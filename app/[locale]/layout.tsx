@@ -59,6 +59,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={params.locale} dir={dir} suppressHydrationWarning>
+      <head>
+        {/* Monetag site verification */}
+        <meta name="monetag" content="a0ac60af89b9b55d82647e019146c160" />
+      </head>
       <body className="min-h-screen">
         <a href="#main-content" className="skip-link">
           {t('skipToContent')}
