@@ -15,11 +15,14 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      // inklinkor.com is the host of Monetag's tag (Vignette banner + other
+      // Monetag formats). It must be allow-listed or the dynamically-created
+      // ad script is refused by the CSP.
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://inklinkor.com",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' blob: data:",
+      "img-src 'self' blob: data: https://inklinkor.com",
       "font-src 'self' data:",
-      "connect-src 'self' blob: data: https://open.er-api.com",
+      "connect-src 'self' blob: data: https://open.er-api.com https://inklinkor.com",
       "worker-src 'self' blob:",
       "frame-ancestors *",
     ].join('; '),

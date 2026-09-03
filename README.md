@@ -42,6 +42,7 @@ Copy `.env.example` to `.env.local` and adjust. Everything is optional — the s
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager ID (consent-gated) |
 | `NEXT_PUBLIC_ANALYTICS_ENABLED` | `true` to activate analytics scripts |
 | `NEXT_PUBLIC_ADS_ENABLED` / `NEXT_PUBLIC_ADS_CLIENT_ID` | AdSense (consent-gated, off by default) |
+| `NEXT_PUBLIC_MONETAG_VIGNETTE_ZONE_ID` | Monetag Vignette Banner zone id (consent-gated, off unless set) |
 | `NEXT_PUBLIC_CONTACT_ENDPOINT` | Optional URL that receives `POST {name, email, message}` |
 
 ## Architecture
@@ -87,6 +88,17 @@ Scripts load **only after** the user consents to analytics cookies (see the cons
 Set `NEXT_PUBLIC_ADS_ENABLED=true` and `NEXT_PUBLIC_ADS_CLIENT_ID`.
 `AdPlacement` components reserve space on the homepage and tool pages and render AdSense units only
 after advertising consent is given.
+
+### Monetag Vignette Banner
+
+To enable the Monetag Vignette ad:
+
+1. In your Monetag dashboard, create a **Vignette Banner** zone and copy its numeric zone id.
+2. Set `NEXT_PUBLIC_MONETAG_VIGNETTE_ZONE_ID=<zone id>` in your environment.
+3. Done. `MonetagVignette` (mounted from `app/[locale]/layout.tsx`) injects Monetag's official
+   vignette tag into `<head>` — but only after the visitor consents to advertising cookies,
+   consistent with the rest of the ad system. The CSP in `next.config.mjs` already allow-lists
+   `https://inklinkor.com` (Monetag's tag host).
 
 ## Activating PWA mode
 

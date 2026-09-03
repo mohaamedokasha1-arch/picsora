@@ -8,6 +8,7 @@ import { ConsentProvider } from '@/components/consent/consent-provider';
 import { CookieBanner } from '@/components/consent/cookie-banner';
 import { ConsentModal } from '@/components/consent/consent-modal';
 import { AnalyticsProvider } from '@/components/analytics/analytics-provider';
+import { MonetagVignette } from '@/components/ads/monetag-vignette';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import '../globals.css';
@@ -81,6 +82,7 @@ export default async function LocaleLayout({
                 <CookieBanner />
                 <ConsentModal />
               </AnalyticsProvider>
+              <MonetagVignette />
             </ConsentProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
