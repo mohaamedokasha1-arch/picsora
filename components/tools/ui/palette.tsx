@@ -46,7 +46,7 @@ export default function PaletteTool({ ctx }: { ctx: WorkspaceContext }) {
       cctx.fillRect(i * (size + 4), 0, size, size);
     });
     canvas.toBlob((blob) => {
-      if (blob) triggerDownload(blob, 'pixora-palette.png');
+      if (blob) triggerDownload(blob, 'piclizer-palette.png');
     }, 'image/png');
   };
 
@@ -57,7 +57,7 @@ export default function PaletteTool({ ctx }: { ctx: WorkspaceContext }) {
       null,
       2,
     );
-    triggerDownload(new Blob([data], { type: 'application/json' }), 'pixora-palette.json');
+    triggerDownload(new Blob([data], { type: 'application/json' }), 'piclizer-palette.json');
   };
 
   return (

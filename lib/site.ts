@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: 'Pixora',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://pixora.app',
+  name: 'Piclizer',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://piclizer.app',
   ogImage: '/images/og-image.svg',
   description:
     'Free online image tools that run 100% in your browser. Compress, resize, crop, convert and edit images privately.',
@@ -15,7 +15,7 @@ export const siteConfig = {
   ],
   defaultLocale: 'en',
   locales: ['en', 'ar'] as const,
-  contactEmail: 'privacy@pixora.app',
+  contactEmail: 'privacy@piclizer.app',
 };
 
 export type Locale = (typeof siteConfig.locales)[number];

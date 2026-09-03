@@ -34,7 +34,7 @@ export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
   const { processing, results, error, run } = useToolRunner();
   const decoded = ctx.decoded[0];
   const [type, setType] = React.useState<'text' | 'image'>('text');
-  const [text, setText] = React.useState('© Pixora');
+  const [text, setText] = React.useState('© Piclizer');
   const [fontSize, setFontSize] = React.useState(48);
   const [fontFamily, setFontFamily] = React.useState('Arial, sans-serif');
   const [color, setColor] = React.useState('#ffffff');

@@ -1,6 +1,6 @@
 {
   "common": {
-    "siteName": "Pixora",
+    "siteName": "Piclizer",
     "tagline": "Free, private, browser-based image tools",
     "home": "Home",
     "tools": "Tools",
@@ -85,7 +85,7 @@
   "home": {
     "heroTitle": "Powerful image tools — free, fast and private",
     "heroHighlight": "right in your browser",
-    "heroSubtitle": "Compress, resize, convert, crop and edit images instantly. Pixora processes everything locally on your device — your files are never uploaded to any server.",
+    "heroSubtitle": "Compress, resize, convert, crop and edit images instantly. Piclizer processes everything locally on your device — your files are never uploaded to any server.",
     "heroPrimary": "Explore all tools",
     "heroSecondary": "Try the image compressor",
     "searchTitle": "What do you want to do with your image?",
@@ -96,7 +96,7 @@
     "popularSubtitle": "The tools people use every day.",
     "allToolsTitle": "Every tool, free forever",
     "allToolsSubtitle": "20 tools. No accounts, no watermarks, no limits.",
-    "benefitsTitle": "Why Pixora?",
+    "benefitsTitle": "Why Piclizer?",
     "benefitsSubtitle": "Honest tools that respect your privacy.",
     "benefitFreeTitle": "Free forever",
     "benefitFreeText": "Every tool is completely free. No trials, no paywalls, no hidden costs.",
@@ -115,18 +115,18 @@
     "step3Title": "Download the result",
     "step3Text": "Save the processed image straight back to your device.",
     "privacyTitle": "Your images never leave your device",
-    "privacyText1": "Most online image tools upload your file to their server, process it, and keep a copy. Pixora is different: every tool uses the Canvas, Blob and File APIs built into your browser, so the image stays on your machine the whole time.",
+    "privacyText1": "Most online image tools upload your file to their server, process it, and keep a copy. Piclizer is different: every tool uses the Canvas, Blob and File APIs built into your browser, so the image stays on your machine the whole time.",
     "privacyText2": "Close the tab and every trace is gone. It's the same technology photo editors use — without any upload step.",
     "privacyPoint1": "No servers, no storage, no copies",
     "privacyPoint2": "Works even when you're offline",
     "privacyPoint3": "Free and open to everyone",
     "faqTitle": "Frequently asked questions",
-    "faqSubtitle": "Quick answers about Pixora."
+    "faqSubtitle": "Quick answers about Piclizer."
   },
 
   "homeFaqs": [
     {
-      "q": "Is Pixora really free?",
+      "q": "Is Piclizer really free?",
       "a": "Yes. All 20 tools are completely free with no usage limits, no watermarks and no hidden fees."
     },
     {
@@ -135,11 +135,11 @@
     },
     {
       "q": "Do I need to create an account?",
-      "a": "No. Pixora requires no registration, no email and no personal information. Open a tool and start working immediately."
+      "a": "No. Piclizer requires no registration, no email and no personal information. Open a tool and start working immediately."
     },
     {
       "q": "Does it work on mobile phones?",
-      "a": "Yes. Pixora works in any modern browser on Android, iPhone, tablets and desktop computers. Some heavy operations are faster on a desktop, but everything works on mobile."
+      "a": "Yes. Piclizer works in any modern browser on Android, iPhone, tablets and desktop computers. Some heavy operations are faster on a desktop, but everything works on mobile."
     },
     {
       "q": "What image formats are supported?",
@@ -150,7 +150,7 @@
       "a": "Completely. Since processing happens on your device, there is nothing for us to collect, store or share. We don't use your images for anything."
     },
     {
-      "q": "Can I use Pixora offline?",
+      "q": "Can I use Piclizer offline?",
       "a": "Once the page is loaded, most tools work without an internet connection, because no server round-trip is needed."
     },
     {
@@ -298,7 +298,7 @@
       "faqs": [
         {
           "q": "How does image compression work?",
-          "a": "Pixora redraws your image using your browser's built-in encoder with a quality setting you control. Lower quality means a smaller file. Processing happens entirely on your device."
+          "a": "Piclizer redraws your image using your browser's built-in encoder with a quality setting you control. Lower quality means a smaller file. Processing happens entirely on your device."
         },
         {
           "q": "Will I lose visible quality?",
@@ -332,7 +332,7 @@
       "faqs": [
         {
           "q": "Does resizing reduce quality?",
-          "a": "Downscaling an image keeps it sharp; upscaling beyond the original size cannot add detail and may look softer. Pixora resamples smoothly using your browser's graphics engine."
+          "a": "Downscaling an image keeps it sharp; upscaling beyond the original size cannot add detail and may look softer. Piclizer resamples smoothly using your browser's graphics engine."
         },
         {
           "q": "What is the aspect-ratio lock?",
@@ -526,7 +526,7 @@
         },
         {
           "q": "What if my browser can't encode WebP?",
-          "a": "Pixora detects this and shows a clear message suggesting an up-to-date browser such as Chrome, Edge or Firefox."
+          "a": "Piclizer detects this and shows a clear message suggesting an up-to-date browser such as Chrome, Edge or Firefox."
         }
       ]
     },
@@ -544,7 +544,7 @@
       "faqs": [
         {
           "q": "Is transparency preserved?",
-          "a": "Yes. WebP supports full alpha transparency, and Pixora keeps it intact."
+          "a": "Yes. WebP supports full alpha transparency, and Piclizer keeps it intact."
         },
         {
           "q": "Will quality suffer?",
@@ -768,7 +768,7 @@
       "name": "Image to Grayscale",
       "short": "Convert images to black and white.",
       "description": "Convert JPG, PNG and WebP images to grayscale online for free. Beautiful black-and-white conversion right in your browser.",
-      "intro": "Transform color images into classic black and white. Pixora uses perceptual luminance weighting, so your grayscale images look natural — not flat.",
+      "intro": "Transform color images into classic black and white. Piclizer uses perceptual luminance weighting, so your grayscale images look natural — not flat.",
       "howTo": [
         "Add an image.",
         "Press Convert to grayscale.",
@@ -868,7 +868,7 @@
 
   "categoryFaqs": {
     "q1": "Is it free to use?",
-    "a1": "Yes — all {category} tools on Pixora are completely free, with no limits, no watermarks and no account required.",
+    "a1": "Yes — all {category} tools on Piclizer are completely free, with no limits, no watermarks and no account required.",
     "q2": "Are my images uploaded anywhere?",
     "a2": "No. Every tool in this category processes your images entirely in your browser. Nothing is sent to a server."
   },
@@ -879,31 +879,31 @@
 
   "categoriesPage": {
     "title": "Image tool categories",
-    "description": "Browse Pixora's free image tools by category — compressors, resizers, converters, editors, PDF tools and color tools.",
+    "description": "Browse Piclizer's free image tools by category — compressors, resizers, converters, editors, PDF tools and color tools.",
     "subtitle": "Find the right tool for the job.",
     "viewCategory": "View category"
   },
 
   "seo": {
-    "homeTitle": "Free Online Image Tools — Compress, Convert & Edit in Your Browser | Pixora",
+    "homeTitle": "Free Online Image Tools — Compress, Convert & Edit in Your Browser | Piclizer",
     "homeDescription": "Free online image tools that run 100% in your browser. Compress, resize, crop, convert and edit JPG, PNG & WebP — no upload, no sign-up, private by design.",
-    "toolsTitle": "All Free Image Tools — 20 Browser-Based Tools | Pixora",
+    "toolsTitle": "All Free Image Tools — 20 Browser-Based Tools | Piclizer",
     "toolsDescription": "Explore all 20 free image tools: compress, resize, crop, rotate, convert formats, make PDFs, merge, split, pick colors and more. 100% in your browser.",
-    "categoriesTitle": "Image Tool Categories | Pixora",
-    "categoriesDescription": "Browse Pixora's free image tools by category: compress, resize, convert, edit, PDF and color tools.",
-    "aboutTitle": "About Pixora — Free, Private Image Tools",
-    "aboutDescription": "Pixora builds free image tools that run entirely in your browser. Learn about our mission, our technology and why privacy matters to us.",
-    "contactTitle": "Contact Pixora",
-    "contactDescription": "Get in touch with the Pixora team. Questions, feedback and partnership inquiries.",
-    "privacyTitle": "Privacy Policy | Pixora",
-    "privacyDescription": "Pixora's privacy policy: what data we collect (almost none), how we handle it, and how your images stay on your device.",
-    "termsTitle": "Terms of Service | Pixora",
-    "termsDescription": "The terms of service for using Pixora's free online image tools.",
-    "cookiePolicyTitle": "Cookie Policy | Pixora",
-    "cookiePolicyDescription": "How Pixora uses cookies, which categories exist, and how to manage your preferences.",
-    "disclaimerTitle": "Disclaimer | Pixora",
-    "disclaimerDescription": "Disclaimer for Pixora's free online image tools.",
-    "notFoundTitle": "Page Not Found | Pixora"
+    "categoriesTitle": "Image Tool Categories | Piclizer",
+    "categoriesDescription": "Browse Piclizer's free image tools by category: compress, resize, convert, edit, PDF and color tools.",
+    "aboutTitle": "About Piclizer — Free, Private Image Tools",
+    "aboutDescription": "Piclizer builds free image tools that run entirely in your browser. Learn about our mission, our technology and why privacy matters to us.",
+    "contactTitle": "Contact Piclizer",
+    "contactDescription": "Get in touch with the Piclizer team. Questions, feedback and partnership inquiries.",
+    "privacyTitle": "Privacy Policy | Piclizer",
+    "privacyDescription": "Piclizer's privacy policy: what data we collect (almost none), how we handle it, and how your images stay on your device.",
+    "termsTitle": "Terms of Service | Piclizer",
+    "termsDescription": "The terms of service for using Piclizer's free online image tools.",
+    "cookiePolicyTitle": "Cookie Policy | Piclizer",
+    "cookiePolicyDescription": "How Piclizer uses cookies, which categories exist, and how to manage your preferences.",
+    "disclaimerTitle": "Disclaimer | Piclizer",
+    "disclaimerDescription": "Disclaimer for Piclizer's free online image tools.",
+    "notFoundTitle": "Page Not Found | Piclizer"
   },
 
   "notFound": {
@@ -940,17 +940,17 @@
   "legal": {
     "lastUpdated": "Last updated",
     "about": {
-      "title": "About Pixora",
-      "p1": "Pixora is a free collection of image tools that run entirely in your web browser. There are no servers processing your images, no uploads, and no accounts — just fast, private tools you can use the moment the page loads.",
+      "title": "About Piclizer",
+      "p1": "Piclizer is a free collection of image tools that run entirely in your web browser. There are no servers processing your images, no uploads, and no accounts — just fast, private tools you can use the moment the page loads.",
       "p2": "Our mission is simple: make everyday image tasks free, instant and private for everyone. Compressing a photo for an email, resizing a banner for a website, or converting a logo to the right format should never require installing software or trusting a stranger with your files.",
       "p3": "We achieve this with modern browser technology. The Canvas, Blob and File APIs — the same building blocks used by professional web-based editors — let us process images entirely on your device, inside your own browser tab.",
-      "p4": "Pixora is honest about what it is: a small, independent tool set built for privacy-first workflows. We don't have fake user counts or invented testimonials. If a tool works for you, that's our success metric."
+      "p4": "Piclizer is honest about what it is: a small, independent tool set built for privacy-first workflows. We don't have fake user counts or invented testimonials. If a tool works for you, that's our success metric."
     },
     "privacy": {
       "title": "Privacy Policy",
-      "intro": "This policy explains what information Pixora collects and how it is used. The short version: we collect almost nothing, and your images never leave your device.",
+      "intro": "This policy explains what information Piclizer collects and how it is used. The short version: we collect almost nothing, and your images never leave your device.",
       "h1": "What we collect",
-      "p1": "Pixora does not require an account and does not collect names, emails or personal information. We do not receive, store or process your images — all processing happens locally in your browser.",
+      "p1": "Piclizer does not require an account and does not collect names, emails or personal information. We do not receive, store or process your images — all processing happens locally in your browser.",
       "p2": "Like most websites, our hosting provider may keep standard technical logs (such as IP address and user agent) needed to operate and secure the service. We do not use these logs to identify individuals.",
       "h2": "Cookies",
       "p2b": "We use a small first-party cookie to remember your consent preferences, plus your language and theme choices. With your consent we may enable analytics or advertising cookies, which are off by default. See our Cookie Policy for details.",
@@ -959,25 +959,25 @@
       "h4": "Your rights",
       "p4": "You can change or withdraw your consent at any time via the Cookie Settings link in the footer. Because we hold no personal data about you, there is typically nothing to access, correct or delete — but you can contact us anytime.",
       "h5": "Contact",
-      "p5": "For privacy inquiries, use the contact page or email privacy@pixora.app."
+      "p5": "For privacy inquiries, use the contact page or email privacy@piclizer.app."
     },
     "terms": {
       "title": "Terms of Service",
-      "intro": "By using Pixora you agree to these terms. They're written in plain language.",
+      "intro": "By using Piclizer you agree to these terms. They're written in plain language.",
       "h1": "Acceptable use",
-      "p1": "You may use Pixora for any lawful purpose. You are responsible for the images you process and must have the rights to use them.",
+      "p1": "You may use Piclizer for any lawful purpose. You are responsible for the images you process and must have the rights to use them.",
       "h2": "Prohibited uses",
-      "p2": "Do not use Pixora to process illegal content, content that infringes others' rights, or content that is harmful, deceptive or abusive. Automated abuse or attempts to disrupt the service are prohibited.",
+      "p2": "Do not use Piclizer to process illegal content, content that infringes others' rights, or content that is harmful, deceptive or abusive. Automated abuse or attempts to disrupt the service are prohibited.",
       "h3": "No warranty",
-      "p3": "Pixora is provided 'as is' and 'as available', without warranties of any kind. We do not guarantee that tools are error-free or that outputs will meet your requirements.",
+      "p3": "Piclizer is provided 'as is' and 'as available', without warranties of any kind. We do not guarantee that tools are error-free or that outputs will meet your requirements.",
       "h4": "Limitation of liability",
-      "p4": "To the maximum extent permitted by law, Pixora is not liable for any indirect, incidental or consequential damages arising from your use of the service.",
+      "p4": "To the maximum extent permitted by law, Piclizer is not liable for any indirect, incidental or consequential damages arising from your use of the service.",
       "h5": "Changes",
       "p5": "We may update these terms occasionally. Continued use after changes means you accept the updated terms."
     },
     "cookiePolicy": {
       "title": "Cookie Policy",
-      "intro": "This policy explains what cookies are, which ones Pixora uses, and how you can control them.",
+      "intro": "This policy explains what cookies are, which ones Piclizer uses, and how you can control them.",
       "h1": "What are cookies",
       "p1": "Cookies are small text files stored on your device by your browser. They help websites remember preferences and understand usage.",
       "h2": "Categories we use",
@@ -989,10 +989,10 @@
     },
     "disclaimer": {
       "title": "Disclaimer",
-      "intro": "Please read this disclaimer carefully before using Pixora.",
-      "p1": "Pixora tools are provided free of charge for general use. Output quality depends on the source image, your browser and your device. We do not guarantee specific results, file sizes or visual fidelity.",
+      "intro": "Please read this disclaimer carefully before using Piclizer.",
+      "p1": "Piclizer tools are provided free of charge for general use. Output quality depends on the source image, your browser and your device. We do not guarantee specific results, file sizes or visual fidelity.",
       "p2": "You are responsible for the files you create and download, including ensuring you have the rights to the source images and that outputs are suitable for your intended use.",
-      "p3": "Pixora does not store or transmit your images. Any processing happens on your device, and you are responsible for keeping copies of your original files."
+      "p3": "Piclizer does not store or transmit your images. Any processing happens on your device, and you are responsible for keeping copies of your original files."
     }
   }
 }
