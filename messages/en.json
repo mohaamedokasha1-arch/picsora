@@ -1,0 +1,998 @@
+{
+  "common": {
+    "siteName": "Pixora",
+    "tagline": "Free, private, browser-based image tools",
+    "home": "Home",
+    "tools": "Tools",
+    "categories": "Categories",
+    "about": "About",
+    "contact": "Contact",
+    "search": "Search",
+    "searchTools": "Search tools…",
+    "searchNoResults": "No tools match your search.",
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "useTool": "Use tool",
+    "free": "Free",
+    "noUpload": "No upload required",
+    "worksInBrowser": "Works in your browser",
+    "noRegistration": "No registration",
+    "allProcessingLocal": "All processing is done locally in your browser. Your images never leave your device.",
+    "backHome": "Back to homepage",
+    "exploreTools": "Explore all tools",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "copied": "Copied!",
+    "copy": "Copy",
+    "download": "Download",
+    "downloadAll": "Download all",
+    "process": "Process",
+    "processing": "Processing…",
+    "reset": "Reset",
+    "tryAgain": "Try again",
+    "uploadDifferent": "Upload a different file",
+    "or": "or",
+    "loading": "Loading…",
+    "minutesRead": "min read",
+    "toolsCount": "{count} tools",
+    "oneTool": "1 tool",
+    "popular": "Popular",
+    "allTools": "All tools",
+    "browseAll": "Browse all",
+    "newWindow": "opens in a new window",
+    "ariaLanguage": "Language",
+    "ariaTheme": "Color theme",
+    "ariaOpenMenu": "Open menu",
+    "ariaCloseMenu": "Close menu",
+    "ariaOpenSearch": "Open search",
+    "skipToContent": "Skip to content",
+    "cookiesSettings": "Cookie Settings",
+    "faq": "FAQ",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookiePolicy": "Cookie Policy",
+    "disclaimer": "Disclaimer",
+    "rightsReserved": "All rights reserved.",
+    "madeWith": "Built for privacy-first image editing.",
+    "localSignal": "100% local — no uploads, no servers"
+  },
+
+  "validation": {
+    "invalidType": "This file type is not supported here. Please choose {types}.",
+    "fileTooLarge": "This file is too large. The maximum size is {size} MB.",
+    "emptyFile": "This file is empty (0 bytes) and cannot be processed.",
+    "corruptImage": "We couldn't read this image. It may be corrupted or in an unsupported format.",
+    "noFile": "Please add at least one image first.",
+    "mimeMismatch": "The file content does not match its extension and was rejected.",
+    "tooManyFiles": "You can upload up to {max} files at once.",
+    "readError": "Could not load the file. Please try a different one."
+  },
+
+  "header": {
+    "nav": "Main navigation"
+  },
+
+  "footer": {
+    "description": "Free online image tools that run entirely in your browser. Compress, resize, convert, edit and organize images without uploading them anywhere.",
+    "toolsColumn": "Popular tools",
+    "categoriesColumn": "Categories",
+    "legalColumn": "Legal",
+    "aboutColumn": "Company",
+    "trust": "Your files never leave your device. Everything is processed locally using browser technology."
+  },
+
+  "home": {
+    "heroTitle": "Powerful image tools — free, fast and private",
+    "heroHighlight": "right in your browser",
+    "heroSubtitle": "Compress, resize, convert, crop and edit images instantly. Pixora processes everything locally on your device — your files are never uploaded to any server.",
+    "heroPrimary": "Explore all tools",
+    "heroSecondary": "Try the image compressor",
+    "searchTitle": "What do you want to do with your image?",
+    "searchSubtitle": "Search 20 free tools",
+    "categoriesTitle": "Browse by category",
+    "categoriesSubtitle": "Everything you need to work with images, organized.",
+    "popularTitle": "Most popular tools",
+    "popularSubtitle": "The tools people use every day.",
+    "allToolsTitle": "Every tool, free forever",
+    "allToolsSubtitle": "20 tools. No accounts, no watermarks, no limits.",
+    "benefitsTitle": "Why Pixora?",
+    "benefitsSubtitle": "Honest tools that respect your privacy.",
+    "benefitFreeTitle": "Free forever",
+    "benefitFreeText": "Every tool is completely free. No trials, no paywalls, no hidden costs.",
+    "benefitPrivateTitle": "Private & secure",
+    "benefitPrivateText": "Images are processed with browser technology on your device. They never travel over the internet.",
+    "benefitFastTitle": "Instant & fast",
+    "benefitFastText": "No waiting for uploads or downloads. Modern browser APIs do the heavy lifting instantly.",
+    "benefitAnywhereTitle": "Works everywhere",
+    "benefitAnywhereText": "Any modern browser on desktop or mobile. No software to install, no account needed.",
+    "howTitle": "How it works",
+    "howSubtitle": "Three steps. Zero uploads.",
+    "step1Title": "Add your image",
+    "step1Text": "Drag and drop a file or click to browse from your device.",
+    "step2Title": "Process locally",
+    "step2Text": "Adjust the settings and hit the button — everything runs in your browser.",
+    "step3Title": "Download the result",
+    "step3Text": "Save the processed image straight back to your device.",
+    "privacyTitle": "Your images never leave your device",
+    "privacyText1": "Most online image tools upload your file to their server, process it, and keep a copy. Pixora is different: every tool uses the Canvas, Blob and File APIs built into your browser, so the image stays on your machine the whole time.",
+    "privacyText2": "Close the tab and every trace is gone. It's the same technology photo editors use — without any upload step.",
+    "privacyPoint1": "No servers, no storage, no copies",
+    "privacyPoint2": "Works even when you're offline",
+    "privacyPoint3": "Free and open to everyone",
+    "faqTitle": "Frequently asked questions",
+    "faqSubtitle": "Quick answers about Pixora."
+  },
+
+  "homeFaqs": [
+    {
+      "q": "Is Pixora really free?",
+      "a": "Yes. All 20 tools are completely free with no usage limits, no watermarks and no hidden fees."
+    },
+    {
+      "q": "Are my images uploaded to your servers?",
+      "a": "Never. Every tool runs entirely in your browser using standard web APIs. Your files are read locally, processed locally and downloaded locally. Nothing is transmitted anywhere."
+    },
+    {
+      "q": "Do I need to create an account?",
+      "a": "No. Pixora requires no registration, no email and no personal information. Open a tool and start working immediately."
+    },
+    {
+      "q": "Does it work on mobile phones?",
+      "a": "Yes. Pixora works in any modern browser on Android, iPhone, tablets and desktop computers. Some heavy operations are faster on a desktop, but everything works on mobile."
+    },
+    {
+      "q": "What image formats are supported?",
+      "a": "JPG, PNG and WebP are supported across the platform, plus GIF for resizing. Each tool lists its exact supported formats on its page."
+    },
+    {
+      "q": "Is my data private?",
+      "a": "Completely. Since processing happens on your device, there is nothing for us to collect, store or share. We don't use your images for anything."
+    },
+    {
+      "q": "Can I use Pixora offline?",
+      "a": "Once the page is loaded, most tools work without an internet connection, because no server round-trip is needed."
+    },
+    {
+      "q": "Why is it faster than other tools?",
+      "a": "There is no upload or download time. Processing starts instantly and uses your device's own computing power."
+    }
+  ],
+
+  "categoryMeta": {
+    "compress": { "name": "Image Compressors", "description": "Reduce image file size without losing visible quality — right in your browser." },
+    "resize": { "name": "Image Resizers", "description": "Change image dimensions precisely with presets or custom sizes." },
+    "convert": { "name": "Image Converters", "description": "Convert images between JPG, PNG and WebP formats instantly." },
+    "edit": { "name": "Image Editors", "description": "Crop, rotate, flip, merge, split and transform your images." },
+    "pdf": { "name": "PDF Tools", "description": "Turn your images into polished PDF documents." },
+    "color": { "name": "Color Tools", "description": "Pick and extract colors from any image." }
+  },
+
+  "categoryIntros": {
+    "compress": "Large images slow down websites, apps and emails. Our compressor tools shrink JPG, PNG and WebP files by intelligently reducing quality and metadata — all in your browser, with no quality loss you can see.",
+    "resize": "Need exact dimensions for a profile picture, a website banner or a print job? Resize images to precise pixel sizes, keep the aspect ratio, and export in the same format.",
+    "convert": "Different situations need different formats. Convert between JPG, PNG and WebP in seconds — with quality control, transparency handling and background color options.",
+    "edit": "From simple flips and rotations to cropping, merging and watermarking — edit your images exactly how you need, without installing any software.",
+    "pdf": "Turn single images or entire galleries into clean PDF documents. Choose page sizes, orientations and order — generated entirely on your device.",
+    "color": "Extract the exact colors from any image. Pick a pixel's HEX, RGB and HSL values, or generate a complete color palette from a photo."
+  },
+
+  "toolShell": {
+    "dropHere": "Drop your images here",
+    "clickOrDrag": "Drag & drop images here, or click to browse",
+    "uploadTitle": "Add your image{s}",
+    "maxFiles": "Up to {n} files",
+    "maxSize": "Max {n} MB per file",
+    "accepted": "Accepted: {formats}",
+    "selected": "Selected",
+    "processingTitle": "Processing",
+    "progress": "Processing image {current} of {total}",
+    "resultTitle": "Your result",
+    "originalSize": "Original",
+    "newSize": "New",
+    "savedPercent": "Saved",
+    "processAnother": "Process another image",
+    "settingsTitle": "Settings",
+    "beforeAfter": "Before / after",
+    "outputFormat": "Output format",
+    "noPreviewYet": "Your processed image will appear here.",
+    "quality": "Quality",
+    "noticeLarge": "This file is large and may take a moment to process."
+  },
+
+  "controls": {
+    "quality": "Quality",
+    "width": "Width",
+    "height": "Height",
+    "pixels": "px",
+    "lockAspect": "Lock aspect ratio",
+    "preset": "Preset sizes",
+    "custom": "Custom",
+    "angle": "Angle",
+    "degrees": "°",
+    "rotateLeft": "Rotate 90° left",
+    "rotateRight": "Rotate 90° right",
+    "rotate180": "Rotate 180°",
+    "aspectRatio": "Aspect ratio",
+    "free": "Free",
+    "background": "Background color",
+    "white": "White",
+    "transparent": "Transparent",
+    "pageSize": "Page size",
+    "a4": "A4",
+    "letter": "Letter",
+    "fitToImage": "Fit to image",
+    "orientation": "Orientation",
+    "portrait": "Portrait",
+    "landscape": "Landscape",
+    "direction": "Direction",
+    "horizontal": "Horizontal",
+    "vertical": "Vertical",
+    "spacing": "Spacing",
+    "columns": "Columns",
+    "rows": "Rows",
+    "grid": "Grid",
+    "format": "Format",
+    "fontSize": "Font size",
+    "fontFamily": "Font family",
+    "opacity": "Opacity",
+    "position": "Position",
+    "tile": "Tile across image",
+    "watermarkType": "Watermark type",
+    "text": "Text",
+    "image": "Image",
+    "watermarkText": "Watermark text",
+    "watermarkImage": "Watermark image",
+    "colorCount": "Number of colors",
+    "positionTopLeft": "Top left",
+    "positionTopCenter": "Top center",
+    "positionTopRight": "Top right",
+    "positionMiddleLeft": "Middle left",
+    "positionCenter": "Center",
+    "positionMiddleRight": "Middle right",
+    "positionBottomLeft": "Bottom left",
+    "positionBottomCenter": "Bottom center",
+    "positionBottomRight": "Bottom right",
+    "merge": "Merge images",
+    "split": "Split image",
+    "pickColor": "Click the image to pick a color",
+    "colorHistory": "Color history",
+    "copyHex": "Copy HEX",
+    "copyRgb": "Copy RGB",
+    "copyHsl": "Copy HSL",
+    "exportPalette": "Export palette",
+    "exportPng": "Export as PNG",
+    "exportJson": "Export as JSON",
+    "reorder": "Drag to reorder",
+    "addImageWatermark": "Choose a watermark image",
+    "grayscale": "Convert to grayscale",
+    "crop": "Crop",
+    "cropDimensions": "Crop size",
+    "apply": "Apply",
+    "flipHorizontal": "Flip horizontally",
+    "flipVertical": "Flip vertically",
+    "convert": "Convert",
+    "compress": "Compress",
+    "resize": "Resize",
+    "outputSame": "Same as input",
+    "tilesNote": "Each tile will be downloaded inside a ZIP archive.",
+    "hex": "HEX",
+    "rgb": "RGB",
+    "hsl": "HSL",
+    "selectImages": "Select images",
+    "dropReorder": "Drag thumbnails to change the order"
+  },
+
+  "tools": {
+    "image-compressor": {
+      "name": "Image Compressor",
+      "short": "Reduce image file size while keeping quality.",
+      "description": "Compress JPG, PNG and WebP images online for free. Reduce file size in your browser with a quality slider — no upload, no watermark.",
+      "intro": "Shrink your images to a fraction of their size without any visible quality loss. Perfect for websites, emails and apps where every kilobyte matters. Adjust the quality slider and watch the size savings in real time.",
+      "howTo": [
+        "Add one or more images using drag & drop or the browse button.",
+        "Choose the output quality with the slider (lower = smaller file).",
+        "Optionally pick a different output format.",
+        "Press Compress and download your optimized images."
+      ],
+      "faqs": [
+        {
+          "q": "How does image compression work?",
+          "a": "Pixora redraws your image using your browser's built-in encoder with a quality setting you control. Lower quality means a smaller file. Processing happens entirely on your device."
+        },
+        {
+          "q": "Will I lose visible quality?",
+          "a": "At 70–90% quality, most photos look nearly identical to the original while being significantly smaller. You can preview the result before downloading."
+        },
+        {
+          "q": "Which formats can I compress?",
+          "a": "JPG, PNG and WebP. You can keep the original format or export to a different one."
+        },
+        {
+          "q": "Can I compress multiple images at once?",
+          "a": "Yes — add as many files as you like and they will be processed in a batch, one after another."
+        },
+        {
+          "q": "Are my images uploaded anywhere?",
+          "a": "No. Compression uses your browser's Canvas API. Your images never leave your device."
+        }
+      ]
+    },
+    "image-resizer": {
+      "name": "Image Resizer",
+      "short": "Resize images to exact dimensions.",
+      "description": "Resize JPG, PNG, WebP and GIF images online to exact pixel dimensions. Preset or custom sizes, aspect-ratio lock, 100% in your browser.",
+      "intro": "Get your images to the exact pixel size you need. Choose a preset or enter custom width and height, lock the aspect ratio, and export at the same quality as the original.",
+      "howTo": [
+        "Add an image to resize.",
+        "Choose a preset size or enter custom dimensions.",
+        "Keep the aspect-ratio lock on to avoid distortion, or unlock it for exact values.",
+        "Press Resize and download your image."
+      ],
+      "faqs": [
+        {
+          "q": "Does resizing reduce quality?",
+          "a": "Downscaling an image keeps it sharp; upscaling beyond the original size cannot add detail and may look softer. Pixora resamples smoothly using your browser's graphics engine."
+        },
+        {
+          "q": "What is the aspect-ratio lock?",
+          "a": "When locked, changing the width automatically adjusts the height to keep the image proportions, preventing stretching."
+        },
+        {
+          "q": "Which formats are supported?",
+          "a": "JPG, PNG, WebP and GIF. The output keeps the original format."
+        },
+        {
+          "q": "Can I resize transparent PNGs?",
+          "a": "Yes, transparency is preserved when the output stays PNG."
+        }
+      ]
+    },
+    "image-cropper": {
+      "name": "Image Cropper",
+      "short": "Crop images interactively with ratio presets.",
+      "description": "Crop JPG, PNG and WebP images online for free. Drag to select, choose aspect ratios like 1:1, 16:9, 4:3 — all in your browser.",
+      "intro": "Cut away the parts you don't need with an interactive crop tool. Drag the selection box, snap to common aspect ratios, and export the exact region you want.",
+      "howTo": [
+        "Add an image to crop.",
+        "Drag the corners of the crop box to select the area.",
+        "Pick an aspect ratio preset, or keep it free-form.",
+        "Press Crop and download the result."
+      ],
+      "faqs": [
+        {
+          "q": "Can I crop to an exact aspect ratio?",
+          "a": "Yes. Choose from Free, 1:1, 4:3, 16:9, 3:2 and 9:16 presets."
+        },
+        {
+          "q": "How precise is the crop?",
+          "a": "You see the crop dimensions live as you drag, and the final image is rendered at full original resolution."
+        },
+        {
+          "q": "Is the cropped image compressed?",
+          "a": "No — the crop is exported at the original quality in the same format."
+        }
+      ]
+    },
+    "image-rotator": {
+      "name": "Image Rotator",
+      "short": "Rotate images by 90°, 180° or any angle.",
+      "description": "Rotate JPG, PNG and WebP images online. Quick 90°, 180° and custom-angle rotation with live preview — free and private.",
+      "intro": "Fix sideways photos or get creative with custom angles. Use the quick buttons for 90° and 180° turns, or enter any angle from 0 to 360 degrees.",
+      "howTo": [
+        "Add an image to rotate.",
+        "Use the quick buttons or enter a custom angle.",
+        "Preview the rotation live.",
+        "Press Rotate and download the result."
+      ],
+      "faqs": [
+        {
+          "q": "Can I rotate by any angle?",
+          "a": "Yes, any value between 0 and 360 degrees, plus the 90° and 180° shortcuts."
+        },
+        {
+          "q": "What happens to transparent areas?",
+          "a": "For PNG images, newly exposed corners stay transparent. For JPG they are filled with white."
+        },
+        {
+          "q": "Does rotating lose quality?",
+          "a": "90° and 180° rotations are lossless. Arbitrary angles re-render the image, which can cause a slight resample."
+        }
+      ]
+    },
+    "flip-image-horizontal": {
+      "name": "Flip Image Horizontally",
+      "short": "Mirror an image left-to-right.",
+      "description": "Flip JPG, PNG and WebP images horizontally online. Create a perfect mirror image in one click, free and 100% in your browser.",
+      "intro": "Create a mirror image instantly. A horizontal flip swaps left and right — useful for fixing selfies, product shots and creative compositions.",
+      "howTo": [
+        "Add an image to flip.",
+        "Press Flip horizontally.",
+        "Preview the mirror image.",
+        "Download your flipped image."
+      ],
+      "faqs": [
+        {
+          "q": "What does horizontal flip mean?",
+          "a": "The image is mirrored along the vertical axis — the left side becomes the right side, like looking in a mirror."
+        },
+        {
+          "q": "Is quality affected?",
+          "a": "No. Flipping is a pixel-perfect transform with no quality loss."
+        },
+        {
+          "q": "Which formats are supported?",
+          "a": "JPG, PNG and WebP, with the output in the same format."
+        }
+      ]
+    },
+    "flip-image-vertical": {
+      "name": "Flip Image Vertically",
+      "short": "Mirror an image top-to-bottom.",
+      "description": "Flip JPG, PNG and WebP images vertically online. Mirror an image upside-down in one click, free and private.",
+      "intro": "Turn an image upside down instantly. A vertical flip mirrors the image along the horizontal axis — top becomes bottom.",
+      "howTo": [
+        "Add an image to flip.",
+        "Press Flip vertically.",
+        "Preview the result.",
+        "Download your flipped image."
+      ],
+      "faqs": [
+        {
+          "q": "What does vertical flip mean?",
+          "a": "The image is mirrored along the horizontal axis, so the top and bottom are swapped."
+        },
+        {
+          "q": "Is quality affected?",
+          "a": "No. Flipping is a pixel-perfect transform with no quality loss."
+        },
+        {
+          "q": "Which formats are supported?",
+          "a": "JPG, PNG and WebP, with the output in the same format."
+        }
+      ]
+    },
+    "jpg-to-png": {
+      "name": "JPG to PNG",
+      "short": "Convert JPG images to PNG format.",
+      "description": "Convert JPG to PNG online for free. Turn JPEG images into high-quality PNG files right in your browser, no upload needed.",
+      "intro": "Convert your JPG photos to the lossless PNG format. PNG is ideal when you need crisp text, graphics or a format that supports transparency for future edits.",
+      "howTo": [
+        "Add a JPG image.",
+        "Press Convert to PNG.",
+        "Compare the file sizes.",
+        "Download your new PNG."
+      ],
+      "faqs": [
+        {
+          "q": "Why is the PNG larger than my JPG?",
+          "a": "PNG is a lossless format, so it keeps every pixel without compression artifacts — which usually means a bigger file than a lossy JPG."
+        },
+        {
+          "q": "Does JPG to PNG improve quality?",
+          "a": "It prevents further loss when you re-save, but it can't restore detail that JPG compression already removed."
+        },
+        {
+          "q": "Are my images uploaded?",
+          "a": "No — conversion runs entirely in your browser."
+        }
+      ]
+    },
+    "png-to-jpg": {
+      "name": "PNG to JPG",
+      "short": "Convert PNG images to JPG format.",
+      "description": "Convert PNG to JPG online for free. Choose a background color for transparency and a quality level — all in your browser.",
+      "intro": "Turn PNG images into smaller JPG files. Since JPG doesn't support transparency, you can choose the background color that replaces transparent areas.",
+      "howTo": [
+        "Add a PNG image.",
+        "Pick a background color for transparent areas.",
+        "Set the output quality.",
+        "Press Convert and download your JPG."
+      ],
+      "faqs": [
+        {
+          "q": "What happens to transparent areas?",
+          "a": "JPG has no transparency, so transparent pixels are filled with your chosen background color (white by default)."
+        },
+        {
+          "q": "Will the file be smaller?",
+          "a": "Usually yes — JPG compresses photos much more efficiently than PNG, especially for photographic images."
+        },
+        {
+          "q": "Can I control quality?",
+          "a": "Yes, with the quality slider. 80–90% is a good balance for most photos."
+        }
+      ]
+    },
+    "jpg-to-webp": {
+      "name": "JPG to WebP",
+      "short": "Convert JPG images to modern WebP format.",
+      "description": "Convert JPG to WebP online for free. Smaller files with equal quality, converted entirely in your browser.",
+      "intro": "WebP is the modern web format that delivers the same visual quality as JPG at a much smaller file size. Convert your photos and speed up your website instantly.",
+      "howTo": [
+        "Add a JPG image.",
+        "Set the output quality.",
+        "Press Convert to WebP.",
+        "Download your optimized WebP file."
+      ],
+      "faqs": [
+        {
+          "q": "What is WebP?",
+          "a": "WebP is a modern image format from Google that produces smaller files than JPG at the same visual quality. All major browsers support it."
+        },
+        {
+          "q": "How much smaller will my file be?",
+          "a": "Typically 25–35% smaller than an equivalent JPG, depending on the image content."
+        },
+        {
+          "q": "What if my browser can't encode WebP?",
+          "a": "Pixora detects this and shows a clear message suggesting an up-to-date browser such as Chrome, Edge or Firefox."
+        }
+      ]
+    },
+    "png-to-webp": {
+      "name": "PNG to WebP",
+      "short": "Convert PNG images to WebP, keeping transparency.",
+      "description": "Convert PNG to WebP online for free with full transparency support. Smaller files, same quality, all in your browser.",
+      "intro": "Get the benefits of WebP with the transparency of PNG. Convert logos, icons and graphics to a format that's dramatically smaller while staying crisp.",
+      "howTo": [
+        "Add a PNG image.",
+        "Set the output quality.",
+        "Press Convert to WebP.",
+        "Download your transparent WebP file."
+      ],
+      "faqs": [
+        {
+          "q": "Is transparency preserved?",
+          "a": "Yes. WebP supports full alpha transparency, and Pixora keeps it intact."
+        },
+        {
+          "q": "Will quality suffer?",
+          "a": "At 90–100% quality the result is visually identical to the source for nearly all images."
+        },
+        {
+          "q": "What about animated PNGs?",
+          "a": "Static images are fully supported. Animated images are converted as a single frame."
+        }
+      ]
+    },
+    "webp-to-jpg": {
+      "name": "WebP to JPG",
+      "short": "Convert WebP images to JPG format.",
+      "description": "Convert WebP to JPG online for free. Pick a background color for transparency and a quality level — entirely in your browser.",
+      "intro": "Need a WebP image in the more universally compatible JPG format? Convert it in seconds with full control over background color and quality.",
+      "howTo": [
+        "Add a WebP image.",
+        "Choose a background color for transparent areas.",
+        "Set the output quality.",
+        "Press Convert and download your JPG."
+      ],
+      "faqs": [
+        {
+          "q": "Why convert WebP to JPG?",
+          "a": "Some older apps and devices don't open WebP. JPG works everywhere."
+        },
+        {
+          "q": "What happens to transparency?",
+          "a": "Transparent areas are filled with your selected background color."
+        },
+        {
+          "q": "Is the conversion lossy?",
+          "a": "JPG is a lossy format, so some data is discarded. Keep quality at 85%+ to minimize visible loss."
+        }
+      ]
+    },
+    "webp-to-png": {
+      "name": "WebP to PNG",
+      "short": "Convert WebP images to PNG format.",
+      "description": "Convert WebP to PNG online for free with full transparency support. Lossless-quality conversion right in your browser.",
+      "intro": "Convert WebP images to the lossless PNG format. Ideal when you need to edit the image further or preserve every pixel including transparency.",
+      "howTo": [
+        "Add a WebP image.",
+        "Press Convert to PNG.",
+        "Compare the file sizes.",
+        "Download your PNG."
+      ],
+      "faqs": [
+        {
+          "q": "Is transparency preserved?",
+          "a": "Yes, fully. Transparent WebP images convert to transparent PNGs."
+        },
+        {
+          "q": "Will the file be larger?",
+          "a": "Often yes — PNG is lossless and stores every pixel, so files are usually larger than lossy WebP."
+        },
+        {
+          "q": "Are my images uploaded?",
+          "a": "No, the conversion happens entirely on your device."
+        }
+      ]
+    },
+    "image-to-pdf": {
+      "name": "Image to PDF",
+      "short": "Turn a single image into a PDF document.",
+      "description": "Convert JPG, PNG or WebP to PDF online for free. Choose A4 or Letter page size and orientation — generated in your browser.",
+      "intro": "Turn any image into a clean, shareable PDF document. Choose A4 or Letter size, portrait or landscape, or fit the page exactly to your image.",
+      "howTo": [
+        "Add an image.",
+        "Choose the page size and orientation.",
+        "Press Create PDF.",
+        "Download your PDF."
+      ],
+      "faqs": [
+        {
+          "q": "How is the image placed on the page?",
+          "a": "With A4 or Letter, the image is centered and scaled to fit within the page margins. Fit-to-image makes the page exactly the size of your image."
+        },
+        {
+          "q": "Are my images uploaded to create the PDF?",
+          "a": "No. The PDF is generated entirely in your browser using client-side libraries."
+        },
+        {
+          "q": "Is there a size limit?",
+          "a": "Yes, up to 50 MB per image. Larger images may need to be resized first."
+        }
+      ]
+    },
+    "images-to-pdf": {
+      "name": "Images to PDF",
+      "short": "Combine multiple images into one PDF.",
+      "description": "Combine multiple JPG, PNG or WebP images into a single PDF online. Reorder pages, choose page size — free and private.",
+      "intro": "Build a multi-page PDF from a set of images. Drag thumbnails to reorder the pages, choose the page size, and generate one clean document.",
+      "howTo": [
+        "Add all the images you want in the PDF.",
+        "Drag the thumbnails to set the page order.",
+        "Choose the page size.",
+        "Press Create PDF and download your document."
+      ],
+      "faqs": [
+        {
+          "q": "How many images can I include?",
+          "a": "You can add many images at once. Each becomes one page in the PDF, in the order you arrange."
+        },
+        {
+          "q": "Can I reorder the pages?",
+          "a": "Yes — drag the thumbnails into the order you want before generating."
+        },
+        {
+          "q": "Is there a limit on file size?",
+          "a": "Up to 50 MB per image. Very large sets may take a moment to generate."
+        }
+      ]
+    },
+    "merge-images": {
+      "name": "Merge Images",
+      "short": "Combine images side by side or stacked.",
+      "description": "Merge multiple JPG, PNG or WebP images into one image online. Horizontal or vertical, custom spacing and background — free.",
+      "intro": "Combine two or more images into a single picture. Stack them vertically or place them side by side, with control over spacing and background color.",
+      "howTo": [
+        "Add two or more images.",
+        "Choose horizontal or vertical direction.",
+        "Adjust spacing and background color if needed.",
+        "Press Merge and download the combined image."
+      ],
+      "faqs": [
+        {
+          "q": "How are different-sized images handled?",
+          "a": "All images are scaled to the same dimension (the largest common size) so the merged result is perfectly aligned."
+        },
+        {
+          "q": "Can I change the order?",
+          "a": "Yes — drag the thumbnails to reorder them before merging."
+        },
+        {
+          "q": "What output formats are available?",
+          "a": "PNG and JPG. PNG keeps transparency; JPG uses your selected background color."
+        }
+      ]
+    },
+    "split-image": {
+      "name": "Split Image",
+      "short": "Cut an image into a grid of tiles.",
+      "description": "Split JPG, PNG or WebP images into a grid online. Choose rows and columns, then download all tiles as a ZIP — free and private.",
+      "intro": "Slice an image into a grid of equal tiles — perfect for Instagram carousels, print layouts and puzzles. Set the rows and columns and download every tile in a ZIP.",
+      "howTo": [
+        "Add an image to split.",
+        "Choose the number of rows and columns.",
+        "Preview the split grid.",
+        "Press Split and download all tiles as a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "How do I get the tiles?",
+          "a": "All tiles are packaged into a single ZIP archive and downloaded together."
+        },
+        {
+          "q": "What if the image doesn't divide evenly?",
+          "a": "Tiles are computed by dividing the image into equal rectangles; any remainder pixels are included in the last row/column."
+        },
+        {
+          "q": "Which formats are supported?",
+          "a": "JPG, PNG and WebP. Tiles keep the original format."
+        }
+      ]
+    },
+    "image-color-picker": {
+      "name": "Image Color Picker",
+      "short": "Pick exact colors from any image.",
+      "description": "Pick colors from any JPG, PNG or WebP image online. Get HEX, RGB and HSL values with a magnifier — free and private.",
+      "intro": "Click anywhere on your image to grab its exact color. Get the HEX, RGB and HSL values instantly, copy them to your clipboard, and keep a history of your recent picks.",
+      "howTo": [
+        "Add an image.",
+        "Move your cursor over the image — a magnifier helps you aim.",
+        "Click to pick a color.",
+        "Copy the HEX, RGB or HSL value, and see your color history."
+      ],
+      "faqs": [
+        {
+          "q": "How accurate is the picker?",
+          "a": "It reads the exact pixel under your cursor using the Canvas API — 100% accurate, down to a single pixel."
+        },
+        {
+          "q": "What formats are shown?",
+          "a": "HEX, RGB and HSL. Click any of them to copy it."
+        },
+        {
+          "q": "Can I pick from transparent areas?",
+          "a": "Transparent pixels report their RGB value with full alpha, shown as the pixel color."
+        }
+      ]
+    },
+    "color-palette-extractor": {
+      "name": "Color Palette Extractor",
+      "short": "Extract dominant colors from an image.",
+      "description": "Extract the dominant color palette from any JPG, PNG or WebP image online. Generate 5–10 swatches with HEX and RGB — free.",
+      "intro": "Turn any photo into a designer-ready color palette. Our median-cut algorithm finds the most dominant colors in your image and presents them as clean swatches you can copy or export.",
+      "howTo": [
+        "Add an image.",
+        "Choose how many colors to extract.",
+        "Press Extract colors.",
+        "Copy any swatch's HEX code or export the full palette."
+      ],
+      "faqs": [
+        {
+          "q": "How are the colors chosen?",
+          "a": "A median-cut quantization algorithm groups the most frequently occurring colors in the image and returns the dominant representatives."
+        },
+        {
+          "q": "How many colors can I extract?",
+          "a": "5, 8 or 10 — you choose."
+        },
+        {
+          "q": "Can I export the palette?",
+          "a": "Yes — as a PNG swatch card or as a JSON file with all the HEX and RGB values."
+        }
+      ]
+    },
+    "image-to-grayscale": {
+      "name": "Image to Grayscale",
+      "short": "Convert images to black and white.",
+      "description": "Convert JPG, PNG and WebP images to grayscale online for free. Beautiful black-and-white conversion right in your browser.",
+      "intro": "Transform color images into classic black and white. Pixora uses perceptual luminance weighting, so your grayscale images look natural — not flat.",
+      "howTo": [
+        "Add an image.",
+        "Press Convert to grayscale.",
+        "Preview the black-and-white result.",
+        "Download your image in the original or PNG format."
+      ],
+      "faqs": [
+        {
+          "q": "How is grayscale calculated?",
+          "a": "Each pixel's red, green and blue channels are combined using perceptual weights that match human vision, producing natural-looking results."
+        },
+        {
+          "q": "Is transparency preserved?",
+          "a": "Yes, for PNG images the alpha channel is kept intact."
+        },
+        {
+          "q": "Which output formats are available?",
+          "a": "The original format or PNG, your choice."
+        }
+      ]
+    },
+    "image-watermark": {
+      "name": "Image Watermark",
+      "short": "Add text or logo watermarks to images.",
+      "description": "Add text or image watermarks to JPG, PNG and WebP images online. 9 positions, tiling, opacity and font controls — free and private.",
+      "intro": "Protect your images with a custom watermark. Add styled text or your own logo, position it anywhere across a 9-point grid, tile it for full coverage, and control size and opacity.",
+      "howTo": [
+        "Add the image you want to watermark.",
+        "Choose a text or image watermark.",
+        "Set the text, font, size, color, opacity and position.",
+        "Press Apply watermark and download the result."
+      ],
+      "faqs": [
+        {
+          "q": "Can I use my own logo as a watermark?",
+          "a": "Yes — upload a PNG or JPG logo and control its size, opacity and position."
+        },
+        {
+          "q": "What is tiling?",
+          "a": "Tiling repeats the watermark across the entire image, which makes it much harder to remove."
+        },
+        {
+          "q": "Which formats are supported?",
+          "a": "JPG, PNG and WebP, with the output in the same format."
+        }
+      ]
+    }
+  },
+
+  "errors": {
+    "title": "Something went wrong",
+    "generic": "We couldn't complete this operation. Please try again with a different file.",
+    "webpUnsupported": "Your browser can't encode WebP images. Please try an up-to-date browser such as Chrome, Edge or Firefox.",
+    "processingFailed": "The image could not be processed. It may be corrupted or too large.",
+    "zipFailed": "We couldn't create the ZIP archive. Please try again.",
+    "pdfFailed": "We couldn't generate the PDF. Please try again with a different image."
+  },
+
+  "consent": {
+    "title": "We value your privacy",
+    "text": "We use cookies to improve your experience. Necessary cookies keep the site working; analytics and advertising cookies are optional and off by default.",
+    "acceptAll": "Accept all",
+    "rejectAll": "Reject non-essential",
+    "manage": "Manage preferences",
+    "modalTitle": "Cookie preferences",
+    "modalText": "Choose which cookie categories you allow. Necessary cookies can't be disabled.",
+    "savePreferences": "Save preferences",
+    "necessary": "Necessary",
+    "necessaryDesc": "Required for the site to function — session and consent preferences.",
+    "functional": "Functional",
+    "functionalDesc": "Remember your language and theme choices.",
+    "analytics": "Analytics",
+    "analyticsDesc": "Help us understand how the site is used. Off by default.",
+    "advertising": "Advertising",
+    "advertisingDesc": "Personalized ads. Off by default.",
+    "alwaysOn": "Always on"
+  },
+
+  "toolsPage": {
+    "title": "All free image tools",
+    "subtitle": "20 tools that run entirely in your browser — compress, resize, convert, edit and more. No uploads, no sign-up."
+  },
+
+  "howTo": {
+    "title": "How to use"
+  },
+
+  "formats": {
+    "title": "Supported formats",
+    "input": "Accepts",
+    "output": "Produces"
+  },
+
+  "related": {
+    "title": "Related tools"
+  },
+
+  "categoryFaqs": {
+    "q1": "Is it free to use?",
+    "a1": "Yes — all {category} tools on Pixora are completely free, with no limits, no watermarks and no account required.",
+    "q2": "Are my images uploaded anywhere?",
+    "a2": "No. Every tool in this category processes your images entirely in your browser. Nothing is sent to a server."
+  },
+
+  "categoryPage": {
+    "relatedCategories": "Related categories"
+  },
+
+  "categoriesPage": {
+    "title": "Image tool categories",
+    "description": "Browse Pixora's free image tools by category — compressors, resizers, converters, editors, PDF tools and color tools.",
+    "subtitle": "Find the right tool for the job.",
+    "viewCategory": "View category"
+  },
+
+  "seo": {
+    "homeTitle": "Free Online Image Tools — Compress, Convert & Edit in Your Browser | Pixora",
+    "homeDescription": "Free online image tools that run 100% in your browser. Compress, resize, crop, convert and edit JPG, PNG & WebP — no upload, no sign-up, private by design.",
+    "toolsTitle": "All Free Image Tools — 20 Browser-Based Tools | Pixora",
+    "toolsDescription": "Explore all 20 free image tools: compress, resize, crop, rotate, convert formats, make PDFs, merge, split, pick colors and more. 100% in your browser.",
+    "categoriesTitle": "Image Tool Categories | Pixora",
+    "categoriesDescription": "Browse Pixora's free image tools by category: compress, resize, convert, edit, PDF and color tools.",
+    "aboutTitle": "About Pixora — Free, Private Image Tools",
+    "aboutDescription": "Pixora builds free image tools that run entirely in your browser. Learn about our mission, our technology and why privacy matters to us.",
+    "contactTitle": "Contact Pixora",
+    "contactDescription": "Get in touch with the Pixora team. Questions, feedback and partnership inquiries.",
+    "privacyTitle": "Privacy Policy | Pixora",
+    "privacyDescription": "Pixora's privacy policy: what data we collect (almost none), how we handle it, and how your images stay on your device.",
+    "termsTitle": "Terms of Service | Pixora",
+    "termsDescription": "The terms of service for using Pixora's free online image tools.",
+    "cookiePolicyTitle": "Cookie Policy | Pixora",
+    "cookiePolicyDescription": "How Pixora uses cookies, which categories exist, and how to manage your preferences.",
+    "disclaimerTitle": "Disclaimer | Pixora",
+    "disclaimerDescription": "Disclaimer for Pixora's free online image tools.",
+    "notFoundTitle": "Page Not Found | Pixora"
+  },
+
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you're looking for doesn't exist or has moved.",
+    "homeLink": "Back to homepage",
+    "toolsLink": "Browse all tools",
+    "searchLabel": "Or search for a tool"
+  },
+
+  "contact": {
+    "title": "Contact us",
+    "intro": "Have a question, feedback or a bug report? We'd love to hear from you.",
+    "name": "Your name",
+    "namePlaceholder": "Jane Doe",
+    "email": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "message": "Message",
+    "messagePlaceholder": "How can we help?",
+    "send": "Send message",
+    "sending": "Sending…",
+    "successTitle": "Message sent",
+    "successText": "Thanks for reaching out — we'll get back to you soon.",
+    "notConfiguredTitle": "Contact form not configured",
+    "notConfiguredText": "This contact form is a demo. Connect an endpoint via the CONTACT_FORM_ENDPOINT environment variable to receive messages.",
+    "validation": {
+      "nameRequired": "Please enter your name.",
+      "emailRequired": "Please enter your email address.",
+      "emailInvalid": "Please enter a valid email address.",
+      "messageRequired": "Please enter a message."
+    }
+  },
+
+  "legal": {
+    "lastUpdated": "Last updated",
+    "about": {
+      "title": "About Pixora",
+      "p1": "Pixora is a free collection of image tools that run entirely in your web browser. There are no servers processing your images, no uploads, and no accounts — just fast, private tools you can use the moment the page loads.",
+      "p2": "Our mission is simple: make everyday image tasks free, instant and private for everyone. Compressing a photo for an email, resizing a banner for a website, or converting a logo to the right format should never require installing software or trusting a stranger with your files.",
+      "p3": "We achieve this with modern browser technology. The Canvas, Blob and File APIs — the same building blocks used by professional web-based editors — let us process images entirely on your device, inside your own browser tab.",
+      "p4": "Pixora is honest about what it is: a small, independent tool set built for privacy-first workflows. We don't have fake user counts or invented testimonials. If a tool works for you, that's our success metric."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "This policy explains what information Pixora collects and how it is used. The short version: we collect almost nothing, and your images never leave your device.",
+      "h1": "What we collect",
+      "p1": "Pixora does not require an account and does not collect names, emails or personal information. We do not receive, store or process your images — all processing happens locally in your browser.",
+      "p2": "Like most websites, our hosting provider may keep standard technical logs (such as IP address and user agent) needed to operate and secure the service. We do not use these logs to identify individuals.",
+      "h2": "Cookies",
+      "p2b": "We use a small first-party cookie to remember your consent preferences, plus your language and theme choices. With your consent we may enable analytics or advertising cookies, which are off by default. See our Cookie Policy for details.",
+      "h3": "Third-party services",
+      "p3": "When you consent, we may load analytics (e.g. Google Analytics) or advertising (e.g. Google AdSense) scripts. These services have their own privacy policies and operate only with your permission.",
+      "h4": "Your rights",
+      "p4": "You can change or withdraw your consent at any time via the Cookie Settings link in the footer. Because we hold no personal data about you, there is typically nothing to access, correct or delete — but you can contact us anytime.",
+      "h5": "Contact",
+      "p5": "For privacy inquiries, use the contact page or email privacy@pixora.app."
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "intro": "By using Pixora you agree to these terms. They're written in plain language.",
+      "h1": "Acceptable use",
+      "p1": "You may use Pixora for any lawful purpose. You are responsible for the images you process and must have the rights to use them.",
+      "h2": "Prohibited uses",
+      "p2": "Do not use Pixora to process illegal content, content that infringes others' rights, or content that is harmful, deceptive or abusive. Automated abuse or attempts to disrupt the service are prohibited.",
+      "h3": "No warranty",
+      "p3": "Pixora is provided 'as is' and 'as available', without warranties of any kind. We do not guarantee that tools are error-free or that outputs will meet your requirements.",
+      "h4": "Limitation of liability",
+      "p4": "To the maximum extent permitted by law, Pixora is not liable for any indirect, incidental or consequential damages arising from your use of the service.",
+      "h5": "Changes",
+      "p5": "We may update these terms occasionally. Continued use after changes means you accept the updated terms."
+    },
+    "cookiePolicy": {
+      "title": "Cookie Policy",
+      "intro": "This policy explains what cookies are, which ones Pixora uses, and how you can control them.",
+      "h1": "What are cookies",
+      "p1": "Cookies are small text files stored on your device by your browser. They help websites remember preferences and understand usage.",
+      "h2": "Categories we use",
+      "p2": "Necessary: required for basic function (consent state, session). Functional: your language and theme preferences. Analytics: usage statistics, off by default. Advertising: ad personalization, off by default.",
+      "h3": "Managing cookies",
+      "p3": "You can change your choices at any time using the Cookie Settings link in the footer, or by clearing cookies in your browser settings.",
+      "h4": "Consent",
+      "p4": "Analytics and advertising cookies load only after you give explicit consent. Necessary cookies do not require consent."
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "intro": "Please read this disclaimer carefully before using Pixora.",
+      "p1": "Pixora tools are provided free of charge for general use. Output quality depends on the source image, your browser and your device. We do not guarantee specific results, file sizes or visual fidelity.",
+      "p2": "You are responsible for the files you create and download, including ensuring you have the rights to the source images and that outputs are suitable for your intended use.",
+      "p3": "Pixora does not store or transmit your images. Any processing happens on your device, and you are responsible for keeping copies of your original files."
+    }
+  }
+}

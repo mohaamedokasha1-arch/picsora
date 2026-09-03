@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens (PHASE 2) — light & dark via CSS variables ─── */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 224 71% 4%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 71% 4%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71% 4%;
+  --primary: 243 75% 59%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 220 9% 20%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+  --accent: 243 75% 96%;
+  --accent-foreground: 243 75% 40%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 243 75% 59%;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: 224 71% 4%;
+  --foreground: 210 20% 98%;
+  --card: 224 71% 6%;
+  --card-foreground: 210 20% 98%;
+  --popover: 224 71% 6%;
+  --popover-foreground: 210 20% 98%;
+  --primary: 243 75% 66%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 215 28% 12%;
+  --secondary-foreground: 210 20% 98%;
+  --muted: 215 28% 12%;
+  --muted-foreground: 217 10% 64%;
+  --accent: 243 40% 16%;
+  --accent-foreground: 243 90% 85%;
+  --destructive: 0 63% 40%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 215 28% 17%;
+  --input: 215 28% 17%;
+  --ring: 243 75% 66%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+  /* Arabic font stack — system fonts render Arabic beautifully with zero payload */
+  html[dir='rtl'] body {
+    font-family: 'Segoe UI', Tahoma, 'Noto Kufi Arabic', 'Noto Sans Arabic',
+      system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-border;
+  }
+}
+
+/* Native range slider styling */
+.slider-native {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+}
+.slider-native::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  border: 2px solid hsl(var(--primary-foreground));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+}
+.slider-native::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  border: 2px solid hsl(var(--primary-foreground));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+}
+.slider-native:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Skip link (moves into view on focus) */
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground;
+}
