@@ -24,6 +24,7 @@ interface FileUploaderProps {
 export function FileUploader({ rule, files, onFilesChange, onError, disabled, compact }: FileUploaderProps) {
   const t = useTranslations();
   const [dragging, setDragging] = React.useState(false);
+  const dragCounter = React.useRef(0);
   const [thumbs, setThumbs] = React.useState<Record<number, string>>({});
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -62,6 +63,8 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
 
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current = 0;
     setDragging(false);
     handleFiles(e.dataTransfer.files);
   };
@@ -141,9 +144,17 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
       }}
       onDragOver={(e) => {
         e.preventDefault();
-        if (!disabled) setDragging(true);
+        e.stopPropagation();
+        if (!disabled) {
+          dragCounter.current += 1;
+          setDragging(true);
+        }
       }}
-      onDragLeave={() => setDragging(false)}
+      onDragLeave={(e: React.DragEvent) => {
+        e.stopPropagation();
+        dragCounter.current = Math.max(0, dragCounter.current - 1);
+        if (dragCounter.current === 0) setDragging(false);
+      }}
       onDrop={onDrop}
       className={cn(
         'flex w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-secondary/30 px-6 text-center transition-all duration-200',

@@ -1,7 +1,7 @@
 import type { ImageFormat } from '@/lib/types';
 
 /** Extensions the uploader can accept (images plus PDF for the PDF tools). */
-export type UploadExtension = ImageFormat | 'pdf';
+export type UploadExtension = ImageFormat | 'pdf' | 'bmp' | 'tiff' | 'tif' | 'avif' | 'svg';
 import { mimeFromExt } from '@/lib/image/format';
 
 export interface FormatRule {

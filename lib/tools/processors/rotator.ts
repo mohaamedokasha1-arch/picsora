@@ -1,6 +1,7 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
-import { createCanvas, fillBackground, nameOf, outputName } from '@/lib/image/process';
+import { createCanvas, nameOf, outputName } from '@/lib/image/process';
 import { canvasToBlob } from '@/lib/image/format';
+import { hasAlpha, fillBackground, clearCanvas } from '@/lib/image/transparent';
 
 export interface RotateOptions {
   angle: number; // degrees 0..360
@@ -40,12 +41,15 @@ export async function rotateImage(
 
   let canvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
+  const sourceHasAlpha = hasAlpha(decoded);
 
   if (lossless) {
     const swap = angle === 90 || angle === 270;
     const { canvas: c, ctx: cctx } = createCanvas(swap ? sh : sw, swap ? sw : sh);
     canvas = c;
     ctx = cctx;
+    clearCanvas(ctx, canvas.width, canvas.height);
+    if (isJpg && sourceHasAlpha) fillBackground(ctx, '#ffffff', canvas.width, canvas.height);
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate((angle * Math.PI) / 180);
     ctx.drawImage(src as CanvasImageSource, -sw / 2, -sh / 2, sw, sh);
@@ -59,7 +63,8 @@ export async function rotateImage(
     const box = createCanvas(nw, nh);
     canvas = box.canvas;
     ctx = box.ctx;
-    if (isJpg) fillBackground(ctx, '#ffffff', nw, nh);
+    clearCanvas(ctx, nw, nh);
+    if (isJpg && sourceHasAlpha) fillBackground(ctx, '#ffffff', nw, nh);
     drawRotated(ctx, src as CanvasImageSource, sw, sh, angle);
   }
 
