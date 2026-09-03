@@ -11,6 +11,8 @@ export interface ToolCardProps {
   categoryLabel?: string;
   href?: string;
   ctaLabel?: string;
+  isNew?: boolean;
+  newLabel?: string;
   className?: string;
 }
 
@@ -22,6 +24,8 @@ export function ToolCard({
   categoryLabel,
   href,
   ctaLabel,
+  isNew,
+  newLabel,
   className,
 }: ToolCardProps) {
   const target = href ?? `/tools/${slug}`;
@@ -38,6 +42,9 @@ export function ToolCard({
           <ToolIcon name={icon} className="h-5 w-5" />
         </span>
         {categoryLabel && <Badge variant="secondary">{categoryLabel}</Badge>}
+        {isNew && (
+          <Badge className="bg-primary text-primary-foreground">{newLabel ?? 'New'}</Badge>
+        )}
       </div>
       <h3 className="text-base font-semibold text-foreground">{name}</h3>
       <p className="mt-1 flex-1 text-sm leading-relaxed text-muted-foreground">{description}</p>

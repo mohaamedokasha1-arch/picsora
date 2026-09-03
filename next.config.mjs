@@ -19,7 +19,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' blob: data:",
       "font-src 'self' data:",
-      "connect-src 'self' blob: data:",
+      "connect-src 'self' blob: data: https://open.er-api.com",
       "worker-src 'self' blob:",
       "frame-ancestors *",
     ].join('; '),

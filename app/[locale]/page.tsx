@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo/metadata';
 import { websiteSchema, organizationSchema, faqSchema, StructuredData } from '@/lib/seo/schema';
 import { siteConfig } from '@/lib/site';
-import { CATEGORIES, TOOLS, getPopularTools } from '@/lib/tools/registry';
+import { CATEGORIES, TOOLS, getNewTools, getPopularTools } from '@/lib/tools/registry';
 import { Link } from '@/lib/i18n/navigation';
 import { ToolCard } from '@/components/tools/tool-card';
 import { ToolsGrid } from '@/components/tools/tools-grid';
@@ -26,6 +26,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
   setRequestLocale(params.locale);
   const t = await getTranslations();
   const popular = getPopularTools();
+  const newest = getNewTools(8);
 
   const catName = (slug: string) => t(`categoryMeta.${slug}.name` as never);
 
@@ -136,6 +137,28 @@ export default async function HomePage({ params }: { params: { locale: string } 
               description={t(tool.shortKey as never)}
               icon={tool.icon}
               categoryLabel={catName(tool.category)}
+              isNew={tool.isNew}
+              newLabel={t('common.new')}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Just added */}
+      <section className="container pb-12">
+        <h2 className="text-2xl font-bold text-foreground sm:text-3xl">{t('home.newTitle')}</h2>
+        <p className="mt-2 text-muted-foreground">{t('home.newSubtitle')}</p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {newest.map((tool) => (
+            <ToolCard
+              key={tool.slug}
+              slug={tool.slug}
+              name={t(tool.nameKey as never)}
+              description={t(tool.shortKey as never)}
+              icon={tool.icon}
+              categoryLabel={catName(tool.category)}
+              isNew
+              newLabel={t('common.new')}
             />
           ))}
         </div>
@@ -155,6 +178,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
                 icon: tool.icon,
                 category: tool.category,
                 categoryLabel: catName(tool.category),
+                isNew: tool.isNew,
               }))}
             />
           </div>

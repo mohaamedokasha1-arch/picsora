@@ -1,0 +1,292 @@
+{
+"en": {
+"pdf-merger": {
+ "name": "PDF Merger",
+ "short": "Combine several PDF files into one document.",
+ "description": "Merge PDF files online for free. Combine multiple documents into one, reorder them by dragging, and download instantly — everything runs in your browser.",
+ "intro": "Bring several PDFs together into a single, tidy document. Drag the files into the order you want, merge them in one click, and keep every page exactly as it was — no uploads, no watermarks, no page limits.",
+ "howTo": ["Add two or more PDF files with drag & drop or the browse button.","Drag the file cards to arrange them in the order you want.","Press Merge PDFs and wait for the progress bar to finish.","Download the combined document to your device."],
+ "faqs": [
+  {"q":"Are my PDF files uploaded to a server?","a":"No. Merging happens entirely inside your browser using pdf-lib. Your documents never leave your device, which is why the tool also works offline once the page is loaded."},
+  {"q":"How many PDFs can I merge at once?","a":"Up to 20 files, each up to 50 MB, with a combined limit of 200 MB. These limits keep the merge comfortably within your browser's available memory."},
+  {"q":"Will merging change the quality of my pages?","a":"No. Pages are copied as-is, so text stays selectable, images keep their original resolution and vector graphics remain sharp."},
+  {"q":"Can I merge password-protected PDFs?","a":"Not directly. Remove the password first with our PDF Unlock tool, then merge the unprotected files."},
+  {"q":"Are bookmarks and links preserved?","a":"Internal page content, links and annotations attached to pages are copied. Document-level bookmarks from the source files are not carried over."}
+ ]},
+"pdf-splitter": {
+ "name": "PDF Splitter",
+ "short": "Split one PDF into several separate files.",
+ "description": "Split a PDF online for free. Extract every page separately, cut into fixed chunks, or define custom page ranges — processed privately in your browser.",
+ "intro": "Break a long PDF into smaller documents in the way that suits you: one file per page, fixed groups of pages, or your own custom ranges. Results are packaged so you can download everything at once.",
+ "howTo": ["Select the PDF you want to split.","Choose a split mode: one file per page, every N pages, or custom ranges.","Enter your ranges, for example 1-3, 5, 8-10.","Press Split PDF and download the files individually or as a ZIP."],
+ "faqs": [
+  {"q":"How do I write a page range?","a":"Use commas to separate parts and dashes for ranges — 1-3, 5, 8-10 produces three files covering pages 1 to 3, page 5, and pages 8 to 10."},
+  {"q":"Is the original PDF modified?","a":"Never. The file on your device is only read; every split part is created as a brand-new document in memory."},
+  {"q":"What are the size limits?","a":"Files up to 100 MB and 500 pages. Larger documents may still work but can be slow depending on your device."},
+  {"q":"Can I download all parts together?","a":"Yes. Use Download all to receive a ZIP archive that is also built locally in your browser."},
+  {"q":"Does splitting reduce quality?","a":"No. Pages are copied without re-encoding, so fonts, images and vectors are identical to the original."}
+ ]},
+"pdf-delete-pages": {
+ "name": "Delete PDF Pages",
+ "short": "Remove unwanted pages from a PDF.",
+ "description": "Delete pages from a PDF online for free. Click page thumbnails to remove them and save a clean document — private, in-browser processing with no uploads.",
+ "intro": "Get rid of blank sheets, cover pages or anything you no longer need. Preview every page as a thumbnail, mark what to remove, and save a clean copy of your document.",
+ "howTo": ["Open your PDF in the tool.","Wait for the page thumbnails to render.","Click the pages you want to delete, or type a range instead.","Press Delete selected pages and download the result."],
+ "faqs": [
+  {"q":"Can I undo a deletion?","a":"Yes. Selections are only applied when you press the delete button, and your original file is never changed, so you can always start over."},
+  {"q":"Can I delete every page?","a":"No — a PDF must keep at least one page, so the tool blocks a selection that would empty the document."},
+  {"q":"Why do thumbnails take a moment to appear?","a":"Each page is rendered locally with pdf.js. Large or graphics-heavy documents simply take longer to draw."},
+  {"q":"Is anything uploaded while I preview pages?","a":"No. Rendering and editing both run on your device; no page image or file byte is ever transmitted."},
+  {"q":"Does the file get smaller after deleting pages?","a":"Usually yes, though shared resources such as embedded fonts may still be kept, so the reduction is not always proportional."}
+ ]},
+"pdf-reorder-pages": {
+ "name": "Reorder PDF Pages",
+ "short": "Rearrange the page order of a PDF.",
+ "description": "Reorder PDF pages online for free. Drag page thumbnails into a new order and save the rearranged document — fully private, in-browser processing.",
+ "intro": "Put your pages in the right order by dragging their thumbnails around. Ideal for fixing scans that came out backwards or moving an appendix to the end.",
+ "howTo": ["Choose the PDF you want to rearrange.","Drag the page thumbnails into the order you prefer.","Use Reset order at any time to start again.","Press Apply new order and download the document."],
+ "faqs": [
+  {"q":"How many pages can I reorder?","a":"Up to 200 pages. Beyond that, thumbnail rendering becomes heavy for most browsers."},
+  {"q":"Can I reverse the whole document?","a":"Yes — drag pages freely, including moving the last page to the front to reverse the sequence."},
+  {"q":"Will links between pages still work?","a":"Page content and annotations are copied intact, but internal links that point to a fixed page number may no longer land where you expect."},
+  {"q":"Does reordering re-compress the file?","a":"No. Pages are copied without re-encoding, so quality and file size stay essentially the same."},
+  {"q":"Does this work on a phone?","a":"Yes. The grid adapts to small screens and supports touch dragging."}
+ ]},
+"pdf-rotate-pages": {
+ "name": "Rotate PDF Pages",
+ "short": "Turn pages 90, 180 or 270 degrees.",
+ "description": "Rotate PDF pages online for free. Fix sideways scans by rotating single pages or the whole document, then save — private, in-browser processing.",
+ "intro": "Straighten scans that came out sideways or upside down. Rotate one page at a time or the entire document at once, and see the result before you save.",
+ "howTo": ["Add the PDF that needs rotating.","Use the arrows on a thumbnail to rotate that page.","Or use Rotate all left/right to turn every page together.","Press Apply rotations and download the corrected file."],
+ "faqs": [
+  {"q":"Is the rotation permanent?","a":"Yes. The saved file stores the new page rotation, so it opens correctly in every PDF reader."},
+  {"q":"Can I rotate only some pages?","a":"Yes. Each thumbnail has its own rotate controls, so you can mix orientations within one document."},
+  {"q":"Does rotating reduce image quality?","a":"No. Rotation changes a page attribute only; nothing is re-rendered or re-compressed."},
+  {"q":"My scan is upside down — what should I use?","a":"Rotate the page twice in the same direction for a 180° turn."},
+  {"q":"Are my files uploaded?","a":"No. Reading, previewing and saving all happen locally in your browser."}
+ ]},
+"pdf-extract-pages": {
+ "name": "Extract PDF Pages",
+ "short": "Save selected pages as a new PDF.",
+ "description": "Extract pages from a PDF online for free. Pick the pages you need and save them as a new document — no uploads, no watermarks, fully private.",
+ "intro": "Need just a few pages out of a long report? Select them by clicking thumbnails or by typing a range, and save exactly those pages as a fresh PDF.",
+ "howTo": ["Open the PDF you want to take pages from.","Click the pages to extract, or type a range such as 2-5, 9.","Check the selection summary shown below the grid.","Press Extract pages and download the new document."],
+ "faqs": [
+  {"q":"How is this different from splitting?","a":"Splitting produces many files at once; extracting collects the pages you choose into one new document."},
+  {"q":"Do extracted pages keep their order?","a":"They follow the order of your selection, so you can also use the tool to build a re-sequenced excerpt."},
+  {"q":"Is there a page limit?","a":"You can extract as many pages as the source document contains, within the 100 MB file limit."},
+  {"q":"Does the original file change?","a":"No. It is only read, and the extract is created as a separate document."},
+  {"q":"Can I extract from a protected PDF?","a":"Remove the password first with the PDF Unlock tool, then extract."}
+ ]},
+"pdf-protect": {
+ "name": "Protect PDF with Password",
+ "short": "Encrypt a PDF with a password.",
+ "description": "Password protect a PDF online for free. Add AES-256 encryption and set printing or copying permissions — your file and password never leave your browser.",
+ "intro": "Add a strong password to a PDF before you share it. Encryption uses AES-256 and runs entirely on your device, so neither the document nor the password is ever transmitted.",
+ "howTo": ["Select the PDF you want to protect.","Type a password and confirm it.","Optionally set an owner password and choose which permissions to allow.","Press Protect PDF and download the encrypted file."],
+ "faqs": [
+  {"q":"What encryption is used?","a":"AES-256, the strongest standard supported by modern PDF readers."},
+  {"q":"Can you recover my password if I forget it?","a":"No, and neither can anyone else. The password is never stored or sent anywhere, so a lost password means a permanently locked file."},
+  {"q":"What is the difference between a user and an owner password?","a":"The user password is required to open the document. The owner password controls permissions such as printing and copying."},
+  {"q":"Do permissions really stop people copying my text?","a":"They instruct compliant readers to restrict those actions. They are a deterrent, not an absolute guarantee — only the open password truly protects content."},
+  {"q":"What makes a strong password?","a":"At least 8 characters mixing upper and lower case letters, numbers and symbols. The strength meter updates as you type."}
+ ]},
+"pdf-unlock": {
+ "name": "Unlock PDF",
+ "short": "Remove a known password from a PDF.",
+ "description": "Remove a PDF password online for free. Enter the password you already know and save an unprotected copy — decryption runs privately in your browser.",
+ "intro": "Stop retyping the same password every time you open a document you own. Enter the password once and save a decrypted copy, processed entirely on your device.",
+ "howTo": ["Add the protected PDF.","Type the password that opens the file.","Press Remove password.","Download the unprotected copy."],
+ "faqs": [
+  {"q":"Can this crack a PDF I do not have the password for?","a":"No. The tool decrypts using the password you supply; it does not guess, brute-force or bypass encryption."},
+  {"q":"Is it legal to remove a password?","a":"Only remove protection from documents you own or are authorised to modify. Respect the rights of the document owner."},
+  {"q":"Is my password sent anywhere?","a":"No. Decryption runs locally in your browser, and the password stays in memory only for the duration of the operation."},
+  {"q":"The tool says the file is not encrypted — why?","a":"Some PDFs restrict permissions without an open password. Those files are already readable and have nothing to remove."},
+  {"q":"Does unlocking change the content?","a":"No. Pages are copied unchanged; only the encryption layer is dropped."}
+ ]},
+"pdf-to-images": {
+ "name": "PDF to Images",
+ "short": "Convert PDF pages to PNG or JPG.",
+ "description": "Convert PDF to images online for free. Render every page as a PNG or JPG at up to 300 DPI and download them as a ZIP — all inside your browser.",
+ "intro": "Turn each page of a PDF into a standalone image for slides, thumbnails or social posts. Choose your resolution and format, then download the pages one by one or as a ZIP.",
+ "howTo": ["Choose the PDF you want to convert.","Pick a resolution: 72, 150 or 300 DPI.","Select PNG for sharpness or JPG for smaller files.","Press Convert to images and download the results."],
+ "faqs": [
+  {"q":"Which resolution should I choose?","a":"72 DPI is fine for on-screen previews, 150 DPI suits most documents, and 300 DPI matches print quality but uses much more memory."},
+  {"q":"Why is the number of pages limited at high DPI?","a":"Rendering at 300 DPI creates very large canvases. To avoid crashing the tab we cap the page count as resolution rises."},
+  {"q":"PNG or JPG?","a":"PNG keeps text edges crisp and supports transparency; JPG produces much smaller files for photo-heavy pages."},
+  {"q":"Is the conversion done online?","a":"It runs in your browser with pdf.js. No page or image is uploaded."},
+  {"q":"Can I convert a scanned PDF?","a":"Yes. Scanned pages are images already, so they render quickly and cleanly."}
+ ]},
+"pdf-compressor": {
+ "name": "PDF Compressor",
+ "short": "Reduce the file size of a PDF.",
+ "description": "Compress PDF files online for free. Choose lossless optimisation or aggressive rasterisation to shrink documents — processed privately in your browser.",
+ "intro": "Make a PDF small enough to email or upload. Light and medium levels optimise the file structure without touching quality, while maximum rasterises the pages for the smallest possible result.",
+ "howTo": ["Add the PDF you want to compress.","Choose a compression level: light, medium or maximum.","Press Compress PDF and wait for the result.","Compare the sizes and download the smaller file."],
+ "faqs": [
+  {"q":"Why did my file barely get smaller?","a":"Text-only PDFs are usually already efficient. Big savings come from documents packed with photos or scans."},
+  {"q":"What does the maximum level do?","a":"It re-renders each page as a JPEG image at 110 DPI. Files become much smaller, but text is no longer selectable or searchable."},
+  {"q":"Are light and medium lossless?","a":"Yes. They rewrite the file structure, remove unused objects and pack object streams without altering page content."},
+  {"q":"Is my document uploaded for compression?","a":"No. Everything is processed locally in your browser."},
+  {"q":"What if compression makes the file bigger?","a":"The tool tells you when no meaningful reduction was possible so you can simply keep your original."}
+ ]},
+"pdf-page-counter": {
+ "name": "PDF Page Counter",
+ "short": "Count pages in one or many PDFs.",
+ "description": "Count PDF pages online for free. Add several documents at once to see page counts, file sizes and totals instantly — nothing is uploaded.",
+ "intro": "Quickly check how long your documents are before printing or submitting them. Add multiple PDFs and get per-file page counts plus a combined total.",
+ "howTo": ["Add one or more PDF files.","Read the page count and size next to each file.","Check the totals row for the combined figures.","Add more files or reset to start over."],
+ "faqs": [
+  {"q":"How many files can I check at once?","a":"Up to 20 files of 50 MB each."},
+  {"q":"Can it count pages in an encrypted PDF?","a":"Encrypted documents must be unlocked first, since their structure cannot be read without the password."},
+  {"q":"Does the file get uploaded to count pages?","a":"No. Only the document structure is parsed locally, and nothing is sent anywhere."},
+  {"q":"Why is a file listed as invalid?","a":"The tool checks the PDF signature. Files renamed to .pdf but saved in another format are rejected."},
+  {"q":"Does it show file sizes too?","a":"Yes — each row shows the size, and the totals row adds them up."}
+ ]}
+},
+"ar": {
+"pdf-merger": {
+ "name": "دمج ملفات PDF",
+ "short": "ادمج عدة ملفات PDF في مستند واحد.",
+ "description": "ادمج ملفات PDF مجانًا عبر الإنترنت. اجمع عدة مستندات في ملف واحد ورتّبها بالسحب ثم نزّلها فورًا — كل شيء يتم داخل متصفحك.",
+ "intro": "اجمع عدة ملفات PDF في مستند واحد منظم. رتّب الملفات بالسحب وادمجها بنقرة واحدة مع الحفاظ على كل صفحة كما هي — بدون رفع أو علامات مائية أو حدود على عدد الصفحات.",
+ "howTo": ["أضف ملفَي PDF أو أكثر بالسحب والإفلات أو عبر زر التصفح.","اسحب بطاقات الملفات لترتيبها كما تريد.","اضغط «دمج ملفات PDF» وانتظر انتهاء شريط التقدم.","نزّل المستند المدموج إلى جهازك."],
+ "faqs": [
+  {"q":"هل تُرفع ملفاتي إلى خادم؟","a":"لا. يتم الدمج بالكامل داخل متصفحك باستخدام pdf-lib، فلا تغادر مستنداتك جهازك، ولهذا تعمل الأداة حتى بدون اتصال بعد تحميل الصفحة."},
+  {"q":"كم ملفًا يمكن دمجه دفعة واحدة؟","a":"حتى 20 ملفًا، بحد أقصى 50 ميجابايت للملف و200 ميجابايت للإجمالي، بما يناسب الذاكرة المتاحة للمتصفح."},
+  {"q":"هل يؤثر الدمج على جودة الصفحات؟","a":"لا. تُنسخ الصفحات كما هي، فيبقى النص قابلًا للتحديد وتحتفظ الصور بدقتها والرسوم المتجهة بحدتها."},
+  {"q":"هل يمكن دمج ملفات محمية بكلمة مرور؟","a":"ليس مباشرة. أزل الحماية أولًا بأداة «إزالة حماية PDF» ثم ادمج الملفات."},
+  {"q":"هل تُحفظ الروابط والإشارات المرجعية؟","a":"تُنسخ محتويات الصفحات والروابط والتعليقات المرتبطة بها، أما الإشارات المرجعية على مستوى المستند فلا تُنقل."}
+ ]},
+"pdf-splitter": {
+ "name": "تقسيم ملف PDF",
+ "short": "قسّم ملف PDF إلى ملفات منفصلة.",
+ "description": "قسّم ملف PDF مجانًا عبر الإنترنت. استخرج كل صفحة على حدة أو قسّم بمجموعات ثابتة أو بنطاقات مخصصة — بمعالجة خاصة داخل متصفحك.",
+ "intro": "قسّم ملف PDF طويلًا إلى مستندات أصغر بالطريقة التي تناسبك: ملف لكل صفحة، أو مجموعات ثابتة، أو نطاقات تحددها بنفسك، مع إمكانية تنزيل النتائج دفعة واحدة.",
+ "howTo": ["اختر ملف PDF الذي تريد تقسيمه.","حدد وضع التقسيم: ملف لكل صفحة أو كل N صفحة أو نطاقات مخصصة.","أدخل النطاقات مثل 1-3، 5، 8-10.","اضغط «تقسيم ملف PDF» ونزّل الملفات فرادى أو في ملف مضغوط."],
+ "faqs": [
+  {"q":"كيف أكتب نطاق الصفحات؟","a":"استخدم الفواصل بين الأجزاء والشرطات للنطاقات — النطاق 1-3، 5، 8-10 ينتج ثلاثة ملفات تغطي الصفحات 1 إلى 3 والصفحة 5 والصفحات 8 إلى 10."},
+  {"q":"هل يتغير الملف الأصلي؟","a":"أبدًا. تتم قراءة الملف فقط، ويُنشأ كل جزء كمستند جديد في الذاكرة."},
+  {"q":"ما حدود الحجم؟","a":"حتى 100 ميجابايت و500 صفحة. قد تعمل الملفات الأكبر لكن ببطء حسب إمكانات جهازك."},
+  {"q":"هل يمكنني تنزيل كل الأجزاء معًا؟","a":"نعم، عبر «تنزيل الكل» الذي ينشئ ملفًا مضغوطًا داخل متصفحك أيضًا."},
+  {"q":"هل يقلل التقسيم الجودة؟","a":"لا. تُنسخ الصفحات دون إعادة ترميز، فتبقى الخطوط والصور مطابقة للأصل."}
+ ]},
+"pdf-delete-pages": {
+ "name": "حذف صفحات من PDF",
+ "short": "احذف الصفحات غير المرغوبة من ملف PDF.",
+ "description": "احذف صفحات من ملف PDF مجانًا عبر الإنترنت. انقر على مصغّرات الصفحات لإزالتها واحفظ مستندًا نظيفًا — بمعالجة خاصة داخل المتصفح بلا رفع.",
+ "intro": "تخلّص من الصفحات الفارغة أو أغلفة الملف أو أي صفحة لم تعد تحتاجها. عاين كل صفحة كمصغّرة، وحدد ما تريد حذفه، واحفظ نسخة نظيفة من مستندك.",
+ "howTo": ["افتح ملف PDF في الأداة.","انتظر ظهور مصغّرات الصفحات.","انقر على الصفحات المراد حذفها أو اكتب نطاقًا بدلًا من ذلك.","اضغط «حذف الصفحات المحددة» ونزّل الناتج."],
+ "faqs": [
+  {"q":"هل يمكن التراجع عن الحذف؟","a":"نعم. لا يُطبَّق التحديد إلا عند الضغط على زر الحذف، والملف الأصلي لا يتغير أبدًا، فيمكنك البدء من جديد في أي وقت."},
+  {"q":"هل يمكن حذف كل الصفحات؟","a":"لا — يجب أن يبقى في ملف PDF صفحة واحدة على الأقل، لذا تمنع الأداة أي تحديد يُفرغ المستند."},
+  {"q":"لماذا تتأخر المصغّرات قليلًا؟","a":"تُعرض كل صفحة محليًا باستخدام pdf.js، والمستندات الكبيرة أو الغنية بالرسوم تستغرق وقتًا أطول."},
+  {"q":"هل يُرفع أي شيء أثناء المعاينة؟","a":"لا. العرض والتحرير يجريان على جهازك، ولا تُرسل أي بيانات."},
+  {"q":"هل يصغر حجم الملف بعد الحذف؟","a":"غالبًا نعم، لكن بعض الموارد المشتركة مثل الخطوط المضمّنة قد تبقى، فلا يكون الانخفاض متناسبًا دائمًا."}
+ ]},
+"pdf-reorder-pages": {
+ "name": "إعادة ترتيب صفحات PDF",
+ "short": "أعد ترتيب صفحات ملف PDF.",
+ "description": "أعد ترتيب صفحات PDF مجانًا عبر الإنترنت. اسحب مصغّرات الصفحات إلى الترتيب الجديد واحفظ المستند — معالجة خاصة بالكامل داخل المتصفح.",
+ "intro": "رتّب صفحاتك كما ينبغي بسحب مصغّراتها. مثالي لتصحيح المسح الضوئي المعكوس أو نقل الملاحق إلى نهاية المستند.",
+ "howTo": ["اختر ملف PDF المراد إعادة ترتيبه.","اسحب مصغّرات الصفحات إلى الترتيب الذي تفضله.","استخدم «إعادة الترتيب الأصلي» في أي وقت للبدء من جديد.","اضغط «تطبيق الترتيب الجديد» ونزّل المستند."],
+ "faqs": [
+  {"q":"كم صفحة يمكن إعادة ترتيبها؟","a":"حتى 200 صفحة، إذ يصبح عرض المصغّرات مرهقًا لمعظم المتصفحات بعد ذلك."},
+  {"q":"هل يمكن عكس ترتيب المستند بالكامل؟","a":"نعم — اسحب الصفحات بحرية، بما في ذلك نقل الصفحة الأخيرة إلى البداية."},
+  {"q":"هل تبقى الروابط بين الصفحات فعّالة؟","a":"تُنسخ محتويات الصفحات والتعليقات كما هي، لكن الروابط الداخلية المرتبطة برقم صفحة ثابت قد لا تشير إلى الوجهة المتوقعة."},
+  {"q":"هل تُعاد ضغط الملف عند إعادة الترتيب؟","a":"لا. تُنسخ الصفحات دون إعادة ترميز، فيبقى الحجم والجودة كما هما تقريبًا."},
+  {"q":"هل تعمل الأداة على الهاتف؟","a":"نعم. تتكيف الشبكة مع الشاشات الصغيرة وتدعم السحب باللمس."}
+ ]},
+"pdf-rotate-pages": {
+ "name": "تدوير صفحات PDF",
+ "short": "دوّر الصفحات 90 أو 180 أو 270 درجة.",
+ "description": "دوّر صفحات PDF مجانًا عبر الإنترنت. صحّح المسح الضوئي المائل بتدوير صفحة واحدة أو المستند كله ثم احفظه — معالجة خاصة داخل المتصفح.",
+ "intro": "صحّح الصفحات الممسوحة ضوئيًا التي ظهرت مائلة أو مقلوبة. دوّر صفحة واحدة أو المستند كله دفعة واحدة، وشاهد النتيجة قبل الحفظ.",
+ "howTo": ["أضف ملف PDF الذي يحتاج إلى تدوير.","استخدم الأسهم على المصغّرة لتدوير تلك الصفحة.","أو استخدم «تدوير الكل» لتدوير جميع الصفحات معًا.","اضغط «تطبيق التدوير» ونزّل الملف المصحح."],
+ "faqs": [
+  {"q":"هل التدوير دائم؟","a":"نعم. يُخزَّن اتجاه الصفحة الجديد في الملف المحفوظ فيظهر صحيحًا في كل قارئات PDF."},
+  {"q":"هل يمكن تدوير بعض الصفحات فقط؟","a":"نعم. لكل مصغّرة أزرار تدوير خاصة بها، فيمكن مزج الاتجاهات داخل المستند نفسه."},
+  {"q":"هل يقلل التدوير جودة الصور؟","a":"لا. يغيّر التدوير خاصية في الصفحة فقط دون إعادة عرض أو ضغط."},
+  {"q":"صفحتي مقلوبة تمامًا، ماذا أفعل؟","a":"دوّر الصفحة مرتين في الاتجاه نفسه للحصول على 180 درجة."},
+  {"q":"هل تُرفع ملفاتي؟","a":"لا. القراءة والمعاينة والحفظ تتم جميعها محليًا داخل متصفحك."}
+ ]},
+"pdf-extract-pages": {
+ "name": "استخراج صفحات من PDF",
+ "short": "احفظ صفحات مختارة في ملف PDF جديد.",
+ "description": "استخرج صفحات من ملف PDF مجانًا عبر الإنترنت. اختر الصفحات التي تحتاجها واحفظها كمستند جديد — بلا رفع ولا علامات مائية وبخصوصية كاملة.",
+ "intro": "تحتاج بضع صفحات فقط من تقرير طويل؟ حددها بالنقر على المصغّرات أو بكتابة نطاق، واحفظ تلك الصفحات بالضبط في ملف PDF جديد.",
+ "howTo": ["افتح ملف PDF الذي تريد الاستخراج منه.","انقر على الصفحات المطلوبة أو اكتب نطاقًا مثل 2-5، 9.","راجع ملخص التحديد أسفل الشبكة.","اضغط «استخراج الصفحات» ونزّل المستند الجديد."],
+ "faqs": [
+  {"q":"ما الفرق بين الاستخراج والتقسيم؟","a":"التقسيم ينتج عدة ملفات دفعة واحدة، أما الاستخراج فيجمع الصفحات التي تختارها في مستند واحد جديد."},
+  {"q":"هل تحافظ الصفحات المستخرجة على ترتيبها؟","a":"تتبع ترتيب تحديدك، فيمكن استخدام الأداة أيضًا لبناء مقتطف بترتيب مختلف."},
+  {"q":"هل هناك حد لعدد الصفحات؟","a":"يمكنك استخراج أي عدد من صفحات المستند ضمن حد الحجم البالغ 100 ميجابايت."},
+  {"q":"هل يتغير الملف الأصلي؟","a":"لا. تتم قراءته فقط ويُنشأ المقتطف كمستند منفصل."},
+  {"q":"هل يمكن الاستخراج من ملف محمي؟","a":"أزل كلمة المرور أولًا بأداة «إزالة حماية PDF» ثم استخرج."}
+ ]},
+"pdf-protect": {
+ "name": "حماية PDF بكلمة مرور",
+ "short": "شفّر ملف PDF بكلمة مرور.",
+ "description": "احمِ ملف PDF بكلمة مرور مجانًا عبر الإنترنت. أضف تشفير AES-256 وحدد صلاحيات الطباعة والنسخ — ملفك وكلمة مرورك لا يغادران متصفحك.",
+ "intro": "أضف كلمة مرور قوية إلى ملف PDF قبل مشاركته. يستخدم التشفير معيار AES-256 ويتم بالكامل على جهازك، فلا يُرسل المستند ولا كلمة المرور إلى أي مكان.",
+ "howTo": ["اختر ملف PDF المراد حمايته.","اكتب كلمة المرور وأكّدها.","اختياريًا عيّن كلمة مرور مالك وحدد الصلاحيات المسموح بها.","اضغط «حماية ملف PDF» ونزّل الملف المشفّر."],
+ "faqs": [
+  {"q":"ما نوع التشفير المستخدم؟","a":"معيار AES-256، وهو الأقوى المدعوم في قارئات PDF الحديثة."},
+  {"q":"هل يمكنكم استعادة كلمة المرور إذا نسيتها؟","a":"لا، ولا يستطيع ذلك أحد. لا تُخزَّن كلمة المرور ولا تُرسل، لذا فقدانها يعني إغلاق الملف نهائيًا."},
+  {"q":"ما الفرق بين كلمة مرور المستخدم والمالك؟","a":"كلمة مرور المستخدم مطلوبة لفتح المستند، بينما تتحكم كلمة مرور المالك في الصلاحيات مثل الطباعة والنسخ."},
+  {"q":"هل تمنع الصلاحيات نسخ النص فعليًا؟","a":"هي تعليمات للقارئات الملتزمة بتقييد تلك الإجراءات، أي رادع لا ضمان مطلق؛ الحماية الحقيقية تأتي من كلمة مرور الفتح."},
+  {"q":"ما مواصفات كلمة المرور القوية؟","a":"‏8 أحرف على الأقل تمزج بين الحروف الكبيرة والصغيرة والأرقام والرموز، ومؤشر القوة يتحدث أثناء الكتابة."}
+ ]},
+"pdf-unlock": {
+ "name": "إزالة حماية PDF",
+ "short": "أزل كلمة مرور معروفة من ملف PDF.",
+ "description": "أزل كلمة مرور ملف PDF مجانًا عبر الإنترنت. أدخل كلمة المرور التي تعرفها واحفظ نسخة غير محمية — فك التشفير يتم بخصوصية داخل متصفحك.",
+ "intro": "لا داعي لكتابة كلمة المرور نفسها في كل مرة تفتح فيها مستندًا تملكه. أدخل كلمة المرور مرة واحدة واحفظ نسخة مفكوكة التشفير تُعالج بالكامل على جهازك.",
+ "howTo": ["أضف ملف PDF المحمي.","اكتب كلمة المرور التي تفتح الملف.","اضغط «إزالة كلمة المرور».","نزّل النسخة غير المحمية."],
+ "faqs": [
+  {"q":"هل تكسر الأداة حماية ملف لا أعرف كلمة مروره؟","a":"لا. تفك الأداة التشفير بكلمة المرور التي تدخلها فقط، ولا تخمّن ولا تتجاوز التشفير."},
+  {"q":"هل إزالة كلمة المرور قانونية؟","a":"أزل الحماية فقط من المستندات التي تملكها أو لديك صلاحية تعديلها، واحترم حقوق مالك المستند."},
+  {"q":"هل تُرسل كلمة المرور إلى أي جهة؟","a":"لا. يتم فك التشفير محليًا داخل متصفحك وتبقى كلمة المرور في الذاكرة أثناء العملية فقط."},
+  {"q":"لماذا تقول الأداة إن الملف غير مشفّر؟","a":"بعض الملفات تقيّد الصلاحيات دون كلمة مرور للفتح، وهذه الملفات مقروءة أصلًا ولا شيء لإزالته."},
+  {"q":"هل يتغير المحتوى بعد إزالة الحماية؟","a":"لا. تُنسخ الصفحات كما هي وتُزال طبقة التشفير فقط."}
+ ]},
+"pdf-to-images": {
+ "name": "تحويل PDF إلى صور",
+ "short": "حوّل صفحات PDF إلى PNG أو JPG.",
+ "description": "حوّل PDF إلى صور مجانًا عبر الإنترنت. اعرض كل صفحة كصورة PNG أو JPG بدقة تصل إلى 300 نقطة/بوصة ونزّلها مضغوطة — كل ذلك داخل متصفحك.",
+ "intro": "حوّل كل صفحة من ملف PDF إلى صورة مستقلة للعروض التقديمية أو المصغّرات أو منشورات التواصل. اختر الدقة والصيغة ثم نزّل الصفحات فرادى أو في ملف مضغوط.",
+ "howTo": ["اختر ملف PDF المراد تحويله.","حدد الدقة: 72 أو 150 أو 300 نقطة/بوصة.","اختر PNG للوضوح أو JPG لحجم أصغر.","اضغط «تحويل إلى صور» ونزّل النتائج."],
+ "faqs": [
+  {"q":"أي دقة أختار؟","a":"‏72 نقطة/بوصة تكفي للمعاينة على الشاشة، و150 تناسب معظم المستندات، و300 تعادل جودة الطباعة لكنها تستهلك ذاكرة أكبر بكثير."},
+  {"q":"لماذا يقل عدد الصفحات المسموح عند الدقة العالية؟","a":"العرض بدقة 300 نقطة/بوصة ينشئ لوحات ضخمة، لذا نحدّ من عدد الصفحات كلما ارتفعت الدقة لتجنب انهيار التبويب."},
+  {"q":"‏PNG أم JPG؟","a":"‏PNG يحافظ على حدة حواف النص ويدعم الشفافية، وJPG ينتج ملفات أصغر بكثير للصفحات الغنية بالصور."},
+  {"q":"هل يتم التحويل عبر خادم؟","a":"لا، بل داخل متصفحك باستخدام pdf.js، ولا تُرفع أي صفحة أو صورة."},
+  {"q":"هل يمكن تحويل ملف ممسوح ضوئيًا؟","a":"نعم. الصفحات الممسوحة صور أصلًا فتُعرض بسرعة ووضوح."}
+ ]},
+"pdf-compressor": {
+ "name": "ضغط ملفات PDF",
+ "short": "قلّل حجم ملف PDF.",
+ "description": "اضغط ملفات PDF مجانًا عبر الإنترنت. اختر تحسينًا بلا فقدان أو تحويلًا مكثفًا إلى صور لتصغير المستندات — بمعالجة خاصة داخل متصفحك.",
+ "intro": "اجعل ملف PDF صغيرًا بما يكفي لإرساله بالبريد أو رفعه. المستويان الخفيف والمتوسط يحسّنان بنية الملف دون المساس بالجودة، أما المستوى الأقصى فيحوّل الصفحات إلى صور لأصغر نتيجة ممكنة.",
+ "howTo": ["أضف ملف PDF المراد ضغطه.","اختر مستوى الضغط: خفيف أو متوسط أو أقصى.","اضغط «ضغط ملف PDF» وانتظر النتيجة.","قارن الأحجام ونزّل الملف الأصغر."],
+ "faqs": [
+  {"q":"لماذا لم يصغر ملفي كثيرًا؟","a":"ملفات PDF النصية مضغوطة بكفاءة أصلًا، والتوفير الكبير يأتي من المستندات المليئة بالصور أو المسح الضوئي."},
+  {"q":"ماذا يفعل المستوى الأقصى؟","a":"يعيد عرض كل صفحة كصورة JPEG بدقة 110 نقطة/بوصة، فيصغر الحجم كثيرًا لكن النص لا يبقى قابلًا للتحديد أو البحث."},
+  {"q":"هل المستويان الخفيف والمتوسط بلا فقدان؟","a":"نعم. يعيدان كتابة بنية الملف ويزيلان العناصر غير المستخدمة ويجمعان تدفقات العناصر دون تغيير محتوى الصفحات."},
+  {"q":"هل يُرفع المستند للضغط؟","a":"لا. كل شيء يُعالج محليًا داخل متصفحك."},
+  {"q":"ماذا لو زاد حجم الملف بعد الضغط؟","a":"تخبرك الأداة عندما لا يكون هناك تقليل ملموس، فتحتفظ بالملف الأصلي ببساطة."}
+ ]},
+"pdf-page-counter": {
+ "name": "عدّاد صفحات PDF",
+ "short": "احسب عدد صفحات ملف أو عدة ملفات PDF.",
+ "description": "احسب عدد صفحات PDF مجانًا عبر الإنترنت. أضف عدة مستندات دفعة واحدة لعرض عدد الصفحات والأحجام والإجماليات فورًا — بلا أي رفع.",
+ "intro": "تحقق سريعًا من طول مستنداتك قبل طباعتها أو تسليمها. أضف عدة ملفات PDF واحصل على عدد صفحات كل ملف مع الإجمالي المجمّع.",
+ "howTo": ["أضف ملف PDF واحدًا أو أكثر.","اقرأ عدد الصفحات والحجم بجانب كل ملف.","راجع صف الإجماليات للأرقام المجمّعة.","أضف ملفات أخرى أو أعد الضبط للبدء من جديد."],
+ "faqs": [
+  {"q":"كم ملفًا يمكن فحصه دفعة واحدة؟","a":"حتى 20 ملفًا بحجم 50 ميجابايت لكل ملف."},
+  {"q":"هل يمكن حساب صفحات ملف مشفّر؟","a":"يجب إزالة الحماية أولًا، لأن بنية المستند لا يمكن قراءتها بدون كلمة المرور."},
+  {"q":"هل يُرفع الملف لحساب الصفحات؟","a":"لا. تُحلَّل بنية المستند محليًا فقط ولا يُرسل شيء."},
+  {"q":"لماذا يظهر ملف على أنه غير صالح؟","a":"تتحقق الأداة من توقيع ملف PDF، وترفض الملفات التي أُعيدت تسميتها إلى ‎.pdf وهي في الأصل بصيغة أخرى."},
+  {"q":"هل تعرض الأداة أحجام الملفات أيضًا؟","a":"نعم — يعرض كل صف الحجم، ويجمعها صف الإجماليات."}
+ ]}
+}
+}

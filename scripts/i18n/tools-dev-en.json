@@ -1,0 +1,158 @@
+{
+"uuid-generator": {
+ "name": "UUID Generator",
+ "short": "Generate UUIDs, ULIDs and Nano IDs.",
+ "description": "Free online UUID generator. Create v4 and v1 UUIDs, ULIDs and Nano IDs in bulk with a built-in validator — generated securely in your browser.",
+ "intro": "Generate unique identifiers for databases, APIs and test data. Choose UUID v4, UUID v1, sortable ULIDs or short Nano IDs, produce up to a thousand at once, and validate existing IDs.",
+ "howTo": ["Pick the identifier type you need.","Set how many to generate and any formatting options.","Press Generate and copy one or all of the results.","Paste an existing ID into the validator to check it."],
+ "faqs": [
+  {"q":"Are the IDs cryptographically random?","a":"Yes. UUID v4, ULID and Nano ID all use your browser's crypto.getRandomValues, the same source used for security keys."},
+  {"q":"What is the difference between UUID v4 and v1?","a":"v4 is entirely random, while v1 embeds a timestamp and is therefore roughly time-ordered but slightly less private."},
+  {"q":"When should I use a ULID?","a":"When you want a unique ID that also sorts chronologically, which keeps database indexes efficient."},
+  {"q":"Why choose a Nano ID?","a":"Nano IDs are much shorter than UUIDs while keeping a very low collision risk, making them ideal for URLs and short links."},
+  {"q":"Are generated IDs stored anywhere?","a":"No. They exist only in your browser tab until you copy them."}
+ ]},
+"url-encoder-decoder": {
+ "name": "URL Encoder / Decoder",
+ "short": "Percent-encode and decode URLs safely.",
+ "description": "Free online URL encoder and decoder. Percent-encode query parameters or full URLs, decode escaped text and process many lines at once — privately in your browser.",
+ "intro": "Fix broken links and unreadable query strings. Encode text so it can travel safely inside a URL, or decode percent-escaped values back into readable characters, one line at a time or in bulk.",
+ "howTo": ["Choose encode or decode.","Pick component, full URL or Base64URL mode.","Paste your text or URL.","Copy the converted result."],
+ "faqs": [
+  {"q":"What is the difference between component and full URL encoding?","a":"Component encoding escapes characters such as / ? & = so a value is safe inside a parameter, while full URL encoding leaves the URL structure intact."},
+  {"q":"When do I need URL encoding?","a":"Whenever a value contains spaces, non-Latin letters or reserved characters such as & and =, which would otherwise break the link."},
+  {"q":"How are Arabic characters handled?","a":"They are encoded as UTF-8 percent sequences, which every modern browser and server understands."},
+  {"q":"What is Base64URL?","a":"A Base64 variant that replaces + and / with - and _ so the result is safe inside URLs and JSON Web Tokens."},
+  {"q":"Why does decoding sometimes fail?","a":"A stray percent sign or an incomplete escape sequence makes the input invalid, and the tool tells you instead of returning broken text."}
+ ]},
+"html-encoder-decoder": {
+ "name": "HTML Encoder / Decoder",
+ "short": "Convert HTML entities to text and back.",
+ "description": "Free online HTML entity encoder and decoder. Escape markup, convert named and numeric entities and preview the result safely — all inside your browser.",
+ "intro": "Show markup as text or turn entities back into readable characters. Choose how aggressively to escape, and preview the rendered output inside a fully sandboxed frame.",
+ "howTo": ["Choose encode or decode.","Select the encoding depth you need.","Paste your HTML or entity-encoded text.","Copy the result or check the rendered preview."],
+ "faqs": [
+  {"q":"Why should I escape HTML?","a":"Escaping prevents user text from being interpreted as markup, which is the basic defence against cross-site scripting."},
+  {"q":"What do the depth options do?","a":"Basic escapes only the five critical characters, non-ASCII also escapes characters outside ASCII, and all escapes every character as a numeric entity."},
+  {"q":"Are named entities supported when decoding?","a":"Yes. Named, decimal and hexadecimal entities are all decoded, using the browser's own HTML parser."},
+  {"q":"Is the preview safe?","a":"Yes. It renders in an iframe with an empty sandbox attribute, so scripts, forms and same-origin access are all disabled."},
+  {"q":"Does it handle emoji and Arabic text?","a":"Yes, in both directions, including characters made of multiple code points."}
+ ]},
+"json-formatter": {
+ "name": "JSON Formatter & Validator",
+ "short": "Format, validate and minify JSON.",
+ "description": "Free online JSON formatter and validator. Beautify or minify JSON, sort keys, explore a tree view and see precise error positions — processed in your browser.",
+ "intro": "Make sense of unreadable JSON. Format it with the indentation you prefer, validate it with exact error positions, sort keys alphabetically, minify it for production, and explore the structure in a collapsible tree.",
+ "howTo": ["Paste your JSON into the editor.","Press Format to beautify it, or Minify to compact it.","Fix any error using the reported line and column.","Copy the result or browse the tree view."],
+ "faqs": [
+  {"q":"What are the most common JSON errors?","a":"Trailing commas, single quotes instead of double quotes, unquoted keys and missing brackets. The error message points to the exact line and column."},
+  {"q":"Does formatting change my data?","a":"No. Only whitespace changes, unless you explicitly choose to sort keys."},
+  {"q":"How large a file can I format?","a":"Several megabytes work comfortably; extremely large files may slow the syntax highlighting."},
+  {"q":"Is my JSON uploaded for validation?","a":"Never. Parsing and formatting use your browser's own JSON engine."},
+  {"q":"Can I sort object keys?","a":"Yes. Sorting is recursive and makes two versions of the same object much easier to compare."}
+ ]},
+"xml-formatter": {
+ "name": "XML Formatter",
+ "short": "Format, validate and convert XML.",
+ "description": "Free online XML formatter and validator. Beautify or minify XML, check it is well-formed and convert it to JSON — processed entirely in your browser.",
+ "intro": "Turn a single-line XML blob into a readable, indented document. Validate that it is well-formed, count elements and attributes, minify it again for transport, or convert it straight to JSON.",
+ "howTo": ["Paste your XML into the editor.","Press Format to indent it or Minify to compact it.","Check the validation message and the element counts.","Convert to JSON if you need it in another format."],
+ "faqs": [
+  {"q":"What does well-formed mean?","a":"Every tag is closed, elements nest correctly and there is a single root element. It is not the same as being valid against a schema."},
+  {"q":"Does it validate against a DTD or XSD?","a":"No. It checks that the document is well-formed, which catches the vast majority of practical errors."},
+  {"q":"How does XML to JSON conversion work?","a":"Elements become objects, repeated elements become arrays and attributes are kept with a prefix so no information is lost."},
+  {"q":"Are comments and CDATA preserved?","a":"Comments and CDATA sections survive formatting; JSON conversion keeps text content but drops comments."},
+  {"q":"Is my XML sent to a server?","a":"No. The browser's built-in DOMParser handles everything locally."}
+ ]},
+"javascript-formatter": {
+ "name": "JavaScript Formatter",
+ "short": "Beautify and minify JavaScript code.",
+ "description": "Free online JavaScript formatter and minifier. Beautify code with Prettier or minify it with Terser, right inside your browser — your code is never uploaded.",
+ "intro": "Clean up messy or minified JavaScript in one click. Prettier reformats your code with consistent style, Terser compresses it for production, and both run locally so your source never leaves the page.",
+ "howTo": ["Paste your JavaScript into the editor.","Press Format to beautify or Minify to compress.","Compare the original and output sizes.","Copy the result or download it as a .js file."],
+ "faqs": [
+  {"q":"Which formatter is used?","a":"Prettier's standalone browser build, so the output matches what Prettier produces in your editor."},
+  {"q":"Is my code uploaded anywhere?","a":"No. Prettier and Terser are loaded into your browser and run entirely on your device."},
+  {"q":"Does it support modern syntax?","a":"Yes, including ES2022 features, optional chaining, class fields and JSX."},
+  {"q":"Will minifying break my code?","a":"Terser is a safe, widely used minifier, but always test minified output before shipping it."},
+  {"q":"Why does the page take a moment on first use?","a":"The formatter libraries are loaded only when you press the button, which keeps the rest of the site fast."}
+ ]},
+"css-formatter": {
+ "name": "CSS Formatter",
+ "short": "Beautify and minify CSS stylesheets.",
+ "description": "Free online CSS formatter and minifier. Beautify stylesheets with Prettier or shrink them with our own minifier — processed entirely inside your browser.",
+ "intro": "Make stylesheets readable again or squeeze them down for production. Formatting uses Prettier, while minification uses our own compact implementation that strips comments and whitespace safely.",
+ "howTo": ["Paste your CSS into the editor.","Press Format for readable output or Minify to compress.","Review the size saving reported below.","Copy the result or download the stylesheet."],
+ "faqs": [
+  {"q":"What does minifying remove?","a":"Comments, unnecessary whitespace, the final semicolon in a block and redundant zeros, without changing how the styles behave."},
+  {"q":"Does it work with SCSS or Less?","a":"Plain CSS is fully supported. Preprocessor syntax may format but is not guaranteed to minify correctly."},
+  {"q":"Are CSS variables and media queries safe?","a":"Yes. Custom properties, media queries, nesting and at-rules are all preserved."},
+  {"q":"What happens if my CSS has an error?","a":"The tool reports the problem and still returns a best-effort formatted version so you can locate it."},
+  {"q":"Is my stylesheet uploaded?","a":"No. Everything runs locally in your browser."}
+ ]},
+"regex-tester": {
+ "name": "Regex Tester",
+ "short": "Test regular expressions with live matching.",
+ "description": "Free online regex tester. Test regular expressions with live highlighting, capture groups, all JavaScript flags and a replace preview — right in your browser.",
+ "intro": "Build and debug regular expressions with instant feedback. Matches are highlighted as you type, capture groups are listed with their positions, and a replacement preview shows the final result.",
+ "howTo": ["Type your regular expression.","Toggle the flags you need, such as global or ignore case.","Paste the text you want to test against.","Review the highlighted matches, groups and replacement preview."],
+ "faqs": [
+  {"q":"Which regex flavour is used?","a":"JavaScript regular expressions, exactly as they behave in the browser and in Node.js."},
+  {"q":"Which flags are supported?","a":"g, i, m, s, u and y, each with an explanation next to the toggle."},
+  {"q":"Are named capture groups supported?","a":"Yes. Named groups appear in the match list alongside numbered groups."},
+  {"q":"What protects against catastrophic backtracking?","a":"The matching loop is capped, so a pathological pattern stops safely instead of freezing the tab."},
+  {"q":"Is my test data private?","a":"Yes. Patterns and text stay in your browser."}
+ ]},
+"base64-encoder-decoder": {
+ "name": "Base64 Encoder / Decoder",
+ "short": "Encode and decode Base64 text, files and images.",
+ "description": "Free online Base64 encoder and decoder. Convert text, files and images to Base64 or data URIs and back — with full UTF-8 support, inside your browser.",
+ "intro": "Convert anything to Base64 and back. Encode text with full Unicode support, turn a file into a Base64 string, or generate a data URI for an image and preview it instantly.",
+ "howTo": ["Choose text, file or image mode.","Select encode or decode.","Paste your text or choose a file.","Copy the Base64 output or download the decoded file."],
+ "faqs": [
+  {"q":"Does Base64 encrypt my data?","a":"No. It is an encoding, not encryption — anyone can decode it. Never use it to protect secrets."},
+  {"q":"Why does Base64 make files bigger?","a":"It represents three bytes with four characters, so the encoded result is about 33% larger than the original."},
+  {"q":"Is UTF-8 supported?","a":"Yes. Arabic, emoji and any other Unicode text encode and decode correctly."},
+  {"q":"What is a data URI?","a":"A string that embeds a file directly in HTML or CSS, in the form data:image/png;base64,… — the image mode generates one for you."},
+  {"q":"What is the file size limit?","a":"25 MB, which keeps the encoded string manageable inside the browser."}
+ ]},
+"color-converter": {
+ "name": "Color Converter",
+ "short": "Convert HEX, RGB, HSL, HSV and CMYK.",
+ "description": "Free online colour converter. Convert between HEX, RGB, HSL, HSV and CMYK, check WCAG contrast and generate shades — instantly in your browser.",
+ "intro": "Convert a colour into every format you need and check whether it is accessible. Paste any notation, pick from the colour wheel, read the WCAG contrast verdicts and grab a ready-made shade palette.",
+ "howTo": ["Type a colour in any format or use the picker.","Read the conversions in HEX, RGB, HSL, HSV and CMYK.","Check the contrast verdicts against white and black.","Click a shade to make it the new base colour."],
+ "faqs": [
+  {"q":"Which colour formats are accepted?","a":"HEX with 3, 4, 6 or 8 digits, rgb(), rgba(), hsl(), hsla() and the standard CSS colour names."},
+  {"q":"What does the contrast ratio mean?","a":"It compares the brightness of two colours. WCAG asks for at least 4.5:1 for normal text and 3:1 for large text."},
+  {"q":"What is the difference between HSL and HSV?","a":"Both describe hue, but HSL is built around lightness while HSV is built around value or brightness, which suits colour pickers."},
+  {"q":"Is CMYK conversion print accurate?","a":"It is a mathematical approximation. Real print output depends on the colour profile, ink and paper."},
+  {"q":"How are the shades generated?","a":"By keeping the hue and saturation and stepping the lightness, which gives a consistent tint and shade scale."}
+ ]},
+"hash-generator": {
+ "name": "Hash Generator",
+ "short": "Generate SHA-256 and other hashes.",
+ "description": "Free online hash generator. Create SHA-1, SHA-256, SHA-384 and SHA-512 hashes from text or files and compare them — computed with Web Crypto in your browser.",
+ "intro": "Verify a download or fingerprint a piece of text. Hashes are computed with the browser's native Web Crypto API, so even large files never leave your device.",
+ "howTo": ["Choose text or file mode.","Type your text or select a file.","Read the hashes for every supported algorithm.","Paste a reference hash into the comparison box to verify it."],
+ "faqs": [
+  {"q":"Which algorithms are available?","a":"SHA-1, SHA-256, SHA-384 and SHA-512, all provided by the Web Crypto API."},
+  {"q":"Why is MD5 not included?","a":"MD5 is cryptographically broken and is not offered by Web Crypto. SHA-256 is the right default today."},
+  {"q":"Can a hash be reversed?","a":"No. Hashing is one way; identical input always gives identical output, but the original cannot be recovered."},
+  {"q":"Are large files uploaded?","a":"No. The file is read locally and hashed in your browser, which is why very large files are limited only by memory."},
+  {"q":"How do I verify a download?","a":"Hash the downloaded file, then paste the publisher's checksum into the comparison box to see whether they match."}
+ ]},
+"number-base-converter": {
+ "name": "Number Base Converter",
+ "short": "Convert between binary, octal, decimal and hex.",
+ "description": "Free online number base converter. Convert between binary, octal, decimal, hexadecimal and any base from 2 to 36 with exact big-integer arithmetic.",
+ "intro": "Convert numbers between any pair of bases without losing precision. Binary, octal, decimal and hexadecimal are always shown, plus a custom base of your choice and a byte-grouped binary view.",
+ "howTo": ["Enter the number you want to convert.","Select the base it is currently written in.","Read the conversions in every common base.","Pick a custom target base for anything from 2 to 36."],
+ "faqs": [
+  {"q":"Which bases are supported?","a":"Any base from 2 to 36, using the digits 0-9 followed by the letters a-z."},
+  {"q":"Can it handle very large numbers?","a":"Yes. Conversion uses BigInt arithmetic, so results stay exact no matter how many digits you enter."},
+  {"q":"Can I paste prefixed values like 0xFF?","a":"Yes. Common prefixes such as 0x, 0b and 0o are recognised and stripped automatically."},
+  {"q":"Are negative numbers supported?","a":"Yes. A leading minus sign is preserved through every conversion."},
+  {"q":"What are the 8-bit groups for?","a":"They split the binary result into bytes, which makes it much easier to read when working with flags or protocols."}
+ ]}
+}

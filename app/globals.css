@@ -121,3 +121,91 @@
 .skip-link {
   @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground;
 }
+
+/* ---------------------------------------------------------------------------
+   Prism.js token colors for the developer tools. Uses the design-system
+   palette so highlighting follows the light/dark theme automatically.
+   --------------------------------------------------------------------------- */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: hsl(var(--muted-foreground));
+  font-style: italic;
+}
+.token.punctuation {
+  color: hsl(var(--muted-foreground));
+}
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #d6336c;
+}
+.dark .token.property,
+.dark .token.tag,
+.dark .token.constant,
+.dark .token.symbol,
+.dark .token.deleted {
+  color: #ff7ab2;
+}
+.token.boolean,
+.token.number {
+  color: #b8860b;
+}
+.dark .token.boolean,
+.dark .token.number {
+  color: #e5c07b;
+}
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #0f7b4f;
+}
+.dark .token.selector,
+.dark .token.attr-name,
+.dark .token.string,
+.dark .token.char,
+.dark .token.builtin,
+.dark .token.inserted {
+  color: #7ee2b8;
+}
+.token.operator,
+.token.entity,
+.token.url {
+  color: #0b7285;
+}
+.dark .token.operator,
+.dark .token.entity,
+.dark .token.url {
+  color: #66d9ef;
+}
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #1971c2;
+}
+.dark .token.atrule,
+.dark .token.attr-value,
+.dark .token.keyword {
+  color: #82aaff;
+}
+.token.function,
+.token.class-name {
+  color: #7048e8;
+}
+.dark .token.function,
+.dark .token.class-name {
+  color: #c792ea;
+}
+.token.important,
+.token.bold {
+  font-weight: 700;
+}
+.token.italic {
+  font-style: italic;
+}
