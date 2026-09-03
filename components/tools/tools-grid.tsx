@@ -12,6 +12,7 @@ export interface GridTool {
   icon: string;
   category: string;
   categoryLabel: string;
+  isNew?: boolean;
 }
 
 export function ToolsGrid({ tools }: { tools: GridTool[] }) {
@@ -70,6 +71,8 @@ export function ToolsGrid({ tools }: { tools: GridTool[] }) {
             description={tool.description}
             icon={tool.icon}
             categoryLabel={tool.categoryLabel}
+            isNew={tool.isNew}
+            newLabel={t('new')}
           />
         ))}
       </div>

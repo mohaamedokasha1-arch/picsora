@@ -1,0 +1,112 @@
+import { analyzeText, convertCase, removeExtraSpaces, defaultSpaceOptions, slugify, reverseText, removeDuplicateLines, generateLorem } from '../../lib/text-processing';
+import { diffWords } from '../../lib/text-processing/diff';
+import { numberToWords } from '../../lib/text-processing/numberToWords';
+import { calculateAge, calculateBmi, percentageOf, isWhatPercentOf, percentChange, simpleInterest, compoundInterest, dateDifference, stackedDiscount, calculateGpa, calculateTip } from '../../lib/calculators';
+import { convertUnit } from '../../lib/calculators/units';
+import { parseJson, formatJson, minifyJson, encodeHtml, decodeHtml, convertBase, utf8ToBase64, base64ToUtf8 } from '../../lib/developer-tools';
+import { parseColor, allFormats, contrastRatio, shades } from '../../lib/developer-tools/color';
+import { minifyCss } from '../../lib/developer-tools/cssMinifier';
+import { generateIds, validateUuid, ulid, nanoId } from '../../lib/developer-tools/ids';
+import { parsePageRanges, chunkPages, summarizeSelection } from '../../lib/pdf-processing/ranges';
+
+let fails = 0;
+const eq = (name: string, a: unknown, b: unknown) => {
+  const ok = JSON.stringify(a) === JSON.stringify(b);
+  if (!ok) { fails++; console.log('FAIL', name, JSON.stringify(a), '!=', JSON.stringify(b)); }
+};
+
+// text
+const st = analyzeText('Hello world. This is a test!\n\nSecond para here.');
+eq('words', st.words, 9); eq('sent', st.sentences, 3); eq('para', st.paragraphs, 2);
+const ar = analyzeText('مرحبا بالعالم هذا نص عربي للاختبار');
+eq('ar words', ar.words, 6);
+eq('upper', convertCase('hello world','upper'), 'HELLO WORLD');
+eq('title', convertCase('hello world','title'), 'Hello World');
+eq('sentence', convertCase('hello. bye there','sentence'), 'Hello. Bye there');
+eq('camel', convertCase('hello big world','camel'), 'helloBigWorld');
+eq('pascal', convertCase('hello big world','pascal'), 'HelloBigWorld');
+eq('snake', convertCase('Hello Big World','snake'), 'hello_big_world');
+eq('kebab', convertCase('Hello Big World','kebab'), 'hello-big-world');
+eq('scream', convertCase('hello world','screamingSnake'), 'HELLO_WORLD');
+eq('inverse', convertCase('HeLLo','inverse'), 'hEllO');
+eq('spaces', removeExtraSpaces('  a   b  \n\n\n\nc  ', defaultSpaceOptions), 'a b\n\nc');
+eq('slug', slugify('Hello World! My Post', {separator:'-',uppercase:false,transliterate:true,removeStopWords:false}), 'hello-world-my-post');
+eq('slug ar', slugify('مرحبا بالعالم', {separator:'-',uppercase:false,transliterate:true,removeStopWords:false}), 'mrhba-balaalm');
+eq('rev', reverseText('abc def','characters'), 'fed cba');
+eq('revw', reverseText('abc def','words'), 'def abc');
+eq('dedupe', removeDuplicateLines('a\nb\na\nB',{caseSensitive:false,trim:true,keep:'first'}).text, 'a\nb');
+const lorem = generateLorem({unit:'words',count:10,startWithLorem:true,html:false,language:'latin'});
+eq('lorem words', lorem.replace(/\.$/,'').split(' ').length, 10);
+eq('lorem paras', generateLorem({unit:'paragraphs',count:3,startWithLorem:true,html:true,language:'latin'}).match(/<p>/g)?.length, 3);
+const d = diffWords('the quick brown fox', 'the slow brown fox jumps');
+eq('diff adds', d.stats.wordsAdded, 2); eq('diff dels', d.stats.wordsRemoved, 1);
+eq('n2w 0', numberToWords('0',{language:'en'}).words, 'Zero');
+eq('n2w 1000', numberToWords('1000',{language:'en'}).words, 'One thousand');
+eq('n2w big', numberToWords('1234567',{language:'en'}).words, 'One million two hundred thirty-four thousand five hundred sixty-seven');
+eq('n2w cur', numberToWords('1000.50',{language:'en',currency:'USD'}).words, 'One thousand US dollars and fifty cents');
+console.log('ar 1234567:', numberToWords('1234567',{language:'ar'}).words);
+console.log('ar 2000:', numberToWords('2000',{language:'ar'}).words);
+eq('n2w invalid', numberToWords('abc',{language:'en'}).error, 'invalidNumber');
+
+// calculators
+const age = calculateAge(new Date(1990,0,15), new Date(2026,8,3));
+eq('age', [age.years,age.months,age.days], [36,7,19]);
+const leap = calculateAge(new Date(2000,1,29), new Date(2026,8,3));
+eq('leap', [leap.years,leap.months], [26,6]);
+const bmi = calculateBmi(70,175)!;
+eq('bmi', bmi.bmi.toFixed(2), '22.86'); eq('bmicat', bmi.category, 'normal');
+eq('pct1', percentageOf(15,200).value, 30);
+eq('pct2', isWhatPercentOf(45,300).value, 15);
+eq('pct3', percentChange(100,150).value, 50);
+eq('pct div0', isWhatPercentOf(5,0).undefinedReason, 'divideByZero');
+eq('si', simpleInterest(1000,5,2).interest, 100);
+const ci = compoundInterest(1000,5,2,12);
+eq('ci', ci.total.toFixed(2), '1104.94');
+eq('ear', ci.effectiveAnnualRate.toFixed(4), '5.1162');
+const dd = dateDifference(new Date(2024,0,1), new Date(2024,2,1));
+eq('dd days', dd.totalDays, 60);
+eq('dd biz', dd.businessDays, 44);
+eq('unit len', convertUnit(1,'km','mi','length').toFixed(6), '0.621371');
+eq('unit temp', convertUnit(100,'c','f','temperature'), 212);
+eq('unit temp k', convertUnit(0,'c','k','temperature'), 273.15);
+eq('storage', convertUnit(1,'gb','mb','storage'), 1024);
+const disc = stackedDiscount(100,[20,10],5);
+eq('disc', [disc.afterDiscount, disc.finalTotal.toFixed(2)], [72, '75.60']);
+const gpa = calculateGpa([{name:'a',grade:'A',credits:3},{name:'b',grade:'B',credits:4}],'4.0');
+eq('gpa', gpa.semesterGpa.toFixed(3), '3.429');
+eq('tip', calculateTip(100,20,4,false).perPerson, 30);
+
+// dev
+eq('json err', parseJson('{a:1}').ok, false);
+eq('json fmt', formatJson('{"b":1,"a":2}',2).text, '{\n  "b": 1,\n  "a": 2\n}');
+eq('json min', minifyJson('{ "a" : 1 }').text, '{"a":1}');
+eq('html enc', encodeHtml('<a href="x">&'), '&lt;a href=&quot;x&quot;&gt;&amp;');
+eq('html rt', decodeHtml(encodeHtml('<a href="x">&\'')), '<a href="x">&\'');
+eq('b64 rt', base64ToUtf8(utf8ToBase64('مرحبا hello')), 'مرحبا hello');
+eq('base', convertBase('255',10)!.hexUpper, 'FF');
+eq('base bin', convertBase('ff',16)!.binary, '11111111');
+eq('base bytes', convertBase('255',10)!.bytes, '11111111');
+eq('bigint', convertBase('123456789012345678901234567890',10)!.hexLower, BigInt('123456789012345678901234567890').toString(16));
+const c = parseColor('#ff6347')!;
+eq('color name', allFormats(c).name, 'tomato');
+eq('color rgb', allFormats(c).rgb, 'rgb(255, 99, 71)');
+eq('color hsl->rgb', parseColor('hsl(9, 100%, 64%)')!.r, 255);
+eq('cmyk parse', parseColor('cmyk(0%,61%,72%,0%)')!.r, 255);
+eq('contrast', contrastRatio(parseColor('#000')!, parseColor('#fff')!).toFixed(0), '21');
+eq('shades', shades(c).length, 10);
+eq('cssmin', minifyCss('/* c */ a {  color : #ffffff ;  margin: 0px; }').css, 'a{color:#fff;margin:0}');
+const ids = generateIds('uuidv4', 50);
+eq('uuid count', ids.length, 50);
+eq('uuid valid', ids.every(i=>/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(i)), true);
+eq('uuid v1 valid', validateUuid(generateIds('uuidv1',1)[0]).version, 1);
+eq('ulid', validateUuid(ulid()).kind, 'ulid');
+eq('nanoid len', nanoId(12).length, 12);
+eq('uuid invalid', validateUuid('nope').valid, false);
+// ranges
+eq('ranges', parsePageRanges('1-3, 5, 7-8', 10).indices, [0,1,2,4,6,7]);
+eq('ranges dup', parsePageRanges('1-3,2', 10).error, 'rangeDuplicate');
+eq('ranges oob', parsePageRanges('1-30', 10).error, 'rangeBounds');
+eq('ranges bad', parsePageRanges('abc', 10).error, 'rangeFormat');
+eq('chunks', chunkPages(5,2).map(c=>c.label), ['1-2','3-4','5']);
+eq('summary', summarizeSelection([1,4,7,8,9,10,11]), '2, 5, 8–12');
+console.log(fails? `\n${fails} FAILURES` : '\nALL PASS');

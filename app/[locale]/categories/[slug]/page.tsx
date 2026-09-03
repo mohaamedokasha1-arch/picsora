@@ -84,6 +84,8 @@ export default async function CategoryPage({ params }: { params: { locale: strin
               name={t(tool.nameKey as never)}
               description={t(tool.shortKey as never)}
               icon={tool.icon}
+              isNew={tool.isNew}
+              newLabel={t('common.new')}
             />
           ))}
         </div>

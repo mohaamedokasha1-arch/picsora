@@ -2,14 +2,19 @@
   "name": "piclizer",
   "version": "1.0.0",
   "private": true,
-  "description": "Piclizer — free, private, browser-based image tools. 20 tools that process images 100% locally in the browser.",
+  "description": "Piclizer \u2014 free, private, browser-based image tools. 20 tools that process images 100% locally in the browser.",
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start -H 0.0.0.0",
-    "lint": "next lint"
+    "lint": "next lint",
+    "copy-pdf-worker": "node scripts/copy-pdf-worker.mjs",
+    "predev": "npm run copy-pdf-worker",
+    "prebuild": "npm run copy-pdf-worker"
   },
   "dependencies": {
+    "@cantoo/pdf-lib": "^2.9.1",
+    "@types/prismjs": "^1.26.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "jszip": "^3.10.1",
@@ -18,9 +23,13 @@
     "next-intl": "^3.26.3",
     "next-themes": "^0.4.4",
     "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.10.38",
+    "prettier": "^3.4.2",
+    "prismjs": "^1.29.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "terser": "^5.37.0"
   },
   "devDependencies": {
     "@types/node": "^20.17.0",

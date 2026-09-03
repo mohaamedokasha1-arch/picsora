@@ -1,0 +1,266 @@
+{
+"en": {
+"word-counter": {
+ "name": "Word Counter",
+ "short": "Count words, characters, sentences and reading time.",
+ "description": "Free online word counter. Count words, characters, sentences, paragraphs and reading time in English and Arabic — instantly and privately in your browser.",
+ "intro": "Keep your writing within the limit. Paste any text to see live counts for words, characters, sentences and paragraphs, plus estimated reading and speaking time and your most frequent words.",
+ "howTo": ["Type or paste your text into the editor.","Watch the statistics update as you write.","Turn on \"Ignore common words\" for a more useful frequency list.","Copy the results or clear the editor to start again."],
+ "faqs": [
+  {"q":"How is a word counted?","a":"Any run of letters, digits or Arabic characters separated by whitespace counts as one word, which matches the way word processors count."},
+  {"q":"Does it work with Arabic text?","a":"Yes. Arabic script is fully supported, including diacritics and Arabic-Indic digits."},
+  {"q":"How is reading time calculated?","a":"Reading time assumes 200 words per minute and speaking time assumes 130 words per minute — common averages for adult readers."},
+  {"q":"Is my text stored or uploaded?","a":"No. Everything is calculated in your browser and disappears as soon as you close the tab."},
+  {"q":"Can I count characters without spaces?","a":"Yes, both totals are shown side by side, which is handy for platforms with strict character limits."}
+ ]},
+"remove-extra-spaces": {
+ "name": "Remove Extra Spaces",
+ "short": "Clean up double spaces, tabs and blank lines.",
+ "description": "Remove extra spaces from text online for free. Collapse double spaces, trim line ends, drop blank lines and convert tabs — instantly in your browser.",
+ "intro": "Text copied from PDFs, emails or spreadsheets is often full of stray spacing. Choose exactly which whitespace problems to fix and get clean, consistent text in one pass.",
+ "howTo": ["Paste the messy text into the input box.","Tick the whitespace rules you want applied.","Review the cleaned result on the right.","Copy the output or download it as a .txt file."],
+ "faqs": [
+  {"q":"What is the difference between collapsing and removing blank lines?","a":"Collapsing turns several consecutive blank lines into one, while removing deletes them all."},
+  {"q":"Will it remove line breaks between paragraphs?","a":"Only if you enable that option. By default paragraph breaks are preserved."},
+  {"q":"Does it handle tabs?","a":"Yes. Tabs can be converted to spaces or stripped entirely with the \"remove all whitespace\" option."},
+  {"q":"Are non-breaking spaces handled?","a":"Yes, invisible non-breaking spaces are normalised to regular spaces before the other rules run."},
+  {"q":"Is my text sent anywhere?","a":"No. All cleaning happens locally in your browser."}
+ ]},
+"case-converter": {
+ "name": "Case Converter",
+ "short": "Convert text between 11 letter cases.",
+ "description": "Convert text case online for free. Switch between UPPERCASE, lowercase, Title Case, camelCase, snake_case, kebab-case and more — instantly in your browser.",
+ "intro": "Change the capitalisation of any text without retyping it. Eleven case styles cover everything from headlines to variable names, and every result can be copied with one click.",
+ "howTo": ["Paste your text into the editor.","Pick the case style you need.","Compare the result and switch styles as often as you like.","Copy the converted text or download it."],
+ "faqs": [
+  {"q":"Which case styles are supported?","a":"UPPERCASE, lowercase, Title Case, Sentence case, camelCase, PascalCase, snake_case, kebab-case, SCREAMING_SNAKE_CASE, aLtErNaTiNg and iNVERSE cASE."},
+  {"q":"What happens to Arabic text?","a":"Arabic script has no upper or lower case, so those styles leave it unchanged, while separator-based styles such as kebab-case still work."},
+  {"q":"Does Title Case handle small words?","a":"Every word is capitalised for predictability. If you follow a style guide with lowercase articles, adjust those few words manually."},
+  {"q":"Can I convert programming identifiers?","a":"Yes. camelCase, PascalCase, snake_case and kebab-case all detect existing word boundaries, including camel humps."},
+  {"q":"Is there a length limit?","a":"No hard limit — very long documents are only limited by your device's memory."}
+ ]},
+"text-cleaner": {
+ "name": "Text Cleaner",
+ "short": "Strip HTML, URLs, emojis and unwanted characters.",
+ "description": "Clean text online for free. Remove HTML tags, URLs, emails, numbers, punctuation, emoji and duplicate lines, plus find and replace — all in your browser.",
+ "intro": "Turn messy copied content into clean plain text. Combine as many cleaning rules as you need, add your own find-and-replace, and see the result update as you go.",
+ "howTo": ["Paste the text you want to clean.","Enable the rules you need for characters and lines.","Optionally add a find-and-replace pair or a line filter.","Copy or download the cleaned text."],
+ "faqs": [
+  {"q":"Does stripping HTML keep the visible text?","a":"Yes. Tags are removed while their inner text remains, so you keep the content without the markup."},
+  {"q":"Can I remove lines that contain a specific word?","a":"Yes. Type the word into the line filter and every line containing it is dropped."},
+  {"q":"Are emoji really removed?","a":"Yes, including modern multi-codepoint emoji sequences with skin tones and joiners."},
+  {"q":"In what order are the rules applied?","a":"Character rules run first, then line rules, then your find-and-replace, so the outcome is always predictable."},
+  {"q":"Is my content private?","a":"Completely. No text is uploaded, logged or stored anywhere."}
+ ]},
+"lorem-ipsum-generator": {
+ "name": "Lorem Ipsum Generator",
+ "short": "Generate placeholder text in Latin or Arabic.",
+ "description": "Generate Lorem Ipsum placeholder text online for free. Create words, sentences or paragraphs in Latin or Arabic, with optional HTML markup — instantly.",
+ "intro": "Fill your mockups with realistic placeholder copy. Generate by words, sentences or paragraphs, choose classic Latin or natural Arabic filler, and copy the result straight into your design.",
+ "howTo": ["Choose whether to generate words, sentences or paragraphs.","Set how many you need.","Pick Latin or Arabic filler text.","Copy the generated text or download it as a file."],
+ "faqs": [
+  {"q":"What is Lorem Ipsum?","a":"It is scrambled Latin used as placeholder text since the 1500s. Its word shapes resemble real prose, so layouts look natural without readers being distracted by content."},
+  {"q":"Why offer Arabic filler text?","a":"Arabic has different word lengths and no capital letters, so testing RTL layouts with Latin text can be misleading."},
+  {"q":"Can I get HTML paragraphs?","a":"Yes. Enable the HTML option and each paragraph is wrapped in a p tag, ready to paste into a template."},
+  {"q":"What are the limits?","a":"Up to 10,000 words, 1,000 sentences or 100 paragraphs per generation."},
+  {"q":"Is the text always the same?","a":"No. Sentences are assembled randomly each time, so you get fresh output on every generation."}
+ ]},
+"text-reverser": {
+ "name": "Text Reverser",
+ "short": "Reverse characters, words or lines.",
+ "description": "Reverse text online for free. Flip characters, word order, each line or the order of lines — with full emoji and Arabic support, right in your browser.",
+ "intro": "Flip text in whichever direction you need — reverse the characters for a puzzle, the word order for a test, or the line order to invert a list.",
+ "howTo": ["Paste your text into the input area.","Choose what to reverse: characters, words, each line or line order.","Check the result on the right.","Copy or download the reversed text."],
+ "faqs": [
+  {"q":"Does reversing break emoji?","a":"No. Text is split by code points, so emoji and other multi-byte characters stay intact."},
+  {"q":"What happens with Arabic text?","a":"Arabic characters are reversed at the code-point level, so the stored order flips while your browser still shapes the letters for display."},
+  {"q":"What is the difference between reversing each line and the line order?","a":"Reversing each line flips the characters within every line; reversing line order keeps each line intact but puts the last line first."},
+  {"q":"Can I reverse a list of items?","a":"Yes — put each item on its own line and choose \"Reverse line order\"."},
+  {"q":"Is there a size limit?","a":"Only your device's memory. Typical documents reverse instantly."}
+ ]},
+"remove-duplicate-lines": {
+ "name": "Remove Duplicate Lines",
+ "short": "Delete repeated lines from a list.",
+ "description": "Remove duplicate lines online for free. Deduplicate lists with case-sensitive or case-insensitive matching and keep the first or last occurrence — privately.",
+ "intro": "Clean up lists of emails, keywords, URLs or IDs by removing repeated entries. Choose whether case and surrounding spaces matter, and whether to keep the first or last copy of each line.",
+ "howTo": ["Paste your list, one item per line.","Choose whether matching should be case sensitive.","Decide whether to keep the first or last occurrence.","Copy the deduplicated list or download it."],
+ "faqs": [
+  {"q":"Is the original order preserved?","a":"Yes. Lines stay in their original sequence; only the repeats are dropped."},
+  {"q":"What does \"ignore leading and trailing spaces\" do?","a":"It compares lines after trimming, so \" apple\" and \"apple\" count as the same entry."},
+  {"q":"Can I keep the last occurrence instead of the first?","a":"Yes, switch the keep option — useful when later rows contain the most recent data."},
+  {"q":"Are blank lines removed?","a":"Repeated blank lines are treated like any other duplicate, so only one blank line remains."},
+  {"q":"How many lines can it handle?","a":"Hundreds of thousands of lines process in well under a second on a typical device."}
+ ]},
+"text-to-slug": {
+ "name": "Text to Slug",
+ "short": "Turn any title into a clean URL slug.",
+ "description": "Convert text to a URL slug online for free. Create SEO-friendly slugs from English or Arabic titles, with optional transliteration — instantly in your browser.",
+ "intro": "Turn a headline into a tidy, readable URL. Accents are simplified, punctuation is dropped and spaces become separators, with an option to transliterate Arabic into Latin letters.",
+ "howTo": ["Type or paste your title.","Choose a hyphen or underscore separator.","Enable transliteration if your title is in Arabic.","Copy the generated slug into your CMS."],
+ "faqs": [
+  {"q":"What makes a good slug?","a":"Short, lowercase, hyphen-separated and descriptive. Aim for three to six meaningful words."},
+  {"q":"Should I use Arabic letters in a URL?","a":"You can — modern browsers support them — but transliterated Latin slugs are easier to share, log and analyse."},
+  {"q":"Are accented characters supported?","a":"Yes. Characters such as é, ü and ñ are converted to their closest plain Latin equivalent."},
+  {"q":"Hyphen or underscore?","a":"Hyphens are the long-standing recommendation for web URLs because search engines treat them as word separators."},
+  {"q":"Does it remove stop words?","a":"No, so the meaning stays intact. Delete any words you do not need before copying."}
+ ]},
+"text-diff": {
+ "name": "Text Diff Checker",
+ "short": "Compare two texts and highlight differences.",
+ "description": "Compare two texts online for free. Highlight added and removed words with a word-level diff, side by side or inline — computed privately in your browser.",
+ "intro": "Spot exactly what changed between two versions of a text. Our own diff engine highlights added and removed words, with side-by-side and inline views and a summary of the changes.",
+ "howTo": ["Paste the original text on the left.","Paste the modified text on the right.","Switch between side-by-side and inline views.","Read the summary to see how much changed."],
+ "faqs": [
+  {"q":"How does the comparison work?","a":"It uses a longest-common-subsequence algorithm written specifically for this tool, comparing word by word rather than character by character for readable results."},
+  {"q":"Can I compare code?","a":"Yes, though the diff is word-based. For source files, comparing line by line in your editor may be clearer."},
+  {"q":"Does it ignore whitespace?","a":"Runs of whitespace are normalised during comparison so that reformatting alone does not appear as a change."},
+  {"q":"Is there a size limit?","a":"Very large texts take longer because the algorithm compares every token pair, but typical documents are instant."},
+  {"q":"Are my documents uploaded?","a":"No. Both texts stay in your browser."}
+ ]},
+"number-to-words": {
+ "name": "Number to Words",
+ "short": "Write numbers in English or Arabic words.",
+ "description": "Convert numbers to words online for free. Write any number in English or Arabic words, including currency wording for cheques and invoices — instantly.",
+ "intro": "Turn digits into properly written words for cheques, contracts and invoices. Both English and grammatically correct Arabic are supported, including currency phrasing.",
+ "howTo": ["Type the number you want to convert.","Choose English or Arabic output.","Turn on currency mode and pick a currency if needed.","Copy the written form into your document."],
+ "faqs": [
+  {"q":"Is the Arabic output grammatically correct?","a":"Yes. Our own implementation handles dual forms, the tens-then-units order and the correct case endings used in formal Arabic."},
+  {"q":"Can it write decimals?","a":"Yes. In currency mode the fractional part becomes the subunit, such as cents or piastres."},
+  {"q":"Which currencies are supported?","a":"Common currencies including USD, EUR, GBP, SAR, AED and EGP, each with its correct subunit name."},
+  {"q":"How large a number can it convert?","a":"Up to the quadrillions, which is well beyond any practical cheque or invoice amount."},
+  {"q":"Does it accept Arabic-Indic digits?","a":"Yes. Digits such as ١٢٣ are normalised automatically before conversion."}
+ ]}
+},
+"ar": {
+"word-counter": {
+ "name": "عدّاد الكلمات",
+ "short": "احسب الكلمات والأحرف والجمل وزمن القراءة.",
+ "description": "عدّاد كلمات مجاني عبر الإنترنت. احسب الكلمات والأحرف والجمل والفقرات وزمن القراءة بالعربية والإنجليزية فورًا وبخصوصية داخل متصفحك.",
+ "intro": "التزم بالحد المطلوب في كتابتك. الصق أي نص لترى إحصاءات فورية للكلمات والأحرف والجمل والفقرات، إضافة إلى زمن القراءة والإلقاء التقديري وأكثر الكلمات تكرارًا.",
+ "howTo": ["اكتب نصك أو الصقه في المحرر.","تابع تحدث الإحصاءات أثناء الكتابة.","فعّل «تجاهل الكلمات الشائعة» للحصول على قائمة تكرار أكثر فائدة.","انسخ النتائج أو امسح المحرر للبدء من جديد."],
+ "faqs": [
+  {"q":"كيف تُحسب الكلمة؟","a":"كل تتابع من الحروف أو الأرقام أو الأحرف العربية يفصله فراغ يُحسب كلمة واحدة، وهو ما يوافق طريقة برامج معالجة النصوص."},
+  {"q":"هل تدعم الأداة النص العربي؟","a":"نعم، بدعم كامل للحروف العربية والتشكيل والأرقام العربية الهندية."},
+  {"q":"كيف يُحسب زمن القراءة؟","a":"يفترض زمن القراءة 200 كلمة في الدقيقة، وزمن الإلقاء 130 كلمة في الدقيقة، وهي متوسطات شائعة للقراء البالغين."},
+  {"q":"هل يُخزَّن نصي أو يُرفع؟","a":"لا. كل الحسابات تجري في متصفحك وتختفي بمجرد إغلاق التبويب."},
+  {"q":"هل يمكن حساب الأحرف بدون مسافات؟","a":"نعم، يُعرض العددان جنبًا إلى جنب، وهو مفيد للمنصات ذات الحدود الصارمة."}
+ ]},
+"remove-extra-spaces": {
+ "name": "إزالة المسافات الزائدة",
+ "short": "نظّف المسافات المزدوجة وعلامات الجدولة والأسطر الفارغة.",
+ "description": "أزل المسافات الزائدة من النص مجانًا عبر الإنترنت. ادمج المسافات المكررة ونظّف أطراف الأسطر واحذف الأسطر الفارغة وحوّل الجدولة — فورًا داخل متصفحك.",
+ "intro": "النص المنسوخ من ملفات PDF أو البريد أو الجداول يمتلئ عادة بمسافات عشوائية. اختر بدقة ما تريد إصلاحه واحصل على نص نظيف ومتسق في خطوة واحدة.",
+ "howTo": ["الصق النص غير المنظم في مربع الإدخال.","حدد قواعد المسافات التي تريد تطبيقها.","راجع النتيجة النظيفة على اليسار.","انسخ الناتج أو نزّله كملف ‎.txt."],
+ "faqs": [
+  {"q":"ما الفرق بين دمج الأسطر الفارغة وحذفها؟","a":"الدمج يحوّل عدة أسطر فارغة متتالية إلى سطر واحد، أما الحذف فيزيلها كلها."},
+  {"q":"هل تُزال فواصل الأسطر بين الفقرات؟","a":"فقط إذا فعّلت هذا الخيار، وإلا تبقى فواصل الفقرات كما هي."},
+  {"q":"هل تعالج الأداة علامات الجدولة؟","a":"نعم. يمكن تحويلها إلى مسافات أو إزالتها تمامًا بخيار «إزالة كل المسافات»."},
+  {"q":"وماذا عن المسافات غير القابلة للكسر؟","a":"نعم، تُحوَّل هذه المسافات الخفية إلى مسافات عادية قبل تطبيق بقية القواعد."},
+  {"q":"هل يُرسل نصي إلى أي مكان؟","a":"لا. كل التنظيف يتم محليًا داخل متصفحك."}
+ ]},
+"case-converter": {
+ "name": "محوّل حالة الأحرف",
+ "short": "حوّل النص بين 11 نمطًا لحالة الأحرف.",
+ "description": "حوّل حالة أحرف النص مجانًا عبر الإنترنت. بدّل بين الأحرف الكبيرة والصغيرة وحالة العنوان وcamelCase وsnake_case وkebab-case وغيرها فورًا داخل متصفحك.",
+ "intro": "غيّر حالة أحرف أي نص دون إعادة كتابته. أحد عشر نمطًا تغطي كل شيء من العناوين إلى أسماء المتغيرات، ويمكن نسخ كل نتيجة بنقرة واحدة.",
+ "howTo": ["الصق نصك في المحرر.","اختر نمط الحالة الذي تحتاجه.","قارن النتيجة وبدّل الأنماط كما تشاء.","انسخ النص المحوَّل أو نزّله."],
+ "faqs": [
+  {"q":"ما الأنماط المدعومة؟","a":"أحرف كبيرة، أحرف صغيرة، حالة العنوان، حالة الجملة، camelCase، PascalCase، snake_case، kebab-case، SCREAMING_SNAKE_CASE، الأحرف المتناوبة، وعكس الحالة."},
+  {"q":"ماذا يحدث للنص العربي؟","a":"لا يوجد في العربية تمييز بين الحرف الكبير والصغير، فتبقى هذه الأنماط بلا أثر، بينما تعمل الأنماط القائمة على الفواصل مثل kebab-case."},
+  {"q":"هل تراعي حالة العنوان الكلمات القصيرة؟","a":"تُكبَّر كل كلمة لضمان نتيجة متوقعة، فإن كنت تتبع دليل أسلوب يبقي أدوات التعريف صغيرة فعدّل تلك الكلمات يدويًا."},
+  {"q":"هل يمكن تحويل أسماء المتغيرات البرمجية؟","a":"نعم، فأنماط camelCase وPascalCase وsnake_case وkebab-case تتعرف على حدود الكلمات القائمة بما فيها الأحرف الكبيرة الداخلية."},
+  {"q":"هل هناك حد لطول النص؟","a":"لا حد صارم؛ المستندات الطويلة جدًا محدودة بذاكرة جهازك فقط."}
+ ]},
+"text-cleaner": {
+ "name": "منظّف النصوص",
+ "short": "أزل وسوم HTML والروابط والإيموجي والرموز غير المرغوبة.",
+ "description": "نظّف النصوص مجانًا عبر الإنترنت. أزل وسوم HTML والروابط والبريد والأرقام وعلامات الترقيم والإيموجي والأسطر المكررة مع بحث واستبدال — داخل متصفحك.",
+ "intro": "حوّل المحتوى المنسوخ غير المنظم إلى نص عادي نظيف. اجمع بين القواعد التي تحتاجها، وأضف بحثًا واستبدالًا خاصًا بك، وشاهد النتيجة تتحدث لحظيًا.",
+ "howTo": ["الصق النص الذي تريد تنظيفه.","فعّل القواعد اللازمة للأحرف والأسطر.","اختياريًا أضف بحثًا واستبدالًا أو مرشّح أسطر.","انسخ النص النظيف أو نزّله."],
+ "faqs": [
+  {"q":"هل تبقى النصوص الظاهرة بعد إزالة HTML؟","a":"نعم. تُزال الوسوم ويبقى النص داخلها، فتحتفظ بالمحتوى دون الترميز."},
+  {"q":"هل يمكن حذف الأسطر التي تحتوي كلمة معينة؟","a":"نعم. اكتب الكلمة في مرشّح الأسطر ليُحذف كل سطر يحتويها."},
+  {"q":"هل تُزال الإيموجي فعلًا؟","a":"نعم، بما في ذلك تسلسلات الإيموجي الحديثة متعددة النقاط بدرجات البشرة والروابط."},
+  {"q":"بأي ترتيب تُطبَّق القواعد؟","a":"قواعد الأحرف أولًا ثم قواعد الأسطر ثم البحث والاستبدال، فتكون النتيجة متوقعة دائمًا."},
+  {"q":"هل محتواي خاص؟","a":"تمامًا. لا يُرفع أي نص ولا يُسجَّل ولا يُخزَّن في أي مكان."}
+ ]},
+"lorem-ipsum-generator": {
+ "name": "مولّد نص بديل (Lorem Ipsum)",
+ "short": "ولّد نصًا بديلًا باللاتينية أو العربية.",
+ "description": "ولّد نص Lorem Ipsum البديل مجانًا عبر الإنترنت. أنشئ كلمات أو جملًا أو فقرات باللاتينية أو العربية مع وسوم HTML اختيارية — فورًا.",
+ "intro": "املأ نماذجك التصميمية بنص بديل واقعي. ولّد بالكلمات أو الجمل أو الفقرات، واختر النص اللاتيني الكلاسيكي أو نصًا عربيًا طبيعيًا، وانسخ النتيجة مباشرة إلى تصميمك.",
+ "howTo": ["اختر التوليد بالكلمات أو الجمل أو الفقرات.","حدد العدد المطلوب.","اختر النص اللاتيني أو العربي.","انسخ النص المولَّد أو نزّله كملف."],
+ "faqs": [
+  {"q":"ما هو Lorem Ipsum؟","a":"نص لاتيني مشوّش يُستخدم كنص بديل منذ القرن السادس عشر، وتشبه أشكال كلماته النثر الحقيقي فتبدو التصاميم طبيعية دون أن ينشغل القارئ بالمحتوى."},
+  {"q":"لماذا تقدمون نصًا بديلًا بالعربية؟","a":"لأن للعربية أطوال كلمات مختلفة ولا تحتوي أحرفًا كبيرة، فاختبار التخطيطات من اليمين لليسار بنص لاتيني قد يكون مضللًا."},
+  {"q":"هل يمكن الحصول على فقرات HTML؟","a":"نعم. فعّل خيار HTML لتُحاط كل فقرة بوسم p جاهز للصق في قالبك."},
+  {"q":"ما الحدود المسموح بها؟","a":"حتى 10000 كلمة أو 1000 جملة أو 100 فقرة في كل عملية توليد."},
+  {"q":"هل النص نفسه في كل مرة؟","a":"لا. تُركَّب الجمل عشوائيًا في كل مرة فتحصل على ناتج جديد."}
+ ]},
+"text-reverser": {
+ "name": "عاكس النصوص",
+ "short": "اعكس الأحرف أو الكلمات أو الأسطر.",
+ "description": "اعكس النص مجانًا عبر الإنترنت. اقلب الأحرف أو ترتيب الكلمات أو كل سطر أو ترتيب الأسطر بدعم كامل للإيموجي والعربية داخل متصفحك.",
+ "intro": "اقلب النص بالطريقة التي تحتاجها — اعكس الأحرف للألغاز، أو ترتيب الكلمات للاختبار، أو ترتيب الأسطر لقلب قائمة.",
+ "howTo": ["الصق نصك في منطقة الإدخال.","اختر ما تريد عكسه: الأحرف أو الكلمات أو كل سطر أو ترتيب الأسطر.","راجع النتيجة على اليسار.","انسخ النص المعكوس أو نزّله."],
+ "faqs": [
+  {"q":"هل يفسد العكس الإيموجي؟","a":"لا. يُقسَّم النص حسب نقاط الترميز فتبقى الإيموجي والأحرف متعددة البايتات سليمة."},
+  {"q":"ماذا يحدث للنص العربي؟","a":"تُعكس الأحرف على مستوى نقاط الترميز فينقلب الترتيب المخزَّن بينما يواصل متصفحك تشكيل الحروف للعرض."},
+  {"q":"ما الفرق بين عكس كل سطر وعكس ترتيب الأسطر؟","a":"عكس كل سطر يقلب الأحرف داخل السطر، أما عكس ترتيب الأسطر فيبقي كل سطر كما هو ويضع الأخير أولًا."},
+  {"q":"هل يمكن عكس قائمة عناصر؟","a":"نعم — ضع كل عنصر في سطر واختر «عكس ترتيب الأسطر»."},
+  {"q":"هل هناك حد للحجم؟","a":"ذاكرة جهازك فقط؛ المستندات المعتادة تُعكس فورًا."}
+ ]},
+"remove-duplicate-lines": {
+ "name": "إزالة الأسطر المكررة",
+ "short": "احذف الأسطر المتكررة من قائمة.",
+ "description": "أزل الأسطر المكررة مجانًا عبر الإنترنت. نظّف القوائم بمطابقة حساسة أو غير حساسة لحالة الأحرف واحتفظ بأول أو آخر ظهور — بخصوصية تامة.",
+ "intro": "نظّف قوائم البريد الإلكتروني أو الكلمات المفتاحية أو الروابط أو المعرّفات بإزالة العناصر المكررة. حدد إن كانت حالة الأحرف والمسافات مهمة، واختر الاحتفاظ بأول أو آخر نسخة.",
+ "howTo": ["الصق قائمتك بعنصر واحد في كل سطر.","حدد إن كانت المطابقة حساسة لحالة الأحرف.","اختر الاحتفاظ بأول أو آخر ظهور.","انسخ القائمة بعد إزالة التكرار أو نزّلها."],
+ "faqs": [
+  {"q":"هل يبقى الترتيب الأصلي؟","a":"نعم. تبقى الأسطر بترتيبها الأصلي وتُحذف التكرارات فقط."},
+  {"q":"ماذا يعني «تجاهل المسافات الطرفية»؟","a":"يقارن الأسطر بعد إزالة المسافات من الطرفين، فيُعد « تفاحة» و«تفاحة» عنصرًا واحدًا."},
+  {"q":"هل يمكن الاحتفاظ بآخر ظهور بدل الأول؟","a":"نعم، بدّل الخيار — وهو مفيد عندما تحمل الصفوف الأخيرة أحدث البيانات."},
+  {"q":"هل تُحذف الأسطر الفارغة؟","a":"تُعامل الأسطر الفارغة المتكررة كأي تكرار آخر، فيبقى سطر فارغ واحد."},
+  {"q":"كم سطرًا يمكن معالجته؟","a":"مئات الآلاف من الأسطر تُعالَج في أقل من ثانية على جهاز اعتيادي."}
+ ]},
+"text-to-slug": {
+ "name": "تحويل النص إلى رابط",
+ "short": "حوّل أي عنوان إلى رابط نظيف.",
+ "description": "حوّل النص إلى رابط (Slug) مجانًا عبر الإنترنت. أنشئ روابط صديقة لمحركات البحث من عناوين عربية أو إنجليزية مع نقل حروف اختياري — فورًا داخل متصفحك.",
+ "intro": "حوّل عنوانك إلى رابط مرتب وسهل القراءة. تُبسَّط الحروف المشكّلة وتُحذف علامات الترقيم وتتحول المسافات إلى فواصل، مع خيار نقل الحروف العربية إلى لاتينية.",
+ "howTo": ["اكتب عنوانك أو الصقه.","اختر الشرطة أو الشرطة السفلية كفاصل.","فعّل نقل الحروف إن كان عنوانك بالعربية.","انسخ الرابط الناتج إلى نظام إدارة المحتوى لديك."],
+ "faqs": [
+  {"q":"ما مواصفات الرابط الجيد؟","a":"قصير وبأحرف صغيرة ومفصول بشرطات ووصفي، ويفضّل أن يتكون من ثلاث إلى ست كلمات ذات معنى."},
+  {"q":"هل أستخدم الحروف العربية في الرابط؟","a":"يمكنك ذلك فالمتصفحات الحديثة تدعمها، لكن الروابط اللاتينية المنقولة أسهل في المشاركة والتسجيل والتحليل."},
+  {"q":"هل تدعم الأداة الحروف المشكّلة؟","a":"نعم. تُحوَّل حروف مثل é وü وñ إلى أقرب مكافئ لاتيني بسيط."},
+  {"q":"شرطة أم شرطة سفلية؟","a":"الشرطة هي التوصية المعتمدة منذ زمن طويل لروابط الويب لأن محركات البحث تعدّها فاصلًا بين الكلمات."},
+  {"q":"هل تُحذف الكلمات الشائعة؟","a":"لا، حفاظًا على المعنى. احذف ما لا تحتاجه قبل النسخ."}
+ ]},
+"text-diff": {
+ "name": "مقارنة النصوص",
+ "short": "قارن نصين وأبرز الفروق بينهما.",
+ "description": "قارن نصين مجانًا عبر الإنترنت. أبرز الكلمات المضافة والمحذوفة بمقارنة على مستوى الكلمة جنبًا إلى جنب أو ضمن السطر — بحساب خاص داخل متصفحك.",
+ "intro": "اكتشف بالضبط ما تغيّر بين نسختين من نص. محرك المقارنة الخاص بنا يبرز الكلمات المضافة والمحذوفة مع عرض جنبًا إلى جنب أو ضمن السطر وملخص للتغييرات.",
+ "howTo": ["الصق النص الأصلي في الجهة الأولى.","الصق النص المعدّل في الجهة الأخرى.","بدّل بين العرض جنبًا إلى جنب والعرض ضمن السطر.","اقرأ الملخص لمعرفة حجم التغيير."],
+ "faqs": [
+  {"q":"كيف تتم المقارنة؟","a":"باستخدام خوارزمية أطول تسلسل مشترك كُتبت خصيصًا لهذه الأداة، وتقارن كلمة بكلمة بدل حرف بحرف لنتائج أوضح."},
+  {"q":"هل يمكن مقارنة كود برمجي؟","a":"نعم، لكن المقارنة قائمة على الكلمات؛ وللملفات المصدرية قد تكون المقارنة سطرًا بسطر في محررك أوضح."},
+  {"q":"هل تتجاهل المقارنة المسافات؟","a":"تُوحَّد تتابعات المسافات أثناء المقارنة حتى لا تظهر إعادة التنسيق وحدها كتغيير."},
+  {"q":"هل هناك حد للحجم؟","a":"النصوص الضخمة تستغرق وقتًا أطول لأن الخوارزمية تقارن كل زوج من الرموز، أما المستندات المعتادة فتُقارن فورًا."},
+  {"q":"هل تُرفع مستنداتي؟","a":"لا. يبقى النصان داخل متصفحك."}
+ ]},
+"number-to-words": {
+ "name": "تحويل الأرقام إلى كلمات",
+ "short": "اكتب الأرقام بالحروف بالعربية أو الإنجليزية.",
+ "description": "حوّل الأرقام إلى كلمات مجانًا عبر الإنترنت. اكتب أي رقم بالحروف العربية أو الإنجليزية مع صيغة العملة للشيكات والفواتير — فورًا داخل متصفحك.",
+ "intro": "حوّل الأرقام إلى كلمات مكتوبة بشكل صحيح للشيكات والعقود والفواتير، بدعم الإنجليزية والعربية السليمة نحويًا بما في ذلك صيغة العملة.",
+ "howTo": ["اكتب الرقم المراد تحويله.","اختر الناتج بالعربية أو الإنجليزية.","فعّل وضع العملة واختر العملة إن لزم.","انسخ الصيغة المكتوبة إلى مستندك."],
+ "faqs": [
+  {"q":"هل الناتج العربي سليم نحويًا؟","a":"نعم. تعالج خوارزميتنا صيغة المثنى وترتيب العشرات والآحاد والنهايات الإعرابية المستخدمة في العربية الفصحى."},
+  {"q":"هل تدعم الأرقام العشرية؟","a":"نعم. في وضع العملة يتحول الجزء العشري إلى الوحدة الفرعية مثل السنتات أو القروش."},
+  {"q":"ما العملات المدعومة؟","a":"عملات شائعة مثل الدولار واليورو والجنيه الإسترليني والريال السعودي والدرهم الإماراتي والجنيه المصري، ولكلٍ اسم وحدته الفرعية الصحيح."},
+  {"q":"ما أكبر رقم يمكن تحويله؟","a":"حتى آلاف التريليونات، وهو أكبر بكثير من أي مبلغ عملي في شيك أو فاتورة."},
+  {"q":"هل تقبل الأداة الأرقام العربية الهندية؟","a":"نعم. تُوحَّد أرقام مثل ١٢٣ تلقائيًا قبل التحويل."}
+ ]}
+}
+}

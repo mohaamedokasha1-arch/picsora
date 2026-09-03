@@ -1,0 +1,266 @@
+{
+"en": {
+"age-calculator": {
+ "name": "Age Calculator",
+ "short": "Calculate exact age in years, months and days.",
+ "description": "Free online age calculator. Find your exact age in years, months and days, plus your next birthday, star sign and Chinese zodiac — calculated in your browser.",
+ "intro": "Work out exactly how old someone is on any given date. The calculator follows the real calendar, so leap years and different month lengths are handled precisely, and it also shows the countdown to the next birthday.",
+ "howTo": ["Enter the date of birth.","Optionally change the reference date from today to another day.","Read the exact age in years, months and days.","Check the totals and the next birthday countdown."],
+ "faqs": [
+  {"q":"How is age calculated exactly?","a":"We subtract the dates on the calendar, borrowing days from the previous month when needed, so the result matches how people actually count age."},
+  {"q":"Are leap years taken into account?","a":"Yes. A person born on 29 February is treated as having their birthday on 28 February in non-leap years."},
+  {"q":"Can I calculate age at a past or future date?","a":"Yes. Change the reference date to any day to see the age at that point in time."},
+  {"q":"What does the totals section show?","a":"Your age expressed entirely in months, weeks, days, hours, minutes and seconds."},
+  {"q":"Is my date of birth stored?","a":"No. Everything is calculated locally and nothing is saved or transmitted."}
+ ]},
+"bmi-calculator": {
+ "name": "BMI Calculator",
+ "short": "Calculate body mass index in metric or imperial.",
+ "description": "Free online BMI calculator. Work out your body mass index in metric or imperial units, see your category and healthy weight range — privately in your browser.",
+ "intro": "Find your body mass index in a few seconds using metric or imperial measurements. You will see your BMI value, the category it falls into, your healthy weight range and supporting indicators.",
+ "howTo": ["Choose metric or imperial units.","Enter your height and weight.","Read your BMI value and category on the scale.","Check your healthy weight range for the same height."],
+ "faqs": [
+  {"q":"What is the BMI formula?","a":"BMI equals weight in kilograms divided by height in metres squared. Imperial values are converted to metric before the calculation."},
+  {"q":"What do the categories mean?","a":"Below 18.5 is underweight, 18.5 to 24.9 is normal, 25 to 29.9 is overweight and 30 or above is classed as obesity."},
+  {"q":"Is BMI accurate for everyone?","a":"No. It does not distinguish muscle from fat and can be misleading for athletes, older adults, pregnant people and children. It is a screening indicator, not a diagnosis."},
+  {"q":"What is BMI prime?","a":"Your BMI divided by 25. Anything above 1 means you are above the upper end of the healthy range."},
+  {"q":"Should I make health decisions based on this?","a":"No. Discuss your results with a qualified healthcare professional before changing your diet or exercise."}
+ ]},
+"percentage-calculator": {
+ "name": "Percentage Calculator",
+ "short": "Solve five common percentage problems.",
+ "description": "Free online percentage calculator. Find a percentage of a number, percentage change, increases, decreases and original values — with step-by-step working.",
+ "intro": "Handle every everyday percentage question in one place. Pick the type of problem, enter two numbers, and see the answer together with the formula and the steps behind it.",
+ "howTo": ["Choose the kind of percentage problem you need to solve.","Enter the two values in the fields shown.","Read the result and the step-by-step working.","Switch modes at any time to try another calculation."],
+ "faqs": [
+  {"q":"How do I find a percentage of a number?","a":"Divide the percentage by 100 and multiply by the number — 20% of 250 is (20 ÷ 100) × 250 = 50."},
+  {"q":"How is percentage change calculated?","a":"Subtract the old value from the new one, divide by the old value and multiply by 100."},
+  {"q":"Why is a decrease of 50% not undone by an increase of 50%?","a":"Because each percentage is applied to a different base. Dropping 100 by 50% gives 50, and adding 50% of 50 only brings you back to 75."},
+  {"q":"What happens if I enter zero?","a":"Modes that would divide by zero show a clear message instead of an incorrect result."},
+  {"q":"Are the steps shown for every mode?","a":"Yes. Each result includes the formula and the substituted values so you can check the working."}
+ ]},
+"interest-calculator": {
+ "name": "Interest Calculator",
+ "short": "Calculate simple and compound interest.",
+ "description": "Free online interest calculator. Work out simple or compound interest with any compounding frequency and see a year-by-year breakdown of your balance.",
+ "intro": "See how savings or a loan grow over time. Compare simple interest with compound interest at annual, monthly or daily compounding, and follow the balance year by year.",
+ "howTo": ["Enter the principal amount.","Set the annual interest rate and the number of years.","Choose simple interest or compound interest with a frequency.","Review the total, the interest earned and the yearly breakdown."],
+ "faqs": [
+  {"q":"What is the difference between simple and compound interest?","a":"Simple interest is always calculated on the original principal, while compound interest is calculated on the principal plus the interest already added."},
+  {"q":"What does compounding frequency change?","a":"More frequent compounding adds interest more often, so the balance grows slightly faster at the same nominal rate."},
+  {"q":"What is the effective annual rate?","a":"The rate that a once-a-year compounding would need in order to produce the same yearly growth as your chosen frequency."},
+  {"q":"Can I use this for a loan?","a":"Yes for interest accrual, but real loans usually involve regular repayments, fees and different rounding, so treat the figures as an estimate."},
+  {"q":"Is this financial advice?","a":"No. The calculator is an educational tool for planning and comparison only."}
+ ]},
+"date-difference-calculator": {
+ "name": "Date Difference Calculator",
+ "short": "Count days, weeks and months between dates.",
+ "description": "Free online date difference calculator. Count the exact days, weeks, months and business days between two dates, with holiday exclusions — in your browser.",
+ "intro": "Find out exactly how much time separates two dates. Get the calendar difference in years, months and days, the totals in every unit, and an optional business-day count that skips weekends and holidays.",
+ "howTo": ["Pick a start date and an end date.","Optionally include the time of day for an exact duration.","Enable business days only to skip weekends.","Add any holidays to exclude, one date per line."],
+ "faqs": [
+  {"q":"Are both the start and end dates counted?","a":"The difference is the span between the two dates, so the start day is not counted as a whole day. Business-day counting includes the end date."},
+  {"q":"Which days count as business days?","a":"Monday to Friday, minus any dates you list as exclusions."},
+  {"q":"Can I use it for future dates?","a":"Yes. The result indicates whether the span is in the past or the future."},
+  {"q":"How are months counted?","a":"Calendar months are used, so 31 January to 28 February counts as one month rather than a fixed number of days."},
+  {"q":"Does it handle daylight saving time?","a":"Calculations use whole calendar days, so daylight saving changes do not shift the day count."}
+ ]},
+"unit-converter": {
+ "name": "Unit Converter",
+ "short": "Convert length, weight, temperature and more.",
+ "description": "Free online unit converter. Convert length, weight, temperature, area, volume, speed, time and digital storage between 50+ units — instantly and offline-friendly.",
+ "intro": "Convert between more than fifty units across eight categories. Type a value into any field and every other unit in the category updates instantly, so you can compare them all at a glance.",
+ "howTo": ["Choose a category such as length or weight.","Type a value into the unit you already know.","Read the converted values in every other unit.","Copy any result with the button next to it."],
+ "faqs": [
+  {"q":"Which categories are covered?","a":"Length, weight, temperature, area, volume, speed, time and digital storage."},
+  {"q":"How is temperature handled?","a":"Temperature uses offset formulas rather than simple factors, so Celsius, Fahrenheit and Kelvin convert correctly."},
+  {"q":"Are storage units decimal or binary?","a":"Binary — one kilobyte equals 1024 bytes, matching how operating systems report file sizes."},
+  {"q":"How precise are the results?","a":"Conversion factors are exact where a definition exists, and results are shown with enough significant digits for everyday and technical use."},
+  {"q":"Does it need an internet connection?","a":"No. All conversion tables are built into the page and run locally."}
+ ]},
+"discount-calculator": {
+ "name": "Discount Calculator",
+ "short": "Work out sale prices and savings.",
+ "description": "Free online discount calculator. Find the sale price, your savings, the discount percentage or the original price, with stacked discounts and tax support.",
+ "intro": "Know exactly what you are paying before you reach the till. Calculate the price after one or several discounts, work backwards to the original price, and add tax to see the true final total.",
+ "howTo": ["Choose what you want to find: the sale price, the percentage or the original price.","Enter the amounts you know.","Add extra discounts if the offer stacks.","Optionally add tax to see the final total."],
+ "faqs": [
+  {"q":"How do stacked discounts work?","a":"Each discount applies to the price after the previous one, so 20% then 10% is not 30% — it is an effective 28%."},
+  {"q":"How do I find the original price?","a":"Switch to the original price mode and enter the discounted price with the percentage that was taken off."},
+  {"q":"Is tax applied before or after the discount?","a":"After, which matches how most retailers calculate the total."},
+  {"q":"How is the discount percentage calculated?","a":"The saving is divided by the original price and multiplied by 100."},
+  {"q":"Does it round like a shop till?","a":"Results are shown to two decimal places, so a shop's own rounding may differ by a cent."}
+ ]},
+"gpa-calculator": {
+ "name": "GPA Calculator",
+ "short": "Calculate semester and cumulative GPA.",
+ "description": "Free online GPA calculator. Work out your semester and cumulative grade point average on a 4.0, 5.0 or percentage scale with credit-hour weighting.",
+ "intro": "Track your academic progress across a semester. Add each course with its grade and credit hours to see your weighted semester GPA, and include previous semesters for the cumulative figure.",
+ "howTo": ["Choose your grading scale: 4.0, 5.0 or percentage.","Add each course with its grade and credit hours.","Optionally enter your previous GPA and credit hours.","Read your semester and cumulative GPA."],
+ "faqs": [
+  {"q":"How is GPA calculated?","a":"Each course's grade points are multiplied by its credit hours; the total is then divided by the total credit hours."},
+  {"q":"Which scales are supported?","a":"The 4.0 scale, the 5.0 scale used in several countries, and direct percentage averaging."},
+  {"q":"How do I include previous semesters?","a":"Enable the previous results option and enter your prior cumulative GPA together with the credit hours it covers."},
+  {"q":"What about pass or fail courses?","a":"Courses that do not affect GPA should be entered with zero credit hours, which excludes them from the weighting."},
+  {"q":"Will my institution get the same number?","a":"Usually, though some institutions round differently or exclude retaken courses, so check your official policy."}
+ ]},
+"tip-calculator": {
+ "name": "Tip Calculator",
+ "short": "Split the bill and calculate the tip.",
+ "description": "Free online tip calculator. Work out the tip, the total and each person's share, with round-up support for splitting a restaurant bill fairly.",
+ "intro": "Settle the bill without the mental arithmetic. Enter the amount, choose a tip percentage and the number of people, and see exactly what everyone owes — with an option to round the total up.",
+ "howTo": ["Enter the bill amount.","Choose a tip percentage or type your own.","Set the number of people sharing the bill.","Optionally round the total up and read each share."],
+ "faqs": [
+  {"q":"How much should I tip?","a":"It varies by country and venue. In the United States 15–20% is typical, while in much of Europe and the Middle East a smaller tip or none at all is normal."},
+  {"q":"Is the tip based on the amount before or after tax?","a":"This calculator applies the percentage to the amount you enter, so type the pre-tax subtotal if that is your preference."},
+  {"q":"How does rounding up work?","a":"The total is rounded up to the next whole unit and the difference is added to the tip, which makes cash payment easier."},
+  {"q":"Can it split unevenly?","a":"The split is equal per person. For uneven shares, calculate each person's portion separately."},
+  {"q":"Is anything sent online?","a":"No. All arithmetic happens in your browser."}
+ ]},
+"currency-converter": {
+ "name": "Currency Converter",
+ "short": "Convert between 18 major currencies.",
+ "description": "Free online currency converter. Convert between 18 major currencies using public exchange rates, cached locally with the source and update time shown.",
+ "intro": "Convert amounts between the world's most-used currencies. Rates come from a free public exchange-rate service, are cached in your browser for an hour, and always display their source and timestamp.",
+ "howTo": ["Choose the currency you are converting from and to.","Enter the amount.","Read the converted value and the rate used.","Press refresh if you want the very latest rates."],
+ "faqs": [
+  {"q":"Where do the exchange rates come from?","a":"From the free public Exchange Rate API. Only the rate table is requested — the amount you type never leaves your browser."},
+  {"q":"How often are rates updated?","a":"They are cached locally for one hour, and the update time is always shown next to the result. You can force a refresh at any time."},
+  {"q":"What happens if I am offline?","a":"The last saved rates are used and clearly labelled as cached, so you can still convert approximately."},
+  {"q":"Are these rates suitable for trading?","a":"No. They are mid-market reference rates. Banks and exchange services apply their own spreads and fees."},
+  {"q":"Why is this the only tool that uses the internet?","a":"Exchange rates change constantly and cannot be bundled into the page. Everything else on the site runs fully offline."}
+ ]}
+},
+"ar": {
+"age-calculator": {
+ "name": "حاسبة العمر",
+ "short": "احسب العمر بدقة بالسنوات والأشهر والأيام.",
+ "description": "حاسبة عمر مجانية عبر الإنترنت. اعرف عمرك بدقة بالسنوات والأشهر والأيام مع عيد ميلادك القادم وبرجك الفلكي والصيني — بحساب داخل متصفحك.",
+ "intro": "اعرف بالضبط كم يبلغ عمر شخص ما في أي تاريخ. تتبع الحاسبة التقويم الفعلي فتعالج السنوات الكبيسة واختلاف أطوال الأشهر بدقة، وتعرض أيضًا العد التنازلي لعيد الميلاد القادم.",
+ "howTo": ["أدخل تاريخ الميلاد.","اختياريًا غيّر التاريخ المرجعي من اليوم إلى تاريخ آخر.","اقرأ العمر بالتحديد بالسنوات والأشهر والأيام.","راجع الإجماليات والعد التنازلي لعيد الميلاد القادم."],
+ "faqs": [
+  {"q":"كيف يُحسب العمر بالضبط؟","a":"نطرح التاريخين على التقويم مع استلاف الأيام من الشهر السابق عند الحاجة، فتطابق النتيجة الطريقة التي يحسب بها الناس أعمارهم."},
+  {"q":"هل تؤخذ السنوات الكبيسة في الحسبان؟","a":"نعم. من وُلد في 29 فبراير يُعد عيد ميلاده في 28 فبراير في السنوات غير الكبيسة."},
+  {"q":"هل يمكن حساب العمر في تاريخ ماضٍ أو مستقبلي؟","a":"نعم. غيّر التاريخ المرجعي إلى أي يوم لمعرفة العمر عنده."},
+  {"q":"ماذا يعرض قسم الإجماليات؟","a":"عمرك معبَّرًا عنه كاملًا بالأشهر والأسابيع والأيام والساعات والدقائق والثواني."},
+  {"q":"هل يُخزَّن تاريخ ميلادي؟","a":"لا. كل شيء يُحسب محليًا ولا يُحفظ ولا يُرسل."}
+ ]},
+"bmi-calculator": {
+ "name": "حاسبة مؤشر كتلة الجسم",
+ "short": "احسب مؤشر كتلة الجسم بالنظام المتري أو الإمبراطوري.",
+ "description": "حاسبة مؤشر كتلة الجسم مجانًا عبر الإنترنت. احسب مؤشرك بالوحدات المترية أو الإمبراطورية واعرف فئتك ونطاق وزنك الصحي — بخصوصية داخل متصفحك.",
+ "intro": "اعرف مؤشر كتلة جسمك في ثوانٍ باستخدام القياسات المترية أو الإمبراطورية. سترى قيمة المؤشر والفئة التي تقع فيها ونطاق وزنك الصحي ومؤشرات مساندة.",
+ "howTo": ["اختر الوحدات المترية أو الإمبراطورية.","أدخل طولك ووزنك.","اقرأ قيمة المؤشر وفئتك على المقياس.","راجع نطاق الوزن الصحي المناسب لطولك."],
+ "faqs": [
+  {"q":"ما معادلة مؤشر كتلة الجسم؟","a":"المؤشر يساوي الوزن بالكيلوجرام مقسومًا على مربع الطول بالمتر، وتُحوَّل القيم الإمبراطورية إلى المترية قبل الحساب."},
+  {"q":"ماذا تعني الفئات؟","a":"أقل من 18.5 نقص في الوزن، ومن 18.5 إلى 24.9 وزن طبيعي، ومن 25 إلى 29.9 زيادة في الوزن، و30 فأكثر يُصنَّف سمنة."},
+  {"q":"هل المؤشر دقيق للجميع؟","a":"لا. فهو لا يميز بين العضلات والدهون وقد يكون مضللًا للرياضيين وكبار السن والحوامل والأطفال، وهو مؤشر استرشادي لا تشخيص."},
+  {"q":"ما مؤشر كتلة الجسم النسبي؟","a":"هو مؤشرك مقسومًا على 25، وأي قيمة فوق 1 تعني تجاوز الحد الأعلى للنطاق الصحي."},
+  {"q":"هل أتخذ قرارات صحية بناءً على هذه النتيجة؟","a":"لا. ناقش نتيجتك مع مختص صحي مؤهل قبل تغيير نظامك الغذائي أو الرياضي."}
+ ]},
+"percentage-calculator": {
+ "name": "حاسبة النسبة المئوية",
+ "short": "حل خمس مسائل شائعة في النسب المئوية.",
+ "description": "حاسبة نسبة مئوية مجانية عبر الإنترنت. احسب نسبة من عدد ونسبة التغير والزيادة والنقصان والقيمة الأصلية مع خطوات الحل التفصيلية.",
+ "intro": "تعامل مع كل أسئلة النسب المئوية اليومية في مكان واحد. اختر نوع المسألة وأدخل الرقمين لترى الإجابة مع المعادلة وخطوات الوصول إليها.",
+ "howTo": ["اختر نوع مسألة النسبة المئوية التي تريد حلها.","أدخل القيمتين في الحقول الظاهرة.","اقرأ النتيجة وخطوات الحل.","بدّل الوضع في أي وقت لتجربة عملية أخرى."],
+ "faqs": [
+  {"q":"كيف أحسب نسبة من عدد؟","a":"اقسم النسبة على 100 واضرب في العدد — فمثلًا 20% من 250 تساوي (20 ÷ 100) × 250 = 50."},
+  {"q":"كيف تُحسب نسبة التغير؟","a":"اطرح القيمة القديمة من الجديدة، ثم اقسم على القيمة القديمة واضرب في 100."},
+  {"q":"لماذا لا تعوّض زيادة 50% نقصانًا بنسبة 50%؟","a":"لأن كل نسبة تُطبَّق على أساس مختلف؛ فنقص 100 بنسبة 50% يعطي 50، وإضافة 50% من 50 تعيدك إلى 75 فقط."},
+  {"q":"ماذا يحدث إذا أدخلت صفرًا؟","a":"الأوضاع التي تؤدي إلى القسمة على صفر تعرض رسالة واضحة بدل نتيجة خاطئة."},
+  {"q":"هل تُعرض الخطوات لكل الأوضاع؟","a":"نعم. كل نتيجة تتضمن المعادلة والقيم المعوَّضة لتتمكن من مراجعة الحل."}
+ ]},
+"interest-calculator": {
+ "name": "حاسبة الفائدة",
+ "short": "احسب الفائدة البسيطة والمركبة.",
+ "description": "حاسبة فائدة مجانية عبر الإنترنت. احسب الفائدة البسيطة أو المركبة بأي دورية تركيب مع تفصيل سنة بسنة لرصيدك.",
+ "intro": "اعرف كيف تنمو مدخراتك أو قرضك مع الوقت. قارن الفائدة البسيطة بالمركبة عند التركيب السنوي أو الشهري أو اليومي، وتابع الرصيد سنة بسنة.",
+ "howTo": ["أدخل المبلغ الأساسي.","حدد المعدل السنوي وعدد السنوات.","اختر الفائدة البسيطة أو المركبة مع دوريتها.","راجع الإجمالي والفائدة المكتسبة والتفصيل السنوي."],
+ "faqs": [
+  {"q":"ما الفرق بين الفائدة البسيطة والمركبة؟","a":"الفائدة البسيطة تُحسب دائمًا على المبلغ الأساسي، أما المركبة فتُحسب على الأساس مضافًا إليه الفوائد السابقة."},
+  {"q":"ما تأثير دورية التركيب؟","a":"كلما زاد تكرار التركيب أُضيفت الفائدة أكثر، فينمو الرصيد أسرع قليلًا عند المعدل الاسمي نفسه."},
+  {"q":"ما المعدل السنوي الفعلي؟","a":"هو المعدل الذي يحتاجه التركيب مرة واحدة سنويًا لينتج النمو السنوي نفسه الذي تحققه دوريتك المختارة."},
+  {"q":"هل يمكن استخدامها للقروض؟","a":"نعم لتراكم الفائدة، لكن القروض الفعلية تتضمن أقساطًا ورسومًا وطرق تقريب مختلفة، فاعتبر الأرقام تقديرية."},
+  {"q":"هل هذه استشارة مالية؟","a":"لا. الحاسبة أداة تعليمية للتخطيط والمقارنة فقط."}
+ ]},
+"date-difference-calculator": {
+ "name": "حاسبة الفرق بين تاريخين",
+ "short": "احسب الأيام والأسابيع والأشهر بين تاريخين.",
+ "description": "حاسبة الفرق بين تاريخين مجانًا عبر الإنترنت. احسب الأيام والأسابيع والأشهر وأيام العمل بدقة مع استبعاد العطلات — داخل متصفحك.",
+ "intro": "اعرف بالضبط كم من الوقت يفصل بين تاريخين. احصل على الفرق التقويمي بالسنوات والأشهر والأيام، والإجماليات بكل الوحدات، مع عدّ اختياري لأيام العمل يتجاوز العطلات الأسبوعية والرسمية.",
+ "howTo": ["اختر تاريخ البداية وتاريخ النهاية.","اختياريًا ضمّن الوقت للحصول على مدة دقيقة.","فعّل حساب أيام العمل فقط لتجاوز عطلة نهاية الأسبوع.","أضف العطلات المستبعدة بتاريخ واحد في كل سطر."],
+ "faqs": [
+  {"q":"هل يُحسب تاريخا البداية والنهاية معًا؟","a":"الفرق هو المدة بين التاريخين، فلا يُحسب يوم البداية يومًا كاملًا، بينما يشمل عدّ أيام العمل تاريخ النهاية."},
+  {"q":"ما الأيام التي تُعد أيام عمل؟","a":"من الاثنين إلى الجمعة، ناقص أي تواريخ تدرجها ضمن الاستبعادات."},
+  {"q":"هل يمكن استخدامها لتواريخ مستقبلية؟","a":"نعم، وتوضح النتيجة إن كانت المدة في الماضي أم المستقبل."},
+  {"q":"كيف تُحسب الأشهر؟","a":"تُستخدم الأشهر التقويمية، فمن 31 يناير إلى 28 فبراير يُعد شهرًا واحدًا لا عددًا ثابتًا من الأيام."},
+  {"q":"هل تراعي الأداة التوقيت الصيفي؟","a":"تعتمد الحسابات على أيام تقويمية كاملة، فلا تؤثر تغييرات التوقيت الصيفي على عدد الأيام."}
+ ]},
+"unit-converter": {
+ "name": "محوّل الوحدات",
+ "short": "حوّل الطول والوزن ودرجة الحرارة وغيرها.",
+ "description": "محوّل وحدات مجاني عبر الإنترنت. حوّل الطول والوزن ودرجة الحرارة والمساحة والحجم والسرعة والزمن والتخزين بين أكثر من 50 وحدة فورًا.",
+ "intro": "حوّل بين أكثر من خمسين وحدة موزعة على ثماني فئات. اكتب قيمة في أي حقل لتتحدث بقية الوحدات في الفئة فورًا، فتقارنها جميعًا بنظرة واحدة.",
+ "howTo": ["اختر فئة مثل الطول أو الوزن.","اكتب القيمة في الوحدة التي تعرفها.","اقرأ القيم المحوَّلة في بقية الوحدات.","انسخ أي نتيجة بالزر المجاور لها."],
+ "faqs": [
+  {"q":"ما الفئات المشمولة؟","a":"الطول والوزن ودرجة الحرارة والمساحة والحجم والسرعة والزمن والتخزين الرقمي."},
+  {"q":"كيف تُعالَج درجة الحرارة؟","a":"تستخدم درجة الحرارة معادلات إزاحة لا معاملات ضرب بسيطة، فيتم التحويل بين المئوية والفهرنهايت والكلفن بدقة."},
+  {"q":"هل وحدات التخزين عشرية أم ثنائية؟","a":"ثنائية — الكيلوبايت يساوي 1024 بايت، بما يطابق طريقة أنظمة التشغيل في عرض أحجام الملفات."},
+  {"q":"ما مدى دقة النتائج؟","a":"معاملات التحويل مضبوطة حيثما وُجد تعريف رسمي، وتُعرض النتائج بعدد كافٍ من الأرقام المعنوية للاستخدام اليومي والتقني."},
+  {"q":"هل تحتاج الأداة إلى اتصال بالإنترنت؟","a":"لا. جداول التحويل مضمّنة في الصفحة وتعمل محليًا."}
+ ]},
+"discount-calculator": {
+ "name": "حاسبة الخصم",
+ "short": "احسب سعر التخفيض وقيمة التوفير.",
+ "description": "حاسبة خصم مجانية عبر الإنترنت. احسب سعر البيع وقيمة التوفير ونسبة الخصم أو السعر الأصلي مع دعم الخصومات المتتالية والضريبة.",
+ "intro": "اعرف بالضبط ما ستدفعه قبل الوصول إلى الصندوق. احسب السعر بعد خصم واحد أو عدة خصومات، وارجع إلى السعر الأصلي، وأضف الضريبة لترى الإجمالي النهائي الحقيقي.",
+ "howTo": ["اختر ما تريد حسابه: سعر البيع أو النسبة أو السعر الأصلي.","أدخل القيم التي تعرفها.","أضف خصومات إضافية إذا كان العرض متتاليًا.","اختياريًا أضف الضريبة لرؤية الإجمالي النهائي."],
+ "faqs": [
+  {"q":"كيف تعمل الخصومات المتتالية؟","a":"يُطبَّق كل خصم على السعر بعد الخصم السابق، فخصم 20% ثم 10% ليس 30% بل 28% فعليًا."},
+  {"q":"كيف أعرف السعر الأصلي؟","a":"انتقل إلى وضع السعر الأصلي وأدخل السعر بعد الخصم مع النسبة التي خُصمت."},
+  {"q":"هل تُطبَّق الضريبة قبل الخصم أم بعده؟","a":"بعده، وهو ما يوافق طريقة معظم المتاجر في حساب الإجمالي."},
+  {"q":"كيف تُحسب نسبة الخصم؟","a":"تُقسم قيمة التوفير على السعر الأصلي وتُضرب في 100."},
+  {"q":"هل يطابق التقريب صندوق المتجر؟","a":"تُعرض النتائج بمنزلتين عشريتين، وقد يختلف تقريب المتجر بمقدار وحدة صغيرة."}
+ ]},
+"gpa-calculator": {
+ "name": "حاسبة المعدل التراكمي",
+ "short": "احسب معدل الفصل والمعدل التراكمي.",
+ "description": "حاسبة معدل تراكمي مجانية عبر الإنترنت. احسب معدل الفصل والمعدل التراكمي على مقياس 4.0 أو 5.0 أو النسبة المئوية مع ترجيح الساعات المعتمدة.",
+ "intro": "تابع تقدمك الأكاديمي خلال الفصل. أضف كل مقرر مع تقديره وساعاته المعتمدة لترى معدل الفصل المرجّح، وضمّن الفصول السابقة للحصول على المعدل التراكمي.",
+ "howTo": ["اختر مقياس التقديرات: 4.0 أو 5.0 أو النسبة المئوية.","أضف كل مقرر مع تقديره وساعاته المعتمدة.","اختياريًا أدخل معدلك السابق وساعاته.","اقرأ معدل الفصل والمعدل التراكمي."],
+ "faqs": [
+  {"q":"كيف يُحسب المعدل؟","a":"تُضرب نقاط تقدير كل مقرر في ساعاته المعتمدة، ثم يُقسم المجموع على إجمالي الساعات."},
+  {"q":"ما المقاييس المدعومة؟","a":"مقياس 4.0 ومقياس 5.0 المستخدم في عدة دول، إضافة إلى متوسط النسب المئوية مباشرة."},
+  {"q":"كيف أضمّن الفصول السابقة؟","a":"فعّل خيار النتائج السابقة وأدخل معدلك التراكمي السابق مع عدد الساعات التي يغطيها."},
+  {"q":"وماذا عن مقررات النجاح والرسوب؟","a":"أدخل المقررات التي لا تؤثر في المعدل بساعات صفرية لاستبعادها من الترجيح."},
+  {"q":"هل ستحصل جامعتي على الرقم نفسه؟","a":"غالبًا، لكن بعض المؤسسات تقرّب بطريقة مختلفة أو تستبعد المقررات المعادة، فراجع لائحتك الرسمية."}
+ ]},
+"tip-calculator": {
+ "name": "حاسبة البقشيش",
+ "short": "قسّم الفاتورة واحسب البقشيش.",
+ "description": "حاسبة بقشيش مجانية عبر الإنترنت. احسب البقشيش والإجمالي ونصيب كل شخص مع خيار التقريب لتقسيم فاتورة المطعم بإنصاف.",
+ "intro": "سوِّ الفاتورة دون حساب ذهني. أدخل المبلغ واختر نسبة البقشيش وعدد الأشخاص لترى ما يدفعه كل فرد بالضبط، مع خيار تقريب الإجمالي للأعلى.",
+ "howTo": ["أدخل قيمة الفاتورة.","اختر نسبة بقشيش أو اكتب نسبتك الخاصة.","حدد عدد الأشخاص المشاركين في الفاتورة.","اختياريًا قرّب الإجمالي للأعلى واقرأ نصيب كل شخص."],
+ "faqs": [
+  {"q":"كم ينبغي أن أدفع بقشيشًا؟","a":"يختلف الأمر حسب البلد والمكان؛ ففي الولايات المتحدة تتراوح النسبة المعتادة بين 15% و20%، بينما في كثير من أوروبا والشرق الأوسط تكفي نسبة أقل أو لا بقشيش أصلًا."},
+  {"q":"هل يُحسب البقشيش قبل الضريبة أم بعدها؟","a":"تطبّق الحاسبة النسبة على المبلغ الذي تدخله، فاكتب المبلغ قبل الضريبة إن كان هذا تفضيلك."},
+  {"q":"كيف يعمل التقريب للأعلى؟","a":"يُقرَّب الإجمالي إلى الوحدة الصحيحة التالية ويُضاف الفرق إلى البقشيش، ما يسهّل الدفع نقدًا."},
+  {"q":"هل يمكن التقسيم بشكل غير متساوٍ؟","a":"التقسيم متساوٍ لكل شخص؛ وللأنصبة المتفاوتة احسب نصيب كل فرد على حدة."},
+  {"q":"هل يُرسل أي شيء عبر الإنترنت؟","a":"لا. كل العمليات الحسابية تتم داخل متصفحك."}
+ ]},
+"currency-converter": {
+ "name": "محوّل العملات",
+ "short": "حوّل بين 18 عملة رئيسية.",
+ "description": "محوّل عملات مجاني عبر الإنترنت. حوّل بين 18 عملة رئيسية بأسعار صرف عامة مخزّنة محليًا مع عرض المصدر ووقت التحديث.",
+ "intro": "حوّل المبالغ بين أكثر عملات العالم استخدامًا. تأتي الأسعار من خدمة عامة مجانية لأسعار الصرف، وتُخزَّن في متصفحك لمدة ساعة، مع عرض مصدرها ووقت تحديثها دائمًا.",
+ "howTo": ["اختر العملة التي تحوّل منها والعملة التي تحوّل إليها.","أدخل المبلغ.","اقرأ القيمة المحوَّلة وسعر الصرف المستخدم.","اضغط تحديث للحصول على أحدث الأسعار."],
+ "faqs": [
+  {"q":"من أين تأتي أسعار الصرف؟","a":"من خدمة Exchange Rate API العامة المجانية. يُطلب جدول الأسعار فقط، أما المبلغ الذي تكتبه فلا يغادر متصفحك أبدًا."},
+  {"q":"كم مرة تُحدَّث الأسعار؟","a":"تُخزَّن محليًا لمدة ساعة، ويُعرض وقت التحديث دائمًا بجانب النتيجة، ويمكنك فرض التحديث في أي وقت."},
+  {"q":"ماذا يحدث إذا كنت غير متصل؟","a":"تُستخدم آخر أسعار محفوظة مع توضيح أنها مخزّنة، فيمكنك التحويل بشكل تقريبي."},
+  {"q":"هل تصلح هذه الأسعار للتداول؟","a":"لا. هي أسعار مرجعية وسطية، وتطبّق البنوك وشركات الصرافة هوامشها ورسومها الخاصة."},
+  {"q":"لماذا هذه الأداة الوحيدة التي تستخدم الإنترنت؟","a":"لأن أسعار الصرف تتغير باستمرار ولا يمكن تضمينها في الصفحة، أما بقية أدوات الموقع فتعمل بالكامل دون اتصال."}
+ ]}
+}
+}

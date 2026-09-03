@@ -55,9 +55,9 @@
     "disclaimer": "Disclaimer",
     "rightsReserved": "All rights reserved.",
     "madeWith": "Built for privacy-first image editing.",
-    "localSignal": "100% local — no uploads, no servers"
+    "localSignal": "100% local — no uploads, no servers",
+    "new": "New"
   },
-
   "validation": {
     "invalidType": "This file type is not supported here. Please choose {types}.",
     "fileTooLarge": "This file is too large. The maximum size is {size} MB.",
@@ -68,11 +68,9 @@
     "tooManyFiles": "You can upload up to {max} files at once.",
     "readError": "Could not load the file. Please try a different one."
   },
-
   "header": {
     "nav": "Main navigation"
   },
-
   "footer": {
     "description": "Free online image tools that run entirely in your browser. Compress, resize, convert, edit and organize images without uploading them anywhere.",
     "toolsColumn": "Popular tools",
@@ -81,7 +79,6 @@
     "aboutColumn": "Company",
     "trust": "Your files never leave your device. Everything is processed locally using browser technology."
   },
-
   "home": {
     "heroTitle": "Powerful image tools — free, fast and private",
     "heroHighlight": "right in your browser",
@@ -121,9 +118,10 @@
     "privacyPoint2": "Works even when you're offline",
     "privacyPoint3": "Free and open to everyone",
     "faqTitle": "Frequently asked questions",
-    "faqSubtitle": "Quick answers about Piclizer."
+    "faqSubtitle": "Quick answers about Piclizer.",
+    "newTitle": "Just added",
+    "newSubtitle": "The newest tools on Piclizer — PDF, text, calculator and developer utilities."
   },
-
   "homeFaqs": [
     {
       "q": "Is Piclizer really free?",
@@ -158,25 +156,60 @@
       "a": "There is no upload or download time. Processing starts instantly and uses your device's own computing power."
     }
   ],
-
   "categoryMeta": {
-    "compress": { "name": "Image Compressors", "description": "Reduce image file size without losing visible quality — right in your browser." },
-    "resize": { "name": "Image Resizers", "description": "Change image dimensions precisely with presets or custom sizes." },
-    "convert": { "name": "Image Converters", "description": "Convert images between JPG, PNG and WebP formats instantly." },
-    "edit": { "name": "Image Editors", "description": "Crop, rotate, flip, merge, split and transform your images." },
-    "pdf": { "name": "PDF Tools", "description": "Turn your images into polished PDF documents." },
-    "color": { "name": "Color Tools", "description": "Pick and extract colors from any image." }
+    "compress": {
+      "name": "Image Compressors",
+      "description": "Reduce image file size without losing visible quality — right in your browser."
+    },
+    "resize": {
+      "name": "Image Resizers",
+      "description": "Change image dimensions precisely with presets or custom sizes."
+    },
+    "convert": {
+      "name": "Image Converters",
+      "description": "Convert images between JPG, PNG and WebP formats instantly."
+    },
+    "edit": {
+      "name": "Image Editors",
+      "description": "Crop, rotate, flip, merge, split and transform your images."
+    },
+    "pdf": {
+      "name": "PDF Tools",
+      "description": "Turn your images into polished PDF documents."
+    },
+    "color": {
+      "name": "Color Tools",
+      "description": "Pick and extract colors from any image."
+    },
+    "pdf-tools": {
+      "name": "PDF Tools",
+      "description": "Merge, split, rotate, protect and convert PDF documents — entirely in your browser."
+    },
+    "text-tools": {
+      "name": "Text Tools",
+      "description": "Count, clean, convert and compare text in English and Arabic, instantly and privately."
+    },
+    "calculator-tools": {
+      "name": "Calculators",
+      "description": "Everyday calculators for age, BMI, percentages, dates, money and units."
+    },
+    "developer-tools": {
+      "name": "Developer Tools",
+      "description": "Format, encode, hash and generate — the developer utilities you reach for daily."
+    }
   },
-
   "categoryIntros": {
     "compress": "Large images slow down websites, apps and emails. Our compressor tools shrink JPG, PNG and WebP files by intelligently reducing quality and metadata — all in your browser, with no quality loss you can see.",
     "resize": "Need exact dimensions for a profile picture, a website banner or a print job? Resize images to precise pixel sizes, keep the aspect ratio, and export in the same format.",
     "convert": "Different situations need different formats. Convert between JPG, PNG and WebP in seconds — with quality control, transparency handling and background color options.",
     "edit": "From simple flips and rotations to cropping, merging and watermarking — edit your images exactly how you need, without installing any software.",
     "pdf": "Turn single images or entire galleries into clean PDF documents. Choose page sizes, orientations and order — generated entirely on your device.",
-    "color": "Extract the exact colors from any image. Pick a pixel's HEX, RGB and HSL values, or generate a complete color palette from a photo."
+    "color": "Extract the exact colors from any image. Pick a pixel's HEX, RGB and HSL values, or generate a complete color palette from a photo.",
+    "pdf-tools": "Working with PDFs usually means uploading private documents to a stranger’s server. Our PDF tools do the opposite: merging, splitting, rotating, encrypting and converting all happen inside your browser, so contracts, invoices and reports never leave your device.",
+    "text-tools": "From counting words for an assignment to cleaning scraped content or comparing two drafts, these text utilities handle everyday writing tasks in both English and Arabic. Everything is pure JavaScript, so results appear as fast as you can type.",
+    "calculator-tools": "Quick, reliable answers for the numbers that come up in daily life — your age, your BMI, a discount at the till, interest on savings, a tip to split or a unit you need converted. Every calculator shows the formula and the steps behind its result.",
+    "developer-tools": "The small utilities every developer needs, gathered in one fast, private place. Format JSON, test a regular expression, generate a UUID, hash a file or convert a colour — with no sign-up, no rate limits and no code ever leaving your browser."
   },
-
   "toolShell": {
     "dropHere": "Drop your images here",
     "clickOrDrag": "Drag & drop images here, or click to browse",
@@ -199,7 +232,6 @@
     "quality": "Quality",
     "noticeLarge": "This file is large and may take a moment to process."
   },
-
   "controls": {
     "quality": "Quality",
     "width": "Width",
@@ -280,9 +312,10 @@
     "rgb": "RGB",
     "hsl": "HSL",
     "selectImages": "Select images",
-    "dropReorder": "Drag thumbnails to change the order"
+    "dropReorder": "Drag thumbnails to change the order",
+    "color": "Colour",
+    "size": "Size"
   },
-
   "tools": {
     "image-compressor": {
       "name": "Image Compressor",
@@ -815,18 +848,1513 @@
           "a": "JPG, PNG and WebP, with the output in the same format."
         }
       ]
+    },
+    "pdf-merger": {
+      "name": "PDF Merger",
+      "short": "Combine several PDF files into one document.",
+      "description": "Merge PDF files online for free. Combine multiple documents into one, reorder them by dragging, and download instantly — everything runs in your browser.",
+      "intro": "Bring several PDFs together into a single, tidy document. Drag the files into the order you want, merge them in one click, and keep every page exactly as it was — no uploads, no watermarks, no page limits.",
+      "howTo": [
+        "Add two or more PDF files with drag & drop or the browse button.",
+        "Drag the file cards to arrange them in the order you want.",
+        "Press Merge PDFs and wait for the progress bar to finish.",
+        "Download the combined document to your device."
+      ],
+      "faqs": [
+        {
+          "q": "Are my PDF files uploaded to a server?",
+          "a": "No. Merging happens entirely inside your browser using pdf-lib. Your documents never leave your device, which is why the tool also works offline once the page is loaded."
+        },
+        {
+          "q": "How many PDFs can I merge at once?",
+          "a": "Up to 20 files, each up to 50 MB, with a combined limit of 200 MB. These limits keep the merge comfortably within your browser's available memory."
+        },
+        {
+          "q": "Will merging change the quality of my pages?",
+          "a": "No. Pages are copied as-is, so text stays selectable, images keep their original resolution and vector graphics remain sharp."
+        },
+        {
+          "q": "Can I merge password-protected PDFs?",
+          "a": "Not directly. Remove the password first with our PDF Unlock tool, then merge the unprotected files."
+        },
+        {
+          "q": "Are bookmarks and links preserved?",
+          "a": "Internal page content, links and annotations attached to pages are copied. Document-level bookmarks from the source files are not carried over."
+        }
+      ]
+    },
+    "pdf-splitter": {
+      "name": "PDF Splitter",
+      "short": "Split one PDF into several separate files.",
+      "description": "Split a PDF online for free. Extract every page separately, cut into fixed chunks, or define custom page ranges — processed privately in your browser.",
+      "intro": "Break a long PDF into smaller documents in the way that suits you: one file per page, fixed groups of pages, or your own custom ranges. Results are packaged so you can download everything at once.",
+      "howTo": [
+        "Select the PDF you want to split.",
+        "Choose a split mode: one file per page, every N pages, or custom ranges.",
+        "Enter your ranges, for example 1-3, 5, 8-10.",
+        "Press Split PDF and download the files individually or as a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "How do I write a page range?",
+          "a": "Use commas to separate parts and dashes for ranges — 1-3, 5, 8-10 produces three files covering pages 1 to 3, page 5, and pages 8 to 10."
+        },
+        {
+          "q": "Is the original PDF modified?",
+          "a": "Never. The file on your device is only read; every split part is created as a brand-new document in memory."
+        },
+        {
+          "q": "What are the size limits?",
+          "a": "Files up to 100 MB and 500 pages. Larger documents may still work but can be slow depending on your device."
+        },
+        {
+          "q": "Can I download all parts together?",
+          "a": "Yes. Use Download all to receive a ZIP archive that is also built locally in your browser."
+        },
+        {
+          "q": "Does splitting reduce quality?",
+          "a": "No. Pages are copied without re-encoding, so fonts, images and vectors are identical to the original."
+        }
+      ]
+    },
+    "pdf-delete-pages": {
+      "name": "Delete PDF Pages",
+      "short": "Remove unwanted pages from a PDF.",
+      "description": "Delete pages from a PDF online for free. Click page thumbnails to remove them and save a clean document — private, in-browser processing with no uploads.",
+      "intro": "Get rid of blank sheets, cover pages or anything you no longer need. Preview every page as a thumbnail, mark what to remove, and save a clean copy of your document.",
+      "howTo": [
+        "Open your PDF in the tool.",
+        "Wait for the page thumbnails to render.",
+        "Click the pages you want to delete, or type a range instead.",
+        "Press Delete selected pages and download the result."
+      ],
+      "faqs": [
+        {
+          "q": "Can I undo a deletion?",
+          "a": "Yes. Selections are only applied when you press the delete button, and your original file is never changed, so you can always start over."
+        },
+        {
+          "q": "Can I delete every page?",
+          "a": "No — a PDF must keep at least one page, so the tool blocks a selection that would empty the document."
+        },
+        {
+          "q": "Why do thumbnails take a moment to appear?",
+          "a": "Each page is rendered locally with pdf.js. Large or graphics-heavy documents simply take longer to draw."
+        },
+        {
+          "q": "Is anything uploaded while I preview pages?",
+          "a": "No. Rendering and editing both run on your device; no page image or file byte is ever transmitted."
+        },
+        {
+          "q": "Does the file get smaller after deleting pages?",
+          "a": "Usually yes, though shared resources such as embedded fonts may still be kept, so the reduction is not always proportional."
+        }
+      ]
+    },
+    "pdf-reorder-pages": {
+      "name": "Reorder PDF Pages",
+      "short": "Rearrange the page order of a PDF.",
+      "description": "Reorder PDF pages online for free. Drag page thumbnails into a new order and save the rearranged document — fully private, in-browser processing.",
+      "intro": "Put your pages in the right order by dragging their thumbnails around. Ideal for fixing scans that came out backwards or moving an appendix to the end.",
+      "howTo": [
+        "Choose the PDF you want to rearrange.",
+        "Drag the page thumbnails into the order you prefer.",
+        "Use Reset order at any time to start again.",
+        "Press Apply new order and download the document."
+      ],
+      "faqs": [
+        {
+          "q": "How many pages can I reorder?",
+          "a": "Up to 200 pages. Beyond that, thumbnail rendering becomes heavy for most browsers."
+        },
+        {
+          "q": "Can I reverse the whole document?",
+          "a": "Yes — drag pages freely, including moving the last page to the front to reverse the sequence."
+        },
+        {
+          "q": "Will links between pages still work?",
+          "a": "Page content and annotations are copied intact, but internal links that point to a fixed page number may no longer land where you expect."
+        },
+        {
+          "q": "Does reordering re-compress the file?",
+          "a": "No. Pages are copied without re-encoding, so quality and file size stay essentially the same."
+        },
+        {
+          "q": "Does this work on a phone?",
+          "a": "Yes. The grid adapts to small screens and supports touch dragging."
+        }
+      ]
+    },
+    "pdf-rotate-pages": {
+      "name": "Rotate PDF Pages",
+      "short": "Turn pages 90, 180 or 270 degrees.",
+      "description": "Rotate PDF pages online for free. Fix sideways scans by rotating single pages or the whole document, then save — private, in-browser processing.",
+      "intro": "Straighten scans that came out sideways or upside down. Rotate one page at a time or the entire document at once, and see the result before you save.",
+      "howTo": [
+        "Add the PDF that needs rotating.",
+        "Use the arrows on a thumbnail to rotate that page.",
+        "Or use Rotate all left/right to turn every page together.",
+        "Press Apply rotations and download the corrected file."
+      ],
+      "faqs": [
+        {
+          "q": "Is the rotation permanent?",
+          "a": "Yes. The saved file stores the new page rotation, so it opens correctly in every PDF reader."
+        },
+        {
+          "q": "Can I rotate only some pages?",
+          "a": "Yes. Each thumbnail has its own rotate controls, so you can mix orientations within one document."
+        },
+        {
+          "q": "Does rotating reduce image quality?",
+          "a": "No. Rotation changes a page attribute only; nothing is re-rendered or re-compressed."
+        },
+        {
+          "q": "My scan is upside down — what should I use?",
+          "a": "Rotate the page twice in the same direction for a 180° turn."
+        },
+        {
+          "q": "Are my files uploaded?",
+          "a": "No. Reading, previewing and saving all happen locally in your browser."
+        }
+      ]
+    },
+    "pdf-extract-pages": {
+      "name": "Extract PDF Pages",
+      "short": "Save selected pages as a new PDF.",
+      "description": "Extract pages from a PDF online for free. Pick the pages you need and save them as a new document — no uploads, no watermarks, fully private.",
+      "intro": "Need just a few pages out of a long report? Select them by clicking thumbnails or by typing a range, and save exactly those pages as a fresh PDF.",
+      "howTo": [
+        "Open the PDF you want to take pages from.",
+        "Click the pages to extract, or type a range such as 2-5, 9.",
+        "Check the selection summary shown below the grid.",
+        "Press Extract pages and download the new document."
+      ],
+      "faqs": [
+        {
+          "q": "How is this different from splitting?",
+          "a": "Splitting produces many files at once; extracting collects the pages you choose into one new document."
+        },
+        {
+          "q": "Do extracted pages keep their order?",
+          "a": "They follow the order of your selection, so you can also use the tool to build a re-sequenced excerpt."
+        },
+        {
+          "q": "Is there a page limit?",
+          "a": "You can extract as many pages as the source document contains, within the 100 MB file limit."
+        },
+        {
+          "q": "Does the original file change?",
+          "a": "No. It is only read, and the extract is created as a separate document."
+        },
+        {
+          "q": "Can I extract from a protected PDF?",
+          "a": "Remove the password first with the PDF Unlock tool, then extract."
+        }
+      ]
+    },
+    "pdf-protect": {
+      "name": "Protect PDF with Password",
+      "short": "Encrypt a PDF with a password.",
+      "description": "Password protect a PDF online for free. Add AES-256 encryption and set printing or copying permissions — your file and password never leave your browser.",
+      "intro": "Add a strong password to a PDF before you share it. Encryption uses AES-256 and runs entirely on your device, so neither the document nor the password is ever transmitted.",
+      "howTo": [
+        "Select the PDF you want to protect.",
+        "Type a password and confirm it.",
+        "Optionally set an owner password and choose which permissions to allow.",
+        "Press Protect PDF and download the encrypted file."
+      ],
+      "faqs": [
+        {
+          "q": "What encryption is used?",
+          "a": "AES-256, the strongest standard supported by modern PDF readers."
+        },
+        {
+          "q": "Can you recover my password if I forget it?",
+          "a": "No, and neither can anyone else. The password is never stored or sent anywhere, so a lost password means a permanently locked file."
+        },
+        {
+          "q": "What is the difference between a user and an owner password?",
+          "a": "The user password is required to open the document. The owner password controls permissions such as printing and copying."
+        },
+        {
+          "q": "Do permissions really stop people copying my text?",
+          "a": "They instruct compliant readers to restrict those actions. They are a deterrent, not an absolute guarantee — only the open password truly protects content."
+        },
+        {
+          "q": "What makes a strong password?",
+          "a": "At least 8 characters mixing upper and lower case letters, numbers and symbols. The strength meter updates as you type."
+        }
+      ]
+    },
+    "pdf-unlock": {
+      "name": "Unlock PDF",
+      "short": "Remove a known password from a PDF.",
+      "description": "Remove a PDF password online for free. Enter the password you already know and save an unprotected copy — decryption runs privately in your browser.",
+      "intro": "Stop retyping the same password every time you open a document you own. Enter the password once and save a decrypted copy, processed entirely on your device.",
+      "howTo": [
+        "Add the protected PDF.",
+        "Type the password that opens the file.",
+        "Press Remove password.",
+        "Download the unprotected copy."
+      ],
+      "faqs": [
+        {
+          "q": "Can this crack a PDF I do not have the password for?",
+          "a": "No. The tool decrypts using the password you supply; it does not guess, brute-force or bypass encryption."
+        },
+        {
+          "q": "Is it legal to remove a password?",
+          "a": "Only remove protection from documents you own or are authorised to modify. Respect the rights of the document owner."
+        },
+        {
+          "q": "Is my password sent anywhere?",
+          "a": "No. Decryption runs locally in your browser, and the password stays in memory only for the duration of the operation."
+        },
+        {
+          "q": "The tool says the file is not encrypted — why?",
+          "a": "Some PDFs restrict permissions without an open password. Those files are already readable and have nothing to remove."
+        },
+        {
+          "q": "Does unlocking change the content?",
+          "a": "No. Pages are copied unchanged; only the encryption layer is dropped."
+        }
+      ]
+    },
+    "pdf-to-images": {
+      "name": "PDF to Images",
+      "short": "Convert PDF pages to PNG or JPG.",
+      "description": "Convert PDF to images online for free. Render every page as a PNG or JPG at up to 300 DPI and download them as a ZIP — all inside your browser.",
+      "intro": "Turn each page of a PDF into a standalone image for slides, thumbnails or social posts. Choose your resolution and format, then download the pages one by one or as a ZIP.",
+      "howTo": [
+        "Choose the PDF you want to convert.",
+        "Pick a resolution: 72, 150 or 300 DPI.",
+        "Select PNG for sharpness or JPG for smaller files.",
+        "Press Convert to images and download the results."
+      ],
+      "faqs": [
+        {
+          "q": "Which resolution should I choose?",
+          "a": "72 DPI is fine for on-screen previews, 150 DPI suits most documents, and 300 DPI matches print quality but uses much more memory."
+        },
+        {
+          "q": "Why is the number of pages limited at high DPI?",
+          "a": "Rendering at 300 DPI creates very large canvases. To avoid crashing the tab we cap the page count as resolution rises."
+        },
+        {
+          "q": "PNG or JPG?",
+          "a": "PNG keeps text edges crisp and supports transparency; JPG produces much smaller files for photo-heavy pages."
+        },
+        {
+          "q": "Is the conversion done online?",
+          "a": "It runs in your browser with pdf.js. No page or image is uploaded."
+        },
+        {
+          "q": "Can I convert a scanned PDF?",
+          "a": "Yes. Scanned pages are images already, so they render quickly and cleanly."
+        }
+      ]
+    },
+    "pdf-compressor": {
+      "name": "PDF Compressor",
+      "short": "Reduce the file size of a PDF.",
+      "description": "Compress PDF files online for free. Choose lossless optimisation or aggressive rasterisation to shrink documents — processed privately in your browser.",
+      "intro": "Make a PDF small enough to email or upload. Light and medium levels optimise the file structure without touching quality, while maximum rasterises the pages for the smallest possible result.",
+      "howTo": [
+        "Add the PDF you want to compress.",
+        "Choose a compression level: light, medium or maximum.",
+        "Press Compress PDF and wait for the result.",
+        "Compare the sizes and download the smaller file."
+      ],
+      "faqs": [
+        {
+          "q": "Why did my file barely get smaller?",
+          "a": "Text-only PDFs are usually already efficient. Big savings come from documents packed with photos or scans."
+        },
+        {
+          "q": "What does the maximum level do?",
+          "a": "It re-renders each page as a JPEG image at 110 DPI. Files become much smaller, but text is no longer selectable or searchable."
+        },
+        {
+          "q": "Are light and medium lossless?",
+          "a": "Yes. They rewrite the file structure, remove unused objects and pack object streams without altering page content."
+        },
+        {
+          "q": "Is my document uploaded for compression?",
+          "a": "No. Everything is processed locally in your browser."
+        },
+        {
+          "q": "What if compression makes the file bigger?",
+          "a": "The tool tells you when no meaningful reduction was possible so you can simply keep your original."
+        }
+      ]
+    },
+    "pdf-page-counter": {
+      "name": "PDF Page Counter",
+      "short": "Count pages in one or many PDFs.",
+      "description": "Count PDF pages online for free. Add several documents at once to see page counts, file sizes and combined totals instantly — nothing is uploaded.",
+      "intro": "Quickly check how long your documents are before printing or submitting them. Add multiple PDFs and get per-file page counts plus a combined total.",
+      "howTo": [
+        "Add one or more PDF files.",
+        "Read the page count and size next to each file.",
+        "Check the totals row for the combined figures.",
+        "Add more files or reset to start over."
+      ],
+      "faqs": [
+        {
+          "q": "How many files can I check at once?",
+          "a": "Up to 20 files of 50 MB each."
+        },
+        {
+          "q": "Can it count pages in an encrypted PDF?",
+          "a": "Encrypted documents must be unlocked first, since their structure cannot be read without the password."
+        },
+        {
+          "q": "Does the file get uploaded to count pages?",
+          "a": "No. Only the document structure is parsed locally, and nothing is sent anywhere."
+        },
+        {
+          "q": "Why is a file listed as invalid?",
+          "a": "The tool checks the PDF signature. Files renamed to .pdf but saved in another format are rejected."
+        },
+        {
+          "q": "Does it show file sizes too?",
+          "a": "Yes — each row shows the size, and the totals row adds them up."
+        }
+      ]
+    },
+    "word-counter": {
+      "name": "Word Counter",
+      "short": "Count words, characters, sentences and reading time.",
+      "description": "Free online word counter. Count words, characters, sentences, paragraphs and reading time in English and Arabic — instantly and privately in your browser.",
+      "intro": "Keep your writing within the limit. Paste any text to see live counts for words, characters, sentences and paragraphs, plus estimated reading and speaking time and your most frequent words.",
+      "howTo": [
+        "Type or paste your text into the editor.",
+        "Watch the statistics update as you write.",
+        "Turn on \"Ignore common words\" for a more useful frequency list.",
+        "Copy the results or clear the editor to start again."
+      ],
+      "faqs": [
+        {
+          "q": "How is a word counted?",
+          "a": "Any run of letters, digits or Arabic characters separated by whitespace counts as one word, which matches the way word processors count."
+        },
+        {
+          "q": "Does it work with Arabic text?",
+          "a": "Yes. Arabic script is fully supported, including diacritics and Arabic-Indic digits."
+        },
+        {
+          "q": "How is reading time calculated?",
+          "a": "Reading time assumes 200 words per minute and speaking time assumes 130 words per minute — common averages for adult readers."
+        },
+        {
+          "q": "Is my text stored or uploaded?",
+          "a": "No. Everything is calculated in your browser and disappears as soon as you close the tab."
+        },
+        {
+          "q": "Can I count characters without spaces?",
+          "a": "Yes, both totals are shown side by side, which is handy for platforms with strict character limits."
+        }
+      ]
+    },
+    "remove-extra-spaces": {
+      "name": "Remove Extra Spaces",
+      "short": "Clean up double spaces, tabs and blank lines.",
+      "description": "Remove extra spaces from text online for free. Collapse double spaces, trim line ends, drop blank lines and convert tabs — instantly in your browser.",
+      "intro": "Text copied from PDFs, emails or spreadsheets is often full of stray spacing. Choose exactly which whitespace problems to fix and get clean, consistent text in one pass.",
+      "howTo": [
+        "Paste the messy text into the input box.",
+        "Tick the whitespace rules you want applied.",
+        "Review the cleaned result on the right.",
+        "Copy the output or download it as a .txt file."
+      ],
+      "faqs": [
+        {
+          "q": "What is the difference between collapsing and removing blank lines?",
+          "a": "Collapsing turns several consecutive blank lines into one, while removing deletes them all."
+        },
+        {
+          "q": "Will it remove line breaks between paragraphs?",
+          "a": "Only if you enable that option. By default paragraph breaks are preserved."
+        },
+        {
+          "q": "Does it handle tabs?",
+          "a": "Yes. Tabs can be converted to spaces or stripped entirely with the \"remove all whitespace\" option."
+        },
+        {
+          "q": "Are non-breaking spaces handled?",
+          "a": "Yes, invisible non-breaking spaces are normalised to regular spaces before the other rules run."
+        },
+        {
+          "q": "Is my text sent anywhere?",
+          "a": "No. All cleaning happens locally in your browser."
+        }
+      ]
+    },
+    "case-converter": {
+      "name": "Case Converter",
+      "short": "Convert text between 11 letter cases.",
+      "description": "Convert text case online for free. Switch between UPPERCASE, lowercase, Title Case, camelCase, snake_case, kebab-case and more — instantly in your browser.",
+      "intro": "Change the capitalisation of any text without retyping it. Eleven case styles cover everything from headlines to variable names, and every result can be copied with one click.",
+      "howTo": [
+        "Paste your text into the editor.",
+        "Pick the case style you need.",
+        "Compare the result and switch styles as often as you like.",
+        "Copy the converted text or download it."
+      ],
+      "faqs": [
+        {
+          "q": "Which case styles are supported?",
+          "a": "UPPERCASE, lowercase, Title Case, Sentence case, camelCase, PascalCase, snake_case, kebab-case, SCREAMING_SNAKE_CASE, aLtErNaTiNg and iNVERSE cASE."
+        },
+        {
+          "q": "What happens to Arabic text?",
+          "a": "Arabic script has no upper or lower case, so those styles leave it unchanged, while separator-based styles such as kebab-case still work."
+        },
+        {
+          "q": "Does Title Case handle small words?",
+          "a": "Every word is capitalised for predictability. If you follow a style guide with lowercase articles, adjust those few words manually."
+        },
+        {
+          "q": "Can I convert programming identifiers?",
+          "a": "Yes. camelCase, PascalCase, snake_case and kebab-case all detect existing word boundaries, including camel humps."
+        },
+        {
+          "q": "Is there a length limit?",
+          "a": "No hard limit — very long documents are only limited by your device's memory."
+        }
+      ]
+    },
+    "text-cleaner": {
+      "name": "Text Cleaner",
+      "short": "Strip HTML, URLs, emojis and unwanted characters.",
+      "description": "Clean text online for free. Remove HTML tags, URLs, emails, numbers, punctuation, emoji and duplicate lines, plus find and replace — all in your browser.",
+      "intro": "Turn messy copied content into clean plain text. Combine as many cleaning rules as you need, add your own find-and-replace, and see the result update as you go.",
+      "howTo": [
+        "Paste the text you want to clean.",
+        "Enable the rules you need for characters and lines.",
+        "Optionally add a find-and-replace pair or a line filter.",
+        "Copy or download the cleaned text."
+      ],
+      "faqs": [
+        {
+          "q": "Does stripping HTML keep the visible text?",
+          "a": "Yes. Tags are removed while their inner text remains, so you keep the content without the markup."
+        },
+        {
+          "q": "Can I remove lines that contain a specific word?",
+          "a": "Yes. Type the word into the line filter and every line containing it is dropped."
+        },
+        {
+          "q": "Are emoji really removed?",
+          "a": "Yes, including modern multi-codepoint emoji sequences with skin tones and joiners."
+        },
+        {
+          "q": "In what order are the rules applied?",
+          "a": "Character rules run first, then line rules, then your find-and-replace, so the outcome is always predictable."
+        },
+        {
+          "q": "Is my content private?",
+          "a": "Completely. No text is uploaded, logged or stored anywhere."
+        }
+      ]
+    },
+    "lorem-ipsum-generator": {
+      "name": "Lorem Ipsum Generator",
+      "short": "Generate placeholder text in Latin or Arabic.",
+      "description": "Generate Lorem Ipsum placeholder text online for free. Create words, sentences or paragraphs in Latin or Arabic, with optional HTML markup — instantly.",
+      "intro": "Fill your mockups with realistic placeholder copy. Generate by words, sentences or paragraphs, choose classic Latin or natural Arabic filler, and copy the result straight into your design.",
+      "howTo": [
+        "Choose whether to generate words, sentences or paragraphs.",
+        "Set how many you need.",
+        "Pick Latin or Arabic filler text.",
+        "Copy the generated text or download it as a file."
+      ],
+      "faqs": [
+        {
+          "q": "What is Lorem Ipsum?",
+          "a": "It is scrambled Latin used as placeholder text since the 1500s. Its word shapes resemble real prose, so layouts look natural without readers being distracted by content."
+        },
+        {
+          "q": "Why offer Arabic filler text?",
+          "a": "Arabic has different word lengths and no capital letters, so testing RTL layouts with Latin text can be misleading."
+        },
+        {
+          "q": "Can I get HTML paragraphs?",
+          "a": "Yes. Enable the HTML option and each paragraph is wrapped in a p tag, ready to paste into a template."
+        },
+        {
+          "q": "What are the limits?",
+          "a": "Up to 10,000 words, 1,000 sentences or 100 paragraphs per generation."
+        },
+        {
+          "q": "Is the text always the same?",
+          "a": "No. Sentences are assembled randomly each time, so you get fresh output on every generation."
+        }
+      ]
+    },
+    "text-reverser": {
+      "name": "Text Reverser",
+      "short": "Reverse characters, words or lines.",
+      "description": "Reverse text online for free. Flip characters, word order, each line or the order of lines — with full emoji and Arabic support, right in your browser.",
+      "intro": "Flip text in whichever direction you need — reverse the characters for a puzzle, the word order for a test, or the line order to invert a list.",
+      "howTo": [
+        "Paste your text into the input area.",
+        "Choose what to reverse: characters, words, each line or line order.",
+        "Check the result on the right.",
+        "Copy or download the reversed text."
+      ],
+      "faqs": [
+        {
+          "q": "Does reversing break emoji?",
+          "a": "No. Text is split by code points, so emoji and other multi-byte characters stay intact."
+        },
+        {
+          "q": "What happens with Arabic text?",
+          "a": "Arabic characters are reversed at the code-point level, so the stored order flips while your browser still shapes the letters for display."
+        },
+        {
+          "q": "What is the difference between reversing each line and the line order?",
+          "a": "Reversing each line flips the characters within every line; reversing line order keeps each line intact but puts the last line first."
+        },
+        {
+          "q": "Can I reverse a list of items?",
+          "a": "Yes — put each item on its own line and choose \"Reverse line order\"."
+        },
+        {
+          "q": "Is there a size limit?",
+          "a": "Only your device's memory. Typical documents reverse instantly."
+        }
+      ]
+    },
+    "remove-duplicate-lines": {
+      "name": "Remove Duplicate Lines",
+      "short": "Delete repeated lines from a list.",
+      "description": "Remove duplicate lines online for free. Deduplicate lists with case-sensitive matching and keep the first or last occurrence — fully private.",
+      "intro": "Clean up lists of emails, keywords, URLs or IDs by removing repeated entries. Choose whether case and surrounding spaces matter, and whether to keep the first or last copy of each line.",
+      "howTo": [
+        "Paste your list, one item per line.",
+        "Choose whether matching should be case sensitive.",
+        "Decide whether to keep the first or last occurrence.",
+        "Copy the deduplicated list or download it."
+      ],
+      "faqs": [
+        {
+          "q": "Is the original order preserved?",
+          "a": "Yes. Lines stay in their original sequence; only the repeats are dropped."
+        },
+        {
+          "q": "What does \"ignore leading and trailing spaces\" do?",
+          "a": "It compares lines after trimming, so \" apple\" and \"apple\" count as the same entry."
+        },
+        {
+          "q": "Can I keep the last occurrence instead of the first?",
+          "a": "Yes, switch the keep option — useful when later rows contain the most recent data."
+        },
+        {
+          "q": "Are blank lines removed?",
+          "a": "Repeated blank lines are treated like any other duplicate, so only one blank line remains."
+        },
+        {
+          "q": "How many lines can it handle?",
+          "a": "Hundreds of thousands of lines process in well under a second on a typical device."
+        }
+      ]
+    },
+    "text-to-slug": {
+      "name": "Text to Slug",
+      "short": "Turn any title into a clean URL slug.",
+      "description": "Convert text to a URL slug online for free. Create SEO-friendly slugs from English or Arabic titles, with optional transliteration, in your browser.",
+      "intro": "Turn a headline into a tidy, readable URL. Accents are simplified, punctuation is dropped and spaces become separators, with an option to transliterate Arabic into Latin letters.",
+      "howTo": [
+        "Type or paste your title.",
+        "Choose a hyphen or underscore separator.",
+        "Enable transliteration if your title is in Arabic.",
+        "Copy the generated slug into your CMS."
+      ],
+      "faqs": [
+        {
+          "q": "What makes a good slug?",
+          "a": "Short, lowercase, hyphen-separated and descriptive. Aim for three to six meaningful words."
+        },
+        {
+          "q": "Should I use Arabic letters in a URL?",
+          "a": "You can — modern browsers support them — but transliterated Latin slugs are easier to share, log and analyse."
+        },
+        {
+          "q": "Are accented characters supported?",
+          "a": "Yes. Characters such as é, ü and ñ are converted to their closest plain Latin equivalent."
+        },
+        {
+          "q": "Hyphen or underscore?",
+          "a": "Hyphens are the long-standing recommendation for web URLs because search engines treat them as word separators."
+        },
+        {
+          "q": "Does it remove stop words?",
+          "a": "No, so the meaning stays intact. Delete any words you do not need before copying."
+        }
+      ]
+    },
+    "text-diff": {
+      "name": "Text Diff Checker",
+      "short": "Compare two texts and highlight differences.",
+      "description": "Compare two texts online for free. Highlight added and removed words with a word-level diff, side by side or inline — computed privately in your browser.",
+      "intro": "Spot exactly what changed between two versions of a text. Our own diff engine highlights added and removed words, with side-by-side and inline views and a summary of the changes.",
+      "howTo": [
+        "Paste the original text on the left.",
+        "Paste the modified text on the right.",
+        "Switch between side-by-side and inline views.",
+        "Read the summary to see how much changed."
+      ],
+      "faqs": [
+        {
+          "q": "How does the comparison work?",
+          "a": "It uses a longest-common-subsequence algorithm written specifically for this tool, comparing word by word rather than character by character for readable results."
+        },
+        {
+          "q": "Can I compare code?",
+          "a": "Yes, though the diff is word-based. For source files, comparing line by line in your editor may be clearer."
+        },
+        {
+          "q": "Does it ignore whitespace?",
+          "a": "Runs of whitespace are normalised during comparison so that reformatting alone does not appear as a change."
+        },
+        {
+          "q": "Is there a size limit?",
+          "a": "Very large texts take longer because the algorithm compares every token pair, but typical documents are instant."
+        },
+        {
+          "q": "Are my documents uploaded?",
+          "a": "No. Both texts stay in your browser."
+        }
+      ]
+    },
+    "number-to-words": {
+      "name": "Number to Words",
+      "short": "Write numbers in English or Arabic words.",
+      "description": "Convert numbers to words online for free. Write any number in English or Arabic words, including currency wording for cheques and invoices — instantly.",
+      "intro": "Turn digits into properly written words for cheques, contracts and invoices. Both English and grammatically correct Arabic are supported, including currency phrasing.",
+      "howTo": [
+        "Type the number you want to convert.",
+        "Choose English or Arabic output.",
+        "Turn on currency mode and pick a currency if needed.",
+        "Copy the written form into your document."
+      ],
+      "faqs": [
+        {
+          "q": "Is the Arabic output grammatically correct?",
+          "a": "Yes. Our own implementation handles dual forms, the tens-then-units order and the correct case endings used in formal Arabic."
+        },
+        {
+          "q": "Can it write decimals?",
+          "a": "Yes. In currency mode the fractional part becomes the subunit, such as cents or piastres."
+        },
+        {
+          "q": "Which currencies are supported?",
+          "a": "Common currencies including USD, EUR, GBP, SAR, AED and EGP, each with its correct subunit name."
+        },
+        {
+          "q": "How large a number can it convert?",
+          "a": "Up to the quadrillions, which is well beyond any practical cheque or invoice amount."
+        },
+        {
+          "q": "Does it accept Arabic-Indic digits?",
+          "a": "Yes. Digits such as ١٢٣ are normalised automatically before conversion."
+        }
+      ]
+    },
+    "age-calculator": {
+      "name": "Age Calculator",
+      "short": "Calculate exact age in years, months and days.",
+      "description": "Free online age calculator. Find your exact age in years, months and days, plus your next birthday and star sign — calculated in your browser.",
+      "intro": "Work out exactly how old someone is on any given date. The calculator follows the real calendar, so leap years and different month lengths are handled precisely, and it also shows the countdown to the next birthday.",
+      "howTo": [
+        "Enter the date of birth.",
+        "Optionally change the reference date from today to another day.",
+        "Read the exact age in years, months and days.",
+        "Check the totals and the next birthday countdown."
+      ],
+      "faqs": [
+        {
+          "q": "How is age calculated exactly?",
+          "a": "We subtract the dates on the calendar, borrowing days from the previous month when needed, so the result matches how people actually count age."
+        },
+        {
+          "q": "Are leap years taken into account?",
+          "a": "Yes. A person born on 29 February is treated as having their birthday on 28 February in non-leap years."
+        },
+        {
+          "q": "Can I calculate age at a past or future date?",
+          "a": "Yes. Change the reference date to any day to see the age at that point in time."
+        },
+        {
+          "q": "What does the totals section show?",
+          "a": "Your age expressed entirely in months, weeks, days, hours, minutes and seconds."
+        },
+        {
+          "q": "Is my date of birth stored?",
+          "a": "No. Everything is calculated locally and nothing is saved or transmitted."
+        }
+      ]
+    },
+    "bmi-calculator": {
+      "name": "BMI Calculator",
+      "short": "Calculate body mass index in metric or imperial.",
+      "description": "Free online BMI calculator. Work out your body mass index in metric or imperial units and see your category and healthy weight range, privately.",
+      "intro": "Find your body mass index in a few seconds using metric or imperial measurements. You will see your BMI value, the category it falls into, your healthy weight range and supporting indicators.",
+      "howTo": [
+        "Choose metric or imperial units.",
+        "Enter your height and weight.",
+        "Read your BMI value and category on the scale.",
+        "Check your healthy weight range for the same height."
+      ],
+      "faqs": [
+        {
+          "q": "What is the BMI formula?",
+          "a": "BMI equals weight in kilograms divided by height in metres squared. Imperial values are converted to metric before the calculation."
+        },
+        {
+          "q": "What do the categories mean?",
+          "a": "Below 18.5 is underweight, 18.5 to 24.9 is normal, 25 to 29.9 is overweight and 30 or above is classed as obesity."
+        },
+        {
+          "q": "Is BMI accurate for everyone?",
+          "a": "No. It does not distinguish muscle from fat and can be misleading for athletes, older adults, pregnant people and children. It is a screening indicator, not a diagnosis."
+        },
+        {
+          "q": "What is BMI prime?",
+          "a": "Your BMI divided by 25. Anything above 1 means you are above the upper end of the healthy range."
+        },
+        {
+          "q": "Should I make health decisions based on this?",
+          "a": "No. Discuss your results with a qualified healthcare professional before changing your diet or exercise."
+        }
+      ]
+    },
+    "percentage-calculator": {
+      "name": "Percentage Calculator",
+      "short": "Solve five common percentage problems.",
+      "description": "Free online percentage calculator. Find a percentage of a number, percentage change, increases, decreases and original values — with step-by-step working.",
+      "intro": "Handle every everyday percentage question in one place. Pick the type of problem, enter two numbers, and see the answer together with the formula and the steps behind it.",
+      "howTo": [
+        "Choose the kind of percentage problem you need to solve.",
+        "Enter the two values in the fields shown.",
+        "Read the result and the step-by-step working.",
+        "Switch modes at any time to try another calculation."
+      ],
+      "faqs": [
+        {
+          "q": "How do I find a percentage of a number?",
+          "a": "Divide the percentage by 100 and multiply by the number — 20% of 250 is (20 ÷ 100) × 250 = 50."
+        },
+        {
+          "q": "How is percentage change calculated?",
+          "a": "Subtract the old value from the new one, divide by the old value and multiply by 100."
+        },
+        {
+          "q": "Why is a decrease of 50% not undone by an increase of 50%?",
+          "a": "Because each percentage is applied to a different base. Dropping 100 by 50% gives 50, and adding 50% of 50 only brings you back to 75."
+        },
+        {
+          "q": "What happens if I enter zero?",
+          "a": "Modes that would divide by zero show a clear message instead of an incorrect result."
+        },
+        {
+          "q": "Are the steps shown for every mode?",
+          "a": "Yes. Each result includes the formula and the substituted values so you can check the working."
+        }
+      ]
+    },
+    "interest-calculator": {
+      "name": "Interest Calculator",
+      "short": "Calculate simple and compound interest.",
+      "description": "Free online interest calculator. Work out simple or compound interest with any compounding frequency and see a year-by-year breakdown of your balance.",
+      "intro": "See how savings or a loan grow over time. Compare simple interest with compound interest at annual, monthly or daily compounding, and follow the balance year by year.",
+      "howTo": [
+        "Enter the principal amount.",
+        "Set the annual interest rate and the number of years.",
+        "Choose simple interest or compound interest with a frequency.",
+        "Review the total, the interest earned and the yearly breakdown."
+      ],
+      "faqs": [
+        {
+          "q": "What is the difference between simple and compound interest?",
+          "a": "Simple interest is always calculated on the original principal, while compound interest is calculated on the principal plus the interest already added."
+        },
+        {
+          "q": "What does compounding frequency change?",
+          "a": "More frequent compounding adds interest more often, so the balance grows slightly faster at the same nominal rate."
+        },
+        {
+          "q": "What is the effective annual rate?",
+          "a": "The rate that a once-a-year compounding would need in order to produce the same yearly growth as your chosen frequency."
+        },
+        {
+          "q": "Can I use this for a loan?",
+          "a": "Yes for interest accrual, but real loans usually involve regular repayments, fees and different rounding, so treat the figures as an estimate."
+        },
+        {
+          "q": "Is this financial advice?",
+          "a": "No. The calculator is an educational tool for planning and comparison only."
+        }
+      ]
+    },
+    "date-difference-calculator": {
+      "name": "Date Difference Calculator",
+      "short": "Count days, weeks and months between dates.",
+      "description": "Free online date difference calculator. Count the exact days, weeks, months and business days between two dates, with holiday exclusions — in your browser.",
+      "intro": "Find out exactly how much time separates two dates. Get the calendar difference in years, months and days, the totals in every unit, and an optional business-day count that skips weekends and holidays.",
+      "howTo": [
+        "Pick a start date and an end date.",
+        "Optionally include the time of day for an exact duration.",
+        "Enable business days only to skip weekends.",
+        "Add any holidays to exclude, one date per line."
+      ],
+      "faqs": [
+        {
+          "q": "Are both the start and end dates counted?",
+          "a": "The difference is the span between the two dates, so the start day is not counted as a whole day. Business-day counting includes the end date."
+        },
+        {
+          "q": "Which days count as business days?",
+          "a": "Monday to Friday, minus any dates you list as exclusions."
+        },
+        {
+          "q": "Can I use it for future dates?",
+          "a": "Yes. The result indicates whether the span is in the past or the future."
+        },
+        {
+          "q": "How are months counted?",
+          "a": "Calendar months are used, so 31 January to 28 February counts as one month rather than a fixed number of days."
+        },
+        {
+          "q": "Does it handle daylight saving time?",
+          "a": "Calculations use whole calendar days, so daylight saving changes do not shift the day count."
+        }
+      ]
+    },
+    "unit-converter": {
+      "name": "Unit Converter",
+      "short": "Convert length, weight, temperature and more.",
+      "description": "Free online unit converter. Convert length, weight, temperature, area, volume, speed, time and digital storage between more than 50 units instantly.",
+      "intro": "Convert between more than fifty units across eight categories. Type a value into any field and every other unit in the category updates instantly, so you can compare them all at a glance.",
+      "howTo": [
+        "Choose a category such as length or weight.",
+        "Type a value into the unit you already know.",
+        "Read the converted values in every other unit.",
+        "Copy any result with the button next to it."
+      ],
+      "faqs": [
+        {
+          "q": "Which categories are covered?",
+          "a": "Length, weight, temperature, area, volume, speed, time and digital storage."
+        },
+        {
+          "q": "How is temperature handled?",
+          "a": "Temperature uses offset formulas rather than simple factors, so Celsius, Fahrenheit and Kelvin convert correctly."
+        },
+        {
+          "q": "Are storage units decimal or binary?",
+          "a": "Binary — one kilobyte equals 1024 bytes, matching how operating systems report file sizes."
+        },
+        {
+          "q": "How precise are the results?",
+          "a": "Conversion factors are exact where a definition exists, and results are shown with enough significant digits for everyday and technical use."
+        },
+        {
+          "q": "Does it need an internet connection?",
+          "a": "No. All conversion tables are built into the page and run locally."
+        }
+      ]
+    },
+    "discount-calculator": {
+      "name": "Discount Calculator",
+      "short": "Work out sale prices and savings.",
+      "description": "Free online discount calculator. Find the sale price, your savings, the discount percentage or the original price, with stacked discounts and tax support.",
+      "intro": "Know exactly what you are paying before you reach the till. Calculate the price after one or several discounts, work backwards to the original price, and add tax to see the true final total.",
+      "howTo": [
+        "Choose what you want to find: the sale price, the percentage or the original price.",
+        "Enter the amounts you know.",
+        "Add extra discounts if the offer stacks.",
+        "Optionally add tax to see the final total."
+      ],
+      "faqs": [
+        {
+          "q": "How do stacked discounts work?",
+          "a": "Each discount applies to the price after the previous one, so 20% then 10% is not 30% — it is an effective 28%."
+        },
+        {
+          "q": "How do I find the original price?",
+          "a": "Switch to the original price mode and enter the discounted price with the percentage that was taken off."
+        },
+        {
+          "q": "Is tax applied before or after the discount?",
+          "a": "After, which matches how most retailers calculate the total."
+        },
+        {
+          "q": "How is the discount percentage calculated?",
+          "a": "The saving is divided by the original price and multiplied by 100."
+        },
+        {
+          "q": "Does it round like a shop till?",
+          "a": "Results are shown to two decimal places, so a shop's own rounding may differ by a cent."
+        }
+      ]
+    },
+    "gpa-calculator": {
+      "name": "GPA Calculator",
+      "short": "Calculate semester and cumulative GPA.",
+      "description": "Free online GPA calculator. Work out your semester and cumulative grade point average on a 4.0, 5.0 or percentage scale with credit-hour weighting.",
+      "intro": "Track your academic progress across a semester. Add each course with its grade and credit hours to see your weighted semester GPA, and include previous semesters for the cumulative figure.",
+      "howTo": [
+        "Choose your grading scale: 4.0, 5.0 or percentage.",
+        "Add each course with its grade and credit hours.",
+        "Optionally enter your previous GPA and credit hours.",
+        "Read your semester and cumulative GPA."
+      ],
+      "faqs": [
+        {
+          "q": "How is GPA calculated?",
+          "a": "Each course's grade points are multiplied by its credit hours; the total is then divided by the total credit hours."
+        },
+        {
+          "q": "Which scales are supported?",
+          "a": "The 4.0 scale, the 5.0 scale used in several countries, and direct percentage averaging."
+        },
+        {
+          "q": "How do I include previous semesters?",
+          "a": "Enable the previous results option and enter your prior cumulative GPA together with the credit hours it covers."
+        },
+        {
+          "q": "What about pass or fail courses?",
+          "a": "Courses that do not affect GPA should be entered with zero credit hours, which excludes them from the weighting."
+        },
+        {
+          "q": "Will my institution get the same number?",
+          "a": "Usually, though some institutions round differently or exclude retaken courses, so check your official policy."
+        }
+      ]
+    },
+    "tip-calculator": {
+      "name": "Tip Calculator",
+      "short": "Split the bill and calculate the tip.",
+      "description": "Free online tip calculator. Work out the tip, the total and each person's share, with round-up support for splitting a restaurant bill fairly.",
+      "intro": "Settle the bill without the mental arithmetic. Enter the amount, choose a tip percentage and the number of people, and see exactly what everyone owes — with an option to round the total up.",
+      "howTo": [
+        "Enter the bill amount.",
+        "Choose a tip percentage or type your own.",
+        "Set the number of people sharing the bill.",
+        "Optionally round the total up and read each share."
+      ],
+      "faqs": [
+        {
+          "q": "How much should I tip?",
+          "a": "It varies by country and venue. In the United States 15–20% is typical, while in much of Europe and the Middle East a smaller tip or none at all is normal."
+        },
+        {
+          "q": "Is the tip based on the amount before or after tax?",
+          "a": "This calculator applies the percentage to the amount you enter, so type the pre-tax subtotal if that is your preference."
+        },
+        {
+          "q": "How does rounding up work?",
+          "a": "The total is rounded up to the next whole unit and the difference is added to the tip, which makes cash payment easier."
+        },
+        {
+          "q": "Can it split unevenly?",
+          "a": "The split is equal per person. For uneven shares, calculate each person's portion separately."
+        },
+        {
+          "q": "Is anything sent online?",
+          "a": "No. All arithmetic happens in your browser."
+        }
+      ]
+    },
+    "currency-converter": {
+      "name": "Currency Converter",
+      "short": "Convert between 18 major currencies.",
+      "description": "Free online currency converter. Convert between 18 major currencies using public exchange rates, cached locally with the source and update time shown.",
+      "intro": "Convert amounts between the world's most-used currencies. Rates come from a free public exchange-rate service, are cached in your browser for an hour, and always display their source and timestamp.",
+      "howTo": [
+        "Choose the currency you are converting from and to.",
+        "Enter the amount.",
+        "Read the converted value and the rate used.",
+        "Press refresh if you want the very latest rates."
+      ],
+      "faqs": [
+        {
+          "q": "Where do the exchange rates come from?",
+          "a": "From the free public Exchange Rate API. Only the rate table is requested — the amount you type never leaves your browser."
+        },
+        {
+          "q": "How often are rates updated?",
+          "a": "They are cached locally for one hour, and the update time is always shown next to the result. You can force a refresh at any time."
+        },
+        {
+          "q": "What happens if I am offline?",
+          "a": "The last saved rates are used and clearly labelled as cached, so you can still convert approximately."
+        },
+        {
+          "q": "Are these rates suitable for trading?",
+          "a": "No. They are mid-market reference rates. Banks and exchange services apply their own spreads and fees."
+        },
+        {
+          "q": "Why is this the only tool that uses the internet?",
+          "a": "Exchange rates change constantly and cannot be bundled into the page. Everything else on the site runs fully offline."
+        }
+      ]
+    },
+    "uuid-generator": {
+      "name": "UUID Generator",
+      "short": "Generate UUIDs, ULIDs and Nano IDs.",
+      "description": "Free online UUID generator. Create v4 and v1 UUIDs, ULIDs and Nano IDs in bulk with a built-in validator — generated securely in your browser.",
+      "intro": "Generate unique identifiers for databases, APIs and test data. Choose UUID v4, UUID v1, sortable ULIDs or short Nano IDs, produce up to a thousand at once, and validate existing IDs.",
+      "howTo": [
+        "Pick the identifier type you need.",
+        "Set how many to generate and any formatting options.",
+        "Press Generate and copy one or all of the results.",
+        "Paste an existing ID into the validator to check it."
+      ],
+      "faqs": [
+        {
+          "q": "Are the IDs cryptographically random?",
+          "a": "Yes. UUID v4, ULID and Nano ID all use your browser's crypto.getRandomValues, the same source used for security keys."
+        },
+        {
+          "q": "What is the difference between UUID v4 and v1?",
+          "a": "v4 is entirely random, while v1 embeds a timestamp and is therefore roughly time-ordered but slightly less private."
+        },
+        {
+          "q": "When should I use a ULID?",
+          "a": "When you want a unique ID that also sorts chronologically, which keeps database indexes efficient."
+        },
+        {
+          "q": "Why choose a Nano ID?",
+          "a": "Nano IDs are much shorter than UUIDs while keeping a very low collision risk, making them ideal for URLs and short links."
+        },
+        {
+          "q": "Are generated IDs stored anywhere?",
+          "a": "No. They exist only in your browser tab until you copy them."
+        }
+      ]
+    },
+    "url-encoder-decoder": {
+      "name": "URL Encoder / Decoder",
+      "short": "Percent-encode and decode URLs safely.",
+      "description": "Free online URL encoder and decoder. Percent-encode query parameters or full URLs and decode escaped text in bulk — privately in your browser.",
+      "intro": "Fix broken links and unreadable query strings. Encode text so it can travel safely inside a URL, or decode percent-escaped values back into readable characters, one line at a time or in bulk.",
+      "howTo": [
+        "Choose encode or decode.",
+        "Pick component, full URL or Base64URL mode.",
+        "Paste your text or URL.",
+        "Copy the converted result."
+      ],
+      "faqs": [
+        {
+          "q": "What is the difference between component and full URL encoding?",
+          "a": "Component encoding escapes characters such as / ? & = so a value is safe inside a parameter, while full URL encoding leaves the URL structure intact."
+        },
+        {
+          "q": "When do I need URL encoding?",
+          "a": "Whenever a value contains spaces, non-Latin letters or reserved characters such as & and =, which would otherwise break the link."
+        },
+        {
+          "q": "How are Arabic characters handled?",
+          "a": "They are encoded as UTF-8 percent sequences, which every modern browser and server understands."
+        },
+        {
+          "q": "What is Base64URL?",
+          "a": "A Base64 variant that replaces + and / with - and _ so the result is safe inside URLs and JSON Web Tokens."
+        },
+        {
+          "q": "Why does decoding sometimes fail?",
+          "a": "A stray percent sign or an incomplete escape sequence makes the input invalid, and the tool tells you instead of returning broken text."
+        }
+      ]
+    },
+    "html-encoder-decoder": {
+      "name": "HTML Encoder / Decoder",
+      "short": "Convert HTML entities to text and back.",
+      "description": "Free online HTML entity encoder and decoder. Escape markup, convert named and numeric entities and preview the result safely — all inside your browser.",
+      "intro": "Show markup as text or turn entities back into readable characters. Choose how aggressively to escape, and preview the rendered output inside a fully sandboxed frame.",
+      "howTo": [
+        "Choose encode or decode.",
+        "Select the encoding depth you need.",
+        "Paste your HTML or entity-encoded text.",
+        "Copy the result or check the rendered preview."
+      ],
+      "faqs": [
+        {
+          "q": "Why should I escape HTML?",
+          "a": "Escaping prevents user text from being interpreted as markup, which is the basic defence against cross-site scripting."
+        },
+        {
+          "q": "What do the depth options do?",
+          "a": "Basic escapes only the five critical characters, non-ASCII also escapes characters outside ASCII, and all escapes every character as a numeric entity."
+        },
+        {
+          "q": "Are named entities supported when decoding?",
+          "a": "Yes. Named, decimal and hexadecimal entities are all decoded, using the browser's own HTML parser."
+        },
+        {
+          "q": "Is the preview safe?",
+          "a": "Yes. It renders in an iframe with an empty sandbox attribute, so scripts, forms and same-origin access are all disabled."
+        },
+        {
+          "q": "Does it handle emoji and Arabic text?",
+          "a": "Yes, in both directions, including characters made of multiple code points."
+        }
+      ]
+    },
+    "json-formatter": {
+      "name": "JSON Formatter & Validator",
+      "short": "Format, validate and minify JSON.",
+      "description": "Free online JSON formatter and validator. Beautify or minify JSON, sort keys, explore a tree view and see exact error positions in your browser.",
+      "intro": "Make sense of unreadable JSON. Format it with the indentation you prefer, validate it with exact error positions, sort keys alphabetically, minify it for production, and explore the structure in a collapsible tree.",
+      "howTo": [
+        "Paste your JSON into the editor.",
+        "Press Format to beautify it, or Minify to compact it.",
+        "Fix any error using the reported line and column.",
+        "Copy the result or browse the tree view."
+      ],
+      "faqs": [
+        {
+          "q": "What are the most common JSON errors?",
+          "a": "Trailing commas, single quotes instead of double quotes, unquoted keys and missing brackets. The error message points to the exact line and column."
+        },
+        {
+          "q": "Does formatting change my data?",
+          "a": "No. Only whitespace changes, unless you explicitly choose to sort keys."
+        },
+        {
+          "q": "How large a file can I format?",
+          "a": "Several megabytes work comfortably; extremely large files may slow the syntax highlighting."
+        },
+        {
+          "q": "Is my JSON uploaded for validation?",
+          "a": "Never. Parsing and formatting use your browser's own JSON engine."
+        },
+        {
+          "q": "Can I sort object keys?",
+          "a": "Yes. Sorting is recursive and makes two versions of the same object much easier to compare."
+        }
+      ]
+    },
+    "xml-formatter": {
+      "name": "XML Formatter",
+      "short": "Format, validate and convert XML.",
+      "description": "Free online XML formatter and validator. Beautify or minify XML, check it is well-formed and convert it to JSON — processed entirely in your browser.",
+      "intro": "Turn a single-line XML blob into a readable, indented document. Validate that it is well-formed, count elements and attributes, minify it again for transport, or convert it straight to JSON.",
+      "howTo": [
+        "Paste your XML into the editor.",
+        "Press Format to indent it or Minify to compact it.",
+        "Check the validation message and the element counts.",
+        "Convert to JSON if you need it in another format."
+      ],
+      "faqs": [
+        {
+          "q": "What does well-formed mean?",
+          "a": "Every tag is closed, elements nest correctly and there is a single root element. It is not the same as being valid against a schema."
+        },
+        {
+          "q": "Does it validate against a DTD or XSD?",
+          "a": "No. It checks that the document is well-formed, which catches the vast majority of practical errors."
+        },
+        {
+          "q": "How does XML to JSON conversion work?",
+          "a": "Elements become objects, repeated elements become arrays and attributes are kept with a prefix so no information is lost."
+        },
+        {
+          "q": "Are comments and CDATA preserved?",
+          "a": "Comments and CDATA sections survive formatting; JSON conversion keeps text content but drops comments."
+        },
+        {
+          "q": "Is my XML sent to a server?",
+          "a": "No. The browser's built-in DOMParser handles everything locally."
+        }
+      ]
+    },
+    "javascript-formatter": {
+      "name": "JavaScript Formatter",
+      "short": "Beautify and minify JavaScript code.",
+      "description": "Free online JavaScript formatter and minifier. Beautify code with Prettier or minify it with Terser in your browser — code is never uploaded.",
+      "intro": "Clean up messy or minified JavaScript in one click. Prettier reformats your code with consistent style, Terser compresses it for production, and both run locally so your source never leaves the page.",
+      "howTo": [
+        "Paste your JavaScript into the editor.",
+        "Press Format to beautify or Minify to compress.",
+        "Compare the original and output sizes.",
+        "Copy the result or download it as a .js file."
+      ],
+      "faqs": [
+        {
+          "q": "Which formatter is used?",
+          "a": "Prettier's standalone browser build, so the output matches what Prettier produces in your editor."
+        },
+        {
+          "q": "Is my code uploaded anywhere?",
+          "a": "No. Prettier and Terser are loaded into your browser and run entirely on your device."
+        },
+        {
+          "q": "Does it support modern syntax?",
+          "a": "Yes, including ES2022 features, optional chaining, class fields and JSX."
+        },
+        {
+          "q": "Will minifying break my code?",
+          "a": "Terser is a safe, widely used minifier, but always test minified output before shipping it."
+        },
+        {
+          "q": "Why does the page take a moment on first use?",
+          "a": "The formatter libraries are loaded only when you press the button, which keeps the rest of the site fast."
+        }
+      ]
+    },
+    "css-formatter": {
+      "name": "CSS Formatter",
+      "short": "Beautify and minify CSS stylesheets.",
+      "description": "Free online CSS formatter and minifier. Beautify stylesheets with Prettier or shrink them with our own minifier — processed entirely inside your browser.",
+      "intro": "Make stylesheets readable again or squeeze them down for production. Formatting uses Prettier, while minification uses our own compact implementation that strips comments and whitespace safely.",
+      "howTo": [
+        "Paste your CSS into the editor.",
+        "Press Format for readable output or Minify to compress.",
+        "Review the size saving reported below.",
+        "Copy the result or download the stylesheet."
+      ],
+      "faqs": [
+        {
+          "q": "What does minifying remove?",
+          "a": "Comments, unnecessary whitespace, the final semicolon in a block and redundant zeros, without changing how the styles behave."
+        },
+        {
+          "q": "Does it work with SCSS or Less?",
+          "a": "Plain CSS is fully supported. Preprocessor syntax may format but is not guaranteed to minify correctly."
+        },
+        {
+          "q": "Are CSS variables and media queries safe?",
+          "a": "Yes. Custom properties, media queries, nesting and at-rules are all preserved."
+        },
+        {
+          "q": "What happens if my CSS has an error?",
+          "a": "The tool reports the problem and still returns a best-effort formatted version so you can locate it."
+        },
+        {
+          "q": "Is my stylesheet uploaded?",
+          "a": "No. Everything runs locally in your browser."
+        }
+      ]
+    },
+    "regex-tester": {
+      "name": "Regex Tester",
+      "short": "Test regular expressions with live matching.",
+      "description": "Free online regex tester. Test regular expressions with live highlighting, capture groups, every JavaScript flag and a replace preview in-browser.",
+      "intro": "Build and debug regular expressions with instant feedback. Matches are highlighted as you type, capture groups are listed with their positions, and a replacement preview shows the final result.",
+      "howTo": [
+        "Type your regular expression.",
+        "Toggle the flags you need, such as global or ignore case.",
+        "Paste the text you want to test against.",
+        "Review the highlighted matches, groups and replacement preview."
+      ],
+      "faqs": [
+        {
+          "q": "Which regex flavour is used?",
+          "a": "JavaScript regular expressions, exactly as they behave in the browser and in Node.js."
+        },
+        {
+          "q": "Which flags are supported?",
+          "a": "g, i, m, s, u and y, each with an explanation next to the toggle."
+        },
+        {
+          "q": "Are named capture groups supported?",
+          "a": "Yes. Named groups appear in the match list alongside numbered groups."
+        },
+        {
+          "q": "What protects against catastrophic backtracking?",
+          "a": "The matching loop is capped, so a pathological pattern stops safely instead of freezing the tab."
+        },
+        {
+          "q": "Is my test data private?",
+          "a": "Yes. Patterns and text stay in your browser."
+        }
+      ]
+    },
+    "base64-encoder-decoder": {
+      "name": "Base64 Encoder / Decoder",
+      "short": "Encode and decode Base64 text, files and images.",
+      "description": "Free online Base64 encoder and decoder. Convert text, files and images to Base64 or data URIs and back — with full UTF-8 support, inside your browser.",
+      "intro": "Convert anything to Base64 and back. Encode text with full Unicode support, turn a file into a Base64 string, or generate a data URI for an image and preview it instantly.",
+      "howTo": [
+        "Choose text, file or image mode.",
+        "Select encode or decode.",
+        "Paste your text or choose a file.",
+        "Copy the Base64 output or download the decoded file."
+      ],
+      "faqs": [
+        {
+          "q": "Does Base64 encrypt my data?",
+          "a": "No. It is an encoding, not encryption — anyone can decode it. Never use it to protect secrets."
+        },
+        {
+          "q": "Why does Base64 make files bigger?",
+          "a": "It represents three bytes with four characters, so the encoded result is about 33% larger than the original."
+        },
+        {
+          "q": "Is UTF-8 supported?",
+          "a": "Yes. Arabic, emoji and any other Unicode text encode and decode correctly."
+        },
+        {
+          "q": "What is a data URI?",
+          "a": "A string that embeds a file directly in HTML or CSS, in the form data:image/png;base64,… — the image mode generates one for you."
+        },
+        {
+          "q": "What is the file size limit?",
+          "a": "25 MB, which keeps the encoded string manageable inside the browser."
+        }
+      ]
+    },
+    "color-converter": {
+      "name": "Color Converter",
+      "short": "Convert HEX, RGB, HSL, HSV and CMYK.",
+      "description": "Free online colour converter. Convert between HEX, RGB, HSL, HSV and CMYK, check WCAG contrast and generate shades — instantly in your browser.",
+      "intro": "Convert a colour into every format you need and check whether it is accessible. Paste any notation, pick from the colour wheel, read the WCAG contrast verdicts and grab a ready-made shade palette.",
+      "howTo": [
+        "Type a colour in any format or use the picker.",
+        "Read the conversions in HEX, RGB, HSL, HSV and CMYK.",
+        "Check the contrast verdicts against white and black.",
+        "Click a shade to make it the new base colour."
+      ],
+      "faqs": [
+        {
+          "q": "Which colour formats are accepted?",
+          "a": "HEX with 3, 4, 6 or 8 digits, rgb(), rgba(), hsl(), hsla() and the standard CSS colour names."
+        },
+        {
+          "q": "What does the contrast ratio mean?",
+          "a": "It compares the brightness of two colours. WCAG asks for at least 4.5:1 for normal text and 3:1 for large text."
+        },
+        {
+          "q": "What is the difference between HSL and HSV?",
+          "a": "Both describe hue, but HSL is built around lightness while HSV is built around value or brightness, which suits colour pickers."
+        },
+        {
+          "q": "Is CMYK conversion print accurate?",
+          "a": "It is a mathematical approximation. Real print output depends on the colour profile, ink and paper."
+        },
+        {
+          "q": "How are the shades generated?",
+          "a": "By keeping the hue and saturation and stepping the lightness, which gives a consistent tint and shade scale."
+        }
+      ]
+    },
+    "hash-generator": {
+      "name": "Hash Generator",
+      "short": "Generate SHA-256 and other hashes.",
+      "description": "Free online hash generator. Create SHA-1, SHA-256, SHA-384 and SHA-512 hashes from text or files with Web Crypto, right inside your browser.",
+      "intro": "Verify a download or fingerprint a piece of text. Hashes are computed with the browser's native Web Crypto API, so even large files never leave your device.",
+      "howTo": [
+        "Choose text or file mode.",
+        "Type your text or select a file.",
+        "Read the hashes for every supported algorithm.",
+        "Paste a reference hash into the comparison box to verify it."
+      ],
+      "faqs": [
+        {
+          "q": "Which algorithms are available?",
+          "a": "SHA-1, SHA-256, SHA-384 and SHA-512, all provided by the Web Crypto API."
+        },
+        {
+          "q": "Why is MD5 not included?",
+          "a": "MD5 is cryptographically broken and is not offered by Web Crypto. SHA-256 is the right default today."
+        },
+        {
+          "q": "Can a hash be reversed?",
+          "a": "No. Hashing is one way; identical input always gives identical output, but the original cannot be recovered."
+        },
+        {
+          "q": "Are large files uploaded?",
+          "a": "No. The file is read locally and hashed in your browser, which is why very large files are limited only by memory."
+        },
+        {
+          "q": "How do I verify a download?",
+          "a": "Hash the downloaded file, then paste the publisher's checksum into the comparison box to see whether they match."
+        }
+      ]
+    },
+    "number-base-converter": {
+      "name": "Number Base Converter",
+      "short": "Convert between binary, octal, decimal and hex.",
+      "description": "Free online number base converter. Convert between binary, octal, decimal, hexadecimal and any base from 2 to 36 with exact big-integer arithmetic.",
+      "intro": "Convert numbers between any pair of bases without losing precision. Binary, octal, decimal and hexadecimal are always shown, plus a custom base of your choice and a byte-grouped binary view.",
+      "howTo": [
+        "Enter the number you want to convert.",
+        "Select the base it is currently written in.",
+        "Read the conversions in every common base.",
+        "Pick a custom target base for anything from 2 to 36."
+      ],
+      "faqs": [
+        {
+          "q": "Which bases are supported?",
+          "a": "Any base from 2 to 36, using the digits 0-9 followed by the letters a-z."
+        },
+        {
+          "q": "Can it handle very large numbers?",
+          "a": "Yes. Conversion uses BigInt arithmetic, so results stay exact no matter how many digits you enter."
+        },
+        {
+          "q": "Can I paste prefixed values like 0xFF?",
+          "a": "Yes. Common prefixes such as 0x, 0b and 0o are recognised and stripped automatically."
+        },
+        {
+          "q": "Are negative numbers supported?",
+          "a": "Yes. A leading minus sign is preserved through every conversion."
+        },
+        {
+          "q": "What are the 8-bit groups for?",
+          "a": "They split the binary result into bytes, which makes it much easier to read when working with flags or protocols."
+        }
+      ]
     }
   },
-
   "errors": {
     "title": "Something went wrong",
     "generic": "We couldn't complete this operation. Please try again with a different file.",
     "webpUnsupported": "Your browser can't encode WebP images. Please try an up-to-date browser such as Chrome, Edge or Firefox.",
     "processingFailed": "The image could not be processed. It may be corrupted or too large.",
     "zipFailed": "We couldn't create the ZIP archive. Please try again.",
-    "pdfFailed": "We couldn't generate the PDF. Please try again with a different image."
+    "pdfFailed": "We couldn't generate the PDF. Please try again with a different image.",
+    "invalidPdf": "This file is not a valid PDF. Please choose a different file.",
+    "pdfEncrypted": "This PDF is password protected. Unlock it first, then try again.",
+    "pdfEncryptedFile": "\"{name}\" is password protected. Unlock it before continuing.",
+    "pdfWrongPassword": "Wrong password. Please check it and try again.",
+    "pdfTooLarge": "This PDF is too large for in-browser processing.",
+    "pdfTotalTooLarge": "The selected files exceed the {size} MB total limit.",
+    "pdfNeedTwo": "Select at least two PDF files to merge.",
+    "pdfNoPages": "This PDF has no pages.",
+    "pdfTooManyPages": "This PDF has more than {max} pages, which is above the limit for this tool.",
+    "pdfCannotDeleteAll": "You cannot delete every page — keep at least one.",
+    "pdfRangeOutOfBounds": "One of the pages you asked for does not exist in this PDF.",
+    "pdfPasswordShort": "The password must be at least 4 characters long.",
+    "pdfPasswordMismatch": "The two passwords do not match.",
+    "pdfNotEncrypted": "This PDF is not password protected — nothing to unlock.",
+    "pdfRenderFailed": "The page could not be rendered. The PDF may be damaged.",
+    "rangeEmpty": "Enter at least one page or range, for example 1-3, 5.",
+    "rangeFormat": "That page range is not valid. Use a format like 1-3, 5, 8-10.",
+    "rangeBounds": "The range is outside the pages available in this document.",
+    "rangeDuplicate": "The same page appears more than once in your range.",
+    "invalidNumberInput": "Enter a valid number.",
+    "invalidNumberForBase": "That value is not a valid number in base {base}.",
+    "invalidDate": "Enter a valid date.",
+    "birthAfterAsOf": "The date of birth cannot be after the reference date.",
+    "divideByZero": "The value cannot be zero for this calculation.",
+    "ratesUnavailable": "Live exchange rates are unavailable right now. Showing the last saved rates if available.",
+    "malformedUrl": "This text cannot be decoded — it contains a malformed escape sequence.",
+    "invalidBase64": "This is not valid Base64 data.",
+    "invalidColor": "That colour value could not be recognised.",
+    "noWebCrypto": "Your browser does not support the Web Crypto API needed for hashing.",
+    "hashFailed": "Hashing failed. Please try again with a smaller input.",
+    "jsonParse": "JSON error at line {line}, column {column}: {message}",
+    "xmlParse": "XML error: {message}",
+    "jsSyntax": "JavaScript syntax error: {message}",
+    "cssSyntax": "CSS syntax error: {message}",
+    "regexInvalid": "Invalid regular expression: {message}"
   },
-
   "consent": {
     "title": "We value your privacy",
     "text": "We use cookies to improve your experience. Necessary cookies keep the site working; analytics and advertising cookies are optional and off by default.",
@@ -846,44 +2374,36 @@
     "advertisingDesc": "Personalized ads. Off by default.",
     "alwaysOn": "Always on"
   },
-
   "toolsPage": {
     "title": "All free image tools",
     "subtitle": "20 tools that run entirely in your browser — compress, resize, convert, edit and more. No uploads, no sign-up."
   },
-
   "howTo": {
     "title": "How to use"
   },
-
   "formats": {
     "title": "Supported formats",
     "input": "Accepts",
     "output": "Produces"
   },
-
   "related": {
     "title": "Related tools"
   },
-
   "categoryFaqs": {
     "q1": "Is it free to use?",
     "a1": "Yes — all {category} tools on Piclizer are completely free, with no limits, no watermarks and no account required.",
     "q2": "Are my images uploaded anywhere?",
     "a2": "No. Every tool in this category processes your images entirely in your browser. Nothing is sent to a server."
   },
-
   "categoryPage": {
     "relatedCategories": "Related categories"
   },
-
   "categoriesPage": {
     "title": "Image tool categories",
     "description": "Browse Piclizer's free image tools by category — compressors, resizers, converters, editors, PDF tools and color tools.",
     "subtitle": "Find the right tool for the job.",
     "viewCategory": "View category"
   },
-
   "seo": {
     "homeTitle": "Free Online Image Tools — Compress, Convert & Edit in Your Browser | Piclizer",
     "homeDescription": "Free online image tools that run 100% in your browser. Compress, resize, crop, convert and edit JPG, PNG & WebP — no upload, no sign-up, private by design.",
@@ -905,7 +2425,6 @@
     "disclaimerDescription": "Disclaimer for Piclizer's free online image tools.",
     "notFoundTitle": "Page Not Found | Piclizer"
   },
-
   "notFound": {
     "title": "Page not found",
     "text": "The page you're looking for doesn't exist or has moved.",
@@ -913,7 +2432,6 @@
     "toolsLink": "Browse all tools",
     "searchLabel": "Or search for a tool"
   },
-
   "contact": {
     "title": "Contact us",
     "intro": "Have a question, feedback or a bug report? We'd love to hear from you.",
@@ -936,7 +2454,6 @@
       "messageRequired": "Please enter a message."
     }
   },
-
   "legal": {
     "lastUpdated": "Last updated",
     "about": {
@@ -994,5 +2511,616 @@
       "p2": "You are responsible for the files you create and download, including ensuring you have the rights to the source images and that outputs are suitable for your intended use.",
       "p3": "Piclizer does not store or transmit your images. Any processing happens on your device, and you are responsible for keeping copies of your original files."
     }
+  },
+  "pdfTools": {
+    "allPages": "All pages",
+    "allowCopying": "Allow copying text",
+    "allowEditing": "Allow editing",
+    "allowPrinting": "Allow printing",
+    "applyOrder": "Apply new order",
+    "applyRange": "Apply range",
+    "applyRotations": "Apply rotations",
+    "compressAction": "Compress PDF",
+    "compressHonesty": "Compression results depend on what is inside your PDF. Text-only files are already efficient and may shrink very little; scanned or image-heavy files usually shrink a lot.",
+    "compressionLevel": "Compression level",
+    "confirmPassword": "Confirm password",
+    "convertToImages": "Convert to images",
+    "counterHint": "Add several PDFs to count all of their pages at once. Nothing is uploaded.",
+    "currentPassword": "Current password",
+    "deleteAction": "Delete selected pages",
+    "deleteConfirm": "Delete {count} page(s)?",
+    "deleteHalfWarning": "You are about to delete more than half of the pages in this document.",
+    "deleteHint": "Click pages to mark them for deletion, then apply. The original file on your device is never changed.",
+    "deselectAll": "Deselect all",
+    "dpiLimitWarning": "At this resolution, only the first {max} pages can be rendered in the browser.",
+    "dpiMedium": "150 DPI — balanced",
+    "dpiPrint": "300 DPI — print quality",
+    "dpiScreen": "72 DPI — screen",
+    "dragToReorder": "Drag to reorder",
+    "dragToReorderPages": "Drag the pages into the order you want.",
+    "encrypted": "Encrypted",
+    "enterPassword": "Enter password",
+    "estimatedSize": "Estimated size",
+    "everyNLabel": "Pages per file",
+    "extractAction": "Extract pages",
+    "extractHint": "Pick the pages you want to keep. They will be saved as a new PDF in the order you selected.",
+    "fileName": "File name",
+    "filesCount": "{count} file(s)",
+    "hidePassword": "Hide password",
+    "highDpiPerformance": "Higher resolutions produce sharper images but use much more memory.",
+    "levelLight": "Light",
+    "levelMaximum": "Maximum",
+    "levelMedium": "Medium",
+    "levelDesc_light": "Rewrites the file structure and removes unused objects. Fully lossless.",
+    "levelDesc_medium": "Lossless structural optimisation with aggressive object stream packing.",
+    "levelDesc_maximum": "Rasterises each page at 110 DPI as JPEG. Smallest files, but text is no longer selectable.",
+    "mergeAction": "Merge PDFs",
+    "mergeDone": "Merged PDF is ready.",
+    "mergeOrder": "Merge order",
+    "mergerHint": "Add two or more PDFs, drag them into the order you want, then merge. Everything happens in your browser.",
+    "mergingPage": "Merging {current} of {total}",
+    "moveDown": "Move down",
+    "moveUp": "Move up",
+    "noPagesSelected": "No pages selected yet.",
+    "noReduction": "This file was already well optimised — no meaningful size reduction was possible.",
+    "outputFormat": "Output format",
+    "ownerHint": "The owner password controls permissions. Leave it empty to reuse the user password.",
+    "ownerPassword": "Owner password",
+    "ownerSection": "Permissions",
+    "pageLabel": "Page {number}",
+    "pageOriginalLabel": "Page {number} (was {original})",
+    "pageSelection": "Page selection",
+    "pages": "Pages",
+    "pagesCount": "{count} page(s)",
+    "pagesRemaining": "{count} page(s) will remain",
+    "password": "Password",
+    "protectAction": "Protect PDF",
+    "protectDone": "Your PDF is now encrypted with AES-256.",
+    "protectPrivacy": "Your password never leaves this device — encryption runs entirely in your browser.",
+    "rangeHint": "Use commas and dashes, for example 1-3, 5, 8-10.",
+    "rangeLabel": "Page range",
+    "rangePlaceholder": "1-3, 5, 8-10",
+    "reduction": "Reduction",
+    "renderingPages": "Rendering pages…",
+    "reorderHint": "Drag page thumbnails to rearrange them, then save the new PDF.",
+    "resetOrder": "Reset order",
+    "resolution": "Resolution",
+    "results": "Results",
+    "rotateAllLeft": "Rotate all left",
+    "rotateAllRight": "Rotate all right",
+    "rotateHint": "Rotate individual pages or everything at once, then save.",
+    "rotateLeft": "Rotate left",
+    "rotatePages": "Rotate pages",
+    "rotateRight": "Rotate right",
+    "selectAll": "Select all",
+    "selectPages": "Select pages",
+    "selectPagesToExtract": "Select the pages to extract",
+    "selectedForDeletion": "{count} page(s) marked for deletion",
+    "selectedSummary": "Selected: {summary}",
+    "selectionSummary": "Selection",
+    "setPassword": "Set a password",
+    "showPassword": "Show password",
+    "size": "Size",
+    "specificRange": "Specific range",
+    "splitAction": "Split PDF",
+    "splitAll": "One file per page",
+    "splitEvery": "Every N pages",
+    "splitMode": "Split mode",
+    "splitPlan": "This will produce {count} file(s).",
+    "splitRanges": "Custom ranges",
+    "splitterHint": "Split a PDF into separate files by page, by fixed chunks, or by custom ranges.",
+    "splittingPart": "Creating part {current} of {total}",
+    "strength": "Password strength",
+    "strength_weak": "Weak",
+    "strength_medium": "Medium",
+    "strength_strong": "Strong",
+    "toImagesHint": "Every page becomes a separate image, rendered locally with pdf.js.",
+    "total": "Total",
+    "totalPages": "Total pages",
+    "totalSize": "Total size",
+    "unlockAction": "Remove password",
+    "unlockLegal": "Only remove protection from PDFs you own or are authorised to modify.",
+    "wasPage": "was page {number}",
+    "weakPasswordWarning": "Short passwords are easy to guess. Use at least 8 characters with mixed types."
+  },
+  "textTools": {
+    "input": "Input",
+    "output": "Output",
+    "options": "Options",
+    "yourText": "Your text",
+    "typeOrPaste": "Type or paste your text here…",
+    "paste": "Paste",
+    "clear": "Clear",
+    "resetOptions": "Reset options",
+    "uploadTxt": "Upload .txt file",
+    "swapToInput": "Use output as input",
+    "words": "Words",
+    "lines": "Lines",
+    "sentences": "Sentences",
+    "paragraphs": "Paragraphs",
+    "charsWithSpaces": "Characters (with spaces)",
+    "charsNoSpaces": "Characters (no spaces)",
+    "uniqueWords": "Unique words",
+    "readingTime": "Reading time",
+    "readingHint": "Based on 200 words per minute.",
+    "speakingTime": "Speaking time",
+    "speakingHint": "Based on 130 words per minute.",
+    "topWords": "Most frequent words",
+    "noWordsYet": "Start typing to see word statistics.",
+    "removeStopWords": "Ignore common words",
+    "removeStopWordsHint": "Excludes words like \"the\", \"and\", \"of\" from the frequency list.",
+    "stopEn": "English",
+    "stopAr": "Arabic",
+    "language": "Language",
+    "removed": "Removed",
+    "added": "Added",
+    "removedChars": "Characters removed",
+    "charactersChanged": "Characters changed",
+    "beforeChars": "Before",
+    "afterChars": "After",
+    "space_trimLeading": "Trim leading spaces",
+    "space_trimTrailing": "Trim trailing spaces",
+    "space_collapseSpaces": "Collapse repeated spaces",
+    "space_collapseBlankLines": "Collapse repeated blank lines",
+    "space_removeBlankLines": "Remove all blank lines",
+    "space_tabsToSpaces": "Convert tabs to spaces",
+    "space_removeAllWhitespace": "Remove all whitespace",
+    "letterCase": "Letter case",
+    "case_upper": "UPPERCASE",
+    "case_lower": "lowercase",
+    "case_title": "Title Case",
+    "case_sentence": "Sentence case",
+    "case_camel": "camelCase",
+    "case_pascal": "PascalCase",
+    "case_snake": "snake_case",
+    "case_kebab": "kebab-case",
+    "case_screamingSnake": "SCREAMING_SNAKE_CASE",
+    "case_alternating": "aLtErNaTiNg",
+    "case_inverse": "iNVERSE cASE",
+    "conversions": "Conversions",
+    "arabicCaseNote": "Arabic script has no upper or lower case, so those modes leave Arabic text unchanged.",
+    "groupCharacters": "Characters & patterns",
+    "groupLines": "Lines",
+    "groupFindReplace": "Find & replace",
+    "clean_stripHtml": "Strip HTML tags",
+    "clean_removeUrls": "Remove URLs",
+    "clean_removeEmails": "Remove email addresses",
+    "clean_removePhones": "Remove phone numbers",
+    "clean_removeNumbers": "Remove numbers",
+    "clean_removePunctuation": "Remove punctuation",
+    "clean_removeSpecial": "Remove special characters",
+    "clean_removeEmoji": "Remove emoji",
+    "clean_removeLineBreaks": "Remove line breaks",
+    "clean_removeDuplicateLines": "Remove duplicate lines",
+    "clean_sortLines": "Sort lines A→Z",
+    "clean_reverseLines": "Reverse line order",
+    "removeLinesContaining": "Remove lines containing",
+    "find": "Find",
+    "replaceWith": "Replace with",
+    "reverseMode": "Reverse mode",
+    "reverse_characters": "Reverse characters",
+    "reverse_words": "Reverse word order",
+    "reverse_eachLine": "Reverse each line",
+    "reverse_lineOrder": "Reverse line order",
+    "keepOccurrence": "Which duplicate to keep",
+    "keepFirst": "Keep first occurrence",
+    "keepLast": "Keep last occurrence",
+    "caseSensitive": "Case sensitive",
+    "trimBeforeCompare": "Ignore leading/trailing spaces",
+    "linesBefore": "Lines before",
+    "linesAfter": "Lines after",
+    "linesRemoved": "Duplicate lines removed",
+    "linesPlaceholder": "One item per line…",
+    "titleOrText": "Title or text",
+    "slugPlaceholder": "How to compress images online",
+    "generatedSlug": "Generated slug",
+    "slugEmpty": "Enter some text to generate a slug.",
+    "separator": "Separator",
+    "hyphen": "Hyphen (-)",
+    "underscore": "Underscore (_)",
+    "transliterate": "Transliterate Arabic to Latin",
+    "transliterateHint": "Turns Arabic letters into Latin equivalents so the slug stays URL-safe.",
+    "generate": "Generate",
+    "generateBy": "Generate by",
+    "quantity": "How many",
+    "unitWords": "Words",
+    "unitSentences": "Sentences",
+    "unitParagraphs": "Paragraphs",
+    "latinLorem": "Classic Latin",
+    "arabicLorem": "Arabic filler text",
+    "startWithLorem": "Start with \"Lorem ipsum\"",
+    "htmlOutput": "Wrap in HTML paragraphs",
+    "compare": "Compare",
+    "originalText": "Original text",
+    "modifiedText": "Modified text",
+    "differences": "Differences",
+    "noDifferences": "The two texts are identical.",
+    "sideBySide": "Side by side",
+    "stacked": "Inline",
+    "wordsAdded": "Words added",
+    "linesAdded": "Lines added",
+    "revert": "Revert",
+    "numberLabel": "Number",
+    "inWords": "In words",
+    "outputLanguage": "Output language",
+    "currencyMode": "Currency mode",
+    "currency": "Currency",
+    "arabicNumerals": "Show Arabic-Indic digits"
+  },
+  "calc": {
+    "unitCat_length": "Length",
+    "unit_length_mm": "Millimetre (mm)",
+    "unit_length_cm": "Centimetre (cm)",
+    "unit_length_m": "Metre (m)",
+    "unit_length_km": "Kilometre (km)",
+    "unit_length_in": "Inch (in)",
+    "unit_length_ft": "Foot (ft)",
+    "unit_length_yd": "Yard (yd)",
+    "unit_length_mi": "Mile (mi)",
+    "unitCat_weight": "Weight",
+    "unit_weight_mg": "Milligram (mg)",
+    "unit_weight_g": "Gram (g)",
+    "unit_weight_kg": "Kilogram (kg)",
+    "unit_weight_t": "Tonne (t)",
+    "unit_weight_oz": "Ounce (oz)",
+    "unit_weight_lb": "Pound (lb)",
+    "unitCat_temperature": "Temperature",
+    "unit_temperature_c": "Celsius (°C)",
+    "unit_temperature_f": "Fahrenheit (°F)",
+    "unit_temperature_k": "Kelvin (K)",
+    "unitCat_area": "Area",
+    "unit_area_cm2": "Square centimetre (cm²)",
+    "unit_area_m2": "Square metre (m²)",
+    "unit_area_km2": "Square kilometre (km²)",
+    "unit_area_ha": "Hectare (ha)",
+    "unit_area_acre": "Acre",
+    "unit_area_ft2": "Square foot (ft²)",
+    "unit_area_mi2": "Square mile (mi²)",
+    "unitCat_volume": "Volume",
+    "unit_volume_ml": "Millilitre (ml)",
+    "unit_volume_l": "Litre (l)",
+    "unit_volume_m3": "Cubic metre (m³)",
+    "unit_volume_gal": "Gallon (US)",
+    "unit_volume_pt": "Pint (US)",
+    "unit_volume_cup": "Cup",
+    "unit_volume_tbsp": "Tablespoon",
+    "unit_volume_tsp": "Teaspoon",
+    "unit_volume_floz": "Fluid ounce (US)",
+    "unitCat_speed": "Speed",
+    "unit_speed_ms": "Metres per second (m/s)",
+    "unit_speed_kmh": "Kilometres per hour (km/h)",
+    "unit_speed_mph": "Miles per hour (mph)",
+    "unit_speed_kn": "Knot (kn)",
+    "unitCat_time": "Time",
+    "unit_time_ms": "Millisecond (ms)",
+    "unit_time_s": "Second (s)",
+    "unit_time_min": "Minute (min)",
+    "unit_time_h": "Hour (h)",
+    "unit_time_day": "Day",
+    "unit_time_week": "Week",
+    "unit_time_month": "Month (average)",
+    "unit_time_year": "Year (average)",
+    "unitCat_storage": "Digital storage",
+    "unit_storage_bit": "Bit",
+    "unit_storage_byte": "Byte",
+    "unit_storage_kb": "Kilobyte (KB)",
+    "unit_storage_mb": "Megabyte (MB)",
+    "unit_storage_gb": "Gigabyte (GB)",
+    "unit_storage_tb": "Terabyte (TB)",
+    "unit_storage_pb": "Petabyte (PB)",
+    "zodiac_aries": "Aries",
+    "zodiac_taurus": "Taurus",
+    "zodiac_gemini": "Gemini",
+    "zodiac_cancer": "Cancer",
+    "zodiac_leo": "Leo",
+    "zodiac_virgo": "Virgo",
+    "zodiac_libra": "Libra",
+    "zodiac_scorpio": "Scorpio",
+    "zodiac_sagittarius": "Sagittarius",
+    "zodiac_capricorn": "Capricorn",
+    "zodiac_aquarius": "Aquarius",
+    "zodiac_pisces": "Pisces",
+    "chinese_rat": "Rat",
+    "chinese_ox": "Ox",
+    "chinese_tiger": "Tiger",
+    "chinese_rabbit": "Rabbit",
+    "chinese_dragon": "Dragon",
+    "chinese_snake": "Snake",
+    "chinese_horse": "Horse",
+    "chinese_goat": "Goat",
+    "chinese_monkey": "Monkey",
+    "chinese_rooster": "Rooster",
+    "chinese_dog": "Dog",
+    "chinese_pig": "Pig",
+    "bmi_underweight": "Underweight",
+    "bmi_normal": "Normal weight",
+    "bmi_overweight": "Overweight",
+    "bmi_obese1": "Obesity class I",
+    "bmi_obese2": "Obesity class II",
+    "bmi_obese3": "Obesity class III",
+    "freq_annually": "Annually",
+    "freq_semiAnnually": "Semi-annually",
+    "freq_quarterly": "Quarterly",
+    "freq_monthly": "Monthly",
+    "freq_daily": "Daily",
+    "pctMode_ofValue": "What is X% of Y?",
+    "pctModeDesc_ofValue": "Find a percentage of a number.",
+    "pctFormula_ofValue": "(X ÷ 100) × Y",
+    "pctMode_isWhatPercent": "X is what percent of Y?",
+    "pctModeDesc_isWhatPercent": "Express one number as a percentage of another.",
+    "pctFormula_isWhatPercent": "(X ÷ Y) × 100",
+    "pctMode_change": "Percentage change from X to Y",
+    "pctModeDesc_change": "Measure the increase or decrease between two values.",
+    "pctFormula_change": "((Y − X) ÷ X) × 100",
+    "pctMode_increaseDecrease": "Increase or decrease X by Y%",
+    "pctModeDesc_increaseDecrease": "Apply a percentage change to a number.",
+    "pctFormula_increaseDecrease": "X × (1 ± Y ÷ 100)",
+    "pctMode_original": "X is Y% of what number?",
+    "pctModeDesc_original": "Work backwards to the original value.",
+    "pctFormula_original": "X ÷ (Y ÷ 100)",
+    "addCourse": "Add course",
+    "addDiscount": "Add another discount",
+    "addTax": "Add tax after discount",
+    "ageHint": "Ages are calculated on the calendar, so leap years and month lengths are handled exactly.",
+    "allRates": "All rates against {base}",
+    "allUnits": "All units",
+    "amount": "Amount",
+    "annualRate": "Annual rate (%)",
+    "asOfDate": "Age as of",
+    "balance": "Balance",
+    "billAmount": "Bill amount",
+    "billDetails": "Bill details",
+    "bmiDisclaimer": "BMI is a general screening indicator, not a diagnosis. It does not account for muscle mass, body composition, age or ethnicity. Talk to a healthcare professional about your results.",
+    "bmiPrime": "BMI prime",
+    "bmiPrimeHint": "Your BMI divided by 25 — values above 1 are above the healthy range.",
+    "bornOn": "Born on",
+    "businessDays": "Business days",
+    "businessDaysOnly": "Count business days only",
+    "cachedRates": "Saved rates from {date}",
+    "category": "Category",
+    "chineseZodiac": "Chinese zodiac",
+    "chooseMode": "What do you want to calculate?",
+    "compoundFrequency": "Compounding frequency",
+    "compoundInterest": "Compound interest",
+    "convert": "Convert",
+    "converted": "Converted amount",
+    "courseName": "Course",
+    "courseNamePlaceholder": "e.g. Mathematics",
+    "courses": "Courses",
+    "credits": "Credit hours",
+    "cumulativeGpa": "Cumulative GPA",
+    "currencyPrivacy": "Only the exchange-rate table is fetched from the internet. The amount you type stays in your browser and is never sent anywhere.",
+    "dateOfBirth": "Date of birth",
+    "days": "days",
+    "decrease": "Decrease",
+    "difference": "Difference",
+    "direction": "Direction",
+    "discMode_percentOff": "Percent off a price",
+    "discMode_findPercent": "Find the discount percentage",
+    "discMode_findOriginal": "Find the original price",
+    "discountedPrice": "Discounted price",
+    "discounts": "Discounts",
+    "effectiveAnnualRate": "Effective annual rate",
+    "effectiveDiscount": "Effective total discount",
+    "endDate": "End date",
+    "enterDates": "Enter dates",
+    "exactAge": "Exact age",
+    "excludeDates": "Exclude specific dates",
+    "excludeHint": "One date per line in YYYY-MM-DD format — useful for public holidays.",
+    "finalTotal": "Final total",
+    "financialDisclaimer": "These figures are estimates for planning purposes only and are not financial advice. Real products may apply fees, taxes and different rounding.",
+    "formulaBreakdown": "Step-by-step breakdown",
+    "formulaReference": "Formula",
+    "fromCurrency": "From",
+    "gpaHint": "Enter each course with its grade and credit hours. Courses with zero credits are ignored.",
+    "grade": "Grade",
+    "healthyRange": "Healthy weight range",
+    "heightCm": "Height (cm)",
+    "heightFt": "Height (ft)",
+    "heightIn": "Height (in)",
+    "imperial": "Imperial",
+    "inDays": "in {days} days",
+    "inFuture": "in the future",
+    "inPast": "in the past",
+    "includePrevious": "Include previous semesters",
+    "includeTime": "Include time of day",
+    "increase": "Increase",
+    "interestEarned": "Interest earned",
+    "interestMode": "Interest type",
+    "interestThisYear": "Interest this year",
+    "measurements": "Measurements",
+    "metric": "Metric",
+    "months": "months",
+    "nextBirthday": "Next birthday",
+    "numberOfPeople": "Number of people",
+    "originalPrice": "Original price",
+    "pctBase": "Base value",
+    "pctFrom": "From",
+    "pctPart": "Part",
+    "pctPercent": "Percentage (%)",
+    "pctResult": "Result",
+    "pctTo": "To",
+    "pctTotal": "Total",
+    "percentHint": "Switch modes to solve for the part, the percentage or the whole.",
+    "perPerson": "Per person",
+    "ponderalIndex": "Ponderal index",
+    "previousCredits": "Previous credit hours",
+    "previousGpa": "Previous GPA",
+    "priceAfterDiscount": "Price after discount",
+    "principal": "Principal amount",
+    "quickSwap": "Swap",
+    "ratesSource": "Rates from {source}, updated {date}",
+    "refreshRates": "Refresh rates",
+    "result": "Result",
+    "roundUp": "Round the total up",
+    "roundUpHint": "Rounds the final total up to the nearest whole unit and adds the difference to the tip.",
+    "scale40": "4.0 scale",
+    "scale50": "5.0 scale",
+    "scalePercent": "Percentage",
+    "semesterGpa": "Semester GPA",
+    "showAll": "Show all",
+    "showLess": "Show less",
+    "simpleInterest": "Simple interest",
+    "startDate": "Start date",
+    "swapCurrencies": "Swap currencies",
+    "swapDates": "Swap dates",
+    "taxAmount": "Tax",
+    "taxPercent": "Tax (%)",
+    "time": "Time",
+    "tipAmount": "Tip amount",
+    "tipPerPerson": "Tip per person",
+    "tipPercent": "Tip (%)",
+    "toCurrency": "To",
+    "today": "Today",
+    "totalAmount": "Total amount",
+    "totalBill": "Total bill",
+    "totalCredits": "Total credit hours",
+    "totalDays": "Total days",
+    "totalHours": "Total hours",
+    "totalMinutes": "Total minutes",
+    "totalMonths": "Total months",
+    "totalSeconds": "Total seconds",
+    "totalWeeks": "Total weeks",
+    "undefined": "Undefined",
+    "unitHint": "Type in any field — every other unit updates instantly.",
+    "useToday": "Use today",
+    "values": "Values",
+    "weekdays": "{start} → {end}",
+    "weightKg": "Weight (kg)",
+    "weightLb": "Weight (lb)",
+    "year": "Year",
+    "yearlyBreakdown": "Year-by-year breakdown",
+    "years": "years",
+    "ymd": "{years} years, {months} months, {days} days",
+    "youSave": "You save",
+    "yourBmi": "Your BMI",
+    "zodiac": "Star sign"
+  },
+  "dev": {
+    "mode": "Mode",
+    "modeText": "Text",
+    "modeFile": "File",
+    "modeImage": "Image",
+    "operation": "Operation",
+    "encode": "Encode",
+    "decode": "Decode",
+    "format": "Format",
+    "minify": "Minify",
+    "validate": "Validate",
+    "generate": "Generate",
+    "copyAll": "Copy all",
+    "show": "Show",
+    "hide": "Hide",
+    "uppercase": "Uppercase output",
+    "lineWrap": "Wrap long lines",
+    "chooseFile": "Choose a file",
+    "uploadFile": "Upload a file",
+    "uploadImage": "Upload an image",
+    "downloadFile": "Download decoded file",
+    "previewImage": "Preview image",
+    "pasteBase64": "Paste Base64 data",
+    "idType": "ID type",
+    "id_uuidv4": "UUID v4 (random)",
+    "id_uuidv1": "UUID v1 (time-based)",
+    "id_ulid": "ULID (sortable)",
+    "id_nanoid": "Nano ID (short)",
+    "howMany": "How many",
+    "nanoLength": "Nano ID length",
+    "withHyphens": "Include hyphens",
+    "withBraces": "Wrap in braces",
+    "generatedIds": "{count} ID(s) generated",
+    "uuidHint": "IDs are generated with your browser's cryptographically secure random number generator.",
+    "validator": "Validator",
+    "validateLabel": "Paste an ID to validate",
+    "validUuid": "Valid UUID — version {version}, variant {variant}",
+    "validUlid": "Valid ULID",
+    "invalidUuid": "This is not a valid identifier.",
+    "encodingType": "Encoding type",
+    "urlComponent": "Component (encodeURIComponent)",
+    "urlFull": "Full URL (encodeURI)",
+    "base64Url": "Base64URL",
+    "batchMode": "Batch mode",
+    "batchHint": "Each line is encoded or decoded separately.",
+    "swapDirection": "Swap input and output",
+    "encodingDepth": "Encoding depth",
+    "depthBasic": "Basic (& < > \" ')",
+    "depthNonAscii": "Basic + non-ASCII",
+    "depthAll": "All characters",
+    "renderedPreview": "Rendered preview",
+    "previewSandboxNote": "The preview runs in a fully sandboxed frame with scripts disabled.",
+    "htmlHint": "Useful for safely showing markup inside a page or an email template.",
+    "sortKeys": "Sort keys alphabetically",
+    "jsonValid": "Valid JSON",
+    "formatted": "Formatted",
+    "treeView": "Tree view",
+    "stats": "Statistics",
+    "depth": "Max depth",
+    "totalKeys": "Keys",
+    "totalValues": "Values",
+    "shortcutHint": "Tip: press Ctrl/⌘ + Enter to format.",
+    "xmlValid": "Valid XML",
+    "toJson": "Convert to JSON",
+    "elements": "Elements",
+    "attributes": "Attributes",
+    "originalSize": "Original size",
+    "outputSize": "Output size",
+    "reduction": "Reduction",
+    "lines": "Lines",
+    "jsLocalNote": "Formatting runs with Prettier and Terser loaded straight into your browser — your code is never uploaded.",
+    "pattern": "Regular expression",
+    "testString": "Test string",
+    "matchCount": "{count} match(es)",
+    "matches": "Matches",
+    "replacement": "Replacement",
+    "replaceWith": "Replace matches with",
+    "quickReference": "Quick reference",
+    "flag_g": "g — global",
+    "flag_i": "i — ignore case",
+    "flag_m": "m — multiline",
+    "flag_s": "s — dot matches newline",
+    "flag_u": "u — unicode",
+    "flag_y": "y — sticky",
+    "cheatDigit": "Any digit",
+    "cheatWord": "Word character",
+    "cheatSpace": "Whitespace",
+    "cheatAny": "Any character",
+    "cheatAnchors": "Start / end of string",
+    "cheatQuantifiers": "Zero+, one+, optional",
+    "cheatRange": "Between n and m times",
+    "cheatSet": "Any one of a, b, c",
+    "cheatAlt": "Either a or b",
+    "cheatNamed": "Named capture group",
+    "cheatNonCapture": "Non-capturing group",
+    "cheatBoundary": "Word boundary",
+    "colorInput": "Colour input",
+    "anyFormat": "Any colour format",
+    "colorPicker": "Picker",
+    "allFormats": "All formats",
+    "namedColor": "CSS name",
+    "contrast": "Contrast & accessibility",
+    "onWhite": "On white background",
+    "onBlack": "On black background",
+    "sampleText": "The quick brown fox",
+    "shades": "Shades & tints",
+    "hashes": "Hashes",
+    "compareHashes": "Compare two hashes",
+    "hashA": "First hash",
+    "hashB": "Second hash",
+    "hashesMatch": "The hashes match.",
+    "hashesDiffer": "The hashes are different.",
+    "sha1Warning": "legacy",
+    "hashHint": "Hashes are one-way — they cannot be reversed back into the original data. SHA-1 is included for compatibility only and is no longer considered secure.",
+    "numberValue": "Value",
+    "inputBase": "Input base",
+    "base": "Base",
+    "binary": "Binary",
+    "octal": "Octal",
+    "decimal": "Decimal",
+    "hexUpper": "Hexadecimal (upper)",
+    "hexLower": "Hexadecimal (lower)",
+    "byteGroups": "8-bit groups",
+    "customBase": "Custom base",
+    "targetBase": "Target base",
+    "baseHint": "Arbitrary-precision conversion using BigInt, so very large numbers stay exact."
   }
 }

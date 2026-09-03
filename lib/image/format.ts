@@ -30,6 +30,7 @@ export function mimeFromExt(ext: string): string {
     png: 'image/png',
     webp: 'image/webp',
     gif: 'image/gif',
+    pdf: 'application/pdf',
   };
   return map[ext.toLowerCase()] || 'application/octet-stream';
 }
