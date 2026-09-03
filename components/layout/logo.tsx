@@ -23,7 +23,7 @@ export function Logo({ className, withText = true }: { className?: string; withT
       </svg>
       {withText && (
         <span className="text-xl font-bold tracking-tight text-foreground">
-          Pixora
+          Piclizer
         </span>
       )}
     </span>

@@ -1,8 +1,8 @@
 {
-  "name": "pixora",
+  "name": "piclizer",
   "version": "1.0.0",
   "private": true,
-  "description": "Pixora — free, private, browser-based image tools. 20 tools that process images 100% locally in the browser.",
+  "description": "Piclizer — free, private, browser-based image tools. 20 tools that process images 100% locally in the browser.",
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",

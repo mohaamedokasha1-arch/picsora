@@ -1,6 +1,6 @@
-# Pixora — Free, private, browser-based image tools
+# Piclizer — Free, private, browser-based image tools
 
-Pixora is a production-ready SaaS-style platform of **20 image tools** that run **100% in the browser**.
+Piclizer is a production-ready SaaS-style platform of **20 image tools** that run **100% in the browser**.
 No uploads, no accounts, no servers touching your images. Every tool works with real files using the
 Canvas, Blob, File and Web Worker APIs.
 
@@ -35,8 +35,8 @@ Copy `.env.example` to `.env.local` and adjust. Everything is optional — the s
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical domain (default `https://pixora.app`) |
-| `NEXT_PUBLIC_SITE_NAME` | Brand name (default `Pixora`) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical domain (default `https://piclizer.app`) |
+| `NEXT_PUBLIC_SITE_NAME` | Brand name (default `Piclizer`) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Search Console verification token |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics ID (loads only after consent) |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager ID (consent-gated) |
