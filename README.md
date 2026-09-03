@@ -98,8 +98,8 @@ To enable the Monetag Vignette ad:
    shipped in `.env.example` is `11719435`; if you use the tag exactly as provided by Monetag, it
    is built into `components/ads/monetag-vignette.tsx` as well.
 3. Done. `MonetagVignette` (mounted from `app/[locale]/layout.tsx`) injects Monetag's official
-   Vignette script (`https://n6wxm.com/vignette.min.js`) with its `data-zone` attribute — but only
-   after the visitor consents to advertising cookies, consistent with the rest of the ad system.
+   Vignette script (`https://n6wxm.com/vignette.min.js`) with its `data-zone` attribute as soon as
+   the client page hydrates — it does **not** wait for cookie consent (per site owner request).
    The CSP in `next.config.mjs` already allow-lists `https://n6wxm.com` (Monetag's Vignette host).
 
 ## Activating PWA mode

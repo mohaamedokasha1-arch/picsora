@@ -1,34 +1,27 @@
 'use client';
 
 import * as React from 'react';
-import { useConsent } from '@/components/consent/consent-provider';
 
 /**
- * Monetag Vignette Banner (consent-gated).
+ * Monetag Vignette Banner (loads immediately).
  *
  * Injects the official Monetag Vignette tag — the same self-injecting tag
  * Monetag gives you in the dashboard ("Get tag" -> Vignette Banner), which
  * creates a `<script>` element and sets `src` + `data-zone` on it.
  *
- * It runs only when:
- *   1. a zone id is configured (default zone id: 11719435), and
- *   2. the user has consented to advertising cookies.
- *
- * This mirrors the consent behaviour of the rest of the ad system
- * (see <AdPlacement />): no advertising scripts load until consent is given.
+ * It loads as soon as the client page is hydrated, without waiting for cookie
+ * consent (per site owner request). If you need to make this consent-gated
+ * again, remove the comment below and remount it with <useConsent />.
  */
 const MONETAG_VIGNETTE_SRC = 'https://n6wxm.com/vignette.min.js';
 const DEFAULT_MONETAG_ZONE_ID = '11719435';
 const VIGNETTE_SCRIPT_ID = 'monetag-vignette';
 
 export function MonetagVignette() {
-  const { consent } = useConsent();
   const zoneId =
     process.env.NEXT_PUBLIC_MONETAG_VIGNETTE_ZONE_ID || DEFAULT_MONETAG_ZONE_ID;
 
   React.useEffect(() => {
-    if (!consent?.advertising) return;
-
     // Guard against double injection (React StrictMode / re-renders).
     if (document.getElementById(VIGNETTE_SCRIPT_ID)) return;
 
@@ -41,7 +34,7 @@ export function MonetagVignette() {
     // Dynamically-inserted scripts load asynchronously by default, matching
     // the official Monetag tag.
     document.body.appendChild(script);
-  }, [zoneId, consent?.advertising]);
+  }, [zoneId]);
 
   return null;
 }
