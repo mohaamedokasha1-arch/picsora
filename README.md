@@ -94,11 +94,13 @@ after advertising consent is given.
 To enable the Monetag Vignette ad:
 
 1. In your Monetag dashboard, create a **Vignette Banner** zone and copy its numeric zone id.
-2. Set `NEXT_PUBLIC_MONETAG_VIGNETTE_ZONE_ID=<zone id>` in your environment.
+2. Set `NEXT_PUBLIC_MONETAG_VIGNETTE_ZONE_ID=<zone id>` in your environment. The default zone id
+   shipped in `.env.example` is `11719435`; if you use the tag exactly as provided by Monetag, it
+   is built into `components/ads/monetag-vignette.tsx` as well.
 3. Done. `MonetagVignette` (mounted from `app/[locale]/layout.tsx`) injects Monetag's official
-   vignette tag into `<head>` — but only after the visitor consents to advertising cookies,
-   consistent with the rest of the ad system. The CSP in `next.config.mjs` already allow-lists
-   `https://inklinkor.com` (Monetag's tag host).
+   Vignette script (`https://n6wxm.com/vignette.min.js`) with its `data-zone` attribute — but only
+   after the visitor consents to advertising cookies, consistent with the rest of the ad system.
+   The CSP in `next.config.mjs` already allow-lists `https://n6wxm.com` (Monetag's Vignette host).
 
 ## Activating PWA mode
 
