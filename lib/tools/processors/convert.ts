@@ -1,6 +1,7 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, fillBackground, nameOf, outputName } from '@/lib/image/process';
 import { canvasToBlob, supportsWebPEncode } from '@/lib/image/format';
+import { hasAlpha, clearCanvas } from '@/lib/image/transparent';
 
 export interface ConvertOptions {
   format: ImageFormat;
@@ -24,8 +25,10 @@ export async function convertImage(
   if (format === 'webp') ensureWebP();
 
   const needsOpaque = format === 'jpg' || format === 'jpeg';
+  const sourceHasAlpha = hasAlpha(decoded);
   const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
-  if (needsOpaque) fillBackground(ctx, options.background || '#ffffff', decoded.width, decoded.height);
+  clearCanvas(ctx, decoded.width, decoded.height);
+  if (needsOpaque && sourceHasAlpha) fillBackground(ctx, options.background || '#ffffff', decoded.width, decoded.height);
   if (decoded.bitmap) ctx.drawImage(decoded.bitmap, 0, 0);
   else ctx.drawImage(decoded.image, 0, 0);
 

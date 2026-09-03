@@ -1,6 +1,7 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, nameOf, outputName } from '@/lib/image/process';
 import { canvasToBlob } from '@/lib/image/format';
+import { hasAlpha, fillBackground, clearCanvas } from '@/lib/image/transparent';
 
 export interface CropOptions {
   x: number; // natural-image pixel coordinates
@@ -16,6 +17,12 @@ export async function cropImage(
 ): Promise<ProcessResult> {
   const decoded = files[0];
   const { canvas, ctx } = createCanvas(options.width, options.height);
+  clearCanvas(ctx, options.width, options.height);
+  const sourceHasAlpha = hasAlpha(decoded);
+  const isOpaqueOutput = options.format === 'jpg' || options.format === 'jpeg';
+  if (isOpaqueOutput && sourceHasAlpha) {
+    fillBackground(ctx, '#ffffff', options.width, options.height);
+  }
   if (decoded.bitmap) {
     ctx.drawImage(
       decoded.bitmap,

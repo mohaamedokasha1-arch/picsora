@@ -19,6 +19,12 @@ export function extFromMime(mime: string): string {
     'image/png': 'png',
     'image/webp': 'webp',
     'image/gif': 'gif',
+    'image/bmp': 'bmp',
+    'image/tiff': 'tiff',
+    'image/tif': 'tiff',
+    'image/avif': 'avif',
+    'image/svg+xml': 'svg',
+    'application/pdf': 'pdf',
   };
   return map[mime] || '';
 }
@@ -30,6 +36,11 @@ export function mimeFromExt(ext: string): string {
     png: 'image/png',
     webp: 'image/webp',
     gif: 'image/gif',
+    bmp: 'image/bmp',
+    tiff: 'image/tiff',
+    tif: 'image/tiff',
+    avif: 'image/avif',
+    svg: 'image/svg+xml',
     pdf: 'application/pdf',
   };
   return map[ext.toLowerCase()] || 'application/octet-stream';
@@ -55,6 +66,29 @@ export function sniffFormatFromBytes(bytes: Uint8Array): string | null {
     return 'webp';
   // GIF: "GIF8"
   if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x38) return 'gif';
+  // BMP: "BM"
+  if (bytes[0] === 0x42 && bytes[1] === 0x4d) return 'bmp';
+  // TIFF: "II" (little-endian) or "MM" (big-endian) followed by 42/43
+  if ((bytes[0] === 0x49 && bytes[1] === 0x49) || (bytes[0] === 0x4d && bytes[1] === 0x4d)) {
+    if (bytes[2] === 0x2a || bytes[2] === 0x43) return 'tiff';
+  }
+  // AVIF: RIFF + WEBP? Actually AVIF uses ftypavif. Check for ftyp at offset 4
+  if (bytes.length >= 12) {
+    if (bytes[4] === 0x66 && bytes[5] === 0x74 && bytes[6] === 0x79 && bytes[7] === 0x70) {
+      // ftyp box; check if avif or heic in bytes 8-11
+      const brand = String.fromCharCode(...bytes.subarray(8, 12));
+      if (brand.includes('avif') || brand.includes('heic')) return 'avif';
+    }
+  }
+  // SVG: starts with optional whitespace then <svg or <?xml
+  if (bytes.length >= 4) {
+    let i = 0;
+    while (i < bytes.length && (bytes[i] === 0x20 || bytes[i] === 0x09 || bytes[i] === 0x0a || bytes[i] === 0x0d)) i++;
+    if (i + 3 < bytes.length) {
+      const snippet = String.fromCharCode(...bytes.subarray(i, i + 3));
+      if (snippet === '<sv' || snippet === '<?x') return 'svg';
+    }
+  }
   return null;
 }
 
@@ -98,6 +132,10 @@ export function decodeImage(file: File): Promise<DecodedImage> {
       const format =
         (extFromMime(file.type) as ImageFormat) || (fileExt(file.name) as ImageFormat) || 'png';
       const resolveWith = (bitmap: ImageBitmap | null) => {
+        // After the image is fully decoded into the img element memory,
+        // the object URL is no longer needed; revoking prevents memory leaks.
+        // A brief delay ensures any immediate canvas draw operations finish.
+        setTimeout(() => URL.revokeObjectURL(url), 100);
         resolve({ image: img, bitmap, width, height, format, file });
       };
       if (typeof createImageBitmap === 'function') {

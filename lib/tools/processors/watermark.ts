@@ -1,6 +1,7 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, nameOf, outputName } from '@/lib/image/process';
 import { canvasToBlob, decodeImage } from '@/lib/image/format';
+import { hasAlpha, fillBackground, clearCanvas } from '@/lib/image/transparent';
 
 export type WatermarkPosition =
   | 'tl' | 'tc' | 'tr'
@@ -57,6 +58,12 @@ export async function applyWatermark(
 ): Promise<ProcessResult> {
   const decoded = files[0];
   const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
+  clearCanvas(ctx, decoded.width, decoded.height);
+  const sourceHasAlpha = hasAlpha(decoded);
+  const isOpaqueOutput = options.format === 'jpg' || options.format === 'jpeg';
+  if (isOpaqueOutput && sourceHasAlpha) {
+    fillBackground(ctx, '#ffffff', decoded.width, decoded.height);
+  }
   if (decoded.bitmap) ctx.drawImage(decoded.bitmap, 0, 0);
   else ctx.drawImage(decoded.image, 0, 0);
 
