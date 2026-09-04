@@ -1,4 +1,5 @@
-import type { ImageFormat, OutputFormat } from '@/lib/types';
+import type { OutputFormat } from '@/lib/types';
+import type { UploadExtension } from '@/lib/validation';
 
 export type CategorySlug =
   | 'compress'
@@ -44,7 +45,7 @@ export interface ToolDef {
   category: CategorySlug;
   icon: string;
   keywords: string[];
-  inputFormats: (ImageFormat | 'pdf')[];
+  inputFormats: UploadExtension[];
   outputFormats: OutputFormat[];
   maxFileSizeMB: number;
   maxFiles: number;
@@ -71,12 +72,35 @@ export const CATEGORIES: CategoryDef[] = [
   { slug: 'developer-tools', nameKey: 'categoryMeta.developer-tools.name', descriptionKey: 'categoryMeta.developer-tools.description', introKey: 'categoryIntros.developer-tools', icon: 'code', accent: 'cyan' },
 ];
 
+/**
+ * Every raster image input the image conversion tools accept. Besides the
+ * usual web staples this includes BMP / TIFF / AVIF / SVG plus the whole
+ * iPhone HEIC / HEIF family (HEIC is decoded locally via heic2any before
+ * any processing), so photos straight off an iPhone can be dropped into
+ * any converter. Alias extensions (jpeg, tif) are kept too, because the
+ * uploader matches file extensions exactly.
+ */
+const ALL_IMAGE_INPUTS: UploadExtension[] = [
+  'jpg',
+  'jpeg',
+  'png',
+  'webp',
+  'gif',
+  'bmp',
+  'tiff',
+  'tif',
+  'avif',
+  'svg',
+  'heic',
+  'heif',
+];
+
 const T = (
   slug: string,
   category: CategorySlug,
   icon: string,
   keywords: string[],
-  inputFormats: ImageFormat[],
+  inputFormats: UploadExtension[],
   outputFormats: OutputFormat[],
   relatedTools: string[],
   popular = false,
@@ -108,12 +132,14 @@ const IMAGE_TOOLS: ToolDef[] = [
   T('image-rotator', 'edit', 'rotate', ['rotate', 'turn', '90 degrees', '180', 'angle', 'تدوير'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-horizontal', 'flip-image-vertical', 'image-cropper'], false, 1),
   T('flip-image-horizontal', 'edit', 'flip-horizontal', ['flip', 'mirror', 'horizontal', 'reflect', 'انعكاس'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-vertical', 'image-rotator', 'image-cropper'], false, 1),
   T('flip-image-vertical', 'edit', 'flip-vertical', ['flip', 'mirror', 'vertical', 'upside down', 'انعكاس'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-horizontal', 'image-rotator', 'image-cropper'], false, 1),
-  T('jpg-to-png', 'convert', 'repeat', ['jpg to png', 'jpeg to png', 'convert jpg', 'jpg2png', 'تحويل'], ['jpg'], ['png'], ['png-to-jpg', 'jpg-to-webp', 'image-compressor'], true, 10),
-  T('png-to-jpg', 'convert', 'repeat', ['png to jpg', 'convert png', 'png2jpg', 'transparent to white', 'تحويل'], ['png'], ['jpg'], ['jpg-to-png', 'png-to-webp', 'webp-to-jpg'], true, 10),
-  T('jpg-to-webp', 'convert', 'repeat', ['jpg to webp', 'convert to webp', 'jpeg webp', 'تحويل'], ['jpg'], ['webp'], ['png-to-webp', 'webp-to-jpg', 'image-compressor'], false, 10),
-  T('png-to-webp', 'convert', 'repeat', ['png to webp', 'convert png webp', 'transparent webp', 'تحويل'], ['png'], ['webp'], ['jpg-to-webp', 'webp-to-png', 'png-to-jpg'], false, 10),
-  T('webp-to-jpg', 'convert', 'repeat', ['webp to jpg', 'convert webp', 'webp2jpg', 'تحويل'], ['webp'], ['jpg'], ['jpg-to-webp', 'png-to-jpg', 'webp-to-png'], false, 10),
-  T('webp-to-png', 'convert', 'repeat', ['webp to png', 'convert webp png', 'webp2png', 'تحويل'], ['webp'], ['png'], ['png-to-webp', 'jpg-to-png', 'webp-to-jpg'], false, 10),
+  // Conversion tools accept *any* image type in the drop zone (including
+  // iPhone HEIC/HEIF) and always output the format shown in the tool name.
+  T('jpg-to-png', 'convert', 'repeat', ['jpg to png', 'jpeg to png', 'convert jpg', 'jpg2png', 'تحويل'], [...ALL_IMAGE_INPUTS], ['png'], ['png-to-jpg', 'jpg-to-webp', 'image-compressor'], true, 10),
+  T('png-to-jpg', 'convert', 'repeat', ['png to jpg', 'convert png', 'png2jpg', 'transparent to white', 'تحويل'], [...ALL_IMAGE_INPUTS], ['jpg'], ['jpg-to-png', 'png-to-webp', 'webp-to-jpg'], true, 10),
+  T('jpg-to-webp', 'convert', 'repeat', ['jpg to webp', 'convert to webp', 'jpeg webp', 'تحويل'], [...ALL_IMAGE_INPUTS], ['webp'], ['png-to-webp', 'webp-to-jpg', 'image-compressor'], false, 10),
+  T('png-to-webp', 'convert', 'repeat', ['png to webp', 'convert png webp', 'transparent webp', 'تحويل'], [...ALL_IMAGE_INPUTS], ['webp'], ['jpg-to-webp', 'webp-to-png', 'png-to-jpg'], false, 10),
+  T('webp-to-jpg', 'convert', 'repeat', ['webp to jpg', 'convert webp', 'webp2jpg', 'تحويل'], [...ALL_IMAGE_INPUTS], ['jpg'], ['jpg-to-webp', 'png-to-jpg', 'webp-to-png'], false, 10),
+  T('webp-to-png', 'convert', 'repeat', ['webp to png', 'convert webp png', 'webp2png', 'تحويل'], [...ALL_IMAGE_INPUTS], ['png'], ['png-to-webp', 'jpg-to-png', 'webp-to-jpg'], false, 10),
   T('image-to-pdf', 'pdf-tools', 'file-text', ['image to pdf', 'photo to pdf', 'jpg to pdf', 'png to pdf', 'pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['images-to-pdf', 'image-resizer', 'merge-images'], true, 1),
   T('images-to-pdf', 'pdf-tools', 'file-text', ['images to pdf', 'multiple photos pdf', 'combine pdf', 'jpg to pdf', 'صور الى pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['image-to-pdf', 'pdf-merger', 'pdf-compressor'], true, 30),
   T('merge-images', 'edit', 'merge', ['merge', 'combine', 'side by side', 'collage', 'stack', 'دمج'], ['jpg', 'png', 'webp'], ['png', 'jpg'], ['split-image', 'images-to-pdf', 'image-resizer'], false, 10),
@@ -209,21 +235,14 @@ const CALCULATOR_TOOLS: ToolDef[] = [
 
 /**
  * iPhone photos (HEIC / HEIF) are accepted by every generic image tool.
- * Format-specific converters keep their strict inputs; dedicated HEIC
- * converters are registered below instead.
+ * The conversion tools above already list them via ALL_IMAGE_INPUTS, so
+ * this only fills the gap for the remaining tools.
  */
-const STRICT_CONVERTERS = new Set([
-  'jpg-to-png',
-  'png-to-jpg',
-  'jpg-to-webp',
-  'png-to-webp',
-  'webp-to-jpg',
-  'webp-to-png',
-]);
+const IPHONE_EXTRA: UploadExtension[] = ['heic', 'heif'];
 
 for (const tool of IMAGE_TOOLS) {
-  if (!STRICT_CONVERTERS.has(tool.slug)) {
-    tool.inputFormats = [...tool.inputFormats, 'heic', 'heif'];
+  for (const extra of IPHONE_EXTRA) {
+    if (!tool.inputFormats.includes(extra)) tool.inputFormats.push(extra);
   }
 }
 
@@ -253,7 +272,7 @@ const NEW_IMAGE_TOOLS: ToolDef[] = [
       'convert',
       'repeat',
       ['heic to jpg', 'heif to jpg', 'iphone photo converter', 'convert heic', 'heic2jpg', 'تحويل heic الى jpg', 'صور الايفون'],
-      ['heic', 'heif'],
+      [...ALL_IMAGE_INPUTS],
       ['jpg'],
       ['heic-to-png', 'jpg-to-png', 'image-compressor', 'image-to-exact-kb'],
       true,
@@ -267,7 +286,7 @@ const NEW_IMAGE_TOOLS: ToolDef[] = [
       'convert',
       'repeat',
       ['heic to png', 'heif to png', 'iphone to png', 'convert heic png', 'تحويل heic الى png'],
-      ['heic', 'heif'],
+      [...ALL_IMAGE_INPUTS],
       ['png'],
       ['heic-to-jpg', 'jpg-to-png', 'png-to-webp', 'image-compressor'],
       false,
@@ -337,7 +356,7 @@ const NEW_IMAGE_TOOLS: ToolDef[] = [
       'convert',
       'scan-text',
       ['image ocr', 'extract text from image', 'photo to text', 'jpg to text', 'screenshot to text', 'استخراج النص من الصور'],
-      ['jpg', 'png', 'webp', 'heic'],
+      [...ALL_IMAGE_INPUTS],
       ['txt'],
       ['pdf-ocr', 'pdf-to-text', 'word-counter', 'heic-to-jpg'],
       true,
