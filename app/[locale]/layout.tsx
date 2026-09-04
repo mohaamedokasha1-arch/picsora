@@ -63,6 +63,8 @@ export default async function LocaleLayout({
       <head>
         {/* Monetag site verification */}
         <meta name="monetag" content="a0ac60af89b9b55d82647e019146c160" />
+        {/* Google AdSense */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5770911159315916" crossOrigin="anonymous"></script>
       </head>
       <body className="min-h-screen">
         <a href="#main-content" className="skip-link">
