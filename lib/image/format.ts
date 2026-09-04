@@ -120,6 +120,25 @@ export function supportsOffscreenCanvas(): boolean {
   return typeof OffscreenCanvas !== 'undefined';
 }
 
+const IMAGE_FORMATS: ReadonlySet<string> = new Set(['jpg', 'jpeg', 'png', 'webp', 'gif']);
+
+/**
+ * Map a detected format to one the browser can actually encode back out.
+ * Some inputs (HEIC/HEIF from iPhones, AVIF, TIFF, BMP, SVG) can be *decoded*
+ * by the browser but cannot be written back by canvas.toBlob, so we re-target
+ * them at a safe output format instead of breaking the export step.
+ */
+export function normalizeImageFormat(format: string | undefined): ImageFormat {
+  const f = (format || '').trim().toLowerCase();
+  if (IMAGE_FORMATS.has(f)) return f as ImageFormat;
+  if (f === 'svg') return 'png';
+  // Raster formats we can read but not write -> JPEG.
+  if (f === 'heic' || f === 'heif' || f === 'avif' || f === 'tiff' || f === 'tif' || f === 'bmp') {
+    return 'jpg';
+  }
+  return 'png';
+}
+
 /** Load an image from a File into both an HTMLImageElement and (if available) an ImageBitmap. */
 export function decodeImage(file: File): Promise<DecodedImage> {
   return new Promise((resolve, reject) => {
@@ -129,8 +148,7 @@ export function decodeImage(file: File): Promise<DecodedImage> {
     img.onload = () => {
       const width = img.naturalWidth;
       const height = img.naturalHeight;
-      const format =
-        (extFromMime(file.type) as ImageFormat) || (fileExt(file.name) as ImageFormat) || 'png';
+      const format = normalizeImageFormat(extFromMime(file.type) || fileExt(file.name));
       const resolveWith = (bitmap: ImageBitmap | null) => {
         // After the image is fully decoded into the img element memory,
         // the object URL is no longer needed; revoking prevents memory leaks.

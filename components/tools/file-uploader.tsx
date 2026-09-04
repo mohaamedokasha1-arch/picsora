@@ -4,7 +4,7 @@ import * as React from 'react';
 import { UploadCloud, X, ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { FormatRule } from '@/lib/validation';
-import { validateFile } from '@/lib/validation';
+import { acceptAttrFor, validateFile } from '@/lib/validation';
 import { cn, formatBytes } from '@/lib/utils';
 
 export interface UploadError {
@@ -119,7 +119,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
           ref={inputRef}
           type="file"
           multiple={rule.maxFiles > 1}
-          accept={rule.mimes.join(',')}
+          accept={acceptAttrFor(rule)}
           className="sr-only"
           onChange={(e) => {
             if (e.target.files) handleFiles(e.target.files);
@@ -181,7 +181,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
         ref={inputRef}
         type="file"
         multiple={rule.maxFiles > 1}
-        accept={rule.mimes.join(',')}
+        accept={acceptAttrFor(rule)}
         className="sr-only"
         onChange={(e) => {
           if (e.target.files) handleFiles(e.target.files);

@@ -178,7 +178,7 @@ export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
                 <input
                   ref={wmInputRef}
                   type="file"
-                  accept="image/png,image/jpeg,image/webp"
+                  accept="image/*"
                   className="sr-only"
                   onChange={(e) => onWmFile(e.target.files?.[0] ?? null)}
                 />
