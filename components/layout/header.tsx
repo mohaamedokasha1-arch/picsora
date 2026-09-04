@@ -14,8 +14,20 @@ import { cn } from '@/lib/utils';
 export function Header() {
   const t = useTranslations();
   const pathname = usePathname();
+  const headerRef = React.useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = React.useState(false);
+  // Height of the mobile menu sheet: everything below the header's bottom
+  // edge, measured so it stays correct if the header is ever pushed down.
+  const [menuHeight, setMenuHeight] = React.useState('calc(100dvh - 4rem)');
   const [searchOpen, setSearchOpen] = React.useState(false);
+
+  const toggleMenu = React.useCallback((open: boolean) => {
+    if (open) {
+      const top = headerRef.current?.getBoundingClientRect().bottom ?? 64;
+      setMenuHeight(`calc(100dvh - ${Math.max(0, Math.round(top))}px)`);
+    }
+    setMenuOpen(open);
+  }, []);
 
   React.useEffect(() => setMenuOpen(false), [pathname]);
   React.useEffect(() => {
@@ -36,7 +48,7 @@ export function Header() {
     exact ? pathname === href : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+    <header ref={headerRef} className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="container flex h-16 items-center justify-between gap-3">
         <div className="flex items-center gap-6">
           <Link href="/" aria-label={t('common.siteName')} className="shrink-0">
@@ -79,7 +91,7 @@ export function Header() {
             className="md:hidden"
             aria-label={menuOpen ? t('common.ariaCloseMenu') : t('common.ariaOpenMenu')}
             aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((s) => !s)}
+            onClick={() => toggleMenu(!menuOpen)}
           >
             {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
@@ -93,7 +105,10 @@ export function Header() {
       )}
 
       {menuOpen && (
-        <div className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-background md:hidden">
+        <div
+          className="absolute inset-x-0 top-full z-40 overflow-y-auto bg-background md:hidden"
+          style={{ height: menuHeight }}
+        >
           <nav aria-label={t('header.nav')} className="container flex flex-col gap-1 py-4">
             {nav.map((item) => (
               <Link

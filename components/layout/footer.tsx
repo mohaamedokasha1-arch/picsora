@@ -2,6 +2,7 @@ import { getTranslations, getLocale } from 'next-intl/server';
 import { Link } from '@/lib/i18n/navigation';
 import { Logo } from './logo';
 import { LanguageSwitcher } from '@/components/i18n/language-switcher';
+import { CookieSettingsButton } from '@/components/consent/cookie-settings-button';
 import { ShieldCheck } from 'lucide-react';
 import { CATEGORIES, TOOLS } from '@/lib/tools/registry';
 import { getAllGuides } from '@/lib/guides';
@@ -87,6 +88,9 @@ export async function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <CookieSettingsButton />
+            </li>
           </ul>
         </div>
       </div>

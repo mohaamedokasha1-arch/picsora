@@ -2808,7 +2808,9 @@
   },
   "consent": {
     "title": "We value your privacy",
-    "text": "We use cookies to improve your experience. Necessary cookies keep the site working; analytics and advertising cookies are optional and off by default.",
+    "text": "We use cookies to improve your experience. Analytics and advertising cookies stay off by default until you accept them.",
+    "accept": "Accept",
+    "reject": "Reject",
     "acceptAll": "Accept all",
     "rejectAll": "Reject non-essential",
     "manage": "Manage preferences",
