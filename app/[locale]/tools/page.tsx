@@ -5,7 +5,7 @@ import { siteConfig } from '@/lib/site';
 import { TOOLS } from '@/lib/tools/registry';
 import { Breadcrumb } from '@/components/layout/breadcrumb';
 import { ToolsGrid } from '@/components/tools/tools-grid';
-import { breadcrumbSchema, itemListSchema, StructuredData } from '@/lib/seo/schema';
+import { collectionPageSchema, itemListSchema, StructuredData } from '@/lib/seo/schema';
 
 export function generateStaticParams() {
   return siteConfig.locales.map((locale) => ({ locale }));
@@ -25,13 +25,12 @@ export default async function ToolsPage({ params }: { params: { locale: string }
   const base = siteConfig.url.replace(/\/$/, '');
 
   const schema = [
-    breadcrumbSchema(
-      [
-        { name: t('common.home'), path: '/' },
-        { name: t('common.tools'), path: '/tools' },
-      ],
-      siteConfig.url,
-    ),
+    collectionPageSchema({
+      name: t('toolsPage.title'),
+      description: t('toolsPage.subtitle'),
+      url: `${base}/${params.locale}/tools`,
+      locale: params.locale,
+    }),
     itemListSchema(
       TOOLS.map((tool) => ({
         name: t(tool.nameKey as never),

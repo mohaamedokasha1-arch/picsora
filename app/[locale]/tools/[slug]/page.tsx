@@ -9,7 +9,7 @@ import { ToolClient } from '@/components/tools/tool-client';
 import { HowToUse } from '@/components/tools/how-to-use';
 import { FAQSection } from '@/components/tools/faq-section';
 import { RelatedTools } from '@/components/tools/related-tools';
-import { webAppSchema, breadcrumbSchema, faqSchema, howToSchema, StructuredData } from '@/lib/seo/schema';
+import { webAppSchema, faqSchema, howToSchema, StructuredData } from '@/lib/seo/schema';
 import { ToolIcon } from '@/components/icons';
 import { AdPlacement } from '@/components/ads/ad-placement';
 
@@ -32,17 +32,15 @@ export async function generateMetadata({
   const t = await getTranslations();
   const name = t(tool.nameKey as never);
   const description = t(tool.descriptionKey as never);
-  return {
-    ...buildMetadata(
-      {
-        title: `${name} — Free Online Tool | ${siteConfig.name}`,
-        description,
-        path: `/tools/${tool.slug}`,
-      },
-      params.locale,
-    ),
-    keywords: [...tool.keywords, ...siteConfig.keywords],
-  };
+  return buildMetadata(
+    {
+      title: `${name} — Free Online Tool | ${siteConfig.name}`,
+      description,
+      path: `/tools/${tool.slug}`,
+      keywords: tool.keywords,
+    },
+    params.locale,
+  );
 }
 
 const fmtLabel: Record<string, string> = {
@@ -67,7 +65,7 @@ export default async function ToolPage({ params }: { params: { locale: string; s
   const howTo = (t.raw(tool.howToKey) as string[]) ?? [];
   const faqs = (t.raw(tool.faqsKey) as { q: string; a: string }[]) ?? [];
 
-  const url = `${siteConfig.url}/${params.locale}/tools/${tool.slug}`;
+  const url = `${siteConfig.url.replace(/\/$/, '')}/${params.locale}/tools/${tool.slug}`;
 
   const schema = [
     webAppSchema({
@@ -75,17 +73,16 @@ export default async function ToolPage({ params }: { params: { locale: string; s
       description,
       url,
       features: howTo.slice(0, 6),
+      locale: params.locale,
     }),
-    breadcrumbSchema(
-      [
-        { name: t('common.home'), path: '/' },
-        { name: t('common.tools'), path: '/tools' },
-        { name, path: `/tools/${tool.slug}` },
-      ],
-      siteConfig.url,
-    ),
     faqSchema(faqs),
-    howToSchema({ name: `${name} — ${t('howTo.title')}`, description, steps: howTo }),
+    howToSchema({
+      name: `${name} — ${t('howTo.title')}`,
+      description,
+      steps: howTo,
+      locale: params.locale,
+      url,
+    }),
   ];
 
   return (

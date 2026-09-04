@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { ChevronRight } from 'lucide-react';
 import { Link } from '@/lib/i18n/navigation';
 import { siteConfig } from '@/lib/site';
@@ -12,11 +12,13 @@ export interface BreadcrumbItem {
 
 export async function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
   const t = await getTranslations('common');
+  const locale = await getLocale();
   const full: BreadcrumbItem[] = [{ label: t('home'), href: '/' }, ...items];
 
   const schema = breadcrumbSchema(
     full.map((item) => ({ name: item.label, path: item.href ?? '/' })),
     siteConfig.url,
+    locale,
   );
 
   return (

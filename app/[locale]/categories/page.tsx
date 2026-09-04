@@ -6,6 +6,7 @@ import { CATEGORIES, TOOLS } from '@/lib/tools/registry';
 import { Breadcrumb } from '@/components/layout/breadcrumb';
 import { Link } from '@/lib/i18n/navigation';
 import { ToolIcon } from '@/components/icons';
+import { collectionPageSchema, itemListSchema, StructuredData } from '@/lib/seo/schema';
 
 export function generateStaticParams() {
   return siteConfig.locales.map((locale) => ({ locale }));
@@ -23,9 +24,27 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 export default async function CategoriesPage({ params }: { params: { locale: string } }) {
   setRequestLocale(params.locale);
   const t = await getTranslations();
+  const base = siteConfig.url.replace(/\/$/, '');
+
+  const schema = [
+    collectionPageSchema({
+      name: t('categoriesPage.title'),
+      description: t('categoriesPage.subtitle'),
+      url: `${base}/${params.locale}/categories`,
+      locale: params.locale,
+    }),
+    itemListSchema(
+      CATEGORIES.map((cat) => ({
+        name: t(cat.nameKey as never),
+        description: t(cat.descriptionKey as never),
+        url: `${base}/${params.locale}/categories/${cat.slug}`,
+      })),
+    ),
+  ];
 
   return (
     <div className="container py-8">
+      <StructuredData data={schema} />
       <Breadcrumb items={[{ label: t('common.categories'), href: '/categories' }]} />
       <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{t('categoriesPage.title')}</h1>
       <p className="mt-2 text-muted-foreground">{t('categoriesPage.subtitle')}</p>

@@ -1,6 +1,10 @@
 export default function RootNotFound() {
   return (
     <html lang="en">
+      <head>
+        <meta name="robots" content="noindex, follow" />
+        <title>Page not found | Piclizer</title>
+      </head>
       <body>
         <div style={{ fontFamily: 'system-ui, sans-serif', textAlign: 'center', padding: '80px 20px' }}>
           <h1 style={{ fontSize: 40, margin: 0 }}>Page not found</h1>
