@@ -4,7 +4,7 @@ import * as React from 'react';
 import { UploadCloud, X, ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { FormatRule } from '@/lib/validation';
-import { validateFile } from '@/lib/validation';
+import { validateFiles } from '@/lib/validation';
 import { cn, formatBytes } from '@/lib/utils';
 import { convertHeicToBlob } from '@/lib/image/heic';
 
@@ -94,15 +94,16 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
       onError({ key: 'tooManyFiles', params: { max: String(rule.maxFiles) } });
       return;
     }
-    for (const file of list) {
-      const result = await validateFile(file, rule);
-      if (!result.valid) {
-        onError({
-          key: result.errorKey!,
-          params: { ...result.params, file: file.name },
-        });
-        return; // stop on first invalid file to keep it simple
-      }
+    // Batch validation: per-file checks (name structure, magic bytes, MIME,
+    // SVG active content) plus the combined-size ceiling. Same error keys as
+    // before, so the messages the user sees are unchanged.
+    const result = await validateFiles([...files, ...list], rule);
+    if (!result.valid) {
+      onError({
+        key: result.errorKey!,
+        params: { ...result.params, ...(result.file ? { file: result.file } : {}) },
+      });
+      return; // stop on first invalid file to keep it simple
     }
     onFilesChange([...files, ...list]);
   };

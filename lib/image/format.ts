@@ -5,6 +5,7 @@
 
 import type { DecodedImage, ImageFormat } from '@/lib/types';
 import { convertHeicToBlob, isHeicFile } from '@/lib/image/heic';
+import { safeDownloadFilename } from '@/lib/security/sanitize';
 
 export const MAX_DIMENSION = 16000; // safety cap for canvas dimensions
 /** Safety cap for total pixels (~100 MP) so giant panoramas fail with a clear message. */
@@ -298,11 +299,21 @@ export function canvasToBlob(
   return canvasToBlob(c, opts);
 }
 
+/**
+ * Start a client-side download for a Blob.
+ *
+ * The file name is always run through `safeDownloadFilename`, which strips
+ * path separators/traversal, control characters and right-to-left override
+ * spoofing (e.g. `invoice\u202Efdp.exe`) before it reaches the platform.
+ * Human-readable names — including Arabic ones — are preserved as-is.
+ */
 export function triggerDownload(blob: Blob, filename: string) {
+  const safeName = safeDownloadFilename(filename, 'download');
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = filename;
+  a.download = safeName;
+  a.rel = 'noopener noreferrer';
   document.body.appendChild(a);
   a.click();
   a.remove();

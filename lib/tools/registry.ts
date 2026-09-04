@@ -5,7 +5,6 @@ export type CategorySlug =
   | 'resize'
   | 'convert'
   | 'edit'
-  | 'pdf'
   | 'color'
   | 'pdf-tools'
   | 'text-tools'
@@ -65,7 +64,6 @@ export const CATEGORIES: CategoryDef[] = [
   { slug: 'resize', nameKey: 'categoryMeta.resize.name', descriptionKey: 'categoryMeta.resize.description', introKey: 'categoryIntros.resize', icon: 'scaling' },
   { slug: 'convert', nameKey: 'categoryMeta.convert.name', descriptionKey: 'categoryMeta.convert.description', introKey: 'categoryIntros.convert', icon: 'repeat' },
   { slug: 'edit', nameKey: 'categoryMeta.edit.name', descriptionKey: 'categoryMeta.edit.description', introKey: 'categoryIntros.edit', icon: 'pencil' },
-  { slug: 'pdf', nameKey: 'categoryMeta.pdf.name', descriptionKey: 'categoryMeta.pdf.description', introKey: 'categoryIntros.pdf', icon: 'file-text' },
   { slug: 'color', nameKey: 'categoryMeta.color.name', descriptionKey: 'categoryMeta.color.description', introKey: 'categoryIntros.color', icon: 'palette' },
   { slug: 'pdf-tools', nameKey: 'categoryMeta.pdf-tools.name', descriptionKey: 'categoryMeta.pdf-tools.description', introKey: 'categoryIntros.pdf-tools', icon: 'file-pdf', accent: 'red' },
   { slug: 'text-tools', nameKey: 'categoryMeta.text-tools.name', descriptionKey: 'categoryMeta.text-tools.description', introKey: 'categoryIntros.text-tools', icon: 'type', accent: 'green' },
@@ -116,8 +114,8 @@ const IMAGE_TOOLS: ToolDef[] = [
   T('png-to-webp', 'convert', 'repeat', ['png to webp', 'convert png webp', 'transparent webp', 'تحويل'], ['png'], ['webp'], ['jpg-to-webp', 'webp-to-png', 'png-to-jpg'], false, 10),
   T('webp-to-jpg', 'convert', 'repeat', ['webp to jpg', 'convert webp', 'webp2jpg', 'تحويل'], ['webp'], ['jpg'], ['jpg-to-webp', 'png-to-jpg', 'webp-to-png'], false, 10),
   T('webp-to-png', 'convert', 'repeat', ['webp to png', 'convert webp png', 'webp2png', 'تحويل'], ['webp'], ['png'], ['png-to-webp', 'jpg-to-png', 'webp-to-jpg'], false, 10),
-  T('image-to-pdf', 'pdf', 'file-text', ['image to pdf', 'photo to pdf', 'jpg to pdf', 'png to pdf', 'pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['images-to-pdf', 'image-resizer', 'merge-images'], true, 1),
-  { ...T('images-to-pdf', 'pdf', 'file-text', ['images to pdf', 'multiple photos pdf', 'combine pdf', 'jpg to pdf', 'صور الى pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['image-to-pdf', 'pdf-merger', 'pdf-compressor'], true, 30), alsoIn: ['pdf-tools'] },
+  T('image-to-pdf', 'pdf-tools', 'file-text', ['image to pdf', 'photo to pdf', 'jpg to pdf', 'png to pdf', 'pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['images-to-pdf', 'image-resizer', 'merge-images'], true, 1),
+  T('images-to-pdf', 'pdf-tools', 'file-text', ['images to pdf', 'multiple photos pdf', 'combine pdf', 'jpg to pdf', 'صور الى pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['image-to-pdf', 'pdf-merger', 'pdf-compressor'], true, 30),
   T('merge-images', 'edit', 'merge', ['merge', 'combine', 'side by side', 'collage', 'stack', 'دمج'], ['jpg', 'png', 'webp'], ['png', 'jpg'], ['split-image', 'images-to-pdf', 'image-resizer'], false, 10),
   T('split-image', 'edit', 'grid', ['split', 'grid', 'tiles', 'slice', 'carousel', 'تقسيم'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['merge-images', 'image-cropper', 'image-resizer'], false, 1),
   T('image-color-picker', 'color', 'pipette', ['color picker', 'eyedropper', 'hex', 'rgb', 'hsl', 'pixel color', 'منتقي الألوان'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['color-palette-extractor', 'image-to-grayscale', 'image-watermark'], true, 1),

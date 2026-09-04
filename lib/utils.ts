@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { escapeHtml as escapeHtmlSafe, sanitizeFilename as sanitizeFilenameSafe } from '@/lib/security/sanitize';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -19,23 +20,24 @@ export function formatPercent(original: number, current: number): string {
   return `${Math.max(0, Math.round(saved))}%`;
 }
 
-/** Escape a string so it is safe to use as a DOM text node. */
+/**
+ * Escape a string so it is safe to embed in HTML.
+ *
+ * Delegates to the hardened implementation in `lib/security/sanitize` (which
+ * also neutralises `/` and backticks) so there is a single escaping routine in
+ * the codebase.
+ */
 export function escapeHtml(input: string): string {
-  return input
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+  return escapeHtmlSafe(input);
 }
 
-/** Sanitize a user-provided string into a safe file name. */
+/**
+ * Sanitize a user-provided string into a safe file name.
+ *
+ * Delegates to `lib/security/sanitize`, which additionally strips path
+ * separators, traversal sequences, control characters, bidi-override spoofing
+ * and Windows reserved device names before slugifying.
+ */
 export function sanitizeFilename(name: string, fallback = 'file'): string {
-  const cleaned = name
-    .normalize('NFKD')
-    .replace(/[^\w.-]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
-    .slice(0, 80);
-  return cleaned || fallback;
+  return sanitizeFilenameSafe(name, fallback);
 }

@@ -93,8 +93,11 @@ export default async function LocaleLayout({
         {/* Google AdSense */}
         <script
           async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsensePublisherId}`}
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(
+            siteConfig.adsensePublisherId,
+          )}`}
           crossOrigin="anonymous"
+          referrerPolicy="strict-origin-when-cross-origin"
         />
       </head>
       <body className="min-h-screen">

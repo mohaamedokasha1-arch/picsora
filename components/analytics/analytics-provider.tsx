@@ -28,10 +28,13 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     if (process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== 'true') return;
 
     const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-    if (gaId) {
+    // A GA4 measurement id is `G-XXXXXXXX`. Validating it stops a tampered
+    // environment value from being interpolated into the script URL.
+    if (gaId && /^(G|UA|AW|DC)-[A-Za-z0-9_-]{4,24}$/.test(gaId)) {
       const script = document.createElement('script');
       script.async = true;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`;
+      script.referrerPolicy = 'strict-origin-when-cross-origin';
       document.head.appendChild(script);
       const w = window as unknown as {
         dataLayer: unknown[];

@@ -10,6 +10,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { sanitizeHighlightHtml } from '@/lib/security/sanitize';
 
 export type HighlightLanguage = 'json' | 'markup' | 'javascript' | 'css';
 
@@ -58,7 +59,12 @@ export function CodeBlock({
         const prism = await loadPrism();
         const grammar = prism.languages[language];
         if (!grammar) return;
-        const result = prism.highlight(code, grammar, language);
+        // Prism escapes the source text itself; `sanitizeHighlightHtml` is a
+        // second, independent line of defence over the markup it emits — it
+        // strips any executable construct and the id/name attributes used in
+        // DOM-clobbering attacks (see the PrismJS advisories) before the
+        // string is handed to dangerouslySetInnerHTML.
+        const result = sanitizeHighlightHtml(prism.highlight(code, grammar, language));
         if (!cancelled) setHtml(result);
       } catch {
         if (!cancelled) setHtml(null); // fall back to plain text

@@ -18,7 +18,13 @@ export interface AdPlacementProps {
 export function AdPlacement({ slot, className, minHeight = '90px' }: AdPlacementProps) {
   const { consent } = useConsent();
   const adsEnabled = process.env.NEXT_PUBLIC_ADS_ENABLED === 'true';
-  const clientId = process.env.NEXT_PUBLIC_ADS_CLIENT_ID;
+  const rawClientId = process.env.NEXT_PUBLIC_ADS_CLIENT_ID;
+  // AdSense publisher ids look like `ca-pub-1234567890123456`. Validating the
+  // configured value keeps a tampered environment variable out of the DOM.
+  const clientId = rawClientId && /^ca-pub-\d{10,20}$/.test(rawClientId) ? rawClientId : undefined;
+  // Slot ids are numeric; the value is only ever rendered as an attribute, but
+  // constraining it removes any attribute-injection surface entirely.
+  const safeSlot = /^[A-Za-z0-9_-]{1,32}$/.test(slot) ? slot : '';
 
   React.useEffect(() => {
     if (!adsEnabled || !consent?.advertising || !clientId) return;
@@ -35,7 +41,7 @@ export function AdPlacement({ slot, className, minHeight = '90px' }: AdPlacement
 
   return (
     <div
-      data-ad-slot={slot}
+      data-ad-slot={safeSlot}
       aria-hidden={!showAd ? 'true' : undefined}
       className={cn('flex w-full items-center justify-center overflow-hidden', className)}
       style={{ minHeight }}
@@ -45,7 +51,7 @@ export function AdPlacement({ slot, className, minHeight = '90px' }: AdPlacement
           className="adsbygoogle block"
           style={{ display: 'block', minHeight }}
           data-ad-client={clientId}
-          data-ad-slot={slot}
+          data-ad-slot={safeSlot}
           data-ad-format="auto"
           data-full-width-responsive="true"
         />

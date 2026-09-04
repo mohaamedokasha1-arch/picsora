@@ -74,7 +74,7 @@ function useSearchIndex(): SearchItem[] {
       TOOLS.map((tool) => {
         const name = t(tool.nameKey as never);
         const description = t(tool.shortKey as never);
-        const category = t(tool.category === 'pdf' ? 'categoryMeta.pdf.name' : `categoryMeta.${tool.category}.name` as never);
+        const category = t(`categoryMeta.${tool.category}.name` as never);
         return {
           slug: tool.slug,
           name,

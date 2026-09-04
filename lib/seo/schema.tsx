@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
 import { absoluteAsset, siteConfig, siteOrigin } from '@/lib/site';
+import { serializeForScript } from '@/lib/security/sanitize';
 
-/** Prevent `</script>` breakout inside JSON-LD payloads. */
+/**
+ * Prevent `</script>` breakout and JS line-terminator injection inside
+ * JSON-LD payloads. Shared with the rest of the app via `lib/security`.
+ */
 function serializeJsonLd(data: object): string {
-  return JSON.stringify(data)
-    .replace(/</g, '\\u003c')
-    .replace(/>/g, '\\u003e')
-    .replace(/\u2028/g, '\\u2028')
-    .replace(/\u2029/g, '\\u2029');
+  return serializeForScript(data);
 }
 
 export function StructuredData({ data }: { data: object | (object | null | undefined)[] }) {
