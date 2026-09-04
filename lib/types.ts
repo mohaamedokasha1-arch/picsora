@@ -1,6 +1,6 @@
-export type ImageFormat = 'jpg' | 'jpeg' | 'png' | 'webp' | 'gif';
+export type ImageFormat = 'jpg' | 'jpeg' | 'png' | 'webp' | 'gif' | 'heic' | 'heif' | 'bmp' | 'tiff' | 'svg';
 /** Output formats a tool may produce (images, PDF or JSON exports). */
-export type OutputFormat = ImageFormat | 'pdf' | 'json' | 'zip' | 'txt' | 'xml' | 'css' | 'js' | 'csv';
+export type OutputFormat = ImageFormat | 'pdf' | 'json' | 'zip' | 'txt' | 'xml' | 'css' | 'js' | 'csv' | 'svg';
 
 export interface Dimension {
   width: number;
@@ -18,6 +18,10 @@ export interface DecodedImage {
   format: ImageFormat;
   /** Original file. */
   file: File;
+  /** EXIF orientation if detected (1-8). */
+  orientation?: number;
+  /** Live Photo detection info. */
+  isLivePhoto?: boolean;
 }
 
 export interface ProcessResult {

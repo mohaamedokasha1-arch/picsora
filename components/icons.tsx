@@ -4,8 +4,10 @@ import {
   Braces,
   Cake,
   CalendarDays,
+  Camera,
   CaseSensitive,
   Calculator,
+  Clock,
   Code,
   CodeXml,
   Coins,
@@ -29,6 +31,7 @@ import {
   HandCoins,
   Hash,
   ImageDown,
+  KeyRound,
   Link,
   Link2,
   ListOrdered,
@@ -37,13 +40,16 @@ import {
   Paintbrush,
   Palette,
   Pencil,
+  PenLine,
   Percent,
   Pipette,
+  QrCode,
   Regex,
   Repeat,
   RotateCw,
   Ruler,
   Scaling,
+  ScanText,
   Scissors,
   Shield,
   Space,
@@ -54,6 +60,7 @@ import {
   TrendingUp,
   Type,
   Unlock,
+  UserCheck,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -74,6 +81,8 @@ export const TOOL_ICONS: Record<string, LucideIcon> = {
   palette: Palette,
   grayscale: Droplets,
   stamp: Stamp,
+  'user-check': UserCheck,
+  'pen-tool': PenLine,
   // categories
   pencil: Pencil,
   'file-pdf': FileType2,
@@ -101,6 +110,7 @@ export const TOOL_ICONS: Record<string, LucideIcon> = {
   link: Link,
   'link-2': Link2,
   'git-compare': GitCompare,
+  'scan-text': ScanText,
   // calculators
   cake: Cake,
   activity: Activity,
@@ -121,6 +131,10 @@ export const TOOL_ICONS: Record<string, LucideIcon> = {
   paintbrush: Paintbrush,
   regex: Regex,
   binary: Binary,
+  'key-round': KeyRound,
+  clock: Clock,
+  'qr-code': QrCode,
+  camera: Camera,
 };
 
 export function ToolIcon({ name, className }: { name: string; className?: string }) {

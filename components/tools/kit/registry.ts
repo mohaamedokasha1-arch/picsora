@@ -9,9 +9,8 @@ export interface StandaloneToolProps {
 export type StandaloneTool = ComponentType<StandaloneToolProps>;
 
 /**
- * Code-split registry for the PDF / text / calculator / developer tools.
- * Each entry is its own chunk, so visiting one tool never downloads another
- * tool's dependencies (pdf-lib, pdf.js, Prettier, Terser…).
+ * Code-split registry for the PDF / text / calculator / developer / advanced tools.
+ * Each entry is its own chunk, loaded only when visited.
  */
 export const standaloneTools: Record<string, StandaloneTool> = {
   /* ------------------------------------------------------------ PDF */
@@ -26,6 +25,9 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'pdf-to-images': dynamic(() => import('../pdf/to-images')),
   'pdf-compressor': dynamic(() => import('../pdf/compressor')),
   'pdf-page-counter': dynamic(() => import('../pdf/page-counter')),
+  'pdf-to-text': dynamic(() => import('../pdf/to-text')),
+  'pdf-watermark': dynamic(() => import('../pdf/watermark')),
+  'pdf-page-numbers': dynamic(() => import('../pdf/page-numbers')),
 
   /* ----------------------------------------------------------- text */
   'word-counter': dynamic(() => import('../text/word-counter')),
@@ -64,4 +66,14 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'color-converter': dynamic(() => import('../developer/color')),
   'hash-generator': dynamic(() => import('../developer/hash')),
   'number-base-converter': dynamic(() => import('../developer/number-base')),
+  'jwt-decoder': dynamic(() => import('../developer/jwt')),
+  'color-picker': dynamic(() => import('../developer/color-picker')),
+  'unix-timestamp-converter': dynamic(() => import('../developer/timestamp')),
+  'yaml-formatter': dynamic(() => import('../developer/yaml')),
+  'qr-code-generator': dynamic(() => import('../developer/qr-code')),
+
+  /* -------------------------------------------------------- advanced / photo */
+  'photo-metadata-viewer': dynamic(() => import('../ui/photo-metadata-viewer')),
+  'ocr-image-to-text': dynamic(() => import('../ui/ocr')),
+  'signature-maker': dynamic(() => import('../ui/signature-maker')),
 };

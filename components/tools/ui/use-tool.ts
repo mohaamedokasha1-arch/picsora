@@ -7,14 +7,21 @@ import type { UploadError } from '@/components/tools/file-uploader';
 
 export function useToolRunner() {
   const [processing, setProcessing] = React.useState(false);
+  const [progress, setProgress] = React.useState<number | undefined>(undefined);
+  const [progressText, setProgressText] = React.useState<string | undefined>(undefined);
   const [results, setResults] = React.useState<ProcessResult[]>([]);
   const [error, setError] = React.useState<UploadError | null>(null);
 
-  const run = React.useCallback(async (fn: () => Promise<ProcessorOutput>) => {
+  const run = React.useCallback(async (fn: (updateProgress?: (percent: number, text?: string) => void) => Promise<ProcessorOutput>) => {
     setProcessing(true);
     setError(null);
+    setProgress(undefined);
+    setProgressText(undefined);
     try {
-      const out = await fn();
+      const out = await fn((p, text) => {
+        setProgress(p);
+        if (text) setProgressText(text);
+      });
       setResults(Array.isArray(out) ? out : [out]);
     } catch (e) {
       const msg = e instanceof Error ? e.message : 'generic';
@@ -22,13 +29,17 @@ export function useToolRunner() {
       setResults([]);
     } finally {
       setProcessing(false);
+      setProgress(undefined);
+      setProgressText(undefined);
     }
   }, []);
 
   const clear = React.useCallback(() => {
     setResults([]);
     setError(null);
+    setProgress(undefined);
+    setProgressText(undefined);
   }, []);
 
-  return { processing, results, error, run, clear, setError };
+  return { processing, progress, progressText, results, error, run, clear, setError, setResults };
 }

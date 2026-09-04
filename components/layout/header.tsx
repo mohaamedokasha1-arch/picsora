@@ -29,6 +29,7 @@ export function Header() {
     { href: '/', label: t('common.home'), exact: true },
     { href: '/tools', label: t('common.tools') },
     { href: '/categories', label: t('common.categories') },
+    { href: '/guides', label: t('common.guides') || 'Guides' },
     { href: '/about', label: t('common.about') },
   ];
 

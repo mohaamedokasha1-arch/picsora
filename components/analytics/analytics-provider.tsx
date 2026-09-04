@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useConsent } from '@/components/consent/consent-provider';
+import { trackEvent as trackLocalEvent, type AnalyticsEventType, type AnalyticsEventData } from '@/lib/analytics';
 
 interface AnalyticsContextValue {
   trackEvent: (eventName: string, properties?: Record<string, unknown>) => void;
@@ -16,12 +17,21 @@ export function useAnalytics() {
 }
 
 /**
- * Consent-gated analytics.
- * Scripts are loaded only after the user consents to analytics cookies.
- * No analytics provider is active by default (NEXT_PUBLIC_ANALYTICS_ENABLED=false).
+ * Consent-gated analytics + PWA Service Worker registrar.
  */
 export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   const { consent } = useConsent();
+
+  // Register PWA Service Worker
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .catch(() => {
+          /* Service worker registration silently ignored in dev/unsupported */
+        });
+    }
+  }, []);
 
   React.useEffect(() => {
     if (!consent?.analytics) return;
@@ -45,12 +55,10 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
       w.gtag('js', new Date());
       w.gtag('config', gaId, { anonymize_ip: true });
     }
-    return () => {
-      /* scripts stay for the session once consented */
-    };
   }, [consent?.analytics]);
 
   const trackEvent = React.useCallback((eventName: string, properties?: Record<string, unknown>) => {
+    trackLocalEvent(eventName as AnalyticsEventType, properties as AnalyticsEventData);
     if (!consent?.analytics) return;
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event', eventName, properties ?? {});

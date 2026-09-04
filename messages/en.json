@@ -56,11 +56,12 @@
     "rightsReserved": "All rights reserved.",
     "madeWith": "Built for privacy-first image editing.",
     "localSignal": "100% local — no uploads, no servers",
-    "new": "New"
+    "new": "New",
+    "guides": "Guides"
   },
   "validation": {
-    "invalidType": "This file type is not supported here. Please choose {types}.",
-    "fileTooLarge": "This file is too large. The maximum size is {size} MB.",
+    "invalidType": "This file format is not supported. Please upload a JPG, PNG, WebP, or HEIC file.",
+    "fileTooLarge": "This file is too large. Maximum size is {size}MB. Please try a smaller file.",
     "emptyFile": "This file is empty (0 bytes) and cannot be processed.",
     "corruptImage": "We couldn't read this image. It may be corrupted or in an unsupported format.",
     "noFile": "Please add at least one image first.",
@@ -120,7 +121,11 @@
     "faqTitle": "Frequently asked questions",
     "faqSubtitle": "Quick answers about Piclizer.",
     "newTitle": "Just added",
-    "newSubtitle": "The newest tools on Piclizer — PDF, text, calculator and developer utilities."
+    "newSubtitle": "The newest tools on Piclizer — PDF, text, calculator and developer utilities.",
+    "favoritesTitle": "Your Favorites",
+    "favoritesSubtitle": "Quick access to your starred tools",
+    "recentTitle": "Recently Used",
+    "recentSubtitle": "Tools you recently worked with"
   },
   "homeFaqs": [
     {
@@ -230,7 +235,8 @@
     "outputFormat": "Output format",
     "noPreviewYet": "Your processed image will appear here.",
     "quality": "Quality",
-    "noticeLarge": "This file is large and may take a moment to process."
+    "noticeLarge": "This file is large and may take a moment to process.",
+    "livePhotoDetected": "Live Photo detected — processing the still image only"
   },
   "controls": {
     "quality": "Quality",
@@ -314,7 +320,18 @@
     "selectImages": "Select images",
     "dropReorder": "Drag thumbnails to change the order",
     "color": "Colour",
-    "size": "Size"
+    "size": "Resolution",
+    "targetSizeKb": "Target File Size (KB)",
+    "targetSizeHint": "Specify desired size in kilobytes (e.g. 500 KB)",
+    "outputFormat": "Output Format",
+    "sameAsOriginal": "Same as original",
+    "qrContent": "QR Code Content",
+    "textOrUrl": "Text or URL",
+    "customization": "Customization",
+    "errorCorrection": "Error Correction",
+    "qrColor": "QR Color",
+    "preview": "Live Preview",
+    "bgColor": "Background Color"
   },
   "tools": {
     "image-compressor": {
@@ -2310,13 +2327,422 @@
           "a": "They split the binary result into bytes, which makes it much easier to read when working with flags or protocols."
         }
       ]
+    },
+    "exact-kb-image-compressor": {
+      "name": "Exact KB Image Compressor",
+      "short": "Compress images to an exact target file size in KB.",
+      "description": "Compress JPG, PNG, and WebP images to an exact target size in kilobytes (e.g. 500KB, 200KB, 50KB). In-browser binary search quality optimization.",
+      "intro": "Need an image under 500KB, 200KB or 50KB for an online portal or job application? Set your target size in KB and our algorithm optimizes quality and dimensions to hit your goal closely and locally.",
+      "howTo": [
+        "Upload an image (JPG, PNG, WebP, or HEIC).",
+        "Enter your desired target size in KB (e.g. 500 KB) or select a quick preset.",
+        "Click Process to run the smart binary-search optimization.",
+        "Review the resulting size and quality, then download your optimized image."
+      ],
+      "faqs": [
+        {
+          "q": "How does exact KB compression work?",
+          "a": "The tool performs binary-search passes on encoding quality and resolution until the output matches your target KB within a tight ±5% window."
+        },
+        {
+          "q": "Can every image reach the exact target?",
+          "a": "Very close matches are reached for almost all photos. If an image is already smaller than the target, it remains uncompressed to protect quality."
+        },
+        {
+          "q": "Is processing private?",
+          "a": "Yes, 100% of the optimization happens locally in your browser memory. No images leave your device."
+        },
+        {
+          "q": "Which formats work best?",
+          "a": "JPG and WebP support smooth lossy size targeting across any target KB."
+        }
+      ]
+    },
+    "heic-to-jpg": {
+      "name": "HEIC to JPG Converter",
+      "short": "Convert iPhone HEIC photos to universal JPG format.",
+      "description": "Convert Apple iPhone HEIC/HEIF photos to high-quality JPG online. 100% private in-browser conversion with automatic EXIF orientation fix.",
+      "intro": "Easily convert iOS HEIC photos to universally compatible JPG images. Preserves full image clarity, automatically fixes camera orientation, and processes 100% client-side.",
+      "howTo": [
+        "Upload one or more .HEIC photos taken on iPhone or iPad.",
+        "Adjust the output quality slider if desired.",
+        "Click Convert to JPG to transform the images instantly.",
+        "Download your converted JPG images individually or together."
+      ],
+      "faqs": [
+        {
+          "q": "Why convert HEIC to JPG?",
+          "a": "HEIC is Apple's high-efficiency format, but many websites, Windows PCs, and Android devices still require JPG."
+        },
+        {
+          "q": "Will portrait photos stay upright?",
+          "a": "Yes, our engine reads EXIF orientation tags and ensures portrait and landscape photos remain in the correct orientation."
+        },
+        {
+          "q": "Are my iPhone photos uploaded anywhere?",
+          "a": "No, all HEIC decoding and JPEG encoding occurs locally in your browser."
+        },
+        {
+          "q": "Can I convert Live Photos?",
+          "a": "Yes, Live Photos are detected and the still photo portion is converted cleanly."
+        }
+      ]
+    },
+    "heic-to-png": {
+      "name": "HEIC to PNG Converter",
+      "short": "Convert iPhone HEIC photos to lossless PNG format.",
+      "description": "Convert Apple HEIC photos to crisp PNG format in your browser. Lossless quality with full EXIF orientation correction and zero server uploads.",
+      "intro": "Transform Apple HEIC files into crisp, lossless PNG graphics. Ideal for editing, design work, and graphics software requiring standard PNG inputs.",
+      "howTo": [
+        "Select or drag & drop .heic files into the uploader.",
+        "Click Convert to PNG to process the image locally.",
+        "Download the converted PNG file."
+      ],
+      "faqs": [
+        {
+          "q": "Why convert HEIC to PNG?",
+          "a": "PNG offers lossless compression and wide compatibility across graphic design software."
+        },
+        {
+          "q": "Does it support batch conversion?",
+          "a": "Yes, you can upload multiple HEIC files and convert them sequentially."
+        },
+        {
+          "q": "Is it completely free and private?",
+          "a": "Yes, all processing takes place locally in your browser."
+        }
+      ]
+    },
+    "heif-to-jpg": {
+      "name": "HEIF to JPG Converter",
+      "short": "Convert HEIF container photos to standard JPG format.",
+      "description": "Convert HEIF images to JPG online for free. Fast, private client-side conversion with automatic orientation correction.",
+      "intro": "Convert High Efficiency Image File Format (.heif) images into standard JPG files compatible with every modern device and web service.",
+      "howTo": [
+        "Upload your .heif photo.",
+        "Choose your preferred quality setting.",
+        "Click Convert to JPG and download the resulting file."
+      ],
+      "faqs": [
+        {
+          "q": "What is the difference between HEIF and HEIC?",
+          "a": "HEIF is the generic container format, while HEIC is the specific implementation using HEVC compression. Both convert seamlessly to JPG here."
+        },
+        {
+          "q": "Are my files safe?",
+          "a": "Your files never leave your computer or phone."
+        }
+      ]
+    },
+    "heif-to-png": {
+      "name": "HEIF to PNG Converter",
+      "short": "Convert HEIF images to lossless PNG format.",
+      "description": "Convert HEIF files to crisp PNG format in your browser with zero data uploads and full orientation preservation.",
+      "intro": "Convert HEIF images to lossless PNG format directly in your browser with complete privacy and instant local processing.",
+      "howTo": [
+        "Upload your .heif photo.",
+        "Click Convert to PNG.",
+        "Download your lossless PNG image."
+      ],
+      "faqs": [
+        {
+          "q": "Is PNG better than JPG for editing?",
+          "a": "Yes, PNG preserves pixel details without compression artifacts."
+        },
+        {
+          "q": "Does this work on mobile browsers?",
+          "a": "Yes, fully functional on mobile Safari and Chrome."
+        }
+      ]
+    },
+    "qr-code-generator": {
+      "name": "QR Code Generator",
+      "short": "Create custom QR codes for URLs, text, Wi-Fi and contacts.",
+      "description": "Generate high-resolution QR codes online for free. Download as PNG or SVG with custom colors, sizes, and error correction levels.",
+      "intro": "Generate scannable QR codes instantly for websites, text, Wi-Fi networks, and contact info. Customize colors and resolution, then download in crisp PNG or vector SVG format.",
+      "howTo": [
+        "Enter or paste the URL or text you want inside the QR code.",
+        "Optionally customize the resolution, error correction, and colors.",
+        "Preview the generated QR code instantly on screen.",
+        "Click Download PNG or Download SVG to save your code."
+      ],
+      "faqs": [
+        {
+          "q": "Do these QR codes expire?",
+          "a": "No, these are standard static QR codes that never expire and work permanently."
+        },
+        {
+          "q": "Can I scan them with my phone camera?",
+          "a": "Yes, they conform to the ISO standard and scan reliably on iOS and Android camera apps."
+        },
+        {
+          "q": "Is there any scan limit?",
+          "a": "None at all. You can use and print them anywhere for personal or commercial use."
+        }
+      ]
+    },
+    "photo-metadata-viewer": {
+      "name": "Photo Metadata & EXIF Viewer",
+      "short": "View EXIF data, camera settings, and GPS location in photos.",
+      "description": "Inspect photo EXIF metadata online. View camera make, lens, shutter speed, ISO, aperture, date taken, and GPS map coordinates locally.",
+      "intro": "Inspect all hidden metadata inside your JPG, HEIC, and WebP photos. Discover camera models, lens details, shutter speed, ISO, timestamps, and GPS coordinates without sending files to any server.",
+      "howTo": [
+        "Upload a photo (JPG, HEIC, PNG, or WebP).",
+        "Browse organized sections for Camera, Exposure Settings, Timestamps, and GPS.",
+        "Click coordinates to open in Google Maps or export all metadata as JSON."
+      ],
+      "faqs": [
+        {
+          "q": "What kind of metadata does it show?",
+          "a": "Camera make/model, lens, exposure time, aperture, ISO, focal length, flash, date taken, dimensions, and GPS coordinates."
+        },
+        {
+          "q": "Can I view EXIF from iPhone HEIC photos?",
+          "a": "Yes, full EXIF extraction is supported for iPhone HEIC images."
+        },
+        {
+          "q": "Is my location data private?",
+          "a": "Completely private. Metadata extraction executes 100% in your browser; no GPS or image data is ever uploaded."
+        }
+      ]
+    },
+    "pdf-to-text": {
+      "name": "PDF to Text Extractor",
+      "short": "Extract searchable text content from PDF documents.",
+      "description": "Extract text from searchable PDF files online for free. Fast, private client-side extraction with one-click copy and TXT download.",
+      "intro": "Quickly extract all text from text-based PDF documents without installing software. Copy extracted paragraphs or download the entire text as a clean TXT file.",
+      "howTo": [
+        "Upload a text-based PDF document.",
+        "Watch as each page is parsed in real time.",
+        "Review the extracted text, copy to clipboard, or download as a .txt file."
+      ],
+      "faqs": [
+        {
+          "q": "Can it extract text from scanned documents?",
+          "a": "This tool extracts searchable text streams from PDF files. For scanned photo PDFs, use our OCR Image to Text tool."
+        },
+        {
+          "q": "Are my confidential documents private?",
+          "a": "Yes, parsing happens inside your browser WebAssembly engine. Nothing leaves your device."
+        }
+      ]
+    },
+    "pdf-watermark": {
+      "name": "PDF Watermark Tool",
+      "short": "Add custom text watermarks to all pages of a PDF.",
+      "description": "Add custom text watermarks (CONFIDENTIAL, DRAFT, copyright) to PDF pages. Adjust position, opacity, font size, and color locally.",
+      "intro": "Protect and mark your documents by stamping custom text watermarks across all pages of a PDF. Choose diagonal or horizontal placement, opacity, font size, and colors.",
+      "howTo": [
+        "Upload your PDF document.",
+        "Enter the watermark text (e.g. CONFIDENTIAL or DRAFT).",
+        "Select position, opacity, font size, and color.",
+        "Click Apply Watermark and download your watermarked PDF."
+      ],
+      "faqs": [
+        {
+          "q": "Does watermarking affect text searchability?",
+          "a": "No, the watermark is rendered as a clean transparent vector layer over each page."
+        },
+        {
+          "q": "Is there any page limit?",
+          "a": "You can watermark multi-page documents up to 50MB completely in your browser."
+        }
+      ]
+    },
+    "pdf-page-numbers": {
+      "name": "PDF Page Numbers",
+      "short": "Add page numbers and headers/footers to PDF files.",
+      "description": "Add page numbers to PDF documents online for free. Choose page format (Page X of Y), position, font size, and starting number.",
+      "intro": "Number pages in your PDF documents cleanly and professionally. Customize numbering format, alignment (bottom-center, bottom-right, etc.), font size, and start number.",
+      "howTo": [
+        "Upload your PDF file.",
+        "Select numbering format (e.g. Page 1 of N or 1).",
+        "Choose position, font size, and color.",
+        "Click Add Page Numbers and download your numbered PDF."
+      ],
+      "faqs": [
+        {
+          "q": "Can I start numbering from a specific number?",
+          "a": "Yes, you can set the start number to any integer."
+        },
+        {
+          "q": "Where can page numbers be placed?",
+          "a": "Bottom center, bottom right, bottom left, top center, top right, or top left."
+        }
+      ]
+    },
+    "jwt-decoder": {
+      "name": "JWT Decoder & Inspector",
+      "short": "Decode and inspect JSON Web Tokens locally in browser.",
+      "description": "Decode and validate JSON Web Tokens (JWT) online. View formatted Header and Payload claims, expiration time countdown, and signature status securely.",
+      "intro": "Decode, inspect, and debug JSON Web Tokens (JWT) securely in your browser. View formatted Header and Payload JSON, check token expiration timestamps in real time, and verify claims safely.",
+      "howTo": [
+        "Paste your encoded JWT string (Header.Payload.Signature).",
+        "View the parsed Header and Payload JSON structures instantly.",
+        "Check token validity and expiration status.",
+        "Copy claims or JSON with a single click."
+      ],
+      "faqs": [
+        {
+          "q": "Is it safe to paste production tokens here?",
+          "a": "Yes, decoding is performed 100% client-side via JavaScript. Your tokens never leave your browser."
+        },
+        {
+          "q": "Does it calculate token expiration?",
+          "a": "Yes, if the token contains an \"exp\" claim, the tool shows the exact UTC date and human relative time."
+        }
+      ]
+    },
+    "color-picker": {
+      "name": "Color Picker & Palette Tool",
+      "short": "Pick colors, inspect HEX/RGB/HSL, and test WCAG contrast.",
+      "description": "Online color picker and palette tester. Convert between HEX, RGB, HSL, HSV, CMYK with one-click copy, eyedropper, and WCAG contrast check.",
+      "intro": "A comprehensive color picker for designers and developers. Pick colors via palette, sliders, or screen eyedropper. View HEX, RGB, HSL, HSV, CMYK codes and check WCAG contrast ratios.",
+      "howTo": [
+        "Select a color with the visual picker, RGB sliders, or eyedropper.",
+        "View real-time values in HEX, RGB, HSL, and CMYK.",
+        "Inspect WCAG accessibility contrast ratios on white and black backgrounds.",
+        "Click Copy next to any color format."
+      ],
+      "faqs": [
+        {
+          "q": "Does the Eyedropper work on any screen pixel?",
+          "a": "In supported browsers (Chrome, Edge, Opera), the Eyedropper API lets you sample any color directly from your screen."
+        },
+        {
+          "q": "What do WCAG contrast scores mean?",
+          "a": "They ensure text meets accessibility guidelines (AA >= 4.5:1, AAA >= 7:1) for readability."
+        }
+      ]
+    },
+    "unix-timestamp-converter": {
+      "name": "Unix Timestamp Converter",
+      "short": "Convert Epoch timestamps to human dates and vice versa.",
+      "description": "Convert Unix epoch timestamps (seconds & milliseconds) to human-readable dates (ISO, UTC, Local) and dates to Unix timestamps in real time.",
+      "intro": "Convert Unix timestamps into readable human dates and human dates into epoch timestamps instantly. Features a live current epoch ticker and timezone breakdown.",
+      "howTo": [
+        "Enter a Unix timestamp to convert to ISO, UTC, and local time.",
+        "Or pick a date & time to generate Unix epoch seconds and milliseconds.",
+        "Use quick preset buttons (+1 hour, +1 day, +1 week) for fast offsets."
+      ],
+      "faqs": [
+        {
+          "q": "What is Unix Epoch time?",
+          "a": "Unix time represents the number of seconds that have elapsed since January 1, 1970 00:00:00 UTC."
+        },
+        {
+          "q": "Does it support seconds and milliseconds?",
+          "a": "Yes, you can toggle between seconds (10 digits) and milliseconds (13 digits)."
+        }
+      ]
+    },
+    "yaml-formatter": {
+      "name": "YAML Formatter & Validator",
+      "short": "Format, prettify, and validate YAML files with line numbers.",
+      "description": "Format, validate, and convert YAML online. Convert YAML to JSON and JSON to YAML with line numbers, error highlighting, and indentation controls.",
+      "intro": "Clean up, prettify, validate, and convert YAML documents. Identifies syntax errors with precise line and column markers, and provides bi-directional YAML to JSON conversion.",
+      "howTo": [
+        "Paste or type your YAML content into the editor.",
+        "Click Prettify & Validate to clean up spacing and test syntax.",
+        "Convert between YAML and JSON with dedicated conversion buttons.",
+        "Copy or download the formatted output."
+      ],
+      "faqs": [
+        {
+          "q": "How are syntax errors displayed?",
+          "a": "The parser highlights exact line and column numbers where indentation or syntax errors occur."
+        },
+        {
+          "q": "Can it convert YAML to JSON?",
+          "a": "Yes, full bi-directional conversion between YAML and JSON is supported."
+        }
+      ]
+    },
+    "ocr-image-to-text": {
+      "name": "OCR Image to Text",
+      "short": "Extract editable text from images, screenshots, and scans.",
+      "description": "Extract text from images using optical character recognition (OCR) in your browser. Supports English, Arabic, French, Spanish, German with high accuracy.",
+      "intro": "Extract printed and digital text from photos, book scans, document photos, and screenshots. Runs optical character recognition 100% locally in your browser with high precision.",
+      "howTo": [
+        "Upload an image containing text (JPG, PNG, WebP, HEIC).",
+        "Select the primary language of the text (English, Arabic, French, etc.).",
+        "Click Extract Text and watch the live recognition progress.",
+        "Copy the extracted text or download as a .txt file."
+      ],
+      "faqs": [
+        {
+          "q": "How does in-browser OCR work?",
+          "a": "Our engine uses WebAssembly-powered Tesseract OCR executing directly inside your browser without sending images to any server."
+        },
+        {
+          "q": "Which languages are supported?",
+          "a": "English, Arabic, French, Spanish, German, Italian, and Portuguese."
+        },
+        {
+          "q": "How can I get the best recognition accuracy?",
+          "a": "Use well-lit, sharp images with clear contrast between text and background."
+        }
+      ]
+    },
+    "passport-photo-maker": {
+      "name": "Passport Photo Maker",
+      "short": "Create official passport and visa size photos online.",
+      "description": "Crop photos to official passport and visa sizes (2x2 inch, 35x45 mm, Canada 50x70 mm). Features biometric guidelines and 4x6\" printable sheet export.",
+      "intro": "Turn ordinary photos into compliant passport, visa, and ID photos. Features standard dimension presets (US 2x2\", UK/EU 35x45mm), biometric head guides, background color replacement, and printable 4x6\" sheets.",
+      "howTo": [
+        "Upload a clear portrait photo.",
+        "Select your target country passport standard (US, UK/EU, Canada, ID).",
+        "Adjust zoom and position to align face with the biometric oval guidelines.",
+        "Choose background color (White, Off-white, Light Blue).",
+        "Download a single photo or a 4x6\" multi-photo printable sheet."
+      ],
+      "faqs": [
+        {
+          "q": "What are standard US passport photo dimensions?",
+          "a": "US passport photos are 2 × 2 inches (51 × 51 mm / 600 × 600 pixels at 300 DPI)."
+        },
+        {
+          "q": "What is the UK / Schengen visa size?",
+          "a": "35 × 45 mm (413 × 531 pixels at 300 DPI)."
+        },
+        {
+          "q": "Can I print multiple copies on standard photo paper?",
+          "a": "Yes, click \"Download 4x6 Printable Sheet\" to save a high-resolution grid ready for print."
+        }
+      ]
+    },
+    "signature-maker": {
+      "name": "Digital Signature Maker",
+      "short": "Draw and download transparent electronic signatures.",
+      "description": "Create electronic signatures online with mouse or touch screen. Download clean transparent PNG or JPG signatures for PDF documents and contracts.",
+      "intro": "Draw your electronic signature smoothly using your mouse, stylus, or touchscreen on mobile. Adjust pen thickness and ink color, and download a transparent PNG ready to place on PDFs and contracts.",
+      "howTo": [
+        "Draw your signature inside the canvas box using mouse or finger.",
+        "Choose ink color (Black, Navy, Royal Blue, Red) and pen thickness.",
+        "Check or uncheck Transparent Background.",
+        "Download your signature as transparent PNG or white-background JPG."
+      ],
+      "faqs": [
+        {
+          "q": "Is the downloaded signature transparent?",
+          "a": "Yes, when transparent background is checked, PNG output has a clean alpha channel that fits over any document background."
+        },
+        {
+          "q": "Does it work smoothly on smartphones and tablets?",
+          "a": "Yes, full touch and stylus support with smooth Bezier curve interpolation."
+        },
+        {
+          "q": "Are my signatures saved anywhere?",
+          "a": "Never. Signatures are drawn solely in your device memory and deleted when you leave."
+        }
+      ]
     }
   },
   "errors": {
     "title": "Something went wrong",
     "generic": "We couldn't complete this operation. Please try again with a different file.",
     "webpUnsupported": "Your browser can't encode WebP images. Please try an up-to-date browser such as Chrome, Edge or Firefox.",
-    "processingFailed": "The image could not be processed. It may be corrupted or too large.",
+    "processingFailed": "Processing failed. The file may be corrupted. Please try another file.",
     "zipFailed": "We couldn't create the ZIP archive. Please try again.",
     "pdfFailed": "We couldn't generate the PDF. Please try again with a different image.",
     "invalidPdf": "This file is not a valid PDF. Please choose a different file.",
@@ -2353,7 +2779,14 @@
     "xmlParse": "XML error: {message}",
     "jsSyntax": "JavaScript syntax error: {message}",
     "cssSyntax": "CSS syntax error: {message}",
-    "regexInvalid": "Invalid regular expression: {message}"
+    "regexInvalid": "Invalid regular expression: {message}",
+    "browserUnsupported": "Your browser doesn't support this format. Try using Chrome or Firefox.",
+    "heicFailed": "Unable to convert this HEIC file. Make sure it's a valid iPhone photo.",
+    "heicUnsupported": "HEIC conversion is not supported in this environment.",
+    "dimensionsTooLarge": "This file is too large for your browser. Try a smaller image or use a desktop browser.",
+    "decodeFailed": "Processing failed. The file may be corrupted. Please try another file.",
+    "qrFailed": "Unable to generate QR code for this content.",
+    "ocrFailed": "Unable to extract text from this image. Please try a clearer image."
   },
   "consent": {
     "title": "We value your privacy",
@@ -3122,5 +3555,185 @@
     "customBase": "Custom base",
     "targetBase": "Target base",
     "baseHint": "Arbitrary-precision conversion using BigInt, so very large numbers stay exact."
+  },
+  "guides": {
+    "badge": "Free Image & PDF Guides",
+    "hubTitle": "Guides & Tutorials",
+    "hubDescription": "Practical, step-by-step guides on image compression, format conversions, PDF optimization, and digital tools — all with 100% free browser tools.",
+    "compressQuality": {
+      "title": "How to Compress an Image Without Losing Quality",
+      "description": "Learn the optimal compression settings, formats, and browser techniques to shrink photo sizes drastically while keeping visual clarity sharp."
+    },
+    "convertHeic": {
+      "title": "How to Convert HEIC to JPG on Any Device",
+      "description": "The complete guide to converting Apple iPhone HEIC and HEIF photos to universal JPG format on Windows, Mac, Android, and web without software."
+    },
+    "reduce500kb": {
+      "title": "How to Reduce Image Size to 500KB",
+      "description": "Step-by-step instructions to compress photos to under 500KB, 200KB or 100KB for government portals, job applications, and web uploads."
+    },
+    "jpgVsPng": {
+      "title": "JPG vs PNG — Which Format Should You Use?",
+      "description": "A practical comparison of JPEG and PNG image formats: when to choose lossless clarity vs smaller file sizes, transparency, and photos."
+    },
+    "whatIsWebp": {
+      "title": "What is WebP and Why Should You Use It?",
+      "description": "Discover why Google created WebP, how it achieves 30% smaller files than JPEG and PNG with higher quality, and how to convert your images."
+    },
+    "how_to_compress_image_without_losing_quality": {
+      "intro": "Large image files slow down website loading speeds, consume email attachment limits, and take up excessive storage. Discover how modern in-browser compression algorithms preserve sharpness while reducing file sizes by up to 80%.",
+      "steps": [
+        {
+          "title": "1. Select the Right Target Format",
+          "body": "Photos and complex images compress best in JPG or WebP format. Graphics with sharp text and transparency should use PNG or WebP."
+        },
+        {
+          "title": "2. Upload to In-Browser Compressor",
+          "body": "Use Piclizer's Image Compressor to load your photos safely without uploading them across the internet."
+        },
+        {
+          "title": "3. Set the Quality Slider to 75–85%",
+          "body": "The sweet spot for human visual perception is between 75% and 85%. At this level, files shrink by 60–80% with zero perceptible difference to the naked eye."
+        },
+        {
+          "title": "4. Check Preview and Download",
+          "body": "Review the side-by-side file size savings and download your optimized image."
+        }
+      ],
+      "faqs": [
+        {
+          "q": "What is lossy vs lossless compression?",
+          "a": "Lossless compression reduces file size by reorganizing data without changing any pixels. Lossy compression slightly simplifies pixel color variations that the human eye cannot perceive."
+        },
+        {
+          "q": "What is the best quality percentage for websites?",
+          "a": "Between 75% and 82% offers the ideal balance of fast loading and crisp visuals."
+        },
+        {
+          "q": "Will compressing an image multiple times ruin it?",
+          "a": "Yes, repeatedly compressing lossy JPEG files degrades clarity. Always keep your high-resolution master image."
+        }
+      ]
+    },
+    "how_to_convert_heic_to_jpg_on_any_device": {
+      "intro": "Apple devices take photos in High Efficiency Image Container (HEIC) format by default. While HEIC saves space on your iPhone, many Windows PCs, websites, and email clients cannot open it. Here is how to convert them quickly and securely.",
+      "steps": [
+        {
+          "title": "1. Open the HEIC to JPG Tool on Piclizer",
+          "body": "Navigate to Piclizer's free HEIC to JPG converter on your computer, phone, or tablet."
+        },
+        {
+          "title": "2. Select or Drag Your .HEIC Files",
+          "body": "Select one or more HEIC photos from your photo library or files folder."
+        },
+        {
+          "title": "3. Automatic In-Browser Conversion",
+          "body": "Our client-side WebAssembly decoder converts the image and fixes camera EXIF orientation automatically."
+        },
+        {
+          "title": "4. Download Your JPG Photos",
+          "body": "Download the converted JPG files ready for sharing, printing, or uploading anywhere."
+        }
+      ],
+      "faqs": [
+        {
+          "q": "Why did Apple switch to HEIC?",
+          "a": "HEIC offers roughly twice the compression efficiency of JPEG at the same visual quality."
+        },
+        {
+          "q": "Do I need to install an app on Windows?",
+          "a": "No, you can convert directly in any modern browser without installing software."
+        },
+        {
+          "q": "Will my Live Photos work?",
+          "a": "Yes, the still image frame is extracted and converted into a standard JPG."
+        }
+      ]
+    },
+    "how_to_reduce_image_size_to_500kb": {
+      "intro": "Many official portals, visa applications, university submission forms, and email systems enforce strict maximum file size caps such as 500KB, 200KB, or 100KB. Here is the easiest way to hit that exact target size.",
+      "steps": [
+        {
+          "title": "1. Open Exact KB Image Compressor",
+          "body": "Visit the Exact KB Image Compressor tool on Piclizer."
+        },
+        {
+          "title": "2. Type 500 in the Target Size Field",
+          "body": "Specify your exact desired size in kilobytes (e.g. 500 KB or 200 KB)."
+        },
+        {
+          "title": "3. Let Binary Search Optimize Quality",
+          "body": "The algorithm tests multiple compression passes in milliseconds to find the exact quality match."
+        },
+        {
+          "title": "4. Download Compliant Image",
+          "body": "Save your file, guaranteed to pass portal upload size restrictions."
+        }
+      ],
+      "faqs": [
+        {
+          "q": "What if quality reduction alone isn't enough?",
+          "a": "The tool will slightly downscale image dimensions proportionally to ensure the file stays strictly under 500KB."
+        },
+        {
+          "q": "Can I compress multiple files to 500KB at once?",
+          "a": "Yes, batch processing will optimize each image individually to stay under the limit."
+        }
+      ]
+    },
+    "jpg_vs_png_which_format_should_you_use": {
+      "intro": "Choosing between JPEG and PNG is one of the most fundamental decisions in digital imaging and web performance. Understanding when to use each format saves bandwidth and keeps graphics looking sharp.",
+      "steps": [
+        {
+          "title": "1. Use JPG for Real-World Photos",
+          "body": "JPEG is designed for photographs and complex scenery with continuous color gradients."
+        },
+        {
+          "title": "2. Use PNG for Logos, Text, and Transparency",
+          "body": "PNG is lossless and supports transparent alpha backgrounds, making it essential for UI assets and typography."
+        },
+        {
+          "title": "3. Convert Inefficient PNGs to JPG",
+          "body": "Photos mistakenly saved as PNG are often 5x–10x larger than necessary. Convert them to JPG on Piclizer for instant savings."
+        }
+      ],
+      "faqs": [
+        {
+          "q": "Does JPEG support transparent backgrounds?",
+          "a": "No, JPEG does not support transparency. Any transparent areas become solid white or black."
+        },
+        {
+          "q": "Which format is smaller?",
+          "a": "For photographs, JPG is almost always significantly smaller. For simple vector-like graphics with few colors, PNG can be smaller."
+        }
+      ]
+    },
+    "what_is_webp_and_why_should_you_use_it": {
+      "intro": "WebP is a modern image format developed by Google that provides superior lossless and lossy compression for web graphics. Switching to WebP can speed up page loads and slash bandwidth costs.",
+      "steps": [
+        {
+          "title": "1. Understand the Benefits",
+          "body": "WebP lossy images are 25–34% smaller than comparable JPEG images, and WebP lossless images are 26% smaller than PNGs."
+        },
+        {
+          "title": "2. Convert Existing JPG and PNG Files to WebP",
+          "body": "Use Piclizer's JPG to WebP or PNG to WebP tools to convert your assets in seconds."
+        },
+        {
+          "title": "3. Deploy Across All Modern Browsers",
+          "body": "WebP is supported by Chrome, Safari, Firefox, Edge, and mobile operating systems representing over 97% global market share."
+        }
+      ],
+      "faqs": [
+        {
+          "q": "Does Safari support WebP?",
+          "a": "Yes, Safari on iOS 14+ and macOS Big Sur+ fully supports WebP."
+        },
+        {
+          "q": "Does WebP support transparency and animations?",
+          "a": "Yes, WebP supports both 8-bit alpha transparency (like PNG) and animated frames (like GIF)."
+        }
+      ]
+    }
   }
 }

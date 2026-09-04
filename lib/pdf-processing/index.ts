@@ -260,3 +260,183 @@ export async function pdfFromJpegPages(
   }
   return toBlob(await out.save());
 }
+
+export interface WatermarkOptions {
+  text: string;
+  fontSize?: number;
+  opacity?: number; // 0..1
+  position?: 'diagonal' | 'center' | 'top' | 'bottom';
+  colorHex?: string;
+}
+
+/** Add custom text watermark to every page of a PDF document. */
+export async function watermarkPdf(
+  file: File,
+  options: WatermarkOptions,
+  onProgress?: PdfProgress,
+): Promise<Blob> {
+  const { text, fontSize = 48, opacity = 0.3, position = 'diagonal', colorHex = '#888888' } = options;
+  if (!text.trim()) throw new PdfError('emptyFile');
+
+  const { PDFDocument, StandardFonts, rgb, degrees } = await loadPdfLib();
+  const doc = await openFile(file);
+  const font = await doc.embedFont(StandardFonts.HelveticaBold);
+  const pages = doc.getPages();
+  const total = pages.length;
+
+  // Parse hex color
+  const hex = colorHex.replace('#', '');
+  const r = parseInt(hex.slice(0, 2) || '88', 16) / 255;
+  const g = parseInt(hex.slice(2, 4) || '88', 16) / 255;
+  const b = parseInt(hex.slice(4, 6) || '88', 16) / 255;
+
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i];
+    const { width, height } = page.getSize();
+    const textWidth = font.widthOfTextAtSize(text, fontSize);
+    const textHeight = font.heightAtSize(fontSize);
+
+    let x = (width - textWidth) / 2;
+    let y = (height - textHeight) / 2;
+    let rotate = degrees(0);
+
+    if (position === 'diagonal') {
+      const angle = Math.atan2(height, width) * (180 / Math.PI);
+      rotate = degrees(angle);
+      x = (width - textWidth * Math.cos(angle * Math.PI / 180)) / 2;
+      y = (height - textWidth * Math.sin(angle * Math.PI / 180)) / 2;
+    } else if (position === 'top') {
+      y = height - textHeight - 40;
+    } else if (position === 'bottom') {
+      y = 40;
+    }
+
+    page.drawText(text, {
+      x,
+      y,
+      size: fontSize,
+      font,
+      color: rgb(r, g, b),
+      opacity,
+      rotate,
+    });
+
+    onProgress?.(i + 1, total);
+  }
+
+  const bytes = await doc.save();
+  return toBlob(bytes);
+}
+
+export interface PageNumberOptions {
+  format?: 'page-of-total' | 'page-only' | 'page-prefix';
+  position?: 'bottom-center' | 'bottom-right' | 'bottom-left' | 'top-center' | 'top-right' | 'top-left';
+  startNumber?: number;
+  fontSize?: number;
+  colorHex?: string;
+}
+
+/** Add page numbers to all pages of a PDF document. */
+export async function addPageNumbersToPdf(
+  file: File,
+  options: PageNumberOptions = {},
+  onProgress?: PdfProgress,
+): Promise<Blob> {
+  const {
+    format = 'page-of-total',
+    position = 'bottom-center',
+    startNumber = 1,
+    fontSize = 11,
+    colorHex = '#555555',
+  } = options;
+
+  const { PDFDocument, StandardFonts, rgb } = await loadPdfLib();
+  const doc = await openFile(file);
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const pages = doc.getPages();
+  const total = pages.length;
+
+  const hex = colorHex.replace('#', '');
+  const r = parseInt(hex.slice(0, 2) || '55', 16) / 255;
+  const g = parseInt(hex.slice(2, 4) || '55', 16) / 255;
+  const b = parseInt(hex.slice(4, 6) || '55', 16) / 255;
+
+  const margin = 28;
+
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i];
+    const { width, height } = page.getSize();
+    const currentNum = startNumber + i;
+
+    let numStr = `${currentNum}`;
+    if (format === 'page-of-total') {
+      numStr = `Page ${currentNum} of ${total}`;
+    } else if (format === 'page-prefix') {
+      numStr = `Page ${currentNum}`;
+    }
+
+    const textWidth = font.widthOfTextAtSize(numStr, fontSize);
+    const textHeight = font.heightAtSize(fontSize);
+
+    let x = (width - textWidth) / 2;
+    let y = margin;
+
+    if (position.includes('left')) {
+      x = margin;
+    } else if (position.includes('right')) {
+      x = width - textWidth - margin;
+    } else {
+      x = (width - textWidth) / 2;
+    }
+
+    if (position.startsWith('top')) {
+      y = height - textHeight - margin;
+    } else {
+      y = margin;
+    }
+
+    page.drawText(numStr, {
+      x,
+      y,
+      size: fontSize,
+      font,
+      color: rgb(r, g, b),
+    });
+
+    onProgress?.(i + 1, total);
+  }
+
+  const bytes = await doc.save();
+  return toBlob(bytes);
+}
+
+/** Extract text content from a text-based PDF using pdf.js. */
+export async function extractTextFromPdf(
+  file: File,
+  onProgress?: PdfProgress,
+): Promise<string> {
+  const { loadPdfJs } = await import('./render');
+  const pdfjs = await loadPdfJs();
+  const data = await file.arrayBuffer();
+
+  const doc = await pdfjs.getDocument({ data: new Uint8Array(data), isEvalSupported: false }).promise;
+  const total = doc.numPages;
+  const pageTexts: string[] = [];
+
+  for (let i = 1; i <= total; i++) {
+    const page = await doc.getPage(i);
+    const content = await page.getTextContent();
+    const strings = content.items
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map((item: any) => (typeof item.str === 'string' ? item.str : ''))
+      .filter(Boolean);
+
+    const text = strings.join(' ').replace(/\s+/g, ' ').trim();
+    pageTexts.push(`--- Page ${i} ---\n\n${text || '[No extractable text on this page]'}`);
+    page.cleanup();
+    onProgress?.(i, total);
+  }
+
+  await doc.destroy();
+  return pageTexts.join('\n\n');
+}

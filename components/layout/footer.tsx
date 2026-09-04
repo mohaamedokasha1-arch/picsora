@@ -2,12 +2,12 @@ import { getTranslations, getLocale } from 'next-intl/server';
 import { Link } from '@/lib/i18n/navigation';
 import { Logo } from './logo';
 import { LanguageSwitcher } from '@/components/i18n/language-switcher';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, BookOpen } from 'lucide-react';
 import { CATEGORIES, TOOLS } from '@/lib/tools/registry';
+import { GUIDES } from '@/lib/guides';
 
 export async function Footer() {
   const t = await getTranslations();
-  const locale = await getLocale();
   const popular = TOOLS.filter((tool) => tool.popular).slice(0, 5);
 
   const year = new Date().getFullYear();
@@ -21,16 +21,13 @@ export async function Footer() {
   ];
 
   const tCat = (key: string) => {
-    // Resolve nested keys like "categoryMeta.compress.name" from the flat namespace.
-    const parts = key.split('.');
-    // t('categoryMeta.compress.name') works with next-intl nested objects.
     return t(key as never);
   };
 
   return (
     <footer className="mt-16 border-t border-border bg-card">
-      <div className="container grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4">
-        <div className="space-y-3">
+      <div className="container grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-5">
+        <div className="space-y-3 lg:col-span-2">
           <Logo />
           <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
             {t('footer.description')}
@@ -58,15 +55,15 @@ export async function Footer() {
         </div>
 
         <div>
-          <h3 className="mb-3 text-sm font-semibold text-foreground">{t('footer.categoriesColumn')}</h3>
+          <h3 className="mb-3 text-sm font-semibold text-foreground">{t('common.guides') || 'Guides'}</h3>
           <ul className="space-y-2">
-            {CATEGORIES.map((cat) => (
-              <li key={cat.slug}>
+            {GUIDES.slice(0, 5).map((guide) => (
+              <li key={guide.slug}>
                 <Link
-                  href={`/categories/${cat.slug}`}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  href={`/guides/${guide.slug}`}
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground line-clamp-1"
                 >
-                  {tCat(cat.nameKey)}
+                  {t(guide.titleKey as never)}
                 </Link>
               </li>
             ))}

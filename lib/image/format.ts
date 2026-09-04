@@ -4,8 +4,10 @@
  */
 
 import type { DecodedImage, ImageFormat } from '@/lib/types';
+import { getExifOrientation, applyOrientationToCanvas, detectLivePhoto } from '@/lib/image/exif';
 
-export const MAX_DIMENSION = 16000; // safety cap for canvas dimensions
+export const MAX_DIMENSION = 12000; // safety cap for image dimensions (12000x12000)
+export const MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024; // 50MB safety limit
 
 export function fileExt(name: string): string {
   const idx = name.lastIndexOf('.');
@@ -23,10 +25,14 @@ export function extFromMime(mime: string): string {
     'image/tiff': 'tiff',
     'image/tif': 'tiff',
     'image/avif': 'avif',
+    'image/heic': 'heic',
+    'image/heif': 'heif',
+    'image/heic-sequence': 'heic',
+    'image/heif-sequence': 'heif',
     'image/svg+xml': 'svg',
     'application/pdf': 'pdf',
   };
-  return map[mime] || '';
+  return map[mime.toLowerCase()] || '';
 }
 
 export function mimeFromExt(ext: string): string {
@@ -40,6 +46,8 @@ export function mimeFromExt(ext: string): string {
     tiff: 'image/tiff',
     tif: 'image/tiff',
     avif: 'image/avif',
+    heic: 'image/heic',
+    heif: 'image/heif',
     svg: 'image/svg+xml',
     pdf: 'application/pdf',
   };
@@ -49,6 +57,22 @@ export function mimeFromExt(ext: string): string {
 export function stripExtension(name: string): string {
   const idx = name.lastIndexOf('.');
   return idx > 0 ? name.slice(0, idx) : name;
+}
+
+export function sanitizeFilename(name: string): string {
+  return name
+    .replace(/[\\/*?:"<>|\x00-\x1F]/g, '_')
+    .replace(/\.{2,}/g, '.')
+    .trim() || 'image';
+}
+
+export function isHeicFile(file: File | Blob, ext?: string): boolean {
+  const extension = (ext || (file instanceof File ? fileExt(file.name) : '')).toLowerCase();
+  if (extension === 'heic' || extension === 'heif') return true;
+  if (file.type === 'image/heic' || file.type === 'image/heif' || file.type === 'image/heic-sequence' || file.type === 'image/heif-sequence') {
+    return true;
+  }
+  return false;
 }
 
 /** Read the magic bytes of a file and verify they match the claimed extension. */
@@ -61,6 +85,7 @@ export function sniffFormatFromBytes(bytes: Uint8Array): string | null {
   // WebP: "RIFF" .... "WEBP"
   if (
     bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46 &&
+    bytes.length >= 12 &&
     bytes[8] === 0x57 && bytes[9] === 0x45 && bytes[10] === 0x42 && bytes[11] === 0x50
   )
     return 'webp';
@@ -72,12 +97,16 @@ export function sniffFormatFromBytes(bytes: Uint8Array): string | null {
   if ((bytes[0] === 0x49 && bytes[1] === 0x49) || (bytes[0] === 0x4d && bytes[1] === 0x4d)) {
     if (bytes[2] === 0x2a || bytes[2] === 0x43) return 'tiff';
   }
-  // AVIF: RIFF + WEBP? Actually AVIF uses ftypavif. Check for ftyp at offset 4
+  // PDF: %PDF
+  if (bytes[0] === 0x25 && bytes[1] === 0x50 && bytes[2] === 0x44 && bytes[3] === 0x46) return 'pdf';
+  // HEIC / HEIF / AVIF: ftyp box
   if (bytes.length >= 12) {
     if (bytes[4] === 0x66 && bytes[5] === 0x74 && bytes[6] === 0x79 && bytes[7] === 0x70) {
-      // ftyp box; check if avif or heic in bytes 8-11
-      const brand = String.fromCharCode(...bytes.subarray(8, 12));
-      if (brand.includes('avif') || brand.includes('heic')) return 'avif';
+      const brand = String.fromCharCode(...bytes.subarray(8, 12)).toLowerCase();
+      if (brand.includes('heic') || brand.includes('heix') || brand.includes('hevc') || brand.includes('heim') || brand.includes('heis') || brand.includes('mif1') || brand.includes('msf1')) {
+        return 'heic';
+      }
+      if (brand.includes('avif') || brand.includes('avis')) return 'avif';
     }
   }
   // SVG: starts with optional whitespace then <svg or <?xml
@@ -85,14 +114,14 @@ export function sniffFormatFromBytes(bytes: Uint8Array): string | null {
     let i = 0;
     while (i < bytes.length && (bytes[i] === 0x20 || bytes[i] === 0x09 || bytes[i] === 0x0a || bytes[i] === 0x0d)) i++;
     if (i + 3 < bytes.length) {
-      const snippet = String.fromCharCode(...bytes.subarray(i, i + 3));
+      const snippet = String.fromCharCode(...bytes.subarray(i, i + 3)).toLowerCase();
       if (snippet === '<sv' || snippet === '<?x') return 'svg';
     }
   }
   return null;
 }
 
-export function sniffFormat(file: File): Promise<string | null> {
+export function sniffFormat(file: File | Blob): Promise<string | null> {
   return new Promise((resolve) => {
     if (file.size < 4) return resolve(null);
     const reader = new FileReader();
@@ -101,7 +130,7 @@ export function sniffFormat(file: File): Promise<string | null> {
       resolve(sniffFormatFromBytes(arr));
     };
     reader.onerror = () => resolve(null);
-    reader.readAsArrayBuffer(file.slice(0, 16));
+    reader.readAsArrayBuffer(file.slice(0, 32));
   });
 }
 
@@ -120,37 +149,200 @@ export function supportsOffscreenCanvas(): boolean {
   return typeof OffscreenCanvas !== 'undefined';
 }
 
-/** Load an image from a File into both an HTMLImageElement and (if available) an ImageBitmap. */
-export function decodeImage(file: File): Promise<DecodedImage> {
+/**
+ * Convert a HEIC / HEIF file to a standard JPEG blob in the browser.
+ * Dynamically loads heic2any on-demand for code splitting.
+ */
+export async function convertHeicToBlob(file: File | Blob): Promise<Blob> {
+  if (typeof window === 'undefined') {
+    throw new Error('heic-unsupported');
+  }
+  try {
+    const heic2anyModule = await import('heic2any');
+    const heic2any = heic2anyModule.default || heic2anyModule;
+    const result = await heic2any({
+      blob: file,
+      toType: 'image/jpeg',
+      quality: 0.95,
+    });
+    if (Array.isArray(result)) {
+      return result[0];
+    }
+    return result as Blob;
+  } catch (err) {
+    console.error('HEIC conversion failed:', err);
+    throw new Error('heic-conversion-failed');
+  }
+}
+
+/**
+ * Load an image from a File into an HTMLImageElement and ImageBitmap.
+ * Handles EXIF orientation correction and HEIC conversion transparently.
+ */
+export async function decodeImage(file: File): Promise<DecodedImage> {
+  // Safety checks
+  if (file.size > MAX_FILE_SIZE_BYTES) {
+    throw new Error('file-too-large');
+  }
+
+  const ext = fileExt(file.name);
+  let processFile: File | Blob = file;
+  let detectedOrientation = 1;
+
+  // Extract EXIF orientation before any conversion
+  try {
+    detectedOrientation = await getExifOrientation(file);
+  } catch {
+    detectedOrientation = 1;
+  }
+
+  // Detect Live Photo
+  let isLivePhoto = false;
+  try {
+    const liveInfo = await detectLivePhoto(file);
+    isLivePhoto = liveInfo.isLivePhoto;
+  } catch {
+    isLivePhoto = false;
+  }
+
+  // Check if HEIC
+  if (isHeicFile(file, ext)) {
+    try {
+      processFile = await convertHeicToBlob(file);
+    } catch {
+      throw new Error('heic-conversion-failed');
+    }
+  }
+
   return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-    img.decoding = 'async';
-    img.onload = () => {
-      const width = img.naturalWidth;
-      const height = img.naturalHeight;
-      const format =
-        (extFromMime(file.type) as ImageFormat) || (fileExt(file.name) as ImageFormat) || 'png';
-      const resolveWith = (bitmap: ImageBitmap | null) => {
-        // After the image is fully decoded into the img element memory,
-        // the object URL is no longer needed; revoking prevents memory leaks.
-        // A brief delay ensures any immediate canvas draw operations finish.
-        setTimeout(() => URL.revokeObjectURL(url), 100);
-        resolve({ image: img, bitmap, width, height, format, file });
-      };
+    const url = URL.createObjectURL(processFile);
+    const rawImg = new Image();
+    rawImg.decoding = 'async';
+
+    rawImg.onload = async () => {
+      let finalWidth = rawImg.naturalWidth;
+      let finalHeight = rawImg.naturalHeight;
+
+      if (finalWidth > MAX_DIMENSION || finalHeight > MAX_DIMENSION) {
+        URL.revokeObjectURL(url);
+        return reject(new Error('dimensions-too-large'));
+      }
+
+      const format = (extFromMime(file.type) as ImageFormat) || (ext as ImageFormat) || 'jpg';
+
+      // If EXIF orientation is rotated (2-8), render to an upright canvas and create an upright Image
+      if (detectedOrientation > 1) {
+        try {
+          const swap = detectedOrientation >= 5 && detectedOrientation <= 8;
+          finalWidth = swap ? rawImg.naturalHeight : rawImg.naturalWidth;
+          finalHeight = swap ? rawImg.naturalWidth : rawImg.naturalHeight;
+
+          const canvas = document.createElement('canvas');
+          applyOrientationToCanvas(canvas, rawImg, detectedOrientation, rawImg.naturalWidth, rawImg.naturalHeight);
+
+          // Create upright image from oriented canvas
+          const orientedImg = new Image();
+          orientedImg.onload = () => {
+            URL.revokeObjectURL(url);
+            let bitmap: ImageBitmap | null = null;
+            if (typeof createImageBitmap === 'function') {
+              createImageBitmap(canvas)
+                .then((bm) => {
+                  resolve({
+                    image: orientedImg,
+                    bitmap: bm,
+                    width: finalWidth,
+                    height: finalHeight,
+                    format,
+                    file,
+                    orientation: detectedOrientation,
+                    isLivePhoto,
+                  });
+                })
+                .catch(() => {
+                  resolve({
+                    image: orientedImg,
+                    bitmap: null,
+                    width: finalWidth,
+                    height: finalHeight,
+                    format,
+                    file,
+                    orientation: detectedOrientation,
+                    isLivePhoto,
+                  });
+                });
+            } else {
+              resolve({
+                image: orientedImg,
+                bitmap,
+                width: finalWidth,
+                height: finalHeight,
+                format,
+                file,
+                orientation: detectedOrientation,
+                isLivePhoto,
+              });
+            }
+          };
+          orientedImg.onerror = () => {
+            URL.revokeObjectURL(url);
+            reject(new Error('decode-failed'));
+          };
+          orientedImg.src = canvas.toDataURL('image/png');
+          return;
+        } catch {
+          /* fall back to direct image */
+        }
+      }
+
+      // Standard orientation = 1
+      URL.revokeObjectURL(url);
       if (typeof createImageBitmap === 'function') {
-        createImageBitmap(file)
-          .then((bitmap) => resolveWith(bitmap))
-          .catch(() => resolveWith(null));
+        createImageBitmap(processFile)
+          .then((bm) => {
+            resolve({
+              image: rawImg,
+              bitmap: bm,
+              width: finalWidth,
+              height: finalHeight,
+              format,
+              file,
+              orientation: 1,
+              isLivePhoto,
+            });
+          })
+          .catch(() => {
+            resolve({
+              image: rawImg,
+              bitmap: null,
+              width: finalWidth,
+              height: finalHeight,
+              format,
+              file,
+              orientation: 1,
+              isLivePhoto,
+            });
+          });
       } else {
-        resolveWith(null);
+        resolve({
+          image: rawImg,
+          bitmap: null,
+          width: finalWidth,
+          height: finalHeight,
+          format,
+          file,
+          orientation: 1,
+          isLivePhoto,
+        });
       }
     };
-    img.onerror = () => {
+
+    rawImg.onerror = () => {
       URL.revokeObjectURL(url);
       reject(new Error('decode-failed'));
     };
-    img.src = url;
+
+    rawImg.src = url;
   });
 }
 
@@ -168,8 +360,9 @@ export function canvasToBlob(
   opts: EncodeOptions,
 ): Promise<Blob> {
   const { format, quality = 0.92 } = opts;
-  const mime = mimeFromExt(format);
-  const isLossy = format === 'jpg' || format === 'jpeg' || format === 'webp';
+  const effectiveFormat = format === 'heic' || format === 'heif' ? 'jpg' : format;
+  const mime = mimeFromExt(effectiveFormat);
+  const isLossy = effectiveFormat === 'jpg' || effectiveFormat === 'jpeg' || effectiveFormat === 'webp';
 
   // Use OffscreenCanvas.convertToBlob when available (fast, worker-friendly).
   if (typeof OffscreenCanvas !== 'undefined' && source instanceof OffscreenCanvas) {
@@ -211,7 +404,7 @@ export function triggerDownload(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = filename;
+  a.download = sanitizeFilename(filename);
   document.body.appendChild(a);
   a.click();
   a.remove();

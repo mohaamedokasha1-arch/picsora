@@ -2,10 +2,10 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  options: { value: string; label: string }[];
+  options?: { value: string; label: string }[];
 }
 
-export function Select({ options, className, ...props }: SelectProps) {
+export function Select({ options, children, className, ...props }: SelectProps) {
   return (
     <select
       className={cn(
@@ -14,11 +14,13 @@ export function Select({ options, className, ...props }: SelectProps) {
       )}
       {...props}
     >
-      {options.map((o) => (
-        <option key={o.value} value={o.value}>
-          {o.label}
-        </option>
-      ))}
+      {options
+        ? options.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))
+        : children}
     </select>
   );
 }

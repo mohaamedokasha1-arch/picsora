@@ -9,6 +9,7 @@ import { Link } from '@/lib/i18n/navigation';
 import { ToolCard } from '@/components/tools/tool-card';
 import { ToolsGrid } from '@/components/tools/tools-grid';
 import { ToolSearch } from '@/components/tools/tool-search';
+import { UserToolsSection } from '@/components/tools/user-tools-section';
 import { Accordion } from '@/components/ui/accordion';
 import { ToolIcon } from '@/components/icons';
 
@@ -95,6 +96,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
           <ToolSearch />
         </div>
       </section>
+
+      {/* Favorites & Recently Used (if any) */}
+      <UserToolsSection />
 
       {/* Categories */}
       <section className="container py-12">

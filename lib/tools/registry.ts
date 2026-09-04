@@ -103,35 +103,6 @@ const T = (
   kind: 'image',
 });
 
-const IMAGE_TOOLS: ToolDef[] = [
-  T('image-compressor', 'compress', 'gauge', ['compress', 'reduce size', 'optimize', 'shrink', 'jpg compress', 'png compress', 'webp compress', 'ضغط الصور'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['image-resizer', 'jpg-to-webp', 'png-to-jpg', 'image-to-grayscale'], true, 20),
-  T('image-resizer', 'resize', 'scaling', ['resize', 'dimensions', 'pixels', 'scale', 'width', 'height', 'تغيير الحجم'], ['jpg', 'png', 'webp', 'gif'], ['jpg', 'png', 'webp', 'gif'], ['image-compressor', 'image-cropper', 'image-rotator'], true, 1),
-  T('image-cropper', 'edit', 'crop', ['crop', 'cut', 'aspect ratio', 'trim', 'قص'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['image-resizer', 'image-rotator', 'split-image'], true, 1),
-  T('image-rotator', 'edit', 'rotate', ['rotate', 'turn', '90 degrees', '180', 'angle', 'تدوير'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-horizontal', 'flip-image-vertical', 'image-cropper'], false, 1),
-  T('flip-image-horizontal', 'edit', 'flip-horizontal', ['flip', 'mirror', 'horizontal', 'reflect', 'انعكاس'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-vertical', 'image-rotator', 'image-cropper'], false, 1),
-  T('flip-image-vertical', 'edit', 'flip-vertical', ['flip', 'mirror', 'vertical', 'upside down', 'انعكاس'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-horizontal', 'image-rotator', 'image-cropper'], false, 1),
-  T('jpg-to-png', 'convert', 'repeat', ['jpg to png', 'jpeg to png', 'convert jpg', 'jpg2png', 'تحويل'], ['jpg'], ['png'], ['png-to-jpg', 'jpg-to-webp', 'image-compressor'], true, 10),
-  T('png-to-jpg', 'convert', 'repeat', ['png to jpg', 'convert png', 'png2jpg', 'transparent to white', 'تحويل'], ['png'], ['jpg'], ['jpg-to-png', 'png-to-webp', 'webp-to-jpg'], true, 10),
-  T('jpg-to-webp', 'convert', 'repeat', ['jpg to webp', 'convert to webp', 'jpeg webp', 'تحويل'], ['jpg'], ['webp'], ['png-to-webp', 'webp-to-jpg', 'image-compressor'], false, 10),
-  T('png-to-webp', 'convert', 'repeat', ['png to webp', 'convert png webp', 'transparent webp', 'تحويل'], ['png'], ['webp'], ['jpg-to-webp', 'webp-to-png', 'png-to-jpg'], false, 10),
-  T('webp-to-jpg', 'convert', 'repeat', ['webp to jpg', 'convert webp', 'webp2jpg', 'تحويل'], ['webp'], ['jpg'], ['jpg-to-webp', 'png-to-jpg', 'webp-to-png'], false, 10),
-  T('webp-to-png', 'convert', 'repeat', ['webp to png', 'convert webp png', 'webp2png', 'تحويل'], ['webp'], ['png'], ['png-to-webp', 'jpg-to-png', 'webp-to-jpg'], false, 10),
-  T('image-to-pdf', 'pdf', 'file-text', ['image to pdf', 'photo to pdf', 'jpg to pdf', 'png to pdf', 'pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['images-to-pdf', 'image-resizer', 'merge-images'], true, 1),
-  { ...T('images-to-pdf', 'pdf', 'file-text', ['images to pdf', 'multiple photos pdf', 'combine pdf', 'jpg to pdf', 'صور الى pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['image-to-pdf', 'pdf-merger', 'pdf-compressor'], true, 30), alsoIn: ['pdf-tools'] },
-  T('merge-images', 'edit', 'merge', ['merge', 'combine', 'side by side', 'collage', 'stack', 'دمج'], ['jpg', 'png', 'webp'], ['png', 'jpg'], ['split-image', 'images-to-pdf', 'image-resizer'], false, 10),
-  T('split-image', 'edit', 'grid', ['split', 'grid', 'tiles', 'slice', 'carousel', 'تقسيم'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['merge-images', 'image-cropper', 'image-resizer'], false, 1),
-  T('image-color-picker', 'color', 'pipette', ['color picker', 'eyedropper', 'hex', 'rgb', 'hsl', 'pixel color', 'منتقي الألوان'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['color-palette-extractor', 'image-to-grayscale', 'image-watermark'], true, 1),
-  T('color-palette-extractor', 'color', 'palette', ['palette', 'dominant colors', 'extract colors', 'color scheme', 'لوحة الألوان'], ['jpg', 'png', 'webp'], ['png', 'json'], ['image-color-picker', 'image-to-grayscale', 'image-watermark'], true, 1),
-  T('image-to-grayscale', 'edit', 'grayscale', ['grayscale', 'black and white', 'monochrome', 'bw', 'رمادي'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['image-color-picker', 'image-compressor', 'image-rotator'], false, 1),
-  T('image-watermark', 'edit', 'stamp', ['watermark', 'logo overlay', 'text overlay', 'copyright', 'علامة مائية'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['merge-images', 'image-resizer', 'image-compressor'], true, 1),
-];
-
-
-/**
- * Definition helper for the non-image tool families (PDF / text / calculator /
- * developer). These tools do not go through the image decode pipeline, so the
- * format fields describe their real inputs/outputs for the UI + SEO copy.
- */
 interface NewToolOptions {
   inputFormats?: ToolDef['inputFormats'];
   outputFormats?: ToolDef['outputFormats'];
@@ -162,12 +133,59 @@ const N = (
   keywords,
   inputFormats: options.inputFormats ?? [],
   outputFormats: options.outputFormats ?? [],
-  maxFileSizeMB: options.maxFileSizeMB ?? 100,
+  maxFileSizeMB: options.maxFileSizeMB ?? 50,
   maxFiles: options.maxFiles ?? 1,
   relatedTools,
   popular: options.popular ?? false,
   isNew: true,
 });
+
+const IMAGE_TOOLS: ToolDef[] = [
+  T('image-compressor', 'compress', 'gauge', ['compress', 'reduce size', 'optimize', 'shrink', 'jpg compress', 'png compress', 'webp compress', 'ضغط الصور'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['exact-kb-image-compressor', 'image-resizer', 'jpg-to-webp', 'png-to-jpg'], true, 20),
+  {
+    ...T('exact-kb-image-compressor', 'compress', 'gauge', ['exact kb', 'compress to size', '500kb', '200kb', '100kb', 'target size', 'reduce to kb', 'ضغط لحجم محدد'], ['jpg', 'png', 'webp', 'heic'], ['jpg', 'webp'], ['image-compressor', 'image-resizer', 'jpg-to-webp', 'png-to-jpg'], true, 10),
+    isNew: true,
+  },
+  T('image-resizer', 'resize', 'scaling', ['resize', 'dimensions', 'pixels', 'scale', 'width', 'height', 'تغيير الحجم'], ['jpg', 'png', 'webp', 'gif'], ['jpg', 'png', 'webp', 'gif'], ['image-compressor', 'exact-kb-image-compressor', 'image-cropper', 'passport-photo-maker'], true, 1),
+  T('image-cropper', 'edit', 'crop', ['crop', 'cut', 'aspect ratio', 'trim', 'قص'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['passport-photo-maker', 'image-resizer', 'image-rotator', 'split-image'], true, 1),
+  T('image-rotator', 'edit', 'rotate', ['rotate', 'turn', '90 degrees', '180', 'angle', 'تدوير'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-horizontal', 'flip-image-vertical', 'image-cropper'], false, 1),
+  T('flip-image-horizontal', 'edit', 'flip-horizontal', ['flip', 'mirror', 'horizontal', 'reflect', 'انعكاس'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-vertical', 'image-rotator', 'image-cropper'], false, 1),
+  T('flip-image-vertical', 'edit', 'flip-vertical', ['flip', 'mirror', 'vertical', 'upside down', 'انعكاس'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-horizontal', 'image-rotator', 'image-cropper'], false, 1),
+  T('jpg-to-png', 'convert', 'repeat', ['jpg to png', 'jpeg to png', 'convert jpg', 'jpg2png', 'تحويل'], ['jpg'], ['png'], ['png-to-jpg', 'jpg-to-webp', 'image-compressor', 'image-resizer', 'image-to-pdf'], true, 10),
+  T('png-to-jpg', 'convert', 'repeat', ['png to jpg', 'convert png', 'png2jpg', 'transparent to white', 'تحويل'], ['png'], ['jpg'], ['jpg-to-png', 'png-to-webp', 'webp-to-jpg', 'image-compressor'], true, 10),
+  T('jpg-to-webp', 'convert', 'repeat', ['jpg to webp', 'convert to webp', 'jpeg webp', 'تحويل'], ['jpg'], ['webp'], ['png-to-webp', 'webp-to-jpg', 'image-compressor'], false, 10),
+  T('png-to-webp', 'convert', 'repeat', ['png to webp', 'convert png webp', 'transparent webp', 'تحويل'], ['png'], ['webp'], ['jpg-to-webp', 'webp-to-png', 'png-to-jpg'], false, 10),
+  T('webp-to-jpg', 'convert', 'repeat', ['webp to jpg', 'convert webp', 'webp2jpg', 'تحويل'], ['webp'], ['jpg'], ['jpg-to-webp', 'png-to-jpg', 'webp-to-png'], false, 10),
+  T('webp-to-png', 'convert', 'repeat', ['webp to png', 'convert webp png', 'webp2png', 'تحويل'], ['webp'], ['png'], ['png-to-webp', 'jpg-to-png', 'webp-to-jpg'], false, 10),
+  {
+    ...T('heic-to-jpg', 'convert', 'repeat', ['heic to jpg', 'iphone to jpg', 'ios photo', 'apple photo', 'heic converter', 'تحويل heic الى jpg'], ['heic'], ['jpg'], ['heic-to-png', 'image-compressor', 'image-resizer', 'photo-metadata-viewer'], true, 20),
+    isNew: true,
+  },
+  {
+    ...T('heic-to-png', 'convert', 'repeat', ['heic to png', 'iphone to png', 'ios photo transparent', 'تحويل heic الى png'], ['heic'], ['png'], ['heic-to-jpg', 'image-compressor', 'image-resizer', 'photo-metadata-viewer'], false, 20),
+    isNew: true,
+  },
+  {
+    ...T('heif-to-jpg', 'convert', 'repeat', ['heif to jpg', 'heif converter', 'iphone photo', 'تحويل heif الى jpg'], ['heif'], ['jpg'], ['heif-to-png', 'heic-to-jpg', 'image-compressor', 'photo-metadata-viewer'], false, 20),
+    isNew: true,
+  },
+  {
+    ...T('heif-to-png', 'convert', 'repeat', ['heif to png', 'heif converter png', 'تحويل heif الى png'], ['heif'], ['png'], ['heif-to-jpg', 'heic-to-png', 'image-compressor', 'photo-metadata-viewer'], false, 20),
+    isNew: true,
+  },
+  T('image-to-pdf', 'pdf', 'file-text', ['image to pdf', 'photo to pdf', 'jpg to pdf', 'png to pdf', 'pdf'], ['jpg', 'png', 'webp', 'heic'], ['pdf'], ['images-to-pdf', 'image-resizer', 'merge-images'], true, 1),
+  { ...T('images-to-pdf', 'pdf', 'file-text', ['images to pdf', 'multiple photos pdf', 'combine pdf', 'jpg to pdf', 'صور الى pdf'], ['jpg', 'png', 'webp', 'heic'], ['pdf'], ['image-to-pdf', 'pdf-merger', 'pdf-compressor'], true, 30), alsoIn: ['pdf-tools'] },
+  T('merge-images', 'edit', 'merge', ['merge', 'combine', 'side by side', 'collage', 'stack', 'دمج'], ['jpg', 'png', 'webp'], ['png', 'jpg'], ['split-image', 'images-to-pdf', 'image-resizer'], false, 10),
+  T('split-image', 'edit', 'grid', ['split', 'grid', 'tiles', 'slice', 'carousel', 'تقسيم'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['merge-images', 'image-cropper', 'image-resizer'], false, 1),
+  T('image-color-picker', 'color', 'pipette', ['color picker', 'eyedropper', 'hex', 'rgb', 'hsl', 'pixel color', 'منتقي الألوان'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['color-palette-extractor', 'color-picker', 'image-to-grayscale', 'image-watermark'], true, 1),
+  T('color-palette-extractor', 'color', 'palette', ['palette', 'dominant colors', 'extract colors', 'color scheme', 'لوحة الألوان'], ['jpg', 'png', 'webp'], ['png', 'json'], ['image-color-picker', 'color-picker', 'image-to-grayscale'], true, 1),
+  T('image-to-grayscale', 'edit', 'grayscale', ['grayscale', 'black and white', 'monochrome', 'bw', 'رمادي'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['image-color-picker', 'image-compressor', 'image-rotator'], false, 1),
+  T('image-watermark', 'edit', 'stamp', ['watermark', 'logo overlay', 'text overlay', 'copyright', 'علامة مائية'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['merge-images', 'image-resizer', 'image-compressor', 'pdf-watermark'], true, 1),
+  {
+    ...T('passport-photo-maker', 'edit', 'user-check', ['passport photo', 'visa photo', 'id photo', 'passport size 2x2', 'صورة جواز سفر'], ['jpg', 'png', 'webp', 'heic'], ['jpg'], ['image-cropper', 'image-resizer', 'image-compressor'], true, 1),
+    isNew: true,
+  },
+];
 
 const PDF_TOOLS: ToolDef[] = [
   N('pdf-merger', 'pdf-tools', 'pdf', 'file-plus', ['merge pdf', 'combine pdf', 'join pdf', 'pdf merger', 'دمج pdf', 'دمج ملفات pdf'], ['pdf-splitter', 'pdf-extract-pages', 'images-to-pdf', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 50, maxFiles: 20, popular: true }),
@@ -181,6 +199,9 @@ const PDF_TOOLS: ToolDef[] = [
   N('pdf-to-images', 'pdf-tools', 'pdf', 'image-down', ['pdf to jpg', 'pdf to png', 'convert pdf to image', 'pdf إلى صور'], ['images-to-pdf', 'pdf-extract-pages', 'pdf-compressor', 'image-compressor'], { inputFormats: ['pdf'], outputFormats: ['jpg', 'png', 'zip'], maxFileSizeMB: 50, popular: true }),
   N('pdf-compressor', 'pdf-tools', 'pdf', 'gauge', ['compress pdf', 'reduce pdf size', 'shrink pdf', 'ضغط pdf'], ['pdf-merger', 'pdf-to-images', 'pdf-splitter', 'image-compressor'], { inputFormats: ['pdf'], outputFormats: ['pdf'], popular: true }),
   N('pdf-page-counter', 'pdf-tools', 'pdf', 'hash', ['count pdf pages', 'pdf page count', 'how many pages', 'عدد صفحات pdf'], ['pdf-splitter', 'pdf-merger', 'pdf-extract-pages', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: [], maxFileSizeMB: 50, maxFiles: 20 }),
+  N('pdf-to-text', 'pdf-tools', 'pdf', 'file-text', ['pdf to text', 'extract text from pdf', 'copy pdf text', 'استخراج النص من pdf'], ['pdf-to-images', 'ocr-image-to-text', 'pdf-merger', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['txt'], popular: true }),
+  N('pdf-watermark', 'pdf-tools', 'pdf', 'stamp', ['pdf watermark', 'stamp pdf', 'add text to pdf', 'علامة مائية pdf'], ['pdf-page-numbers', 'pdf-protect', 'image-watermark', 'pdf-merger'], { inputFormats: ['pdf'], outputFormats: ['pdf'], popular: true }),
+  N('pdf-page-numbers', 'pdf-tools', 'pdf', 'hash', ['add page numbers', 'pdf page numbering', 'bates numbering', 'أرقام صفحات pdf'], ['pdf-watermark', 'pdf-reorder-pages', 'pdf-page-counter', 'pdf-merger'], { inputFormats: ['pdf'], outputFormats: ['pdf'], popular: true }),
 ];
 
 const TEXT_TOOLS: ToolDef[] = [
@@ -213,15 +234,23 @@ const DEVELOPER_TOOLS: ToolDef[] = [
   N('uuid-generator', 'developer-tools', 'developer', 'fingerprint', ['uuid generator', 'guid', 'ulid', 'nano id', 'مولد uuid'], ['hash-generator', 'base64-encoder-decoder', 'json-formatter', 'lorem-ipsum-generator'], { popular: true }),
   N('url-encoder-decoder', 'developer-tools', 'developer', 'link-2', ['url encode', 'url decode', 'percent encoding', 'ترميز الروابط'], ['base64-encoder-decoder', 'html-encoder-decoder', 'text-to-slug', 'json-formatter'], {}),
   N('html-encoder-decoder', 'developer-tools', 'developer', 'code-xml', ['html encode', 'html entities', 'escape html', 'ترميز html'], ['url-encoder-decoder', 'base64-encoder-decoder', 'xml-formatter', 'text-cleaner'], {}),
-  N('json-formatter', 'developer-tools', 'developer', 'braces', ['json formatter', 'json validator', 'json beautifier', 'minify json', 'تنسيق json'], ['xml-formatter', 'javascript-formatter', 'base64-encoder-decoder', 'text-diff'], { popular: true }),
-  N('xml-formatter', 'developer-tools', 'developer', 'file-code', ['xml formatter', 'xml validator', 'xml to json', 'تنسيق xml'], ['json-formatter', 'html-encoder-decoder', 'css-formatter', 'javascript-formatter'], {}),
+  N('json-formatter', 'developer-tools', 'developer', 'braces', ['json formatter', 'json validator', 'json beautifier', 'minify json', 'تنسيق json'], ['xml-formatter', 'yaml-formatter', 'javascript-formatter', 'jwt-decoder'], { popular: true }),
+  N('xml-formatter', 'developer-tools', 'developer', 'file-code', ['xml formatter', 'xml validator', 'xml to json', 'تنسيق xml'], ['json-formatter', 'html-encoder-decoder', 'css-formatter', 'yaml-formatter'], {}),
   N('javascript-formatter', 'developer-tools', 'developer', 'braces', ['javascript formatter', 'js beautifier', 'js minifier', 'terser', 'تنسيق جافاسكربت'], ['css-formatter', 'json-formatter', 'xml-formatter', 'regex-tester'], {}),
-  N('css-formatter', 'developer-tools', 'developer', 'paintbrush', ['css formatter', 'css beautifier', 'css minifier', 'تنسيق css'], ['javascript-formatter', 'json-formatter', 'color-converter', 'html-encoder-decoder'], {}),
+  N('css-formatter', 'developer-tools', 'developer', 'paintbrush', ['css formatter', 'css beautifier', 'css minifier', 'تنسيق css'], ['javascript-formatter', 'json-formatter', 'color-converter', 'color-picker'], {}),
   N('regex-tester', 'developer-tools', 'developer', 'regex', ['regex tester', 'regular expression', 'pattern match', 'اختبار التعبيرات النمطية'], ['json-formatter', 'text-diff', 'text-cleaner', 'javascript-formatter'], { popular: true }),
-  N('base64-encoder-decoder', 'developer-tools', 'developer', 'binary', ['base64 encode', 'base64 decode', 'data uri', 'ترميز base64'], ['url-encoder-decoder', 'hash-generator', 'html-encoder-decoder', 'uuid-generator'], { maxFileSizeMB: 25 }),
-  N('color-converter', 'developer-tools', 'developer', 'palette', ['color converter', 'hex to rgb', 'hsl', 'cmyk', 'contrast checker', 'محول الألوان'], ['image-color-picker', 'color-palette-extractor', 'css-formatter', 'hash-generator'], {}),
-  N('hash-generator', 'developer-tools', 'developer', 'shield', ['hash generator', 'sha256', 'sha512', 'checksum', 'مولد التجزئة'], ['uuid-generator', 'base64-encoder-decoder', 'json-formatter', 'number-base-converter'], { maxFileSizeMB: 200 }),
-  N('number-base-converter', 'developer-tools', 'developer', 'binary', ['base converter', 'binary to decimal', 'hex converter', 'octal', 'محول الأنظمة العددية'], ['hash-generator', 'unit-converter', 'number-to-words', 'uuid-generator'], {}),
+  N('base64-encoder-decoder', 'developer-tools', 'developer', 'binary', ['base64 encode', 'base64 decode', 'data uri', 'ترميز base64'], ['url-encoder-decoder', 'hash-generator', 'jwt-decoder', 'uuid-generator'], { maxFileSizeMB: 25 }),
+  N('color-converter', 'developer-tools', 'developer', 'palette', ['color converter', 'hex to rgb', 'hsl', 'cmyk', 'contrast checker', 'محول الألوان'], ['color-picker', 'image-color-picker', 'color-palette-extractor', 'css-formatter'], {}),
+  N('hash-generator', 'developer-tools', 'developer', 'shield', ['hash generator', 'sha256', 'sha512', 'checksum', 'مولد التجزئة'], ['uuid-generator', 'base64-encoder-decoder', 'jwt-decoder', 'number-base-converter'], { maxFileSizeMB: 200 }),
+  N('number-base-converter', 'developer-tools', 'developer', 'binary', ['base converter', 'binary to decimal', 'hex converter', 'octal', 'محول الأنظمة العددية'], ['hash-generator', 'unit-converter', 'number-to-words', 'unix-timestamp-converter'], {}),
+  N('jwt-decoder', 'developer-tools', 'developer', 'key-round', ['jwt decoder', 'decode jwt', 'jwt parser', 'json web token', 'فك تشفير jwt'], ['base64-encoder-decoder', 'json-formatter', 'hash-generator', 'unix-timestamp-converter'], { popular: true }),
+  N('color-picker', 'developer-tools', 'developer', 'pipette', ['color picker', 'hex color', 'rgb color', 'hsl', 'cmyk', 'منتقي الألوان'], ['color-converter', 'image-color-picker', 'color-palette-extractor', 'css-formatter'], { popular: true }),
+  N('unix-timestamp-converter', 'developer-tools', 'developer', 'clock', ['unix timestamp', 'timestamp to date', 'epoch converter', 'محول الوقت والتاريخ'], ['date-difference-calculator', 'age-calculator', 'number-base-converter', 'jwt-decoder'], { popular: true }),
+  N('yaml-formatter', 'developer-tools', 'developer', 'file-code', ['yaml formatter', 'yaml validator', 'yaml to json', 'json to yaml', 'تنسيق yaml'], ['json-formatter', 'xml-formatter', 'javascript-formatter', 'css-formatter'], { popular: true }),
+  N('qr-code-generator', 'developer-tools', 'developer', 'qr-code', ['qr code generator', 'create qr code', 'make qr', 'مولد باركود', 'qr كود'], ['uuid-generator', 'url-encoder-decoder', 'base64-encoder-decoder'], { popular: true, outputFormats: ['png', 'svg'] }),
+  N('photo-metadata-viewer', 'color', 'developer', 'camera', ['exif viewer', 'photo metadata', 'image exif', 'camera settings', 'gps photo', 'عرض بيانات الصورة'], ['image-compressor', 'heic-to-jpg', 'image-resizer', 'image-color-picker'], { popular: true, inputFormats: ['jpg', 'png', 'webp', 'heic'], outputFormats: ['json'] }),
+  N('ocr-image-to-text', 'text-tools', 'developer', 'scan-text', ['ocr', 'image to text', 'text from image', 'read image', 'extract text', 'استخراج النص من الصورة'], ['pdf-to-text', 'word-counter', 'case-converter', 'text-cleaner'], { popular: true, inputFormats: ['jpg', 'png', 'webp', 'heic'], outputFormats: ['txt'] }),
+  N('signature-maker', 'edit', 'developer', 'pen-tool', ['signature maker', 'digital signature', 'sign online', 'e signature', 'صانع التوقيع الإلكتروني'], ['image-watermark', 'pdf-watermark', 'image-cropper'], { popular: true, outputFormats: ['png', 'jpg'] }),
 ];
 
 export const TOOLS: ToolDef[] = [
@@ -244,8 +273,8 @@ export function toolsInCategory(slug: CategorySlug): ToolDef[] {
   return TOOLS.filter((t) => t.category === slug || t.alsoIn?.includes(slug));
 }
 
-export function getNewTools(limit = 6): ToolDef[] {
-  return TOOLS.filter((t) => t.isNew && t.popular).slice(0, limit);
+export function getNewTools(limit = 8): ToolDef[] {
+  return TOOLS.filter((t) => t.isNew).slice(0, limit);
 }
 
 export function getRelatedTools(slug: string): ToolDef[] {
@@ -254,7 +283,7 @@ export function getRelatedTools(slug: string): ToolDef[] {
   return tool.relatedTools
     .map((s) => getTool(s))
     .filter((t): t is ToolDef => Boolean(t))
-    .slice(0, 4);
+    .slice(0, 5);
 }
 
 export function getPopularTools(): ToolDef[] {

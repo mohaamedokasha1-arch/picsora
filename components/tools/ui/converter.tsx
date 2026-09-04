@@ -109,3 +109,16 @@ export function WebpToJpgTool({ ctx }: { ctx: WorkspaceContext }) {
 export function WebpToPngTool({ ctx }: { ctx: WorkspaceContext }) {
   return <ConverterTool ctx={ctx} config={{ to: 'png' }} />;
 }
+
+export function HeicToJpgTool({ ctx }: { ctx: WorkspaceContext }) {
+  return <ConverterTool ctx={ctx} config={{ to: 'jpg', needsBackground: true }} />;
+}
+export function HeicToPngTool({ ctx }: { ctx: WorkspaceContext }) {
+  return <ConverterTool ctx={ctx} config={{ to: 'png' }} />;
+}
+export function HeifToJpgTool({ ctx }: { ctx: WorkspaceContext }) {
+  return <ConverterTool ctx={ctx} config={{ to: 'jpg', needsBackground: true }} />;
+}
+export function HeifToPngTool({ ctx }: { ctx: WorkspaceContext }) {
+  return <ConverterTool ctx={ctx} config={{ to: 'png' }} />;
+}
