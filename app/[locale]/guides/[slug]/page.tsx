@@ -11,12 +11,7 @@ import { Link } from '@/lib/i18n/navigation';
 import { ToolCard } from '@/components/tools/tool-card';
 import { Accordion } from '@/components/ui/accordion';
 import { ToolIcon } from '@/components/icons';
-import {
-  articleSchema,
-  breadcrumbSchema,
-  faqSchema,
-  StructuredData,
-} from '@/lib/seo/schema';
+import { articleSchema, faqSchema, StructuredData } from '@/lib/seo/schema';
 
 export function generateStaticParams() {
   const params: { locale: string; slug: string }[] = [];
@@ -34,20 +29,18 @@ export async function generateMetadata({
   setRequestLocale(params.locale);
   const guide = getGuide(params.slug, params.locale);
   if (!guide) return {};
-  const base = buildMetadata(
-    { title: `${guide.title} | ${siteConfig.name}`, description: guide.description, path: `/guides/${guide.slug}` },
+  return buildMetadata(
+    {
+      title: `${guide.title} | ${siteConfig.name}`,
+      description: guide.description,
+      path: `/guides/${guide.slug}`,
+      type: 'article',
+      publishedTime: siteConfig.contentUpdatedAt,
+      modifiedTime: siteConfig.contentUpdatedAt,
+      keywords: [...guide.slug.split('-'), ...guide.relatedTools, 'image guide', 'how to'],
+    },
     params.locale,
   );
-  return {
-    ...base,
-    keywords: [
-      ...guide.slug.split('-'),
-      ...guide.relatedTools,
-      'image guide',
-      'how to',
-      ...siteConfig.keywords,
-    ],
-  };
 }
 
 export default async function GuidePage({ params }: { params: { locale: string; slug: string } }) {
@@ -67,15 +60,10 @@ export default async function GuidePage({ params }: { params: { locale: string; 
       description: guide.description,
       url,
       image: ogImage,
+      locale: params.locale,
+      datePublished: siteConfig.contentUpdatedAt,
+      dateModified: siteConfig.contentUpdatedAt,
     }),
-    breadcrumbSchema(
-      [
-        { name: t('common.home'), path: '/' },
-        { name: t('guides.title'), path: '/guides' },
-        { name: guide.title, path: `/guides/${guide.slug}` },
-      ],
-      siteConfig.url,
-    ),
     faqSchema(guide.faqs),
   ];
 

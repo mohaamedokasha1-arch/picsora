@@ -7,7 +7,7 @@ import { getCategory, toolsInCategory, CATEGORIES } from '@/lib/tools/registry';
 import { Breadcrumb } from '@/components/layout/breadcrumb';
 import { ToolCard } from '@/components/tools/tool-card';
 import { Accordion } from '@/components/ui/accordion';
-import { faqSchema, breadcrumbSchema, itemListSchema, StructuredData } from '@/lib/seo/schema';
+import { faqSchema, itemListSchema, StructuredData } from '@/lib/seo/schema';
 import { Link } from '@/lib/i18n/navigation';
 
 export function generateStaticParams() {
@@ -53,14 +53,6 @@ export default async function CategoryPage({ params }: { params: { locale: strin
 
   const base = siteConfig.url.replace(/\/$/, '');
   const schema = [
-    breadcrumbSchema(
-      [
-        { name: t('common.home'), path: '/' },
-        { name: t('common.categories'), path: '/categories' },
-        { name, path: `/categories/${cat.slug}` },
-      ],
-      siteConfig.url,
-    ),
     faqSchema(faqs),
     itemListSchema(
       tools.map((tool) => ({

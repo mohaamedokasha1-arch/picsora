@@ -6,7 +6,7 @@ import { siteConfig } from '@/lib/site';
 import { getAllGuides } from '@/lib/guides';
 import { Breadcrumb } from '@/components/layout/breadcrumb';
 import { Link } from '@/lib/i18n/navigation';
-import { breadcrumbSchema, itemListSchema, StructuredData } from '@/lib/seo/schema';
+import { collectionPageSchema, itemListSchema, StructuredData } from '@/lib/seo/schema';
 
 export function generateStaticParams() {
   return siteConfig.locales.map((locale) => ({ locale }));
@@ -43,13 +43,12 @@ export default async function GuidesPage({ params }: { params: { locale: string 
   const base = siteConfig.url.replace(/\/$/, '');
 
   const schema = [
-    breadcrumbSchema(
-      [
-        { name: t('common.home'), path: '/' },
-        { name: t('guides.title'), path: '/guides' },
-      ],
-      siteConfig.url,
-    ),
+    collectionPageSchema({
+      name: t('guides.title'),
+      description: t('guides.subtitle'),
+      url: `${base}/${params.locale}/guides`,
+      locale: params.locale,
+    }),
     itemListSchema(
       guides.map((g) => ({
         name: g.title,

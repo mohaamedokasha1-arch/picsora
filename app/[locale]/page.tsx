@@ -33,7 +33,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
   const homeFaqs = (t.raw('homeFaqs') as { q: string; a: string }[]) ?? [];
 
   const structured = [
-    websiteSchema(siteConfig.url, siteConfig.name),
+    websiteSchema(siteConfig.url, siteConfig.name, params.locale),
     organizationSchema(siteConfig.url, siteConfig.name),
     faqSchema(homeFaqs),
   ];

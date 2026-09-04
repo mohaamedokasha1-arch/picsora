@@ -1,7 +1,13 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { SearchX } from 'lucide-react';
 import { Link } from '@/lib/i18n/navigation';
 import { ToolSearch } from '@/components/tools/tool-search';
+
+export const metadata: Metadata = {
+  title: 'Page Not Found | Piclizer',
+  robots: { index: false, follow: true },
+};
 
 export default async function NotFound() {
   const t = await getTranslations();

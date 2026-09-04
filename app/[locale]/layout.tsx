@@ -29,19 +29,44 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(siteConfig.url.replace(/\/$/, '')),
   title: {
     default: siteConfig.name,
     template: '%s',
   },
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
   applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: 'utilities',
   manifest: '/manifest.json',
   icons: {
-    icon: '/icons/icon.svg',
-    apple: '/icons/apple-touch-icon.png',
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32' },
+      { url: '/icons/icon.svg', type: 'image/svg+xml' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180' }],
+    shortcut: '/favicon.ico',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+  },
+  other: {
+    'google-adsense-account': siteConfig.adsensePublisherId,
   },
 };
 
@@ -63,8 +88,14 @@ export default async function LocaleLayout({
       <head>
         {/* Monetag site verification */}
         <meta name="monetag" content="a0ac60af89b9b55d82647e019146c160" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
         {/* Google AdSense */}
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5770911159315916" crossOrigin="anonymous"></script>
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsensePublisherId}`}
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="min-h-screen">
         <a href="#main-content" className="skip-link">

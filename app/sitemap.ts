@@ -1,25 +1,27 @@
 import type { MetadataRoute } from 'next';
-import { siteConfig } from '@/lib/site';
+import { siteConfig, absoluteUrl } from '@/lib/site';
 import { SLUGS, CATEGORY_SLUGS } from '@/lib/tools/registry';
 import { GUIDE_SLUGS } from '@/lib/guides';
 
 type Changefreq = 'daily' | 'weekly' | 'monthly';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = siteConfig.url.replace(/\/$/, '');
-  const now = new Date();
+  const now = new Date(siteConfig.contentUpdatedAt);
   const locales = [...siteConfig.locales];
 
   const urls: MetadataRoute.Sitemap = [];
 
   const alternates = (path: string) => ({
-    languages: Object.fromEntries(locales.map((locale) => [locale, `${base}/${locale}${path}`])),
+    languages: {
+      ...Object.fromEntries(locales.map((locale) => [locale, absoluteUrl(path, locale)])),
+      'x-default': absoluteUrl(path, siteConfig.defaultLocale),
+    },
   });
 
   const add = (path: string, priority: number, changefreq: Changefreq) => {
     for (const locale of locales) {
       urls.push({
-        url: `${base}/${locale}${path}`,
+        url: absoluteUrl(path, locale),
         lastModified: now,
         changeFrequency: changefreq,
         priority,
