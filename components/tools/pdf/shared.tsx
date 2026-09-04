@@ -7,6 +7,8 @@ import { UploadCloud, FileText, X, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { cn, formatBytes } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { defaultRuleFor, validateFile } from '@/lib/validation';
+import { resolveUploadMessage, type MessageError } from '../error-messages';
 import { PdfError, inspect, readBytes, type PdfFileInfo } from '@/lib/pdf-processing';
 import { openWithPdfJs, type LoadedPdf } from '@/lib/pdf-processing/render';
 
@@ -52,36 +54,49 @@ export function PdfDropzone({
   const [dragging, setDragging] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
+  // Same rules as the shared image dropzone: the %PDF magic bytes decide, so a
+  // PDF coming from Drive/iCloud/WhatsApp with a missing extension or an
+  // `application/octet-stream` MIME type is no longer rejected.
+  const rule = React.useMemo(
+    () => defaultRuleFor(['pdf'], maxFiles, maxFileSizeMB),
+    [maxFiles, maxFileSizeMB],
+  );
+
   const accept = async (list: FileList | File[]) => {
-    const files = Array.from(list);
-    if (!files.length) return;
-    if (files.length > maxFiles) {
-      onError(t('validation.tooManyFiles', { max: maxFiles }));
+    const all = Array.from(list);
+    if (!all.length) return;
+
+    const batch = all.slice(0, maxFiles);
+    const ok: File[] = [];
+    let firstError: MessageError | null = null;
+
+    for (const file of batch) {
+      const result = await validateFile(file, rule);
+      if (result.valid) {
+        ok.push(file);
+      } else if (!firstError) {
+        firstError = { key: result.errorKey ?? 'invalidType', params: result.params };
+      }
+    }
+    // Everything the user picked that did not make it into the list.
+    const skipped = all.length - ok.length;
+
+    if (ok.length) onFiles(ok);
+
+    if (ok.length && skipped > 0) {
+      const reason = firstError
+        ? resolveUploadMessage(firstError, t)
+        : t('validation.tooManyFiles', { max: maxFiles });
+      onError(t('validation.partialSkip', { count: skipped, reason }));
       return;
     }
-    for (const file of files) {
-      if (!file.size) {
-        onError(t('validation.emptyFile'));
-        return;
-      }
-      if (file.size > maxFileSizeMB * 1024 * 1024) {
-        onError(t('validation.fileTooLarge', { size: maxFileSizeMB }));
-        return;
-      }
-      const isPdfName = file.name.toLowerCase().endsWith('.pdf');
-      const isPdfMime = !file.type || file.type === 'application/pdf' || file.type === 'application/octet-stream';
-      if (!isPdfName || !isPdfMime) {
-        onError(t('validation.invalidType', { types: 'PDF' }));
-        return;
-      }
-      // Magic-byte check — never hand a non-PDF to pdf-lib.
-      const head = new Uint8Array(await file.slice(0, 5).arrayBuffer());
-      if (String.fromCharCode(...head.subarray(0, 4)) !== '%PDF') {
-        onError(t('errors.invalidPdf'));
-        return;
-      }
+    if (!ok.length) {
+      onError(
+        firstError
+          ? resolveUploadMessage(firstError, t)
+          : t('validation.tooManyFiles', { max: maxFiles }),
+      );
     }
-    onFiles(files);
   };
 
   return (
@@ -124,7 +139,7 @@ export function PdfDropzone({
       <input
         ref={inputRef}
         type="file"
-        accept="application/pdf,.pdf"
+        accept={rule.accept}
         multiple={multiple}
         className="sr-only"
         onChange={(e) => {

@@ -66,7 +66,9 @@
     "noFile": "Please add at least one image first.",
     "mimeMismatch": "The file content does not match its extension and was rejected.",
     "tooManyFiles": "You can upload up to {max} files at once.",
-    "readError": "Could not load the file. Please try a different one."
+    "readError": "Could not load the file. Please try a different one.",
+    "partialSkip": "{count} of the selected files were skipped. {reason}",
+    "heicUnsupported": "{count, plural, =1 {This photo is in HEIC/HEIF format, the default iPhone camera format, and your browser cannot open it. On your iPhone share it as a JPEG, or go to Settings, Camera, Formats and choose Most Compatible, then upload it again.} other {# of these photos are in HEIC/HEIF format, the default iPhone camera format, and your browser cannot open them. Share them as JPEG from your iPhone, or go to Settings, Camera, Formats and choose Most Compatible. Your other files loaded normally.}}"
   },
   "header": {
     "nav": "Main navigation"

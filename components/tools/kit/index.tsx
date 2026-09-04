@@ -398,7 +398,7 @@ export function useTextFileInput(onLoad: (text: string) => void) {
     <input
       ref={ref}
       type="file"
-      accept=".txt,text/plain,.md,.csv,.json"
+      accept="text/*,.txt,.text,.md,.markdown,.csv,.json,.xml,.log,.yml,.yaml"
       className="sr-only"
       onChange={async (e) => {
         const file = e.target.files?.[0];

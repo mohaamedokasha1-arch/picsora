@@ -4,7 +4,9 @@ import * as React from 'react';
 import { UploadCloud, X, ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { FormatRule } from '@/lib/validation';
-import { validateFile } from '@/lib/validation';
+import { extensionOf, validateFile } from '@/lib/validation';
+import { normalizeExt, normalizeMime } from '@/lib/image/format';
+import { resolveUploadMessage } from './error-messages';
 import { cn, formatBytes } from '@/lib/utils';
 
 export interface UploadError {
@@ -26,20 +28,42 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
   const [dragging, setDragging] = React.useState(false);
   const dragCounter = React.useRef(0);
   const [thumbs, setThumbs] = React.useState<Record<number, string>>({});
+  const [brokenThumbs, setBrokenThumbs] = React.useState<Record<number, boolean>>({});
   const inputRef = React.useRef<HTMLInputElement>(null);
+
+  /**
+   * `accept` for the hidden input.
+   *
+   * Never a strict MIME-only list: on iOS/Android that hides valid photos whose
+   * reported type is missing or non-standard (HEIC from the camera roll, images
+   * shared from WhatsApp/Drive, screenshots without an extension). Falls back to
+   * `image/*` for image tools and to PDF tokens for the PDF-only tools.
+   */
+  const acceptAttr = React.useMemo(() => {
+    if (rule.accept) return rule.accept;
+    if (rule.acceptsImages === false) return 'application/pdf,.pdf';
+    const mimes = (rule.mimes || []).filter((m) => m && m !== 'application/octet-stream');
+    return ['image/*', ...mimes].join(',');
+  }, [rule]);
 
   // Manage object URLs for thumbnails.
   React.useEffect(() => {
     const urls: string[] = [];
     const map: Record<number, string> = {};
     files.forEach((file, i) => {
-      if (file.type.startsWith('image/')) {
+      // Trust more than the MIME type: phones often hand over an empty one, and
+      // HEIC previews simply fail to render — that is handled by onError below.
+      const isPdf =
+        normalizeExt(extensionOf(file.name)) === 'pdf' ||
+        normalizeMime(file.type) === 'application/pdf';
+      if (!isPdf) {
         const url = URL.createObjectURL(file);
         urls.push(url);
         map[i] = url;
       }
     });
     setThumbs(map);
+    setBrokenThumbs({});
     return () => urls.forEach((u) => URL.revokeObjectURL(u));
   }, [files]);
 
@@ -47,18 +71,43 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
     if (disabled) return;
     const list = Array.from(incoming);
     if (!list.length) return;
-    if (files.length + list.length > rule.maxFiles) {
+
+    // Keep whatever still fits instead of throwing the whole batch away.
+    const room = Math.max(0, rule.maxFiles - files.length);
+    if (room === 0) {
       onError({ key: 'tooManyFiles', params: { max: String(rule.maxFiles) } });
       return;
     }
-    for (const file of list) {
+    const batch = list.slice(0, room);
+    const truncated = list.length > batch.length;
+
+    const accepted: File[] = [];
+    let firstError: UploadError | null = null;
+    for (const file of batch) {
       const result = await validateFile(file, rule);
-      if (!result.valid) {
-        onError({ key: result.errorKey!, params: result.params });
-        return; // stop on first invalid file to keep it simple
+      if (result.valid) {
+        accepted.push(file);
+      } else if (!firstError) {
+        firstError = { key: result.errorKey!, params: result.params };
       }
     }
-    onFilesChange([...files, ...list]);
+    // Everything the user picked that did not make it into the list.
+    const skipped = list.length - accepted.length;
+
+    // Add every file that passed, then surface one honest message about the rest.
+    if (accepted.length) onFilesChange([...files, ...accepted]);
+    if (accepted.length && skipped > 0) {
+      // Some files made it in — explain what was skipped instead of blocking.
+      const reason = firstError
+        ? resolveUploadMessage(firstError, t)
+        : t('validation.tooManyFiles', { max: String(rule.maxFiles) });
+      onError({ key: 'partialSkip', params: { count: String(skipped), reason } });
+      return;
+    }
+    if (truncated && !firstError) {
+      firstError = { key: 'tooManyFiles', params: { max: String(rule.maxFiles) } };
+    }
+    if (firstError) onError(firstError);
   };
 
   const onDrop = (e: React.DragEvent) => {
@@ -75,7 +124,23 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
 
   if (files.length > 0) {
     return (
-      <div className="space-y-3">
+      <div
+        className={cn('space-y-3 rounded-xl transition-shadow', dragging && 'ring-2 ring-primary ring-offset-2 ring-offset-background')}
+        onDragOver={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (!disabled) {
+            dragCounter.current += 1;
+            setDragging(true);
+          }
+        }}
+        onDragLeave={(e) => {
+          e.stopPropagation();
+          dragCounter.current = Math.max(0, dragCounter.current - 1);
+          if (dragCounter.current === 0) setDragging(false);
+        }}
+        onDrop={onDrop}
+      >
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
           {files.map((file, i) => (
             <li
@@ -83,9 +148,14 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
               className="group relative overflow-hidden rounded-lg border border-border bg-secondary/40"
             >
               <div className="aspect-square w-full overflow-hidden bg-secondary">
-                {thumbs[i] ? (
+                {thumbs[i] && !brokenThumbs[i] ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={thumbs[i]} alt={file.name} className="h-full w-full object-cover" />
+                  <img
+                    src={thumbs[i]}
+                    alt={file.name}
+                    className="h-full w-full object-cover"
+                    onError={() => setBrokenThumbs((prev) => ({ ...prev, [i]: true }))}
+                  />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center text-muted-foreground">
                     <ImageIcon className="h-6 w-6" />
@@ -119,7 +189,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
           ref={inputRef}
           type="file"
           multiple={rule.maxFiles > 1}
-          accept={rule.mimes.join(',')}
+          accept={acceptAttr}
           className="sr-only"
           onChange={(e) => {
             if (e.target.files) handleFiles(e.target.files);
@@ -181,7 +251,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
         ref={inputRef}
         type="file"
         multiple={rule.maxFiles > 1}
-        accept={rule.mimes.join(',')}
+        accept={acceptAttr}
         className="sr-only"
         onChange={(e) => {
           if (e.target.files) handleFiles(e.target.files);
