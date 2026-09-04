@@ -5,7 +5,7 @@ import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server
 import { siteConfig } from '@/lib/site';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { ConsentProvider } from '@/components/consent/consent-provider';
-import { CookieBanner } from '@/components/consent/cookie-banner';
+import { CookieConsentGate } from '@/components/consent/cookie-consent-gate';
 import { ConsentModal } from '@/components/consent/consent-modal';
 import { AnalyticsProvider } from '@/components/analytics/analytics-provider';
 import { MonetagVignette } from '@/components/ads/monetag-vignette';
@@ -74,17 +74,20 @@ export default async function LocaleLayout({
           <ThemeProvider>
             <ConsentProvider>
               <AnalyticsProvider>
-                <div className="flex min-h-screen flex-col">
+                <div id="app-root" className="flex min-h-screen flex-col">
                   <Header />
                   <main id="main-content" className="flex-1">
                     {children}
                   </main>
                   <Footer />
                 </div>
-                <CookieBanner />
                 <ConsentModal />
               </AnalyticsProvider>
               <MonetagVignette />
+              {/* Full-screen consent gate — blocks the whole site until the
+                  visitor chooses Accept or Reject. Rendered outside #app-root
+                  so it is never affected by the inert state it applies. */}
+              <CookieConsentGate />
             </ConsentProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
