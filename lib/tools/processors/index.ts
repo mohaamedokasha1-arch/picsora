@@ -10,6 +10,10 @@ import { mergeImages } from './merge';
 import { splitImage } from './split';
 import { toGrayscale } from './grayscale';
 import { applyWatermark } from './watermark';
+import { compressToExactSize } from './exact-size';
+import { removeBackground } from './background';
+import { makePassportPhoto } from './passport';
+import { makeSignature } from './signature';
 
 /**
  * Maps a tool slug to its processing function.
@@ -36,6 +40,12 @@ export const processors: Record<string, ToolProcessor<any>> = {
   'split-image': splitImage,
   'image-to-grayscale': toGrayscale,
   'image-watermark': applyWatermark,
+  'heic-to-jpg': convertImage,
+  'heic-to-png': convertImage,
+  'image-to-exact-kb': compressToExactSize,
+  'background-remover': removeBackground,
+  'passport-photo-maker': makePassportPhoto,
+  'signature-maker': makeSignature,
 };
 
 export * from './types';

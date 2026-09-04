@@ -42,7 +42,9 @@ export function ToolWorkspace({ tool, rule, children }: ToolWorkspaceProps) {
     setBusy(false);
   }, [decoded]);
 
-  // Decode files whenever the selection changes.
+  // Decode files whenever the selection changes. HEIC photos are converted
+  // locally, EXIF orientation is applied, and oversized images fail with a
+  // precise message instead of crashing the tab.
   React.useEffect(() => {
     if (!files.length) {
       setDecoded([]);
@@ -55,9 +57,15 @@ export function ToolWorkspace({ tool, rule, children }: ToolWorkspaceProps) {
       try {
         const list = await Promise.all(files.map((f) => decodeImage(f)));
         if (!cancelled) setDecoded(list);
-      } catch {
+      } catch (e) {
         if (!cancelled) {
-          setError({ key: 'corruptImage' });
+          const key = e instanceof Error ? e.message : 'corruptImage';
+          const params =
+            e instanceof Error
+              ? (e as Error & { params?: Record<string, string | number> }).params
+              : undefined;
+          const known = ['image-too-large', 'heic-convert-failed', 'decode-failed'];
+          setError({ key: known.includes(key) ? key : 'corruptImage', params });
           setFiles([]);
         }
       } finally {

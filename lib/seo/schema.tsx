@@ -54,8 +54,64 @@ export function webAppSchema(input: {
     url: input.url,
     applicationCategory: 'MultimediaApplication',
     operatingSystem: 'Web Browser',
+    browserRequirements: 'Requires JavaScript. Requires HTML5.',
+    isAccessibleForFree: true,
+    inLanguage: ['en', 'ar'],
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     featureList: input.features.join(', '),
+  };
+}
+
+/** HowTo rich result for tool pages ("how to use" steps). */
+export function howToSchema(input: { name: string; description: string; steps: string[] }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: input.name,
+    description: input.description,
+    step: input.steps.slice(0, 8).map((text, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: text.length > 80 ? `${text.slice(0, 77)}…` : text,
+      text,
+    })),
+  };
+}
+
+/** ItemList of tools for category / tools / guides index pages. */
+export function itemListSchema(items: { name: string; url: string; description?: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    numberOfItems: items.length,
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      ...(item.description ? { description: item.description } : {}),
+      url: item.url,
+    })),
+  };
+}
+
+/** Article rich result for guide pages. */
+export function articleSchema(input: {
+  headline: string;
+  description: string;
+  url: string;
+  image?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: input.headline,
+    description: input.description,
+    url: input.url,
+    image: input.image,
+    author: { '@type': 'Organization', name: 'Piclizer', url: input.url.split('/').slice(0, 3).join('/') },
+    publisher: { '@type': 'Organization', name: 'Piclizer' },
+    inLanguage: ['en', 'ar'],
+    isAccessibleForFree: true,
   };
 }
 

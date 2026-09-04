@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import type { FormatRule } from '@/lib/validation';
 import { validateFile } from '@/lib/validation';
 import { cn, formatBytes } from '@/lib/utils';
+import { convertHeicToBlob } from '@/lib/image/heic';
 
 export interface UploadError {
   key: string;
@@ -21,27 +22,69 @@ interface FileUploaderProps {
   compact?: boolean;
 }
 
+function isHeicName(file: File): boolean {
+  return /\.hei[cf]$/i.test(file.name) || file.type.toLowerCase().includes('heic') || file.type.toLowerCase().includes('heif');
+}
+
+/** Thumbnail that converts HEIC previews locally so iPhone photos show up. */
+function Thumb({ file }: { file: File }) {
+  const [url, setUrl] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    let objectUrl: string | null = null;
+    const revoke = () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+        objectUrl = null;
+      }
+    };
+    (async () => {
+      try {
+        let blob: Blob | null = null;
+        if (isHeicName(file)) {
+          blob = await convertHeicToBlob(file, 'image/jpeg', 0.7);
+        } else if (file.type.startsWith('image/')) {
+          blob = file;
+        } else {
+          return;
+        }
+        if (cancelled) return;
+        objectUrl = URL.createObjectURL(blob);
+        setUrl(objectUrl);
+      } catch {
+        /* keep the generic icon — the workspace will explain */
+      }
+    })();
+    return () => {
+      cancelled = true;
+      revoke();
+    };
+  }, [file]);
+
+  if (url) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={url} alt={file.name} className="h-full w-full object-cover" />;
+  }
+  return (
+    <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+      <ImageIcon className="h-6 w-6" />
+    </div>
+  );
+}
+
 export function FileUploader({ rule, files, onFilesChange, onError, disabled, compact }: FileUploaderProps) {
   const t = useTranslations();
   const [dragging, setDragging] = React.useState(false);
   const dragCounter = React.useRef(0);
-  const [thumbs, setThumbs] = React.useState<Record<number, string>>({});
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  // Manage object URLs for thumbnails.
-  React.useEffect(() => {
-    const urls: string[] = [];
-    const map: Record<number, string> = {};
-    files.forEach((file, i) => {
-      if (file.type.startsWith('image/')) {
-        const url = URL.createObjectURL(file);
-        urls.push(url);
-        map[i] = url;
-      }
-    });
-    setThumbs(map);
-    return () => urls.forEach((u) => URL.revokeObjectURL(u));
-  }, [files]);
+  // MIME list plus explicit extensions: some mobile browsers report odd MIME
+  // types for HEIC, so the `.heic` fallback keeps the picker honest.
+  const acceptAttr = React.useMemo(() => {
+    const exts = rule.extensions.map((e) => `.${e}`);
+    return [...rule.mimes, ...exts].join(',');
+  }, [rule]);
 
   const handleFiles = async (incoming: FileList | File[]) => {
     if (disabled) return;
@@ -54,7 +97,10 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
     for (const file of list) {
       const result = await validateFile(file, rule);
       if (!result.valid) {
-        onError({ key: result.errorKey!, params: result.params });
+        onError({
+          key: result.errorKey!,
+          params: { ...result.params, file: file.name },
+        });
         return; // stop on first invalid file to keep it simple
       }
     }
@@ -67,6 +113,12 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
     dragCounter.current = 0;
     setDragging(false);
     handleFiles(e.dataTransfer.files);
+  };
+
+  const onPaste = (e: React.ClipboardEvent) => {
+    if (disabled || !e.clipboardData?.files.length) return;
+    e.preventDefault();
+    handleFiles(e.clipboardData.files);
   };
 
   const removeAt = (i: number) => {
@@ -83,14 +135,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
               className="group relative overflow-hidden rounded-lg border border-border bg-secondary/40"
             >
               <div className="aspect-square w-full overflow-hidden bg-secondary">
-                {thumbs[i] ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={thumbs[i]} alt={file.name} className="h-full w-full object-cover" />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-                    <ImageIcon className="h-6 w-6" />
-                  </div>
-                )}
+                <Thumb file={file} />
               </div>
               <div className="truncate px-2 py-1.5 text-xs text-muted-foreground" title={file.name}>
                 {file.name} · {formatBytes(file.size)}
@@ -119,7 +164,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
           ref={inputRef}
           type="file"
           multiple={rule.maxFiles > 1}
-          accept={rule.mimes.join(',')}
+          accept={acceptAttr}
           className="sr-only"
           onChange={(e) => {
             if (e.target.files) handleFiles(e.target.files);
@@ -142,6 +187,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
           inputRef.current?.click();
         }
       }}
+      onPaste={onPaste}
       onDragOver={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -181,7 +227,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
         ref={inputRef}
         type="file"
         multiple={rule.maxFiles > 1}
-        accept={rule.mimes.join(',')}
+        accept={acceptAttr}
         className="sr-only"
         onChange={(e) => {
           if (e.target.files) handleFiles(e.target.files);

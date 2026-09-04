@@ -1,6 +1,6 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, fillBackground } from '@/lib/image/process';
-import { canvasToBlob } from '@/lib/image/format';
+import { canvasToBlob, encodableFormat } from '@/lib/image/format';
 
 export interface MergeOptions {
   direction: 'horizontal' | 'vertical';
@@ -37,6 +37,7 @@ export async function mergeImages(
     else ctx.drawImage(file.image, ox, oy);
   });
 
-  const blob = await canvasToBlob(canvas, { format: options.format, quality: 0.92 });
-  return { blob, format: options.format, name: `merged.${options.format === 'jpeg' ? 'jpg' : options.format}` };
+  const format = encodableFormat(options.format);
+  const blob = await canvasToBlob(canvas, { format, quality: 0.92 });
+  return { blob, format, name: `merged.${format === 'jpeg' ? 'jpg' : format}` };
 }

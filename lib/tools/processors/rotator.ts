@@ -1,6 +1,6 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, nameOf, outputName } from '@/lib/image/process';
-import { canvasToBlob } from '@/lib/image/format';
+import { canvasToBlob, encodableFormat } from '@/lib/image/format';
 import { hasAlpha, fillBackground, clearCanvas } from '@/lib/image/transparent';
 
 export interface RotateOptions {
@@ -68,6 +68,7 @@ export async function rotateImage(
     drawRotated(ctx, src as CanvasImageSource, sw, sh, angle);
   }
 
-  const blob = await canvasToBlob(canvas, { format: options.format, quality: 0.92 });
-  return { blob, format: options.format, name: outputName(nameOf(decoded.file), options.format) };
+  const format = encodableFormat(options.format);
+  const blob = await canvasToBlob(canvas, { format, quality: 0.92 });
+  return { blob, format, name: outputName(nameOf(decoded.file), format) };
 }

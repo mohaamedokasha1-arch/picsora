@@ -26,6 +26,9 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'pdf-to-images': dynamic(() => import('../pdf/to-images')),
   'pdf-compressor': dynamic(() => import('../pdf/compressor')),
   'pdf-page-counter': dynamic(() => import('../pdf/page-counter')),
+  'pdf-to-text': dynamic(() => import('../pdf/to-text')),
+  'pdf-to-word': dynamic(() => import('../pdf/to-word')),
+  'pdf-ocr': dynamic(() => import('../pdf/ocr')),
 
   /* ----------------------------------------------------------- text */
   'word-counter': dynamic(() => import('../text/word-counter')),
@@ -64,4 +67,8 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'color-converter': dynamic(() => import('../developer/color')),
   'hash-generator': dynamic(() => import('../developer/hash')),
   'number-base-converter': dynamic(() => import('../developer/number-base')),
+  'jwt-decoder': dynamic(() => import('../developer/jwt')),
+  'sql-formatter': dynamic(() => import('../developer/sql')),
+  'yaml-formatter': dynamic(() => import('../developer/yaml')),
+  'markdown-formatter': dynamic(() => import('../developer/markdown')),
 };

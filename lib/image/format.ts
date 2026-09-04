@@ -4,8 +4,29 @@
  */
 
 import type { DecodedImage, ImageFormat } from '@/lib/types';
+import { convertHeicToBlob, isHeicFile } from '@/lib/image/heic';
 
 export const MAX_DIMENSION = 16000; // safety cap for canvas dimensions
+/** Safety cap for total pixels (~100 MP) so giant panoramas fail with a clear message. */
+export const MAX_PIXELS = 100_000_000;
+
+/** Throw `image-too-large` when dimensions exceed what browsers can safely canvas. */
+export function assertDecodableSize(width: number, height: number, fileName?: string): void {
+  if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
+    throw new Error('decode-failed');
+  }
+  if (width > MAX_DIMENSION || height > MAX_DIMENSION || width * height > MAX_PIXELS) {
+    const err = new Error('image-too-large') as Error & {
+      params?: Record<string, string | number>;
+    };
+    err.params = {
+      w: Math.round(width).toLocaleString('en-US'),
+      h: Math.round(height).toLocaleString('en-US'),
+      file: fileName ?? '',
+    };
+    throw err;
+  }
+}
 
 export function fileExt(name: string): string {
   const idx = name.lastIndexOf('.');
@@ -24,9 +45,13 @@ export function extFromMime(mime: string): string {
     'image/tif': 'tiff',
     'image/avif': 'avif',
     'image/svg+xml': 'svg',
+    'image/heic': 'heic',
+    'image/heif': 'heif',
+    'image/heic-sequence': 'heic',
+    'image/heif-sequence': 'heif',
     'application/pdf': 'pdf',
   };
-  return map[mime] || '';
+  return map[(mime || '').toLowerCase()] || '';
 }
 
 export function mimeFromExt(ext: string): string {
@@ -41,6 +66,8 @@ export function mimeFromExt(ext: string): string {
     tif: 'image/tiff',
     avif: 'image/avif',
     svg: 'image/svg+xml',
+    heic: 'image/heic',
+    heif: 'image/heif',
     pdf: 'application/pdf',
   };
   return map[ext.toLowerCase()] || 'application/octet-stream';
@@ -49,6 +76,13 @@ export function mimeFromExt(ext: string): string {
 export function stripExtension(name: string): string {
   const idx = name.lastIndexOf('.');
   return idx > 0 ? name.slice(0, idx) : name;
+}
+
+/** Map an input format to one the browser canvas can actually encode. */
+export function encodableFormat(format: ImageFormat): ImageFormat {
+  if (format === 'heic' || format === 'heif') return 'jpg';
+  if (format === 'gif') return 'png';
+  return format;
 }
 
 /** Read the magic bytes of a file and verify they match the claimed extension. */
@@ -72,12 +106,26 @@ export function sniffFormatFromBytes(bytes: Uint8Array): string | null {
   if ((bytes[0] === 0x49 && bytes[1] === 0x49) || (bytes[0] === 0x4d && bytes[1] === 0x4d)) {
     if (bytes[2] === 0x2a || bytes[2] === 0x43) return 'tiff';
   }
-  // AVIF: RIFF + WEBP? Actually AVIF uses ftypavif. Check for ftyp at offset 4
+  // HEIF/AVIF family: `ftyp` box at offset 4, brand at offset 8.
+  // HEIC brands: heic, heix, hevc, hevx, heim, heis, hevm, hevs, mif1, msf1, heci…
   if (bytes.length >= 12) {
     if (bytes[4] === 0x66 && bytes[5] === 0x74 && bytes[6] === 0x79 && bytes[7] === 0x70) {
-      // ftyp box; check if avif or heic in bytes 8-11
-      const brand = String.fromCharCode(...bytes.subarray(8, 12));
-      if (brand.includes('avif') || brand.includes('heic')) return 'avif';
+      const brand = String.fromCharCode(...bytes.subarray(8, 12)).toLowerCase();
+      if (brand.startsWith('avif') || brand === 'avis') return 'avif';
+      if (
+        brand.startsWith('heic') ||
+        brand.startsWith('heix') ||
+        brand.startsWith('hevc') ||
+        brand.startsWith('hevx') ||
+        brand.startsWith('heim') ||
+        brand.startsWith('heis') ||
+        brand.startsWith('hevm') ||
+        brand.startsWith('hevs') ||
+        brand.startsWith('heci') ||
+        brand === 'mif1' ||
+        brand === 'msf1'
+      )
+        return 'heic';
     }
   }
   // SVG: starts with optional whitespace then <svg or <?xml
@@ -120,38 +168,79 @@ export function supportsOffscreenCanvas(): boolean {
   return typeof OffscreenCanvas !== 'undefined';
 }
 
-/** Load an image from a File into both an HTMLImageElement and (if available) an ImageBitmap. */
-export function decodeImage(file: File): Promise<DecodedImage> {
-  return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-    img.decoding = 'async';
-    img.onload = () => {
-      const width = img.naturalWidth;
-      const height = img.naturalHeight;
-      const format =
-        (extFromMime(file.type) as ImageFormat) || (fileExt(file.name) as ImageFormat) || 'png';
-      const resolveWith = (bitmap: ImageBitmap | null) => {
-        // After the image is fully decoded into the img element memory,
-        // the object URL is no longer needed; revoking prevents memory leaks.
-        // A brief delay ensures any immediate canvas draw operations finish.
-        setTimeout(() => URL.revokeObjectURL(url), 100);
-        resolve({ image: img, bitmap, width, height, format, file });
-      };
-      if (typeof createImageBitmap === 'function') {
-        createImageBitmap(file)
-          .then((bitmap) => resolveWith(bitmap))
-          .catch(() => resolveWith(null));
-      } else {
-        resolveWith(null);
+/**
+ * Load an image from a File into both an HTMLImageElement and (if available)
+ * an EXIF-aware ImageBitmap.
+ *
+ * - HEIC / HEIF photos (iPhone) are converted locally with heic2any first,
+ *   because most browsers cannot decode them natively.
+ * - `imageOrientation: 'from-image'` guarantees portrait photos never come
+ *   out rotated or sideways after processing.
+ * - Oversized images fail fast with `image-too-large` instead of crashing tab.
+ */
+export async function decodeImage(file: File): Promise<DecodedImage> {
+  // Step 1 — HEIC/HEIF: convert locally to a decodable format first.
+  let workFile: File = file;
+  let heicConverted = false;
+  if (isHeicFile(file)) {
+    try {
+      const blob = await convertHeicToBlob(file, 'image/jpeg', 0.92);
+      workFile = new File([blob], file.name, { type: 'image/jpeg' });
+      heicConverted = true;
+    } catch {
+      throw new Error('heic-convert-failed');
+    }
+  }
+
+  const format =
+    (extFromMime(file.type) as ImageFormat) || (fileExt(file.name) as ImageFormat) || 'png';
+
+  // Step 2 — decode via <img> (universal fallback, keeps EXIF for display).
+  const url = URL.createObjectURL(workFile);
+  let img: HTMLImageElement;
+  try {
+    img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const el = new Image();
+      el.decoding = 'async';
+      el.onload = () => resolve(el);
+      el.onerror = () => reject(new Error('decode-failed'));
+      el.src = url;
+    });
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error instanceof Error ? error : new Error('decode-failed');
+  }
+
+  // Step 3 — EXIF-aware bitmap so canvas pipelines keep the true orientation.
+  let bitmap: ImageBitmap | null = null;
+  if (typeof createImageBitmap === 'function') {
+    try {
+      bitmap = await createImageBitmap(workFile, { imageOrientation: 'from-image' });
+    } catch {
+      try {
+        bitmap = await createImageBitmap(img);
+      } catch {
+        bitmap = null;
       }
-    };
-    img.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error('decode-failed'));
-    };
-    img.src = url;
-  });
+    }
+  }
+
+  const width = bitmap?.width ?? img.naturalWidth;
+  const height = bitmap?.height ?? img.naturalHeight;
+
+  try {
+    assertDecodableSize(width, height, file.name);
+  } catch (error) {
+    bitmap?.close?.();
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+
+  // The object URL is no longer needed once pixels live in memory; a brief
+  // delay ensures any immediate canvas draw operations finish first.
+  setTimeout(() => URL.revokeObjectURL(url), 100);
+  void heicConverted;
+  return { image: img, bitmap, width, height, format, file };
 }
 
 export interface EncodeOptions {
@@ -167,7 +256,9 @@ export function canvasToBlob(
   source: HTMLCanvasElement | OffscreenCanvas | ImageBitmap,
   opts: EncodeOptions,
 ): Promise<Blob> {
-  const { format, quality = 0.92 } = opts;
+  const { quality = 0.92 } = opts;
+  // Safety net: never attempt to encode HEIC/GIF via canvas (toBlob yields null).
+  const format = encodableFormat(opts.format);
   const mime = mimeFromExt(format);
   const isLossy = format === 'jpg' || format === 'jpeg' || format === 'webp';
 

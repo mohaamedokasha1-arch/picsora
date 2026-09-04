@@ -1,6 +1,6 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { encodeDecodedToBlob, nameOf, outputName } from '@/lib/image/process';
-import { canvasToBlob } from '@/lib/image/format';
+import { canvasToBlob, encodableFormat } from '@/lib/image/format';
 
 export interface CompressorOptions {
   quality: number; // 1..100
@@ -28,7 +28,7 @@ export async function compressImages(
     const originalFile = file.file;
     const originalSize = originalFile.size;
     const rawFormat = options.format === 'same' ? file.format : options.format;
-    const format: ImageFormat = rawFormat === 'gif' ? 'png' : rawFormat;
+    const format: ImageFormat = encodableFormat(rawFormat);
 
     // Initial quality based on user setting
     let bestQuality = Math.max(0.01, Math.min(1, options.quality / 100));

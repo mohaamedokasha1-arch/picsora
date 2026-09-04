@@ -30,4 +30,11 @@ export const toolComponents: Record<string, ToolUIComponent> = {
   'color-palette-extractor': dynamic(() => import('./palette')),
   'image-to-grayscale': dynamic(() => import('./grayscale')),
   'image-watermark': dynamic(() => import('./watermark')),
+  'heic-to-jpg': dynamic(() => import('./heic-converter').then((m) => m.HeicToJpgTool)),
+  'heic-to-png': dynamic(() => import('./heic-converter').then((m) => m.HeicToPngTool)),
+  'image-to-exact-kb': dynamic(() => import('./exact-kb')),
+  'background-remover': dynamic(() => import('./background-remover')),
+  'passport-photo-maker': dynamic(() => import('./passport-photo')),
+  'signature-maker': dynamic(() => import('./signature-maker')),
+  'image-ocr': dynamic(() => import('./image-ocr')),
 };

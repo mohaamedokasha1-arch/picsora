@@ -1,6 +1,6 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, nameOf, outputName } from '@/lib/image/process';
-import { canvasToBlob } from '@/lib/image/format';
+import { canvasToBlob, encodableFormat } from '@/lib/image/format';
 import { hasAlpha, fillBackground, clearCanvas } from '@/lib/image/transparent';
 
 export interface ResizeOptions {
@@ -14,7 +14,7 @@ export async function resizeImage(
   options: ResizeOptions,
 ): Promise<ProcessResult> {
   const decoded = files[0];
-  const format = options.format === 'gif' ? 'png' : options.format; // canvas can't encode GIF
+  const format = encodableFormat(options.format); // canvas can't encode GIF/HEIC
   const { canvas, ctx } = createCanvas(options.width, options.height);
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';

@@ -6,3 +6,5 @@ declare global {
     gtag?: (...args: unknown[]) => void;
   }
 }
+
+declare module 'heic2any';
