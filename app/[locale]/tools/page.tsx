@@ -5,6 +5,7 @@ import { siteConfig } from '@/lib/site';
 import { TOOLS } from '@/lib/tools/registry';
 import { Breadcrumb } from '@/components/layout/breadcrumb';
 import { ToolsGrid } from '@/components/tools/tools-grid';
+import { breadcrumbSchema, itemListSchema, StructuredData } from '@/lib/seo/schema';
 
 export function generateStaticParams() {
   return siteConfig.locales.map((locale) => ({ locale }));
@@ -21,9 +22,28 @@ export default async function ToolsPage({ params }: { params: { locale: string }
   const t = await getTranslations();
 
   const catName = (slug: string) => t(`categoryMeta.${slug}.name` as never);
+  const base = siteConfig.url.replace(/\/$/, '');
+
+  const schema = [
+    breadcrumbSchema(
+      [
+        { name: t('common.home'), path: '/' },
+        { name: t('common.tools'), path: '/tools' },
+      ],
+      siteConfig.url,
+    ),
+    itemListSchema(
+      TOOLS.map((tool) => ({
+        name: t(tool.nameKey as never),
+        description: t(tool.shortKey as never),
+        url: `${base}/${params.locale}/tools/${tool.slug}`,
+      })),
+    ),
+  ];
 
   return (
     <div className="container py-8">
+      <StructuredData data={schema} />
       <Breadcrumb items={[{ label: t('common.tools'), href: '/tools' }]} />
       <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{t('toolsPage.title')}</h1>
       <p className="mt-2 max-w-2xl text-muted-foreground">{t('toolsPage.subtitle')}</p>

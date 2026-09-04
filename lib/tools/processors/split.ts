@@ -1,6 +1,6 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, nameOf } from '@/lib/image/process';
-import { canvasToBlob } from '@/lib/image/format';
+import { canvasToBlob, encodableFormat } from '@/lib/image/format';
 
 export interface SplitOptions {
   rows: number;
@@ -18,6 +18,7 @@ export async function splitImage(
   const tileW = Math.floor(decoded.width / cols);
   const tileH = Math.floor(decoded.height / rows);
   const base = nameOf(decoded.file);
+  const format = encodableFormat(options.format);
   const results: ProcessResult[] = [];
 
   for (let r = 0; r < rows; r++) {
@@ -32,9 +33,9 @@ export async function splitImage(
       } else {
         ctx.drawImage(decoded.image, sx, sy, sw, sh, 0, 0, sw, sh);
       }
-      const blob = await canvasToBlob(canvas, { format: options.format, quality: 0.92 });
-      const ext = options.format === 'jpeg' ? 'jpg' : options.format;
-      results.push({ blob, format: options.format, name: `${base}_${r + 1}x${c + 1}.${ext}` });
+      const blob = await canvasToBlob(canvas, { format, quality: 0.92 });
+      const ext = format === 'jpeg' ? 'jpg' : format;
+      results.push({ blob, format, name: `${base}_${r + 1}x${c + 1}.${ext}` });
     }
   }
   return results;

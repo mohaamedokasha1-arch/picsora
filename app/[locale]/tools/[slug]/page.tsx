@@ -9,7 +9,7 @@ import { ToolClient } from '@/components/tools/tool-client';
 import { HowToUse } from '@/components/tools/how-to-use';
 import { FAQSection } from '@/components/tools/faq-section';
 import { RelatedTools } from '@/components/tools/related-tools';
-import { webAppSchema, breadcrumbSchema, faqSchema, StructuredData } from '@/lib/seo/schema';
+import { webAppSchema, breadcrumbSchema, faqSchema, howToSchema, StructuredData } from '@/lib/seo/schema';
 import { ToolIcon } from '@/components/icons';
 import { AdPlacement } from '@/components/ads/ad-placement';
 
@@ -32,14 +32,17 @@ export async function generateMetadata({
   const t = await getTranslations();
   const name = t(tool.nameKey as never);
   const description = t(tool.descriptionKey as never);
-  return buildMetadata(
-    {
-      title: `${name} — Free Online Tool | ${siteConfig.name}`,
-      description,
-      path: `/tools/${tool.slug}`,
-    },
-    params.locale,
-  );
+  return {
+    ...buildMetadata(
+      {
+        title: `${name} — Free Online Tool | ${siteConfig.name}`,
+        description,
+        path: `/tools/${tool.slug}`,
+      },
+      params.locale,
+    ),
+    keywords: [...tool.keywords, ...siteConfig.keywords],
+  };
 }
 
 const fmtLabel: Record<string, string> = {
@@ -82,6 +85,7 @@ export default async function ToolPage({ params }: { params: { locale: string; s
       siteConfig.url,
     ),
     faqSchema(faqs),
+    howToSchema({ name: `${name} — ${t('howTo.title')}`, description, steps: howTo }),
   ];
 
   return (

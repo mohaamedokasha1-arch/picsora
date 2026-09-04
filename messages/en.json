@@ -66,13 +66,15 @@
     "noFile": "Please add at least one image first.",
     "mimeMismatch": "The file content does not match its extension and was rejected.",
     "tooManyFiles": "You can upload up to {max} files at once.",
-    "readError": "Could not load the file. Please try a different one."
+    "readError": "Could not load the file. Please try a different one.",
+    "imageTooLarge": "This image is too large to process in the browser ({w} × {h} px). Try a smaller image, or resize it first.",
+    "heicFailed": "This HEIC photo could not be converted on your device. Try exporting it as JPG from your iPhone (Settings → Camera → Formats → Most Compatible) and upload again."
   },
   "header": {
     "nav": "Main navigation"
   },
   "footer": {
-    "description": "Free online image tools that run entirely in your browser. Compress, resize, convert, edit and organize images without uploading them anywhere.",
+    "description": "Free online tools that run entirely in your browser. Compress images, convert HEIC photos, edit PDFs and format code without uploading anything anywhere.",
     "toolsColumn": "Popular tools",
     "categoriesColumn": "Categories",
     "legalColumn": "Legal",
@@ -85,14 +87,14 @@
     "heroSubtitle": "Compress, resize, convert, crop and edit images instantly. Piclizer processes everything locally on your device — your files are never uploaded to any server.",
     "heroPrimary": "Explore all tools",
     "heroSecondary": "Try the image compressor",
-    "searchTitle": "What do you want to do with your image?",
-    "searchSubtitle": "Search 20 free tools",
+    "searchTitle": "What do you want to do today?",
+    "searchSubtitle": "Search every free tool",
     "categoriesTitle": "Browse by category",
     "categoriesSubtitle": "Everything you need to work with images, organized.",
     "popularTitle": "Most popular tools",
     "popularSubtitle": "The tools people use every day.",
     "allToolsTitle": "Every tool, free forever",
-    "allToolsSubtitle": "20 tools. No accounts, no watermarks, no limits.",
+    "allToolsSubtitle": "Every tool, free forever. No accounts, no watermarks, no limits.",
     "benefitsTitle": "Why Piclizer?",
     "benefitsSubtitle": "Honest tools that respect your privacy.",
     "benefitFreeTitle": "Free forever",
@@ -125,7 +127,7 @@
   "homeFaqs": [
     {
       "q": "Is Piclizer really free?",
-      "a": "Yes. All 20 tools are completely free with no usage limits, no watermarks and no hidden fees."
+      "a": "Yes. Every tool is completely free with no usage limits, no watermarks and no hidden fees."
     },
     {
       "q": "Are my images uploaded to your servers?",
@@ -238,7 +240,7 @@
     "height": "Height",
     "pixels": "px",
     "lockAspect": "Lock aspect ratio",
-    "preset": "Preset sizes",
+    "preset": "Photo size",
     "custom": "Custom",
     "angle": "Angle",
     "degrees": "°",
@@ -314,7 +316,19 @@
     "selectImages": "Select images",
     "dropReorder": "Drag thumbnails to change the order",
     "color": "Colour",
-    "size": "Size"
+    "size": "Size",
+    "targetSize": "Target size",
+    "tolerance": "Tolerance",
+    "feather": "Edge softness",
+    "bgSource": "Background colour",
+    "bgAuto": "Auto-detect",
+    "bgWhite": "Pure white",
+    "removeBg": "Remove background",
+    "dpi": "Print resolution",
+    "inkColor": "Ink colour",
+    "threshold": "Threshold",
+    "invertColors": "Invert (light ink on dark background)",
+    "ocrLanguage": "Text language"
   },
   "tools": {
     "image-compressor": {
@@ -2310,6 +2324,434 @@
           "a": "They split the binary result into bytes, which makes it much easier to read when working with flags or protocols."
         }
       ]
+    },
+    "heic-to-jpg": {
+      "name": "HEIC to JPG",
+      "short": "Convert iPhone HEIC photos to JPG.",
+      "description": "Convert HEIC to JPG online for free. Turn iPhone photos into universal JPG files entirely in your browser — no upload needed.",
+      "intro": "iPhone photos save as HEIC, which many apps and websites still reject. Convert them to JPG — the format that works everywhere — with control over quality and background, all processed locally on your device.",
+      "howTo": [
+        "Add one or more HEIC or HEIF photos from your iPhone.",
+        "Set the output quality (85–92% is ideal for sharing).",
+        "Press Convert to JPG.",
+        "Download your JPG files, ready to share anywhere."
+      ],
+      "faqs": [
+        {
+          "q": "Why convert HEIC to JPG?",
+          "a": "HEIC is efficient but poorly supported outside Apple devices. JPG opens everywhere — on the web, in email, on Windows and Android."
+        },
+        {
+          "q": "Will my photos be uploaded?",
+          "a": "No. Conversion uses a decoder running inside your browser. Your photos never leave your device."
+        },
+        {
+          "q": "Does converting lose quality?",
+          "a": "JPG is lossy, so keep quality at 90% or above for results visually identical to the original."
+        },
+        {
+          "q": "Are portrait orientation and HDR preserved?",
+          "a": "Yes. EXIF orientation is applied during decoding so photos never come out sideways, and HDR tone is carried into the JPG."
+        },
+        {
+          "q": "Can I convert several photos at once?",
+          "a": "Yes — add up to 10 HEIC files and convert them as a batch."
+        }
+      ]
+    },
+    "heic-to-png": {
+      "name": "HEIC to PNG",
+      "short": "Convert iPhone HEIC photos to PNG.",
+      "description": "Convert HEIC to PNG online for free. Lossless-quality conversion of iPhone photos, processed privately in your browser.",
+      "intro": "Need your iPhone photo in a lossless format for editing or graphics work? Convert HEIC to PNG with pixel-perfect fidelity, straight in your browser.",
+      "howTo": [
+        "Add your HEIC or HEIF photos.",
+        "Press Convert to PNG.",
+        "Compare the original and converted sizes.",
+        "Download your PNG files."
+      ],
+      "faqs": [
+        {
+          "q": "Why is the PNG larger than my HEIC?",
+          "a": "PNG is lossless and stores every pixel exactly, while HEIC is heavily compressed — larger files are normal."
+        },
+        {
+          "q": "Is transparency supported?",
+          "a": "Yes. If the source has an alpha channel it is preserved in the PNG output."
+        },
+        {
+          "q": "Are my photos uploaded?",
+          "a": "No — decoding and conversion happen entirely on your device."
+        },
+        {
+          "q": "Can I batch convert?",
+          "a": "Yes, up to 10 files at once."
+        }
+      ]
+    },
+    "image-to-exact-kb": {
+      "name": "Image to Exact KB",
+      "short": "Compress any image to an exact file size.",
+      "description": "Compress an image to an exact size online — 100 KB, 200 KB, 50 KB. Smart quality + dimension tuning, free and private in your browser.",
+      "intro": "Job portals, exam forms and uploads often demand an exact size like “under 100 KB”. Set your target and Piclizer searches quality levels — shrinking dimensions only if it must — to land precisely on it.",
+      "howTo": [
+        "Add your image (JPG, PNG, WebP or iPhone HEIC).",
+        "Type the target size in KB, e.g. 100.",
+        "Choose the output format.",
+        "Press Compress and download the exactly-sized file."
+      ],
+      "faqs": [
+        {
+          "q": "How does it hit the exact size?",
+          "a": "It probes several quality levels at full resolution, then bisects to the best quality that fits. Only if that fails does it step dimensions down gradually."
+        },
+        {
+          "q": "Will my image be resized?",
+          "a": "Only when necessary. Resolution is preserved whenever the target can be met with quality tuning alone."
+        },
+        {
+          "q": "What if the target is impossibly small?",
+          "a": "The tool returns the smallest file it could produce and tells you honestly that the target could not be met."
+        },
+        {
+          "q": "Which format gives the smallest file?",
+          "a": "Usually WebP, then JPG. PNG is lossless and cannot reach very small targets for photos."
+        },
+        {
+          "q": "Are my images uploaded?",
+          "a": "Never. Every trial encode runs in your browser."
+        }
+      ]
+    },
+    "background-remover": {
+      "name": "Background Remover",
+      "short": "Erase solid backgrounds automatically.",
+      "description": "Remove image backgrounds online for free. Chroma-key removal for solid backgrounds with feathered edges, exported as transparent PNG — in your browser.",
+      "intro": "Cut out products, logos and signatures photographed on solid backgrounds. The tool samples the background colour, removes it with soft feathered edges, and hands you a transparent PNG.",
+      "howTo": [
+        "Add a photo with a fairly solid background.",
+        "Choose Auto-detect or pure White background.",
+        "Tune Tolerance until the background disappears.",
+        "Soften edges with Feather, then download the PNG."
+      ],
+      "faqs": [
+        {
+          "q": "When does it work best?",
+          "a": "On solid or smoothly graduated backgrounds — product shots, documents, signatures. Busy multi-colour scenes need manual editing software."
+        },
+        {
+          "q": "What does Tolerance do?",
+          "a": "It sets how close a pixel must be to the background colour to become transparent. Raise it for off-white or shadowed backgrounds."
+        },
+        {
+          "q": "Is this AI segmentation?",
+          "a": "No — it is a transparent chroma-key algorithm running locally. It is honest about that: no uploads, no AI server, instant results."
+        },
+        {
+          "q": "Which format is exported?",
+          "a": "Always PNG, because it is the format that supports transparency."
+        }
+      ]
+    },
+    "passport-photo-maker": {
+      "name": "Passport Photo Maker",
+      "short": "Make print-ready ID and passport photos.",
+      "description": "Make passport photos online for free. Exact 35×45 mm, 2×2 inch and other ID sizes at 300/600 DPI — cropped and exported in your browser.",
+      "intro": "Turn any portrait into a correctly sized ID photo. Pick your country’s dimensions, choose print resolution, and get a file with the exact pixel size photo studios and online forms expect.",
+      "howTo": [
+        "Add a front-facing portrait photo.",
+        "Choose the ID size preset (e.g. 35×45 mm).",
+        "Pick 300 or 600 DPI print resolution.",
+        "Press Make photo and download the print-ready file."
+      ],
+      "faqs": [
+        {
+          "q": "Which sizes are supported?",
+          "a": "35×45 mm (most passports), 30×40 mm, 33×48 mm, 2×2 inch (US visa) and 40×60 mm."
+        },
+        {
+          "q": "What resolution will the file be?",
+          "a": "At 300 DPI a 35×45 mm photo is 413×531 px; at 600 DPI it doubles. Both are shown before you export."
+        },
+        {
+          "q": "Does it check official photo rules?",
+          "a": "No — it handles exact sizing only. Always verify background, expression and recency rules with your issuing authority."
+        },
+        {
+          "q": "Are my portrait photos uploaded?",
+          "a": "No. Everything is cropped and rendered on your device."
+        }
+      ]
+    },
+    "signature-maker": {
+      "name": "Signature Maker",
+      "short": "Turn a photo of your signature transparent.",
+      "description": "Make a transparent signature online for free. Convert a photo of your handwritten signature into a clean PNG stamp for documents — in your browser.",
+      "intro": "Sign paper once, use it everywhere. Photograph your signature, and this tool strips the paper background, applies your ink colour and auto-crops to a tidy transparent PNG for PDFs and forms.",
+      "howTo": [
+        "Photograph your signature on plain white paper in good light.",
+        "Upload the photo.",
+        "Adjust Threshold until the paper disappears but strokes stay solid.",
+        "Pick an ink colour and download the transparent PNG."
+      ],
+      "faqs": [
+        {
+          "q": "How do I photograph my signature?",
+          "a": "Use dark ink on plain white paper, in bright even light, holding the camera directly above. Sharp, evenly lit photos give the cleanest result."
+        },
+        {
+          "q": "What does Threshold do?",
+          "a": "It decides which pixels count as ink. Too high keeps paper noise; too low eats thin strokes. Aim for solid strokes with a clean background."
+        },
+        {
+          "q": "Can I change the ink colour?",
+          "a": "Yes — black, blue and red presets plus any custom colour."
+        },
+        {
+          "q": "Is a PNG signature legally valid?",
+          "a": "That depends on your jurisdiction and the document. The tool only creates the image; check what your recipient accepts."
+        }
+      ]
+    },
+    "image-ocr": {
+      "name": "Image to Text (OCR)",
+      "short": "Extract text from photos and screenshots.",
+      "description": "Extract text from images online for free. OCR for photos, screenshots and scans in English and Arabic — processed privately in your browser.",
+      "intro": "Turn pictures of text into editable text. Receipts, screenshots, whiteboards and scanned pages are recognised on your device with support for English, Arabic or both.",
+      "howTo": [
+        "Add up to 5 images (JPG, PNG, WebP or HEIC).",
+        "Choose the text language: English, Arabic or both.",
+        "Press Extract text and wait for recognition.",
+        "Copy the result or download it as a .txt file."
+      ],
+      "faqs": [
+        {
+          "q": "How accurate is the OCR?",
+          "a": "Very good on clear, high-contrast, horizontal text. Blurry, rotated or highly stylised text recognises less reliably."
+        },
+        {
+          "q": "Does it support Arabic?",
+          "a": "Yes — Arabic, English, or a bilingual mode for mixed documents."
+        },
+        {
+          "q": "Are my images uploaded for recognition?",
+          "a": "No. The Tesseract engine and language files run inside your browser; only those program files are downloaded once from a CDN."
+        },
+        {
+          "q": "Why does the first run take a moment?",
+          "a": "The recognition engine and language data (a few MB) download on first use, then are cached for instant later runs."
+        }
+      ]
+    },
+    "pdf-to-text": {
+      "name": "PDF to Text",
+      "short": "Extract all text from a PDF as .txt.",
+      "description": "Convert PDF to text online for free. Extract every page’s text into a clean .txt file with page markers — processed privately in your browser.",
+      "intro": "Get the words out of your PDF. Every page’s text is extracted locally and packaged as a tidy .txt file with page markers — perfect for quoting, archiving or feeding into other tools.",
+      "howTo": [
+        "Add up to 5 PDF files.",
+        "Press Extract text.",
+        "Preview the character and page counts.",
+        "Download each .txt file, or all at once as a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "Does it work on scanned PDFs?",
+          "a": "Scanned pages are pictures of text, so no embedded text exists to extract. Use the PDF OCR tool for those."
+        },
+        {
+          "q": "Is the layout preserved?",
+          "a": "Text comes out in reading order with page markers, but exact visual layout (columns, tables) is not reconstructed."
+        },
+        {
+          "q": "What about password-protected PDFs?",
+          "a": "Unlock them first with the PDF Unlock tool, then extract."
+        },
+        {
+          "q": "Are my documents uploaded?",
+          "a": "No. Extraction runs entirely in your browser."
+        }
+      ]
+    },
+    "pdf-to-word": {
+      "name": "PDF to Word",
+      "short": "Convert PDF pages into editable Word files.",
+      "description": "Convert PDF to Word online for free. Turn PDF pages into editable .doc files with headings and page breaks — generated privately in your browser.",
+      "intro": "Need to edit a PDF’s content? Convert each document into an editable Word (.doc) file with page headings and page breaks, ready to open in Word, LibreOffice or Google Docs.",
+      "howTo": [
+        "Add up to 5 PDF files.",
+        "Press Convert to Word.",
+        "Check the page counts.",
+        "Download each .doc file, or all at once as a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "What Word format is produced?",
+          "a": "A Word-compatible .doc file that opens in Microsoft Word, LibreOffice and Google Docs for editing."
+        },
+        {
+          "q": "Will tables and images transfer?",
+          "a": "Text transfers cleanly; complex tables, images and exact styling do not — this is a text-first conversion done fully offline."
+        },
+        {
+          "q": "Does it work on scanned PDFs?",
+          "a": "Not directly — run the PDF OCR tool first, or use it on text-based PDFs."
+        },
+        {
+          "q": "Are my documents uploaded?",
+          "a": "Never. The whole conversion happens on your device."
+        }
+      ]
+    },
+    "pdf-ocr": {
+      "name": "PDF OCR",
+      "short": "Recognise text in scanned PDFs.",
+      "description": "OCR scanned PDFs online for free. Render each page locally and recognise English or Arabic text into a .txt file — private, in-browser processing.",
+      "intro": "Your scanner produces pictures, not text. This tool renders each page and recognises the words with an on-device OCR engine, giving you selectable, copyable text.",
+      "howTo": [
+        "Add up to 3 scanned PDFs.",
+        "Choose English, Arabic or both.",
+        "Press Extract text and follow the per-page progress.",
+        "Download the recognised .txt files."
+      ],
+      "faqs": [
+        {
+          "q": "How is this different from PDF to Text?",
+          "a": "PDF to Text reads embedded text instantly. PDF OCR re-reads page images with character recognition, so it works on scans but is slower."
+        },
+        {
+          "q": "Why is there a 30-page limit?",
+          "a": "Rendering plus recognition is heavy work; the cap keeps your browser tab fast and stable."
+        },
+        {
+          "q": "Is recognition done online?",
+          "a": "No. Pages render with pdf.js and text is recognised by Tesseract inside your browser. Only the engine files download once from a CDN."
+        },
+        {
+          "q": "How can I improve accuracy?",
+          "a": "Use straight, high-resolution scans (200 DPI or more) with clean contrast."
+        }
+      ]
+    },
+    "jwt-decoder": {
+      "name": "JWT Decoder",
+      "short": "Decode and verify JSON Web Tokens.",
+      "description": "Decode JWT tokens online for free. Inspect header and payload, check expiry, and verify HS256 signatures — offline in your browser, tokens never leave your device.",
+      "intro": "Paste any JSON Web Token to read its header and payload instantly, see expiry in plain language, and verify HMAC signatures with your secret — all offline, nothing transmitted.",
+      "howTo": [
+        "Paste the JWT into the token box.",
+        "Read the decoded header and payload.",
+        "Check the expiry verdict.",
+        "Optionally enter your HMAC secret to verify the signature."
+      ],
+      "faqs": [
+        {
+          "q": "Is my token sent anywhere?",
+          "a": "No. Decoding is pure base64url math in your browser, and even signature verification uses local Web Crypto."
+        },
+        {
+          "q": "Which algorithms can be verified?",
+          "a": "HS256, HS384 and HS512 with a shared secret. RS256/ES256 need public-key handling beyond a quick decoder."
+        },
+        {
+          "q": "Why does it say “expired”?",
+          "a": "The exp claim is compared against your device clock. Check your clock if a fresh token looks expired."
+        },
+        {
+          "q": "Can it create or sign tokens?",
+          "a": "No — it is a decoder and verifier only, which keeps secrets out of the page."
+        }
+      ]
+    },
+    "sql-formatter": {
+      "name": "SQL Formatter",
+      "short": "Beautify and minify SQL queries.",
+      "description": "Format SQL online for free. Beautify queries with indentation and keyword casing, or minify them — processed instantly and privately in your browser.",
+      "intro": "Turn one-line SQL blobs into readable queries. Clauses break onto their own lines, joins and conditions indent cleanly, and keywords follow your casing choice.",
+      "howTo": [
+        "Paste your SQL query.",
+        "Choose keyword casing and indent size.",
+        "Press Format (or Minify for one line).",
+        "Copy the result or download it as .sql."
+      ],
+      "faqs": [
+        {
+          "q": "Is my SQL uploaded?",
+          "a": "No. Formatting is a small local algorithm — your queries never leave the tab."
+        },
+        {
+          "q": "Are strings and comments safe?",
+          "a": "Yes. String literals and comments are tokenised first, so keywords inside them are never altered."
+        },
+        {
+          "q": "Which dialects are supported?",
+          "a": "Standard SQL shared by Postgres, MySQL, SQLite and SQL Server. Dialect-specific procedural blocks format on a best-effort basis."
+        },
+        {
+          "q": "What does Minify do?",
+          "a": "It strips comments and collapses whitespace to a single line for embedding or logging."
+        }
+      ]
+    },
+    "yaml-formatter": {
+      "name": "YAML Formatter",
+      "short": "Validate, format and convert YAML.",
+      "description": "Format YAML online for free. Validate syntax with exact error messages, re-indent, sort keys and convert YAML to JSON — privately in your browser.",
+      "intro": "Fix broken YAML configs fast. Validate with precise error locations, re-indent consistently, sort keys for clean diffs, or convert straight to JSON.",
+      "howTo": [
+        "Paste your YAML.",
+        "Choose indent size and optional key sorting.",
+        "Press Format — or Convert to JSON.",
+        "Copy the output or download it."
+      ],
+      "faqs": [
+        {
+          "q": "How are errors reported?",
+          "a": "The parser returns the exact line and reason, e.g. bad indentation or a stray tab, which YAML forbids."
+        },
+        {
+          "q": "Does formatting change my data?",
+          "a": "No. Only whitespace and (optionally) key order change; values stay identical."
+        },
+        {
+          "q": "Can it convert YAML to JSON?",
+          "a": "Yes — one click produces equivalent JSON with 2-space indentation."
+        },
+        {
+          "q": "Is my config uploaded?",
+          "a": "Never. Parsing runs locally in your browser."
+        }
+      ]
+    },
+    "markdown-formatter": {
+      "name": "Markdown Formatter",
+      "short": "Prettify Markdown documents.",
+      "description": "Format Markdown online for free. Normalise headings, lists and prose wrapping with Prettier — running locally in your browser, files stay private.",
+      "intro": "Make Markdown consistent: uniform lists, tidy headings, and prose wrapped to your line width — powered by Prettier, running entirely on your device.",
+      "howTo": [
+        "Paste your Markdown.",
+        "Choose line width and prose-wrap behaviour.",
+        "Press Format.",
+        "Copy the result or download it as .md."
+      ],
+      "faqs": [
+        {
+          "q": "What gets normalised?",
+          "a": "List markers, heading spacing, emphasis style, code fences and line wrapping — the same output Prettier gives in editors."
+        },
+        {
+          "q": "Will it change my words?",
+          "a": "No. Only formatting changes; text content is untouched."
+        },
+        {
+          "q": "What is prose wrap?",
+          "a": "Whether long paragraphs are re-wrapped to your line width, left as-is, or kept on single lines."
+        },
+        {
+          "q": "Is my document uploaded?",
+          "a": "No. Prettier loads into your browser and formats locally."
+        }
+      ]
     }
   },
   "errors": {
@@ -2353,7 +2795,16 @@
     "xmlParse": "XML error: {message}",
     "jsSyntax": "JavaScript syntax error: {message}",
     "cssSyntax": "CSS syntax error: {message}",
-    "regexInvalid": "Invalid regular expression: {message}"
+    "regexInvalid": "Invalid regular expression: {message}",
+    "signatureEmpty": "No signature ink was detected. Try a sharper photo with darker ink, or lower the threshold.",
+    "ocrFailed": "Text recognition failed for this file. Try a clearer, higher-contrast image.",
+    "ocrModelFailed": "The OCR language files could not be downloaded. Check your internet connection and try again — your files never leave your device.",
+    "ocrTooLarge": "This file is too large for on-device OCR. Try a smaller image (under 25 MB).",
+    "jwtInvalid": "This does not look like a valid JWT. It should have three Base64URL parts separated by dots.",
+    "markdownSyntax": "Markdown error: {message}",
+    "yamlParse": "YAML error: {message}",
+    "yamlTooLarge": "This YAML file is too large to format in the browser.",
+    "sqlTooLarge": "This query exceeds the {max} in-browser limit."
   },
   "consent": {
     "title": "We value your privacy",
@@ -2375,8 +2826,8 @@
     "alwaysOn": "Always on"
   },
   "toolsPage": {
-    "title": "All free image tools",
-    "subtitle": "20 tools that run entirely in your browser — compress, resize, convert, edit and more. No uploads, no sign-up."
+    "title": "All free tools",
+    "subtitle": "Every tool runs entirely in your browser — compress, resize, convert, edit, plus PDF, text and developer utilities. No uploads, no sign-up."
   },
   "howTo": {
     "title": "How to use"
@@ -2406,9 +2857,9 @@
   },
   "seo": {
     "homeTitle": "Free Online Image Tools — Compress, Convert & Edit in Your Browser | Piclizer",
-    "homeDescription": "Free online image tools that run 100% in your browser. Compress, resize, crop, convert and edit JPG, PNG & WebP — no upload, no sign-up, private by design.",
-    "toolsTitle": "All Free Image Tools — 20 Browser-Based Tools | Piclizer",
-    "toolsDescription": "Explore all 20 free image tools: compress, resize, crop, rotate, convert formats, make PDFs, merge, split, pick colors and more. 100% in your browser.",
+    "homeDescription": "Free online tools that run 100% in your browser. Compress images, convert iPhone HEIC photos, edit PDFs, extract text and format code — no upload, no sign-up, private by design.",
+    "toolsTitle": "All Free Online Tools — Image, PDF, Text & Developer Utilities | Piclizer",
+    "toolsDescription": "Explore every free Piclizer tool: compress images to exact sizes, convert iPhone HEIC photos, edit PDFs, extract text with OCR, format code and more. 100% in your browser.",
     "categoriesTitle": "Image Tool Categories | Piclizer",
     "categoriesDescription": "Browse Piclizer's free image tools by category: compress, resize, convert, edit, PDF and color tools.",
     "aboutTitle": "About Piclizer — Free, Private Image Tools",
@@ -2621,7 +3072,17 @@
     "unlockAction": "Remove password",
     "unlockLegal": "Only remove protection from PDFs you own or are authorised to modify.",
     "wasPage": "was page {number}",
-    "weakPasswordWarning": "Short passwords are easy to guess. Use at least 8 characters with mixed types."
+    "weakPasswordWarning": "Short passwords are easy to guess. Use at least 8 characters with mixed types.",
+    "extractTextAction": "Extract text",
+    "extractingText": "Extracting text…",
+    "toWordAction": "Convert to Word",
+    "toTextHint": "Get every word out of your PDF as a clean, page-marked .txt file. Scanned pages need the PDF OCR tool instead.",
+    "toWordHint": "Turn PDF pages into editable Word (.doc) files with headings and page breaks. Text transfers cleanly; complex layouts do not.",
+    "ocrHint": "For scanned PDFs made of page images: each page is rendered and recognised on your device.",
+    "lockedHint": "Locked files were skipped — unlock them first with the PDF Unlock tool.",
+    "noExtractableText": "No extractable text was found. If this is a scanned PDF, try the PDF OCR tool instead.",
+    "totalChars": "Characters",
+    "charsCount": "{count} characters"
   },
   "textTools": {
     "input": "Input",
@@ -3121,6 +3582,93 @@
     "byteGroups": "8-bit groups",
     "customBase": "Custom base",
     "targetBase": "Target base",
-    "baseHint": "Arbitrary-precision conversion using BigInt, so very large numbers stay exact."
+    "baseHint": "Arbitrary-precision conversion using BigInt, so very large numbers stay exact.",
+    "options": "Options"
+  },
+  "exactKb": {
+    "hitNote": "Target hit — output is {size}.",
+    "missNote": "The target could not be met. Smallest possible output is {size}."
+  },
+  "bgRemover": {
+    "hint": "Works best on solid backgrounds. Complex, multi-colour scenes need manual editing software."
+  },
+  "passport": {
+    "preset_35x45": "35 × 45 mm — Passport (most countries)",
+    "preset_30x40": "30 × 40 mm — ID / visa",
+    "preset_33x48": "33 × 48 mm — ID photo",
+    "preset_50x50": "2 × 2 in (51 × 51 mm) — US visa",
+    "preset_40x60": "40 × 60 mm — ID photo",
+    "outputSize": "Output: {w} × {h} px",
+    "make": "Make photo"
+  },
+  "signature": {
+    "make": "Make signature",
+    "hint": "Photograph dark ink on plain white paper, in bright even light, for the cleanest cut-out."
+  },
+  "ocr": {
+    "langEnglish": "English",
+    "langArabic": "Arabic",
+    "langBoth": "English + Arabic",
+    "start": "Extract text",
+    "extracting": "Recognising text… {done} of {total}",
+    "modelNote": "The OCR engine downloads once (a few MB) and is cached. Your images are recognised on-device and never uploaded.",
+    "noText": "No text recognised",
+    "resultTitle": "Recognised text",
+    "pageProgress": "{file} — page {done} of {total}",
+    "pageLimitNote": "To keep your browser fast and stable, OCR processes the first {max} pages of each document."
+  },
+  "jwt": {
+    "tokenLabel": "JWT token",
+    "introHint": "Paste a token above — its header and payload will be decoded instantly, offline.",
+    "privacyNote": "Tokens are decoded and verified entirely on your device. Nothing is transmitted anywhere.",
+    "header": "Header",
+    "payload": "Payload",
+    "algorithm": "Algorithm",
+    "expires": "Expires",
+    "status": "Status",
+    "noExpiry": "No expiry claim",
+    "expired": "Expired",
+    "active": "Active",
+    "issuedAt": "Issued at",
+    "verifyTitle": "Verify signature (HMAC)",
+    "verifyHint": "Enter the shared secret to verify HS256 / HS384 / HS512 signatures locally.",
+    "secretPlaceholder": "HMAC secret",
+    "verifyAction": "Verify",
+    "validSig": "Signature is valid for this secret.",
+    "invalidSig": "Signature does NOT match this secret.",
+    "unsupportedAlg": "Only HS256, HS384 and HS512 can be verified here."
+  },
+  "sql": {
+    "keywordCase": "Keyword case",
+    "preserve": "Preserve",
+    "indent": "Indentation",
+    "indent2": "2 spaces",
+    "indent4": "4 spaces",
+    "linesHint": "{before} lines before"
+  },
+  "yaml": {
+    "validYaml": "Valid YAML",
+    "sortKeys": "Sort keys alphabetically",
+    "toJson": "Convert to JSON"
+  },
+  "markdown": {
+    "lineWidth": "Line width",
+    "proseWrap": "Prose wrap",
+    "wrapPreserve": "Preserve",
+    "wrapAlways": "Wrap always",
+    "wrapNever": "Single line",
+    "words": "Words",
+    "headings": "Headings",
+    "links": "Links"
+  },
+  "guides": {
+    "title": "Image & PDF guides",
+    "subtitle": "Practical, no-nonsense how-tos for the tasks people actually search for.",
+    "backToGuides": "All guides",
+    "contents": "In this guide",
+    "tryTool": "Try the tool",
+    "relatedTools": "Tools used in this guide",
+    "relatedGuides": "Keep reading",
+    "readTime": "{n} min read"
   }
 }

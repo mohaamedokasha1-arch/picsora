@@ -21,6 +21,8 @@ function resolveMessage(error: UploadError | string, t: (key: string, params?: R
     corruptImage: 'validation.corruptImage',
     noFile: 'validation.noFile',
     readError: 'validation.readError',
+    'image-too-large': 'validation.imageTooLarge',
+    'heic-convert-failed': 'validation.heicFailed',
     'webp-unsupported': 'errors.webpUnsupported',
     'decode-failed': 'validation.corruptImage',
     'encode-failed': 'errors.processingFailed',
@@ -28,6 +30,11 @@ function resolveMessage(error: UploadError | string, t: (key: string, params?: R
     'need-at-least-two': 'errors.processingFailed',
     'zip-failed': 'errors.zipFailed',
     'pdf-failed': 'errors.pdfFailed',
+    'signature-empty': 'errors.signatureEmpty',
+    'ocr-failed': 'errors.ocrFailed',
+    'ocr-engine-failed': 'errors.ocrFailed',
+    'ocr-model-failed': 'errors.ocrModelFailed',
+    'ocr-too-large': 'errors.ocrTooLarge',
   };
   const key = known[error.key];
   if (!key) return t('errors.generic');

@@ -1,7 +1,16 @@
 import type { ImageFormat } from '@/lib/types';
 
 /** Extensions the uploader can accept (images plus PDF for the PDF tools). */
-export type UploadExtension = ImageFormat | 'pdf' | 'bmp' | 'tiff' | 'tif' | 'avif' | 'svg';
+export type UploadExtension =
+  | ImageFormat
+  | 'pdf'
+  | 'bmp'
+  | 'tiff'
+  | 'tif'
+  | 'avif'
+  | 'svg'
+  | 'heic'
+  | 'heif';
 import { mimeFromExt } from '@/lib/image/format';
 
 export interface FormatRule {
@@ -44,10 +53,19 @@ export async function validateFile(file: File, rule: FormatRule): Promise<Valida
     return { valid: true };
   }
 
-  // Magic-byte verification (defense in depth)
+  // Magic-byte verification (defense in depth). Alias groups such as
+  // jpg/jpeg and heic/heif are treated as interchangeable.
+  const normalizeAlias = (v: string) => {
+    if (v === 'jpeg') return 'jpg';
+    if (v === 'heif') return 'heic';
+    if (v === 'tif') return 'tiff';
+    return v;
+  };
   const { sniffFormat } = await import('@/lib/image/format');
   const sniffed = await sniffFormat(file);
-  if (sniffed && sniffed !== ext && !(ext === 'jpeg' && sniffed === 'jpg')) {
+  // A null sniff (e.g. an uncommon HEIC brand) lets the decoder attempt a
+  // local conversion instead of rejecting the file outright.
+  if (sniffed && normalizeAlias(sniffed) !== normalizeAlias(ext)) {
     return { valid: false, errorKey: 'mimeMismatch' };
   }
   // MIME check (do not trust extension alone)

@@ -209,6 +209,159 @@ const CALCULATOR_TOOLS: ToolDef[] = [
   N('currency-converter', 'calculator-tools', 'calculator', 'coins', ['currency converter', 'exchange rate', 'usd to eur', 'محول العملات'], ['unit-converter', 'interest-calculator', 'discount-calculator', 'percentage-calculator'], {}),
 ];
 
+/**
+ * iPhone photos (HEIC / HEIF) are accepted by every generic image tool.
+ * Format-specific converters keep their strict inputs; dedicated HEIC
+ * converters are registered below instead.
+ */
+const STRICT_CONVERTERS = new Set([
+  'jpg-to-png',
+  'png-to-jpg',
+  'jpg-to-webp',
+  'png-to-webp',
+  'webp-to-jpg',
+  'webp-to-png',
+]);
+
+for (const tool of IMAGE_TOOLS) {
+  if (!STRICT_CONVERTERS.has(tool.slug)) {
+    tool.inputFormats = [...tool.inputFormats, 'heic', 'heif'];
+  }
+}
+
+/** Smarter internal linking: point existing tools at the new helpers. */
+const RELATED_PATCH: Record<string, string[]> = {
+  'image-compressor': ['image-to-exact-kb', 'heic-to-jpg'],
+  'image-resizer': ['passport-photo-maker', 'image-to-exact-kb'],
+  'image-cropper': ['passport-photo-maker', 'background-remover'],
+  'jpg-to-png': ['heic-to-png', 'png-to-webp'],
+  'png-to-jpg': ['heic-to-jpg', 'jpg-to-webp'],
+  'image-to-grayscale': ['signature-maker', 'background-remover'],
+  'images-to-pdf': ['pdf-to-text', 'pdf-to-word'],
+  'image-to-pdf': ['pdf-to-text', 'images-to-pdf'],
+  'merge-images': ['passport-photo-maker', 'split-image'],
+  'image-watermark': ['signature-maker', 'image-compressor'],
+};
+
+for (const tool of IMAGE_TOOLS) {
+  const extra = RELATED_PATCH[tool.slug];
+  if (extra) tool.relatedTools = [...extra, ...tool.relatedTools].slice(0, 6);
+}
+
+const NEW_IMAGE_TOOLS: ToolDef[] = [
+  {
+    ...T(
+      'heic-to-jpg',
+      'convert',
+      'repeat',
+      ['heic to jpg', 'heif to jpg', 'iphone photo converter', 'convert heic', 'heic2jpg', 'تحويل heic الى jpg', 'صور الايفون'],
+      ['heic', 'heif'],
+      ['jpg'],
+      ['heic-to-png', 'jpg-to-png', 'image-compressor', 'image-to-exact-kb'],
+      true,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'heic-to-png',
+      'convert',
+      'repeat',
+      ['heic to png', 'heif to png', 'iphone to png', 'convert heic png', 'تحويل heic الى png'],
+      ['heic', 'heif'],
+      ['png'],
+      ['heic-to-jpg', 'jpg-to-png', 'png-to-webp', 'image-compressor'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'image-to-exact-kb',
+      'compress',
+      'gauge',
+      ['exact kb', 'exact file size', 'compress to 100kb', 'reduce to specific size', 'image to kb', 'تصغير حجم الصورة الى كيلوبايت', 'ضغط لرقم محدد'],
+      ['jpg', 'png', 'webp', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['image-compressor', 'image-resizer', 'jpg-to-webp', 'heic-to-jpg'],
+      true,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'background-remover',
+      'edit',
+      'eraser',
+      ['background remover', 'remove bg', 'transparent background', 'cutout', 'erase background', 'ازالة الخلفية', 'خلفية شفافة'],
+      ['jpg', 'png', 'webp', 'heic'],
+      ['png'],
+      ['signature-maker', 'image-to-grayscale', 'png-to-webp', 'image-cropper'],
+      true,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'passport-photo-maker',
+      'edit',
+      'id-card',
+      ['passport photo', 'id photo', 'visa photo', '35x45', '2x2 photo', 'صورة جواز', 'صورة شخصية'],
+      ['jpg', 'png', 'webp', 'heic'],
+      ['jpg', 'png'],
+      ['image-resizer', 'image-cropper', 'background-remover', 'image-compressor'],
+      true,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'signature-maker',
+      'edit',
+      'pen-line',
+      ['signature maker', 'transparent signature', 'sign png', 'digital signature image', 'التوقيع الالكتروني', 'توقيع شفاف'],
+      ['jpg', 'png', 'webp', 'heic'],
+      ['png'],
+      ['background-remover', 'image-to-grayscale', 'image-cropper', 'image-watermark'],
+      false,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'image-ocr',
+      'convert',
+      'scan-text',
+      ['image ocr', 'extract text from image', 'photo to text', 'jpg to text', 'screenshot to text', 'استخراج النص من الصور'],
+      ['jpg', 'png', 'webp', 'heic'],
+      ['txt'],
+      ['pdf-ocr', 'pdf-to-text', 'word-counter', 'heic-to-jpg'],
+      true,
+      5,
+    ),
+    isNew: true,
+  },
+];
+
+const NEW_PDF_TOOLS: ToolDef[] = [
+  N('pdf-to-text', 'pdf-tools', 'pdf', 'file-text', ['pdf to text', 'extract text from pdf', 'pdf to txt', 'copy text pdf', 'استخراج النص من pdf'], ['pdf-to-word', 'pdf-ocr', 'pdf-to-images', 'word-counter'], { inputFormats: ['pdf'], outputFormats: ['txt', 'zip'], maxFileSizeMB: 50, maxFiles: 5, popular: true }),
+  N('pdf-to-word', 'pdf-tools', 'pdf', 'file-type', ['pdf to word', 'pdf to doc', 'convert pdf editable', 'pdf word converter', 'تحويل pdf الى وورد'], ['pdf-to-text', 'pdf-ocr', 'pdf-merger', 'text-to-slug'], { inputFormats: ['pdf'], outputFormats: ['doc', 'zip'], maxFileSizeMB: 50, maxFiles: 5, popular: true }),
+  N('pdf-ocr', 'pdf-tools', 'pdf', 'scan-text', ['pdf ocr', 'scanned pdf to text', 'ocr pdf online', 'searchable pdf text', 'pdf ممسوح ضوئيا نص'], ['image-ocr', 'pdf-to-text', 'pdf-to-images', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['txt', 'zip'], maxFileSizeMB: 50, maxFiles: 3 }),
+];
+
+const NEW_DEVELOPER_TOOLS: ToolDef[] = [
+  N('jwt-decoder', 'developer-tools', 'developer', 'key-round', ['jwt decoder', 'jwt debugger', 'decode token', 'json web token', 'verify jwt', 'فك تشفير jwt'], ['base64-encoder-decoder', 'json-formatter', 'hash-generator', 'url-encoder-decoder'], { popular: true }),
+  N('sql-formatter', 'developer-tools', 'developer', 'database', ['sql formatter', 'format sql', 'beautify sql', 'sql minify', 'تنسيق sql'], ['json-formatter', 'xml-formatter', 'text-cleaner', 'javascript-formatter'], {}),
+  N('yaml-formatter', 'developer-tools', 'developer', 'file-json', ['yaml formatter', 'yaml validator', 'yaml to json', 'beautify yaml', 'تنسيق yaml'], ['json-formatter', 'xml-formatter', 'markdown-formatter', 'javascript-formatter'], {}),
+  N('markdown-formatter', 'developer-tools', 'developer', 'book-open', ['markdown formatter', 'format markdown', 'prettify md', 'markdown preview', 'تنسيق ماركداون'], ['html-encoder-decoder', 'text-to-slug', 'json-formatter', 'lorem-ipsum-generator'], { popular: true }),
+];
+
 const DEVELOPER_TOOLS: ToolDef[] = [
   N('uuid-generator', 'developer-tools', 'developer', 'fingerprint', ['uuid generator', 'guid', 'ulid', 'nano id', 'مولد uuid'], ['hash-generator', 'base64-encoder-decoder', 'json-formatter', 'lorem-ipsum-generator'], { popular: true }),
   N('url-encoder-decoder', 'developer-tools', 'developer', 'link-2', ['url encode', 'url decode', 'percent encoding', 'ترميز الروابط'], ['base64-encoder-decoder', 'html-encoder-decoder', 'text-to-slug', 'json-formatter'], {}),
@@ -226,10 +379,13 @@ const DEVELOPER_TOOLS: ToolDef[] = [
 
 export const TOOLS: ToolDef[] = [
   ...IMAGE_TOOLS,
+  ...NEW_IMAGE_TOOLS,
   ...PDF_TOOLS,
+  ...NEW_PDF_TOOLS,
   ...TEXT_TOOLS,
   ...CALCULATOR_TOOLS,
   ...DEVELOPER_TOOLS,
+  ...NEW_DEVELOPER_TOOLS,
 ];
 
 export function getTool(slug: string): ToolDef | undefined {

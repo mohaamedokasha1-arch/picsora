@@ -4,6 +4,7 @@ import { Logo } from './logo';
 import { LanguageSwitcher } from '@/components/i18n/language-switcher';
 import { ShieldCheck } from 'lucide-react';
 import { CATEGORIES, TOOLS } from '@/lib/tools/registry';
+import { getAllGuides } from '@/lib/guides';
 
 export async function Footer() {
   const t = await getTranslations();
@@ -88,6 +89,21 @@ export async function Footer() {
             ))}
           </ul>
         </div>
+      </div>
+
+      <div className="border-t border-border">
+        <nav aria-label={t('guides.title')} className="container flex flex-wrap items-center gap-x-4 gap-y-1 py-3">
+          <span className="text-xs font-semibold text-foreground">{t('guides.title')}:</span>
+          {getAllGuides(locale).map((guide) => (
+            <Link
+              key={guide.slug}
+              href={`/guides/${guide.slug}`}
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {guide.title}
+            </Link>
+          ))}
+        </nav>
       </div>
 
       <div className="border-t border-border">
