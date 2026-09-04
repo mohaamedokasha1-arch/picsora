@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start -H 0.0.0.0",
     "lint": "next lint",
+    "check:upload": "node scripts/check-file-validation.cjs",
     "copy-pdf-worker": "node scripts/copy-pdf-worker.mjs",
     "predev": "npm run copy-pdf-worker",
     "prebuild": "npm run copy-pdf-worker"

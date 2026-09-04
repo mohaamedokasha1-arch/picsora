@@ -4,7 +4,8 @@ import * as React from 'react';
 import { UploadCloud, X, ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { FormatRule } from '@/lib/validation';
-import { acceptAttrFor, validateFile } from '@/lib/validation';
+import { validateFile } from '@/lib/validation';
+import { canonicalImageFormat, fileExt, normalizeMime } from '@/lib/image/format';
 import { cn, formatBytes } from '@/lib/utils';
 
 export interface UploadError {
@@ -33,7 +34,13 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
     const urls: string[] = [];
     const map: Record<number, string> = {};
     files.forEach((file, i) => {
-      if (file.type.startsWith('image/')) {
+      // Fall back to the filename when the platform reports no MIME type —
+      // common for photos picked from an Android content URI — otherwise valid
+      // uploads render as an empty placeholder instead of a preview.
+      const mime = normalizeMime(file.type);
+      const looksLikeImage =
+        mime.startsWith('image/') || canonicalImageFormat(fileExt(file.name)) !== null;
+      if (looksLikeImage) {
         const url = URL.createObjectURL(file);
         urls.push(url);
         map[i] = url;
@@ -51,14 +58,20 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
       onError({ key: 'tooManyFiles', params: { max: String(rule.maxFiles) } });
       return;
     }
+    // Validate every file, but keep the ones that pass. A single stray file in a
+    // multi-select from the camera roll should not throw the whole batch away.
+    const accepted: File[] = [];
+    let firstError: UploadError | null = null;
     for (const file of list) {
       const result = await validateFile(file, rule);
-      if (!result.valid) {
-        onError({ key: result.errorKey!, params: result.params });
-        return; // stop on first invalid file to keep it simple
+      if (result.valid) {
+        accepted.push(file);
+      } else if (!firstError) {
+        firstError = { key: result.errorKey || 'invalidType', params: result.params };
       }
     }
-    onFilesChange([...files, ...list]);
+    if (accepted.length) onFilesChange([...files, ...accepted]);
+    if (firstError) onError(firstError);
   };
 
   const onDrop = (e: React.DragEvent) => {
@@ -119,7 +132,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
           ref={inputRef}
           type="file"
           multiple={rule.maxFiles > 1}
-          accept={acceptAttrFor(rule)}
+          accept={rule.accept || rule.mimes.join(',')}
           className="sr-only"
           onChange={(e) => {
             if (e.target.files) handleFiles(e.target.files);
@@ -181,7 +194,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
         ref={inputRef}
         type="file"
         multiple={rule.maxFiles > 1}
-        accept={acceptAttrFor(rule)}
+        accept={rule.accept || rule.mimes.join(',')}
         className="sr-only"
         onChange={(e) => {
           if (e.target.files) handleFiles(e.target.files);

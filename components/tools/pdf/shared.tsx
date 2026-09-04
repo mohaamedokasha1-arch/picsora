@@ -68,13 +68,10 @@ export function PdfDropzone({
         onError(t('validation.fileTooLarge', { size: maxFileSizeMB }));
         return;
       }
-      const isPdfName = file.name.toLowerCase().endsWith('.pdf');
-      const isPdfMime = !file.type || file.type === 'application/pdf' || file.type === 'application/octet-stream';
-      if (!isPdfName || !isPdfMime) {
-        onError(t('validation.invalidType', { types: 'PDF' }));
-        return;
-      }
-      // Magic-byte check — never hand a non-PDF to pdf-lib.
+      // Decide on the file's actual content, not on its name or the MIME type
+      // the platform guessed. Downloads from messaging apps and scanners often
+      // arrive without a `.pdf` extension or labelled `application/octet-stream`,
+      // which used to be rejected before the real check ever ran.
       const head = new Uint8Array(await file.slice(0, 5).arrayBuffer());
       if (String.fromCharCode(...head.subarray(0, 4)) !== '%PDF') {
         onError(t('errors.invalidPdf'));
