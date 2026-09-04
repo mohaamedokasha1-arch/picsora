@@ -7,6 +7,8 @@ import { UploadCloud, FileText, X, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { cn, formatBytes } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { hasPdfMagic } from '@/lib/validation';
+import { canonicalFormatFromExt, canonicalFormatFromMime, fileExt } from '@/lib/image/format';
 import { PdfError, inspect, readBytes, type PdfFileInfo } from '@/lib/pdf-processing';
 import { openWithPdfJs, type LoadedPdf } from '@/lib/pdf-processing/render';
 
@@ -68,16 +70,14 @@ export function PdfDropzone({
         onError(t('validation.fileTooLarge', { size: maxFileSizeMB }));
         return;
       }
-      const isPdfName = file.name.toLowerCase().endsWith('.pdf');
-      const isPdfMime = !file.type || file.type === 'application/pdf' || file.type === 'application/octet-stream';
-      if (!isPdfName || !isPdfMime) {
-        onError(t('validation.invalidType', { types: 'PDF' }));
-        return;
-      }
-      // Magic-byte check — never hand a non-PDF to pdf-lib.
-      const head = new Uint8Array(await file.slice(0, 5).arrayBuffer());
-      if (String.fromCharCode(...head.subarray(0, 4)) !== '%PDF') {
-        onError(t('errors.invalidPdf'));
+      // The content is the source of truth. Mobile file managers, e-mail apps
+      // and cloud drives frequently hand out valid PDFs whose name lost its
+      // ".pdf" suffix, and some report odd MIME types — requiring both used to
+      // reject perfectly good documents.
+      if (!(await hasPdfMagic(file))) {
+        const claimsPdf =
+          canonicalFormatFromExt(fileExt(file.name)) === 'pdf' || canonicalFormatFromMime(file.type) === 'pdf';
+        onError(claimsPdf ? t('errors.invalidPdf') : t('validation.invalidType', { types: 'PDF' }));
         return;
       }
     }

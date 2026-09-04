@@ -78,8 +78,9 @@ export function ToolWorkspace({ tool, rule, children }: ToolWorkspaceProps) {
           error={error}
           onRetry={() => {
             setError(null);
-            setFiles([]);
-            setDecoded([]);
+            // Never throw away images the user already uploaded: "try again"
+            // only resets the board when it is empty.
+            if (!files.length) setDecoded([]);
           }}
         />
       )}
