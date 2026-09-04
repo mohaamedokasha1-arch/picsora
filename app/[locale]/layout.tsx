@@ -86,6 +86,8 @@ export default async function LocaleLayout({
   return (
     <html lang={params.locale} dir={dir} suppressHydrationWarning>
       <head>
+        {/* Google Search Console verification */}
+        <meta name="google-site-verification" content="6nwKbe3UwHbbzzDg0S8a6TRE_rEEIAdyGgIJD6q6ua4" />
         {/* Monetag site verification */}
         <meta name="monetag" content="a0ac60af89b9b55d82647e019146c160" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
