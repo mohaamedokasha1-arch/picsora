@@ -6,8 +6,18 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, Info } from 'lucide-react';
+import { isSafeHttpUrl, sanitizeSingleLine, sanitizeUserText } from '@/lib/security/sanitize';
+import { safeFetch } from '@/lib/security/net';
 
 type Status = 'idle' | 'sending' | 'success' | 'not-configured' | 'error';
+
+/**
+ * Server-side limits mirrored on the client so an oversized/crafted payload is
+ * never even sent. Values are generous — no legitimate message hits them.
+ */
+const LIMITS = { name: 100, email: 254, message: 5000 } as const;
+/** Minimum gap between two submissions (simple client-side abuse throttle). */
+const SUBMIT_COOLDOWN_MS = 10_000;
 
 export function ContactForm() {
   const t = useTranslations('contact');
@@ -16,6 +26,7 @@ export function ContactForm() {
   const [message, setMessage] = React.useState('');
   const [status, setStatus] = React.useState<Status>('idle');
   const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const lastSubmitRef = React.useRef(0);
 
   const validate = () => {
     const next: Record<string, string> = {};
@@ -30,6 +41,8 @@ export function ContactForm() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    // Throttle: block rapid-fire submissions from a script driving the form.
+    if (Date.now() - lastSubmitRef.current < SUBMIT_COOLDOWN_MS) return;
     setStatus('sending');
     try {
       const endpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
@@ -37,10 +50,30 @@ export function ContactForm() {
         setStatus('not-configured');
         return;
       }
-      const res = await fetch(endpoint, {
+      // The endpoint comes from build-time configuration, but it is still
+      // validated: only an absolute https URL without embedded credentials and
+      // outside the private address space is accepted.
+      if (!isSafeHttpUrl(endpoint)) {
+        setStatus('not-configured');
+        return;
+      }
+      lastSubmitRef.current = Date.now();
+      // Strip CR/LF and control characters (header-injection into whatever
+      // mailer sits behind the endpoint) and clamp every field's length.
+      const payload = {
+        name: sanitizeSingleLine(name, LIMITS.name),
+        email: sanitizeSingleLine(email, LIMITS.email).toLowerCase(),
+        message: sanitizeUserText(message, LIMITS.message),
+      };
+      if (!payload.name || !payload.email || !payload.message) {
+        setStatus('error');
+        return;
+      }
+      const res = await safeFetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message }),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+        timeoutMs: 20000,
       });
       if (!res.ok) throw new Error('failed');
       setStatus('success');
@@ -61,6 +94,8 @@ export function ContactForm() {
         <Input
           id="contact-name"
           value={name}
+          maxLength={LIMITS.name}
+          autoComplete="name"
           onChange={(e) => setName(e.target.value)}
           placeholder={t('namePlaceholder')}
           aria-invalid={Boolean(errors.name)}
@@ -80,6 +115,8 @@ export function ContactForm() {
           id="contact-email"
           type="email"
           value={email}
+          maxLength={LIMITS.email}
+          autoComplete="email"
           onChange={(e) => setEmail(e.target.value)}
           placeholder={t('emailPlaceholder')}
           aria-invalid={Boolean(errors.email)}
@@ -98,6 +135,7 @@ export function ContactForm() {
         <Textarea
           id="contact-message"
           value={message}
+          maxLength={LIMITS.message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder={t('messagePlaceholder')}
           rows={5}
