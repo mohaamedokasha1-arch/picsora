@@ -88,6 +88,22 @@ function assertSameOriginRedirect(response: NextResponse, request: NextRequest):
   return response;
 }
 
+/**
+ * Permanently moved paths.
+ *
+ * The "PDF" and "PDF Tools" categories used to be two separate entries with
+ * the exact same display name; they are now the single `pdf-tools` category.
+ * The old URL is 301'd so indexed links, bookmarks and backlinks keep working
+ * and pass their SEO value to the merged page.
+ *
+ * Handled here rather than in `next.config.mjs` redirects() so the response
+ * still carries the full security header set.
+ */
+const PERMANENT_REDIRECTS: [RegExp, (locale: string) => string][] = [
+  [/^\/(en|ar)\/categories\/pdf\/?$/, (locale) => `/${locale}/categories/pdf-tools`],
+  [/^\/categories\/pdf\/?$/, () => '/en/categories/pdf-tools'],
+];
+
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -101,7 +117,7 @@ export default function middleware(request: NextRequest) {
     return harden(new NextResponse('Not Found', { status: 404 }));
   }
 
-  // 3) Method allow-list. The site serves static documents only; anything
+  // 3) HTTP method allow-list. The site serves static documents only; anything
   //    else (TRACE/TRACK/PUT/DELETE/…) is rejected before it reaches a route.
   if (!ALLOWED_METHODS.has(request.method)) {
     const response = harden(new NextResponse(null, { status: 405 }));
@@ -109,7 +125,17 @@ export default function middleware(request: NextRequest) {
     return response;
   }
 
-  // 4) API surface: no locale negotiation, strict same-origin policy, and no
+  // 4) Permanent redirects for merged/renamed pages.
+  for (const [pattern, destination] of PERMANENT_REDIRECTS) {
+    const match = pattern.exec(pathname);
+    if (match) {
+      const url = request.nextUrl.clone();
+      url.pathname = destination(match[1] ?? 'en');
+      return harden(NextResponse.redirect(url, 301));
+    }
+  }
+
+  // 5) API surface: no locale negotiation, strict same-origin policy, and no
   //    caching of responses. (There are no API routes today — this makes sure
   //    any future one is protected by default rather than by memory.)
   if (pathname === '/api' || pathname.startsWith('/api/')) {
@@ -123,7 +149,7 @@ export default function middleware(request: NextRequest) {
     return response;
   }
 
-  // 5) Normal page request — unchanged locale routing, hardened response.
+  // 6) Normal page request — unchanged locale routing, hardened response.
   const response = intlMiddleware(request) as NextResponse;
   return assertSameOriginRedirect(harden(response), request);
 }

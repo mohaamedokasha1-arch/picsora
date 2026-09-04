@@ -175,17 +175,13 @@
       "name": "Image Editors",
       "description": "Crop, rotate, flip, merge, split and transform your images."
     },
-    "pdf": {
-      "name": "PDF Tools",
-      "description": "Turn your images into polished PDF documents."
-    },
     "color": {
       "name": "Color Tools",
       "description": "Pick and extract colors from any image."
     },
     "pdf-tools": {
       "name": "PDF Tools",
-      "description": "Merge, split, rotate, protect and convert PDF documents — entirely in your browser."
+      "description": "Create, merge, split, rotate, protect and convert PDF documents — entirely in your browser."
     },
     "text-tools": {
       "name": "Text Tools",
@@ -205,9 +201,8 @@
     "resize": "Need exact dimensions for a profile picture, a website banner or a print job? Resize images to precise pixel sizes, keep the aspect ratio, and export in the same format.",
     "convert": "Different situations need different formats. Convert between JPG, PNG and WebP in seconds — with quality control, transparency handling and background color options.",
     "edit": "From simple flips and rotations to cropping, merging and watermarking — edit your images exactly how you need, without installing any software.",
-    "pdf": "Turn single images or entire galleries into clean PDF documents. Choose page sizes, orientations and order — generated entirely on your device.",
     "color": "Extract the exact colors from any image. Pick a pixel's HEX, RGB and HSL values, or generate a complete color palette from a photo.",
-    "pdf-tools": "Working with PDFs usually means uploading private documents to a stranger’s server. Our PDF tools do the opposite: merging, splitting, rotating, encrypting and converting all happen inside your browser, so contracts, invoices and reports never leave your device.",
+    "pdf-tools": "Working with PDFs usually means uploading private documents to a stranger’s server. Our PDF tools do the opposite: creating PDFs from your images, merging, splitting, rotating, encrypting and converting all happen inside your browser, so contracts, invoices and reports never leave your device.",
     "text-tools": "From counting words for an assignment to cleaning scraped content or comparing two drafts, these text utilities handle everyday writing tasks in both English and Arabic. Everything is pure JavaScript, so results appear as fast as you can type.",
     "calculator-tools": "Quick, reliable answers for the numbers that come up in daily life — your age, your BMI, a discount at the till, interest on savings, a tip to split or a unit you need converted. Every calculator shows the formula and the steps behind its result.",
     "developer-tools": "The small utilities every developer needs, gathered in one fast, private place. Format JSON, test a regular expression, generate a UUID, hash a file or convert a colour — with no sign-up, no rate limits and no code ever leaving your browser."
