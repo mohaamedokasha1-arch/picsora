@@ -178,7 +178,12 @@ export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
                 <input
                   ref={wmInputRef}
                   type="file"
-                  accept="image/png,image/jpeg,image/webp"
+                  // MIME types + explicit extensions + wildcard: some Android
+                  // gallery/picker integrations only surface photos when the
+                  // accept list contains extensions or `image/*`. Decoding is
+                  // content-first (see decodeImage), so mislabelled gallery
+                  // picks still work.
+                  accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp,image/*"
                   className="sr-only"
                   onChange={(e) => onWmFile(e.target.files?.[0] ?? null)}
                 />
