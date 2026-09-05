@@ -33,6 +33,7 @@ import { triggerDownload } from '@/lib/image/format';
 import {
   assert,
   assertEq,
+  assertNear,
   makeHalfFile,
   makeOptimisedScreenshotPngFile,
   makePhotoFile,
@@ -214,6 +215,66 @@ async function main() {
     assertEq(info.height, 200, 'cropped height');
     const p = pixelAt(info.rgba, info.width, 10, 100);
     assert(p.b > p.r, 'cropped region must contain the BLUE half');
+  });
+
+  await test('selecting an aspect ratio RESHAPES the frame immediately', async () => {
+    // The reported bug: choosing e.g. 1:1 left the frame untouched — the
+    // ratio only applied if the user then dragged a corner. The pure
+    // geometry behind the Select's onChange must snap the current frame.
+    const { ratioBoxFor, RATIOS } = await import('@/components/tools/ui/crop-geometry');
+    const imgW = 1200;
+    const imgH = 800;
+    // default frame the tool initialises: 86% centred
+    const w0 = Math.round(imgW * 0.86);
+    const h0 = Math.round(imgH * 0.86);
+    const start = { x: Math.round((imgW - w0) / 2), y: Math.round((imgH - h0) / 2), w: w0, h: h0 };
+
+    const square = ratioBoxFor(imgW, imgH, RATIOS['1:1']!, start);
+    assertEq(square.w, 800, '1:1 width = image height (largest centred square)');
+    assertEq(square.h, 800, '1:1 height');
+    assertEq(square.x, 200, '1:1 centred horizontally');
+    assertEq(square.y, 0, '1:1 centred vertically');
+
+    const wide = ratioBoxFor(imgW, imgH, RATIOS['16:9']!, start);
+    assertNear(wide.w / wide.h, 16 / 9, 0.01, '16:9 frame keeps the ratio');
+    assert(wide.w <= imgW && wide.h <= imgH, '16:9 frame fits inside the image');
+
+    const tall = ratioBoxFor(imgW, imgH, RATIOS['9:16']!, start);
+    assertNear(tall.w / tall.h, 9 / 16, 0.01, '9:16 frame keeps the ratio');
+    assertEq(tall.h, 800, '9:16 uses full height');
+
+    // A small off-centre selection must stay roughly WHERE the user put it
+    // (covers the selection, keeps its centre) instead of jumping to the
+    // largest possible frame.
+    const small = { x: 900, y: 600, w: 200, h: 150 };
+    const snapped = ratioBoxFor(imgW, imgH, RATIOS['1:1']!, small);
+    assertEq(snapped.w, 200, 'small selection keeps its scale (200×200)');
+    assertEq(snapped.h, 200, 'small selection keeps its scale');
+    assertNear(snapped.x + snapped.w / 2, 1000, 1, 'centre X preserved');
+    assertNear(snapped.y + snapped.h / 2, 675, 1, 'centre Y preserved');
+    assert(
+      snapped.x >= 0 && snapped.y >= 0 && snapped.x + snapped.w <= imgW && snapped.y + snapped.h <= imgH,
+      'snapped frame stays inside the image',
+    );
+  });
+
+  await test('ratio-locked corner resize never breaks the ratio at image edges', async () => {
+    const { ratioResizeBox } = await import('@/components/tools/ui/crop-geometry');
+    // Dragging the SE corner freely to 500×100 with 1:1 lock → 500×500.
+    const a = ratioResizeBox(1000, 1000, 1, 0, 0, 'e', 's', 500, 100, 24);
+    assertNear(a.w / a.h, 1, 1e-9, '1:1 kept during free drag');
+    assertEq(a.w, 500, 'dominant dimension wins');
+    // Anchor near the east edge: only 200px available → the frame must
+    // shrink PROPORTIONALLY (old code clamped w/h independently → 200×500).
+    const b = ratioResizeBox(1000, 1000, 1, 800, 0, 'e', 's', 500, 500, 24);
+    assertEq(b.w, 200, 'clamped to available width');
+    assertEq(b.h, 200, 'height follows the ratio instead of breaking it');
+    assertEq(b.x, 800, 'anchored at the west edge');
+    assert(b.x + b.w <= 1000, 'inside the image');
+    // Dragging the NW corner (anchor = SE) with a 4:3 lock.
+    const c = ratioResizeBox(1000, 1000, 4 / 3, 900, 900, 'w', 'n', 300, 900, 24);
+    assertNear(c.w / c.h, 4 / 3, 1e-9, '4:3 kept when dragging NW');
+    assert(c.x >= 0 && c.y >= 0 && c.x + c.w <= 900.5 && c.y + c.h <= 900.5, 'stays inside, anchor fixed');
   });
 
   await test('crop with fractional-ish box stays inside the image', async () => {

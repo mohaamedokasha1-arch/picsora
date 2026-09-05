@@ -11,23 +11,8 @@ import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
 import { cropImage } from '@/lib/tools/processors/cropper';
+import { RATIOS, ratioBoxFor, ratioResizeBox, type Box } from './crop-geometry';
 import { cn } from '@/lib/utils';
-
-interface Box {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
-
-const RATIOS: Record<string, number | null> = {
-  free: null,
-  '1:1': 1,
-  '4:3': 4 / 3,
-  '16:9': 16 / 9,
-  '3:2': 3 / 2,
-  '9:16': 9 / 16,
-};
 
 type DragState = { mode: 'move' | 'resize'; corner?: string; startX: number; startY: number; startBox: Box };
 
@@ -41,8 +26,11 @@ export default function CropperTool({ ctx }: { ctx: WorkspaceContext }) {
   const [ratio, setRatio] = React.useState<string>('free');
   const [box, setBox] = React.useState<Box>({ x: 0, y: 0, w: 0, h: 0 });
   const drag = React.useRef<DragState | null>(null);
+  /** Lets the image-init effect honour the selected ratio without re-running on every ratio change. */
+  const ratioRef = React.useRef(ratio);
 
-  // Fit image into container and init crop box.
+  // Fit image into container and init crop box (honouring a selected ratio,
+  // so swapping images keeps e.g. the 1:1 frame instead of resetting to free).
   React.useEffect(() => {
     if (!decoded) return;
     const el = wrapRef.current;
@@ -52,8 +40,23 @@ export default function CropperTool({ ctx }: { ctx: WorkspaceContext }) {
     setScale(s);
     const w = Math.round(decoded.width * 0.86);
     const h = Math.round(decoded.height * 0.86);
-    setBox({ x: Math.round((decoded.width - w) / 2), y: Math.round((decoded.height - h) / 2), w, h });
+    const centred: Box = { x: Math.round((decoded.width - w) / 2), y: Math.round((decoded.height - h) / 2), w, h };
+    const r = RATIOS[ratioRef.current] ?? null;
+    setBox(r ? ratioBoxFor(decoded.width, decoded.height, r, centred) : centred);
   }, [decoded]);
+
+  /**
+   * Choosing a ratio RESHAPES the frame immediately — covering the current
+   * selection at the new ratio. 'free' keeps the frame exactly as it is.
+   */
+  const applyRatio = (key: string) => {
+    setRatio(key);
+    ratioRef.current = key;
+    if (!decoded) return;
+    const r = RATIOS[key] ?? null;
+    if (!r) return;
+    setBox(ratioBoxFor(decoded.width, decoded.height, r, box));
+  };
 
   const clampBox = (b: Box): Box => {
     if (!decoded) return b;
@@ -79,33 +82,42 @@ export default function CropperTool({ ctx }: { ctx: WorkspaceContext }) {
       const dy = (ev.clientY - d.startY) / scale;
       let next: Box = { ...d.startBox };
       const r = RATIOS[ratio];
+      const min = 24 / scale;
 
       if (d.mode === 'move') {
-        next.x = clampBox({ ...next, x: d.startBox.x + dx, y: d.startBox.y + dy }).x;
-        next.y = clampBox({ ...next, x: d.startBox.x + dx, y: d.startBox.y + dy }).y;
+        const moved = clampBox({ ...next, x: d.startBox.x + dx, y: d.startBox.y + dy });
+        next = { ...next, x: moved.x, y: moved.y };
       } else {
         // Resize from a corner (opposite corner stays fixed).
         const cx = d.corner?.includes('e') ? 'e' : 'w';
         const cy = d.corner?.includes('s') ? 's' : 'n';
         const anchorX = cx === 'e' ? d.startBox.x : d.startBox.x + d.startBox.w;
         const anchorY = cy === 's' ? d.startBox.y : d.startBox.y + d.startBox.h;
-        let px = cx === 'e' ? d.startBox.x + d.startBox.w + dx : d.startBox.x + dx;
-        let py = cy === 's' ? d.startBox.y + d.startBox.h + dy : d.startBox.y + dy;
-        let w = Math.abs(px - anchorX);
-        let h = Math.abs(py - anchorY);
+        const px = cx === 'e' ? d.startBox.x + d.startBox.w + dx : d.startBox.x + dx;
+        const py = cy === 's' ? d.startBox.y + d.startBox.h + dy : d.startBox.y + dy;
+        const w = Math.abs(px - anchorX);
+        const h = Math.abs(py - anchorY);
+
         if (r) {
-          const derived = Math.max(w, h / r, r * h >= w ? h * r : w);
-          if (w >= h) {
-            w = Math.max(w, h * r);
-            h = w / r;
-          } else {
-            h = Math.max(h, w / r);
-            w = h * r;
-          }
+          // Ratio-locked resize (see crop-geometry.ratioResizeBox): the frame
+          // keeps the locked ratio even when the drag hits an image edge.
+          next = ratioResizeBox(
+            decoded.width,
+            decoded.height,
+            r,
+            anchorX,
+            anchorY,
+            cx,
+            cy,
+            w,
+            h,
+            min,
+          );
+        } else {
+          const nx = cx === 'e' ? anchorX : anchorX - w;
+          const ny = cy === 's' ? anchorY : anchorY - h;
+          next = clampBox({ x: nx, y: ny, w, h });
         }
-        const nx = cx === 'e' ? anchorX : anchorX - w;
-        const ny = cy === 's' ? anchorY : anchorY - h;
-        next = clampBox({ x: nx, y: ny, w, h });
       }
       setBox(next);
     };
@@ -144,7 +156,7 @@ export default function CropperTool({ ctx }: { ctx: WorkspaceContext }) {
           <Field label={t('controls.aspectRatio')}>
             <Select
               value={ratio}
-              onChange={(e) => setRatio(e.target.value)}
+              onChange={(e) => applyRatio(e.target.value)}
               disabled={processing}
               options={Object.keys(RATIOS).map((k) => ({ value: k, label: k === 'free' ? t('controls.free') : k }))}
             />
