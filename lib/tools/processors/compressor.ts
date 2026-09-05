@@ -1,6 +1,7 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { encodeDecodedToBlob, nameOf, outputName } from '@/lib/image/process';
-import { canvasToBlob, encodableFormat } from '@/lib/image/format';
+import { encodableFormat } from '@/lib/image/format';
+import { quantizeToPng } from '@/lib/image/quantize';
 
 export interface CompressorOptions {
   quality: number; // 1..100
@@ -11,12 +12,25 @@ export interface SmartCompressedResult extends ProcessResult {
   wasCompressed: boolean;
   originalSize: number;
   outputSize: number;
+  /** Result message key resolved by the UI (toolShell.resultMessages.*). */
   message?: string;
+  finalQuality?: number;
 }
 
 /**
- * Smart compression with binary-search quality tuning.
- * If the compressed output is larger than the original, falls back to the original file.
+ * Smart compression.
+ *
+ * Every run performs a REAL processing pass and returns the re-encoded image:
+ * the original bytes are never handed back silently (that was the "same old
+ * size, nothing happened" bug). When even the best real encode cannot beat
+ * the original, the processed result is still returned — with `wasCompressed:
+ * false` and a message explaining why — instead of faking success.
+ *
+ * - Lossy formats (JPG/WebP): encodes at the user's quality first, then sweeps
+ *   lower qualities and keeps the highest one that is smaller than the input.
+ * - PNG (or any source converted to PNG): plain lossless re-encode first; if
+ *   that cannot shrink the file, a 256-colour palette quantization pass runs
+ *   (`lib/image/quantize.ts`), which is what actually makes PNGs smaller.
  */
 export async function compressImages(
   files: DecodedImage[],
@@ -29,92 +43,122 @@ export async function compressImages(
     const originalSize = originalFile.size;
     const rawFormat = options.format === 'same' ? file.format : options.format;
     const format: ImageFormat = encodableFormat(rawFormat);
+    const userQuality = Math.max(0.01, Math.min(1, options.quality / 100));
+    const isLossy = format === 'jpg' || format === 'jpeg' || format === 'webp';
 
-    // Initial quality based on user setting
-    let bestQuality = Math.max(0.01, Math.min(1, options.quality / 100));
-    let bestBlob = await encodeDecodedToBlob(file, format, bestQuality);
+    // 1) Encode at the quality the user selected — this is the real result
+    //    they asked for and the blob we deliver if nothing smaller wins.
+    let bestBlob = await encodeDecodedToBlob(file, format, userQuality);
     let bestSize = bestBlob.size;
+    let bestQuality = userQuality;
 
-    // If already smaller or equal, done.
-    if (bestSize <= originalSize) {
-      results.push({
-        blob: bestBlob,
-        format,
-        name: outputName(nameOf(originalFile), format),
-        wasCompressed: true,
-        originalSize,
-        outputSize: bestSize,
-        message: bestSize < originalSize ? 'compressed-success' : 'same-size',
-      });
+    if (isLossy && bestSize <= originalSize) {
+      results.push(
+        makeResult(file, format, bestBlob, originalSize, true, {
+          message: bestSize < originalSize ? 'compressed-success' : 'same-size',
+          finalQuality: Math.round(bestQuality * 100),
+        }),
+      );
+      continue;
+    }
+    if (!isLossy && bestSize < originalSize) {
+      results.push(
+        makeResult(file, format, bestBlob, originalSize, true, {
+          message: 'compressed-success',
+        }),
+      );
       continue;
     }
 
-    // Binary search for lower quality until output <= original or min reached.
-    let lo = 0.05;
-    let hi = bestQuality;
-    let iterations = 0;
-    const maxIter = 6; // cap to avoid excessive processing
-    let foundBetter = false;
+    if (isLossy) {
+      // 2) Lossy: hunt for the HIGHEST quality whose output is smaller than
+      //    the original. Each candidate is a genuine re-encode.
+      const sweep = [0.8, 0.65, 0.5, 0.38, 0.26, 0.16, 0.08, 0.05].filter(
+        (q) => q < bestQuality,
+      );
+      for (const q of sweep) {
+        const trial = await encodeDecodedToBlob(file, format, q);
+        if (trial.size <= originalSize) {
+          bestBlob = trial;
+          bestSize = trial.size;
+          bestQuality = q;
+          break;
+        }
+        if (trial.size < bestSize) {
+          bestBlob = trial;
+          bestSize = trial.size;
+          bestQuality = q;
+        }
+      }
 
-    while (lo < hi && iterations < maxIter) {
-      const mid = (lo + hi) / 2;
-      const trialBlob = await encodeDecodedToBlob(file, format, mid);
-      const trialSize = trialBlob.size;
-
-      if (trialSize <= originalSize) {
-        // This quality works; try to see if we can go lower (smaller file)
-        bestBlob = trialBlob;
-        bestSize = trialSize;
-        foundBetter = true;
-        hi = mid;
+      if (bestSize <= originalSize) {
+        results.push(
+          makeResult(file, format, bestBlob, originalSize, true, {
+            message: 'compressed-success',
+            finalQuality: Math.round(bestQuality * 100),
+          }),
+        );
       } else {
-        // Still too large; need lower quality (higher compression)
-        lo = mid;
+        // Delivered blob = the user's quality re-encode (actual processing),
+        // not the original file. Reported honestly.
+        const delivered =
+          bestQuality === userQuality ? bestBlob : await encodeDecodedToBlob(file, format, userQuality);
+        results.push(
+          makeResult(file, format, delivered, originalSize, false, {
+            message: 'larger-output',
+            finalQuality: Math.round(userQuality * 100),
+          }),
+        );
       }
-      iterations++;
+      continue;
     }
 
-    // After binary search, if still larger, try very low quality once more (0.05)
-    if (bestSize > originalSize) {
-      const lowBlob = await encodeDecodedToBlob(file, format, 0.05);
-      if (lowBlob.size <= bestSize) {
-        bestBlob = lowBlob;
-        bestSize = lowBlob.size;
+    // 3) Lossless (PNG): plain re-encode could not beat the original —
+    //    try the palette-quantized PNG pass so the tool still compresses.
+    const quantized = await quantizeToPng(file);
+    if (quantized && quantized.size < bestSize) {
+      bestBlob = quantized;
+      bestSize = quantized.size;
+      if (bestSize <= originalSize) {
+        results.push(
+          makeResult(file, 'png', bestBlob, originalSize, true, {
+            message: 'palette-compressed',
+          }),
+        );
+        continue;
       }
     }
 
-    if (bestSize <= originalSize) {
-      results.push({
-        blob: bestBlob,
-        format,
-        name: outputName(nameOf(originalFile), format),
-        wasCompressed: true,
-        originalSize,
-        outputSize: bestSize,
-        message: 'compressed-success',
-      });
-    } else {
-      // Fallback: return original file blob converted to output format? No —
-      // user's requirement: if output is larger even at minimum quality,
-      // return original file (preserve quality) with clear message.
-      // We must return a Blob of the original file, but with the requested output format?
-      // Actually the user wants the original file delivered to the user.
-      // We'll return original blob but keep requested format in metadata? No,
-      // the tool should deliver the original file unchanged.
-      // However the architecture expects a Blob from canvas. To preserve original,
-      // we can read the original file into a blob directly.
-      // Fallback: deliver original file unchanged (File extends Blob).
-      results.push({
-        blob: file.file,
-        format,
-        name: outputName(nameOf(file.file), format),
-        wasCompressed: false,
-        originalSize,
-        outputSize: originalSize,
-        message: 'original-fallback-inflation',
-      });
-    }
+    results.push(
+      makeResult(file, format, bestBlob, originalSize, bestSize < originalSize, {
+        message:
+          bestSize < originalSize
+            ? 'compressed-success'
+            : bestSize === originalSize
+              ? 'same-size'
+              : 'larger-output',
+      }),
+    );
   }
 
   return results;
+}
+
+function makeResult(
+  file: DecodedImage,
+  format: ImageFormat,
+  blob: Blob,
+  originalSize: number,
+  wasCompressed: boolean,
+  extra: Omit<Partial<SmartCompressedResult>, 'blob' | 'format' | 'name' | 'originalSize' | 'outputSize' | 'wasCompressed'>,
+): SmartCompressedResult {
+  return {
+    blob,
+    format,
+    name: outputName(nameOf(file.file), format),
+    wasCompressed,
+    originalSize,
+    outputSize: blob.size,
+    ...extra,
+  };
 }

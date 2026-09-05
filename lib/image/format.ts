@@ -289,8 +289,23 @@ export async function decodeImage(file: File): Promise<DecodedImage> {
     }
   }
 
-  const width = bitmap?.width ?? img.naturalWidth;
-  const height = bitmap?.height ?? img.naturalHeight;
+  // The HTMLImageElement applies EXIF orientation in every modern browser, so
+  // its natural dimensions are the authoritative, user-visible drawing size.
+  // If a bitmap reports DIFFERENT dimensions, that engine silently ignored
+  // `imageOrientation: 'from-image'` (older Safari/Chromium builds) and would
+  // make every processor crop/rotate/scale against the wrong axes — the
+  // classic “output looks like nothing changed / is misaligned” glitch.
+  // Drop such a bitmap and draw from the oriented <img> instead.
+  if (
+    bitmap &&
+    (bitmap.width !== img.naturalWidth || bitmap.height !== img.naturalHeight)
+  ) {
+    bitmap.close?.();
+    bitmap = null;
+  }
+
+  const width = img.naturalWidth;
+  const height = img.naturalHeight;
 
   try {
     assertDecodableSize(width, height, file.name);
@@ -300,9 +315,12 @@ export async function decodeImage(file: File): Promise<DecodedImage> {
     throw error;
   }
 
-  // The object URL is no longer needed once pixels live in memory; a brief
-  // delay ensures any immediate canvas draw operations finish first.
-  setTimeout(() => URL.revokeObjectURL(url), 100);
+  // The object URL is no longer needed once pixels live in memory; a delay
+  // long enough for even very large/late-decodable images (SVG, big PNGs)
+  // ensures any canvas draw operations that fall back to the <img> element
+  // still have a valid source. Early revocation caused intermittent blank /
+  // unprocessed outputs for large or SVG sources on slower devices.
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
   void heicConverted;
   return { image: img, bitmap, width, height, format, file };
 }

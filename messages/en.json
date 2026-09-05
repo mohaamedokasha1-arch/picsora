@@ -227,7 +227,12 @@
     "outputFormat": "Output format",
     "noPreviewYet": "Your processed image will appear here.",
     "quality": "Quality",
-    "noticeLarge": "This file is large and may take a moment to process."
+    "noticeLarge": "This file is large and may take a moment to process.",
+    "resultMessages": {
+      "sameSize": "Re-encoded at the requested settings — size is unchanged.",
+      "paletteCompressed": "Compressed with a 256-color palette.",
+      "largerOutput": "The processed image is larger than the original. Try a lower quality or a WebP output."
+    }
   },
   "controls": {
     "quality": "Quality",

@@ -57,9 +57,10 @@ export default function CropperTool({ ctx }: { ctx: WorkspaceContext }) {
 
   const clampBox = (b: Box): Box => {
     if (!decoded) return b;
-    const min = 24 / scale;
-    const w = Math.max(min, Math.min(decoded.width - b.x, b.w));
-    const h = Math.max(min, Math.min(decoded.height - b.y, b.h));
+    const safeScale = Number.isFinite(scale) && scale > 0 ? scale : 1;
+    const min = Math.max(1, 24 / safeScale);
+    const w = Math.max(min, Math.min(Math.max(1, decoded.width - b.x), b.w));
+    const h = Math.max(min, Math.min(Math.max(1, decoded.height - b.y), b.h));
     return {
       x: Math.max(0, Math.min(decoded.width - min, b.x)),
       y: Math.max(0, Math.min(decoded.height - min, b.y)),
@@ -94,14 +95,10 @@ export default function CropperTool({ ctx }: { ctx: WorkspaceContext }) {
         let w = Math.abs(px - anchorX);
         let h = Math.abs(py - anchorY);
         if (r) {
-          const derived = Math.max(w, h / r, r * h >= w ? h * r : w);
-          if (w >= h) {
-            w = Math.max(w, h * r);
-            h = w / r;
-          } else {
-            h = Math.max(h, w / r);
-            w = h * r;
-          }
+          // Enforce the target ratio by stretching the shorter side so the
+          // crop box always matches the selected aspect exactly.
+          if (w / h > r) w = Math.max(w, h * r);
+          else h = Math.max(h, w / r);
         }
         const nx = cx === 'e' ? anchorX : anchorX - w;
         const ny = cy === 's' ? anchorY : anchorY - h;

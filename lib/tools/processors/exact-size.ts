@@ -65,19 +65,14 @@ async function hitTarget(
 
   // Phase 1 — probe a few qualities at full resolution to bracket the target.
   const probes = [0.85, 0.6, 0.4, 0.2, 0.08];
-  let lo = 0.05;
-  let hi = 0.95;
   let best: { blob: Blob; q: number; w: number; h: number } | null = null;
 
   for (const q of probes) {
     const blob = await encode(fullW, fullH, q);
     if (blob.size <= targetBytes) {
       best = { blob, q, w: fullW, h: fullH };
-      lo = q;
       break;
     }
-    hi = q;
-    lo = Math.min(lo, q - 0.05);
   }
 
   // Phase 2 — bisect upwards for the best quality that still fits.
@@ -126,8 +121,6 @@ async function hitTarget(
       return finish(decoded, format, originalSize, targetBytes, cur, true);
     }
     best = { blob: probe, q: 0.72, w, h };
-    void hi;
-    void lo;
   }
 
   // Nothing fits — return the smallest we produced with an honest flag.

@@ -50,6 +50,12 @@ export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
   React.useEffect(() => {
     const canvas = previewRef.current;
     if (!canvas || !decoded) return;
+    let cancelled = false;
+    let url: string | null = null;
+    const release = () => {
+      if (url) URL.revokeObjectURL(url);
+      url = null;
+    };
     const render = async () => {
       try {
         const { blob } = await applyWatermark([decoded], {
@@ -65,9 +71,11 @@ export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
           watermarkFile: wmFile ?? undefined,
           watermarkScale: wmScale,
         });
-        const url = URL.createObjectURL(blob);
+        if (cancelled) return;
+        url = URL.createObjectURL(blob);
         const img = new Image();
         img.onload = () => {
+          if (cancelled) return;
           const scale = Math.min(1, 520 / img.width);
           canvas.width = Math.round(img.width * scale);
           canvas.height = Math.round(img.height * scale);
@@ -76,15 +84,20 @@ export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
             cctx.clearRect(0, 0, canvas.width, canvas.height);
             cctx.drawImage(img, 0, 0, canvas.width, canvas.height);
           }
-          URL.revokeObjectURL(url);
+          release();
         };
+        img.onerror = release;
         img.src = url;
       } catch {
         /* ignore preview errors */
       }
     };
     const id = setTimeout(render, 120);
-    return () => clearTimeout(id);
+    return () => {
+      cancelled = true;
+      clearTimeout(id);
+      release();
+    };
   }, [decoded, type, text, fontFamily, fontSize, color, opacity, position, tile, wmFile, wmScale]);
 
   const process = () =>

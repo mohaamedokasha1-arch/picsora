@@ -4,7 +4,7 @@ import * as React from 'react';
 import { FileText, ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ProcessResult } from '@/lib/types';
-import { formatBytes, formatPercent } from '@/lib/utils';
+import { formatBytes } from '@/lib/utils';
 import { DownloadButton } from './download-button';
 
 interface ResultPanelProps {
@@ -13,11 +13,29 @@ interface ResultPanelProps {
   onReset?: () => void;
 }
 
+/** Optional per-result message keys surfaced by smart processors (compressor…). */
+const RESULT_MESSAGES: Record<
+  string,
+  { key: string; variant: 'info' | 'success' | 'warning' }
+> = {
+  'same-size': { key: 'sameSize', variant: 'info' },
+  'palette-compressed': { key: 'paletteCompressed', variant: 'success' },
+  'larger-output': { key: 'largerOutput', variant: 'warning' },
+};
+
 function isImage(r: ProcessResult) {
   return ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(r.format);
 }
 
-function ResultCard({ result, originalSize, index }: { result: ProcessResult; originalSize?: number; index: number }) {
+function ResultCard({
+  result,
+  originalSize,
+  index,
+}: {
+  result: ProcessResult;
+  originalSize?: number;
+  index: number;
+}) {
   const t = useTranslations('toolShell');
   const [url, setUrl] = React.useState<string | null>(null);
 
@@ -27,6 +45,17 @@ function ResultCard({ result, originalSize, index }: { result: ProcessResult; or
     setUrl(u);
     return () => URL.revokeObjectURL(u);
   }, [result]);
+
+  const message = RESULT_MESSAGES[(result as { message?: string }).message ?? ''];
+
+  // Signed delta so a larger output is never shown as a fake "saved" badge.
+  let deltaPercent: number | null = null;
+  let deltaTone: 'saved' | 'bigger' | 'same' = 'same';
+  if (originalSize !== undefined && originalSize > 0) {
+    deltaPercent = ((originalSize - result.blob.size) / originalSize) * 100;
+    if (deltaPercent > 0.5) deltaTone = 'saved';
+    else if (deltaPercent < -0.5) deltaTone = 'bigger';
+  }
 
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
@@ -50,13 +79,24 @@ function ResultCard({ result, originalSize, index }: { result: ProcessResult; or
         <div className="truncate text-xs text-muted-foreground" title={result.name}>
           {result.name}
         </div>
-        <div className="flex items-center gap-2 text-xs">
-          {originalSize !== undefined && (
+        <div className="flex flex-wrap items-center gap-2 text-xs">
+          {originalSize !== undefined && deltaPercent !== null && (
             <>
-              <span className="text-muted-foreground line-through">{t('originalSize')}: {formatBytes(originalSize)}</span>
+              <span className="text-muted-foreground line-through">
+                {t('originalSize')}: {formatBytes(originalSize)}
+              </span>
               <span className="text-foreground">{t('newSize')}: {formatBytes(result.blob.size)}</span>
-              <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 font-semibold text-emerald-600 dark:text-emerald-400">
-                −{formatPercent(originalSize, result.blob.size)}
+              <span
+                className={
+                  deltaTone === 'saved'
+                    ? 'rounded bg-emerald-500/10 px-1.5 py-0.5 font-semibold text-emerald-600 dark:text-emerald-400'
+                    : deltaTone === 'bigger'
+                      ? 'rounded bg-amber-500/10 px-1.5 py-0.5 font-semibold text-amber-700 dark:text-amber-300'
+                      : 'rounded bg-secondary px-1.5 py-0.5 font-semibold text-muted-foreground'
+                }
+              >
+                {deltaTone === 'saved' ? '−' : deltaTone === 'bigger' ? '+' : ''}
+                {Math.max(0, Math.round(Math.abs(deltaPercent)))}%
               </span>
             </>
           )}
@@ -64,6 +104,19 @@ function ResultCard({ result, originalSize, index }: { result: ProcessResult; or
             <span className="text-foreground">{formatBytes(result.blob.size)}</span>
           )}
         </div>
+        {message && (
+          <p
+            className={
+              message.variant === 'success'
+                ? 'rounded-md bg-emerald-500/10 px-2 py-1 text-xs text-emerald-700 dark:text-emerald-300'
+                : message.variant === 'warning'
+                  ? 'rounded-md bg-amber-500/10 px-2 py-1 text-xs text-amber-800 dark:text-amber-200'
+                  : 'rounded-md bg-secondary/60 px-2 py-1 text-xs text-muted-foreground'
+            }
+          >
+            {t(`resultMessages.${message.key}`)}
+          </p>
+        )}
         <DownloadButton blob={result.blob} filename={result.name} size="sm" className="w-full" />
       </div>
     </div>
@@ -73,6 +126,9 @@ function ResultCard({ result, originalSize, index }: { result: ProcessResult; or
 export function ResultPanel({ results, originalSize, onReset }: ResultPanelProps) {
   const t = useTranslations('toolShell');
   if (!results.length) return null;
+  // Size comparison is only meaningful for single-result tools; for batches
+  // each card shows its own output size instead of a misleading total delta.
+  const perResultOriginal = results.length === 1 ? originalSize : undefined;
   return (
     <div className="space-y-4">
       <h3 className="flex items-center gap-2 text-base font-semibold text-foreground">
@@ -81,7 +137,7 @@ export function ResultPanel({ results, originalSize, onReset }: ResultPanelProps
       </h3>
       <div className={results.length > 1 ? 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3' : 'grid gap-4 sm:grid-cols-2'}>
         {results.map((r, i) => (
-          <ResultCard key={`${r.name}-${i}`} result={r} originalSize={originalSize} index={i} />
+          <ResultCard key={`${r.name}-${i}`} result={r} originalSize={perResultOriginal} index={i} />
         ))}
       </div>
       {onReset && (

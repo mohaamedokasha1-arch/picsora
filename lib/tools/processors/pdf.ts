@@ -1,5 +1,7 @@
 import type { DecodedImage, ProcessResult } from '@/lib/types';
 import { nameOf } from '@/lib/image/process';
+import { canvasToBlob } from '@/lib/image/format';
+import { hasAlpha } from '@/lib/image/transparent';
 
 export interface PdfOptions {
   pageSize: 'a4' | 'letter' | 'fit';
@@ -17,17 +19,34 @@ function pageDims(opts: PdfOptions): [number, number] {
   return opts.orientation === 'landscape' ? [h, w] : [w, h];
 }
 
+/**
+ * Draw a decoded image through a canvas and encode it for embedding.
+ *
+ * Embedding the raw file bytes directly would skip EXIF orientation: a
+ * portrait photo taken on a phone would land in the PDF rotated/sideways
+ * (its height/width in the layout are the ORIENTED values). Re-encoding from
+ * the oriented bitmap keeps every page exactly as the user sees the preview.
+ * JPG is kept for opaque sources (smaller files), PNG for anything with alpha.
+ */
+async function encodeForPdf(decoded: DecodedImage): Promise<{ bytes: ArrayBuffer; kind: 'jpg' | 'png' }> {
+  const kind = hasAlpha(decoded) ? 'png' : 'jpg';
+  const { createCanvas } = await import('@/lib/image/process');
+  const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
+  ctx.drawImage((decoded.bitmap ?? decoded.image) as CanvasImageSource, 0, 0);
+  const blob = await canvasToBlob(canvas, { format: kind, quality: 0.95 });
+  return { bytes: await blob.arrayBuffer(), kind };
+}
+
 async function makePdf(files: DecodedImage[], opts: PdfOptions): Promise<Uint8Array> {
   const { PDFDocument } = await import('pdf-lib');
   const doc = await PDFDocument.create();
 
   for (const decoded of files) {
-    const isJpg = decoded.format === 'jpg' || decoded.format === 'jpeg';
-    // pdf-lib embeds JPG and PNG natively; re-encode anything else to PNG.
-    const bytes = isJpg
-      ? await decoded.file.arrayBuffer()
-      : await reencodeToPng(decoded);
-    const image = isJpg ? await doc.embedJpg(bytes) : await doc.embedPng(bytes);
+    const { bytes, kind } = await encodeForPdf(decoded);
+    const image =
+      kind === 'jpg'
+        ? await doc.embedJpg(bytes as unknown as ArrayBuffer)
+        : await doc.embedPng(bytes as unknown as ArrayBuffer);
 
     let [pw, ph] = pageDims(opts);
     if (opts.pageSize === 'fit') {
@@ -48,16 +67,6 @@ async function makePdf(files: DecodedImage[], opts: PdfOptions): Promise<Uint8Ar
   }
 
   return doc.save();
-}
-
-async function reencodeToPng(decoded: DecodedImage): Promise<ArrayBuffer> {
-  const { createCanvas } = await import('@/lib/image/process');
-  const { canvasToBlob } = await import('@/lib/image/format');
-  const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
-  if (decoded.bitmap) ctx.drawImage(decoded.bitmap, 0, 0);
-  else ctx.drawImage(decoded.image, 0, 0);
-  const blob = await canvasToBlob(canvas, { format: 'png' });
-  return blob.arrayBuffer();
 }
 
 export async function imagesToPdf(

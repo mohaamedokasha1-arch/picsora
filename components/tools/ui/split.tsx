@@ -23,6 +23,14 @@ export default function SplitTool({ ctx }: { ctx: WorkspaceContext }) {
   const preview = useObjectUrl(ctx.files[0]);
 
   const process = () => run(() => splitImage(ctx.decoded, { rows, cols, format: decoded.format }));
+  const [thumbUrls, setThumbUrls] = React.useState<string[]>([]);
+
+  // Keep one object URL per tile and release them on change/unmount.
+  React.useEffect(() => {
+    const urls = results.map((r) => URL.createObjectURL(r.blob));
+    setThumbUrls(urls);
+    return () => urls.forEach((u) => URL.revokeObjectURL(u));
+  }, [results]);
 
   const downloadZip = async () => {
     if (!results.length) return;
@@ -92,16 +100,15 @@ export default function SplitTool({ ctx }: { ctx: WorkspaceContext }) {
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-            {results.map((r, i) => {
-              const url = URL.createObjectURL(r.blob);
-              return (
-                <div key={i} className="overflow-hidden rounded-lg border border-border bg-card">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={url} alt={r.name} className="aspect-square w-full object-cover" onLoad={() => setTimeout(() => URL.revokeObjectURL(url), 1000)} />
-                  <div className="truncate px-2 py-1 text-[11px] text-muted-foreground">{r.name}</div>
-                </div>
-              );
-            })}
+            {results.map((r, i) => (
+              <div key={i} className="overflow-hidden rounded-lg border border-border bg-card">
+                {thumbUrls[i] ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={thumbUrls[i]} alt={r.name} className="aspect-square w-full object-cover" />
+                ) : null}
+                <div className="truncate px-2 py-1 text-[11px] text-muted-foreground">{r.name}</div>
+              </div>
+            ))}
           </div>
           <button type="button" onClick={ctx.reset} className="text-sm font-medium text-primary hover:underline">
             {t('toolShell.processAnother')}
