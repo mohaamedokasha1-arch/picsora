@@ -86,6 +86,14 @@ export default async function LocaleLayout({
   return (
     <html lang={params.locale} dir={dir} suppressHydrationWarning>
       <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZC19QS3RHY" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-ZC19QS3RHY');",
+          }}
+        />
         {/* Google Search Console verification */}
         <meta name="google-site-verification" content="6nwKbe3UwHbbzzDg0S8a6TRE_rEEIAdyGgIJD6q6ua4" />
         {/* Monetag site verification */}
