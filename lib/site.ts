@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'Piclizer',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://piclizer.app',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://piclizer.vercel.app',
   /** Raster OG image — social crawlers do not reliably fetch SVG. */
   ogImage: '/images/og-image.jpg',
   description:
