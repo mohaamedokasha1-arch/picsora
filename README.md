@@ -35,7 +35,7 @@ Copy `.env.example` to `.env.local` and adjust. Everything is optional — the s
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical domain (default `https://piclizer.app`) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical domain (default `https://piclizer.vercel.app` — must match the real site domain exactly, otherwise sitemap/canonical URLs break) |
 | `NEXT_PUBLIC_SITE_NAME` | Brand name (default `Piclizer`) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Search Console verification token |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics ID (loads only after consent) |
