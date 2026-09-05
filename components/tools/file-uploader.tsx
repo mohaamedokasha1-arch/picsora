@@ -26,6 +26,13 @@ function isHeicName(file: File): boolean {
   return /\.hei[cf]$/i.test(file.name) || file.type.toLowerCase().includes('heic') || file.type.toLowerCase().includes('heif');
 }
 
+/**
+ * Image extension fallback for picks whose MIME type arrives empty —
+ * gallery/photo-picker selections on some Android devices report no type
+ * at all even though the name (or normalisation) says it is an image.
+ */
+const IMAGE_EXT = /\.(jpe?g|png|webp|gif|bmp|tiff?|avif|svg|hei[cf])$/i;
+
 /** Thumbnail that converts HEIC previews locally so iPhone photos show up. */
 function Thumb({ file }: { file: File }) {
   const [url, setUrl] = React.useState<string | null>(null);
@@ -44,7 +51,7 @@ function Thumb({ file }: { file: File }) {
         let blob: Blob | null = null;
         if (isHeicName(file)) {
           blob = await convertHeicToBlob(file, 'image/jpeg', 0.7);
-        } else if (file.type.startsWith('image/')) {
+        } else if ((file.type || '').startsWith('image/') || IMAGE_EXT.test(file.name || '')) {
           blob = file;
         } else {
           return;
@@ -80,10 +87,16 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   // MIME list plus explicit extensions: some mobile browsers report odd MIME
-  // types for HEIC, so the `.heic` fallback keeps the picker honest.
+  // types for HEIC, so the `.heic` fallback keeps the picker honest. The
+  // `image/*` wildcard is added for image tools because several Android
+  // gallery/photo-picker integrations only surface camera photos and
+  // screenshots when a wildcard is present. It only widens the PICKER —
+  // `validateFiles` below still enforces the exact per-tool formats.
   const acceptAttr = React.useMemo(() => {
     const exts = rule.extensions.map((e) => `.${e}`);
-    return [...rule.mimes, ...exts].join(',');
+    const tokens = [...rule.mimes, ...exts];
+    if (rule.mimes.some((m) => m.startsWith('image/'))) tokens.push('image/*');
+    return tokens.join(',');
   }, [rule]);
 
   const handleFiles = async (incoming: FileList | File[]) => {
@@ -94,9 +107,9 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
       onError({ key: 'tooManyFiles', params: { max: String(rule.maxFiles) } });
       return;
     }
-    // Batch validation: per-file checks (name structure, magic bytes, MIME,
-    // SVG active content) plus the combined-size ceiling. Same error keys as
-    // before, so the messages the user sees are unchanged.
+    // Batch validation: per-file checks (name structure, CONTENT-first magic
+    // bytes, MIME, SVG active content) plus the combined-size ceiling. Same
+    // error keys as before, so the messages the user sees are unchanged.
     const result = await validateFiles([...files, ...list], rule);
     if (!result.valid) {
       onError({
@@ -105,7 +118,11 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
       });
       return; // stop on first invalid file to keep it simple
     }
-    onFilesChange([...files, ...list]);
+    // Use the content-normalised files: gallery picks routinely arrive with
+    // no extension, no MIME type, or a name that contradicts the bytes
+    // (JPEG in a `.HEIC` file, PNG screenshot named `.jpg`…). Validation
+    // re-labels them so previews, HEIC routing and output names are right.
+    onFilesChange(result.files ?? [...files, ...list]);
   };
 
   const onDrop = (e: React.DragEvent) => {

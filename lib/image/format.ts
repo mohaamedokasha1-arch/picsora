@@ -34,6 +34,18 @@ export function fileExt(name: string): string {
   return idx >= 0 ? name.slice(idx + 1).toLowerCase() : '';
 }
 
+/**
+ * Collapse alias extensions to one canonical token so `jpeg`/`jpg`,
+ * `heif`/`heic` and `tif`/`tiff` compare equal everywhere.
+ */
+export function normalizeFormatAlias(value: string): string {
+  const v = (value || '').toLowerCase();
+  if (v === 'jpeg') return 'jpg';
+  if (v === 'heif') return 'heic';
+  if (v === 'tif') return 'tiff';
+  return v;
+}
+
 export function extFromMime(mime: string): string {
   const map: Record<string, string> = {
     'image/jpeg': 'jpg',
@@ -89,6 +101,8 @@ export function encodableFormat(format: ImageFormat): ImageFormat {
 /** Read the magic bytes of a file and verify they match the claimed extension. */
 export function sniffFormatFromBytes(bytes: Uint8Array): string | null {
   if (bytes.length < 4) return null;
+  // PDF: "%PDF" (document pickers sometimes strip the name/MIME — bytes decide)
+  if (bytes[0] === 0x25 && bytes[1] === 0x50 && bytes[2] === 0x44 && bytes[3] === 0x46) return 'pdf';
   // PNG: 89 50 4E 47
   if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47) return 'png';
   // JPEG: FF D8 FF
@@ -112,21 +126,34 @@ export function sniffFormatFromBytes(bytes: Uint8Array): string | null {
   if (bytes.length >= 12) {
     if (bytes[4] === 0x66 && bytes[5] === 0x74 && bytes[6] === 0x79 && bytes[7] === 0x70) {
       const brand = String.fromCharCode(...bytes.subarray(8, 12)).toLowerCase();
+      const isHeicBrand = (b: string) =>
+        b.startsWith('heic') ||
+        b.startsWith('heix') ||
+        b.startsWith('hevc') ||
+        b.startsWith('hevx') ||
+        b.startsWith('heim') ||
+        b.startsWith('heis') ||
+        b.startsWith('hevm') ||
+        b.startsWith('hevs') ||
+        b.startsWith('heci');
       if (brand.startsWith('avif') || brand === 'avis') return 'avif';
-      if (
-        brand.startsWith('heic') ||
-        brand.startsWith('heix') ||
-        brand.startsWith('hevc') ||
-        brand.startsWith('hevx') ||
-        brand.startsWith('heim') ||
-        brand.startsWith('heis') ||
-        brand.startsWith('hevm') ||
-        brand.startsWith('hevs') ||
-        brand.startsWith('heci') ||
-        brand === 'mif1' ||
-        brand === 'msf1'
-      )
-        return 'heic';
+      if (isHeicBrand(brand)) return 'heic';
+      // Generic ISO media brands (mif1/msf1/miaf) are used by BOTH HEIC and
+      // AVIF files — cameras and gallery apps differ in which one they write.
+      // Scan the compatible-brand list (offset 16, 4-byte codes) to tell them
+      // apart instead of guessing, so an AVIF photo is never pushed through
+      // the HEIC decoder (and vice versa).
+      if (brand === 'mif1' || brand === 'msf1' || brand === 'miaf') {
+        // eslint-disable-next-line no-bitwise
+        const boxSize = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
+        const end = boxSize >= 16 && boxSize <= bytes.length ? boxSize : bytes.length;
+        for (let i = 16; i + 4 <= end; i += 4) {
+          const compatible = String.fromCharCode(...bytes.subarray(i, i + 4)).toLowerCase();
+          if (compatible.startsWith('avif') || compatible === 'avis') return 'avif';
+          if (isHeicBrand(compatible)) return 'heic';
+        }
+        return 'heic'; // historical default for unknown mif1 content
+      }
     }
   }
   // SVG: starts with optional whitespace then <svg or <?xml
@@ -144,14 +171,36 @@ export function sniffFormatFromBytes(bytes: Uint8Array): string | null {
 export function sniffFormat(file: File): Promise<string | null> {
   return new Promise((resolve) => {
     if (file.size < 4) return resolve(null);
-    const reader = new FileReader();
-    reader.onload = () => {
-      const arr = new Uint8Array(reader.result as ArrayBuffer);
-      resolve(sniffFormatFromBytes(arr));
-    };
-    reader.onerror = () => resolve(null);
-    reader.readAsArrayBuffer(file.slice(0, 16));
+    // 32 bytes: enough for the ISO-BMFF `ftyp` box including a few
+    // compatible brands (HEIC vs AVIF disambiguation).
+    file
+      .slice(0, 32)
+      .arrayBuffer()
+      .then((buf) => resolve(sniffFormatFromBytes(new Uint8Array(buf))))
+      .catch(() => resolve(null));
   });
+}
+
+/**
+ * Best-effort true format of a file, resolved CONTENT-FIRST:
+ *
+ * 1. magic bytes (authoritative — gallery picks are frequently mislabelled:
+ *    JPEG bytes named `.heic`, PNG screenshots named `.jpg`, …),
+ * 2. the file-name extension (gallery pickers on Android/iOS often strip it
+ *    entirely, e.g. `image:47` or an empty name),
+ * 3. the reported MIME type (some pickers report an empty or generic type).
+ *
+ * Returns a canonical, alias-normalised token (`jpg`, `png`, `heic`, …) or
+ * `null` when no signal at all is available.
+ */
+export async function detectFileFormat(file: File): Promise<string | null> {
+  const sniffed = await sniffFormat(file);
+  if (sniffed) return normalizeFormatAlias(sniffed);
+  const fromExt = normalizeFormatAlias(fileExt(file.name || ''));
+  if (fromExt) return fromExt;
+  const fromMime = normalizeFormatAlias(extFromMime(file.type || ''));
+  if (fromMime) return fromMime;
+  return null;
 }
 
 export function supportsWebPEncode(): boolean {
@@ -180,13 +229,24 @@ export function supportsOffscreenCanvas(): boolean {
  * - Oversized images fail fast with `image-too-large` instead of crashing tab.
  */
 export async function decodeImage(file: File): Promise<DecodedImage> {
+  // Step 0 — resolve the TRUE format from the file's content first.
+  // Gallery picks routinely arrive mislabelled: JPEG bytes in a file named
+  // `.HEIC` (iOS transcodes on share), PNG screenshots named `.jpg` (some
+  // Android galleries), or files with no extension/MIME at all. Trusting the
+  // name or MIME here would send a plain JPEG through the HEIC decoder (and
+  // fail) or mislabel the output format.
+  const detected = await detectFileFormat(file);
+
   // Step 1 — HEIC/HEIF: convert locally to a decodable format first.
+  // Only content-confirmed HEIC (or a file with no content signal that at
+  // least claims HEIC by name/MIME) goes through heic2any.
   let workFile: File = file;
   let heicConverted = false;
-  if (isHeicFile(file)) {
+  const treatAsHeic = detected === 'heic' || (detected === null && isHeicFile(file));
+  if (treatAsHeic) {
     try {
       const blob = await convertHeicToBlob(file, 'image/jpeg', 0.92);
-      workFile = new File([blob], file.name, { type: 'image/jpeg' });
+      workFile = new File([blob], file.name || 'photo.heic', { type: 'image/jpeg' });
       heicConverted = true;
     } catch {
       throw new Error('heic-convert-failed');
@@ -194,7 +254,10 @@ export async function decodeImage(file: File): Promise<DecodedImage> {
   }
 
   const format =
-    (extFromMime(file.type) as ImageFormat) || (fileExt(file.name) as ImageFormat) || 'png';
+    (detected as ImageFormat) ||
+    (extFromMime(file.type) as ImageFormat) ||
+    (fileExt(file.name) as ImageFormat) ||
+    'png';
 
   // Step 2 — decode via <img> (universal fallback, keeps EXIF for display).
   const url = URL.createObjectURL(workFile);

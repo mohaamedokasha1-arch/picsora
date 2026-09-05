@@ -31,6 +31,36 @@ export function useErrorText() {
   );
 }
 
+/**
+ * Repair the name/type of an accepted PDF so downstream display, inspection
+ * and downloads work: picker-selected documents sometimes arrive without the
+ * `.pdf` suffix or with an empty/generic MIME type. Contents are untouched —
+ * the same blob is re-wrapped with a consistent label.
+ */
+function normalizePdfFile(file: File): File {
+  const name = file.name || '';
+  const nameOk = /\.pdf$/i.test(name);
+  const typeOk = (file.type || '').toLowerCase() === 'application/pdf';
+  if (nameOk && typeOk) return file;
+  let base = name.replace(/\.pdf$/i, '');
+  // eslint-disable-next-line no-control-regex
+  base = base
+    .replace(/[\u200E\u200F\u202A-\u202E\u2066-\u2069\u200B-\u200D\u2060\uFEFF]/g, '')
+    // eslint-disable-next-line no-control-regex
+    .replace(/[\\/:*?"<>|\u0000-\u001F\u007F-\u009F]/g, '_')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (base.length > 120) base = base.slice(0, 120).trim();
+  try {
+    return new File([file], `${base || 'document'}.pdf`, {
+      type: 'application/pdf',
+      lastModified: file.lastModified || Date.now(),
+    });
+  } catch {
+    return file;
+  }
+}
+
 export interface PdfDropzoneProps {
   multiple?: boolean;
   maxFiles?: number;
@@ -59,6 +89,7 @@ export function PdfDropzone({
       onError(t('validation.tooManyFiles', { max: maxFiles }));
       return;
     }
+    const accepted: File[] = [];
     for (const file of files) {
       if (!file.size) {
         onError(t('validation.emptyFile'));
@@ -68,20 +99,23 @@ export function PdfDropzone({
         onError(t('validation.fileTooLarge', { size: maxFileSizeMB }));
         return;
       }
-      const isPdfName = file.name.toLowerCase().endsWith('.pdf');
-      const isPdfMime = !file.type || file.type === 'application/pdf' || file.type === 'application/octet-stream';
-      if (!isPdfName || !isPdfMime) {
-        onError(t('validation.invalidType', { types: 'PDF' }));
-        return;
-      }
-      // Magic-byte check — never hand a non-PDF to pdf-lib.
+      // Content-first: the %PDF magic bytes are the authoritative signal.
+      // Document pickers — like photo galleries for images — sometimes strip
+      // the `.pdf` suffix or report an empty/generic MIME type; if the bytes
+      // are a PDF, the file IS a PDF. A non-PDF is still never handed to
+      // pdf-lib: without the magic header it is rejected exactly as before.
       const head = new Uint8Array(await file.slice(0, 5).arrayBuffer());
-      if (String.fromCharCode(...head.subarray(0, 4)) !== '%PDF') {
-        onError(t('errors.invalidPdf'));
+      const isPdfMagic =
+        head.length >= 4 && String.fromCharCode(...head.subarray(0, 4)) === '%PDF';
+      if (!isPdfMagic) {
+        const claimsPdf =
+          (file.name || '').toLowerCase().endsWith('.pdf') || file.type === 'application/pdf';
+        onError(claimsPdf ? t('errors.invalidPdf') : t('validation.invalidType', { types: 'PDF' }));
         return;
       }
+      accepted.push(normalizePdfFile(file));
     }
-    onFiles(files);
+    onFiles(accepted);
   };
 
   return (

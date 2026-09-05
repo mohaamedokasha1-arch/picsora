@@ -11,7 +11,15 @@ export type UploadExtension =
   | 'svg'
   | 'heic'
   | 'heif';
-import { mimeFromExt } from '@/lib/image/format';
+import {
+  detectFileFormat,
+  extFromMime,
+  fileExt,
+  mimeFromExt,
+  normalizeFormatAlias,
+  sniffFormat,
+  stripExtension,
+} from '@/lib/image/format';
 
 export interface FormatRule {
   /** Accepted formats (by extension). */
@@ -66,12 +74,35 @@ const CONTROL_OR_NULL = /[\u0000-\u001F\u007F]/;
 const BIDI_SPOOF = /[\u202A-\u202E\u2066-\u2069]/;
 
 /**
+ * Reported MIME types that are unambiguously NOT an image/PDF. Used only on
+ * the no-content-signal fallback path: when the bytes themselves identify
+ * the format, a bogus picker-reported MIME is ignored (content wins).
+ */
+const CLEARLY_WRONG_MIME =
+  /^(application\/pdf|text\/|audio\/|video\/|application\/(javascript|x-msdownload|x-sh|x-httpd-php|xhtml\+xml|zip|x-zip))/;
+
+/** Characters that are illegal or hostile in file names on major OSes. */
+// eslint-disable-next-line no-control-regex
+const NAME_HOSTILE_CHARS = /[\\/:*?"<>|\u0000-\u001F\u007F-\u009F]/g;
+/** Bidi overrides + zero-width invisibles used to spoof file names. */
+const NAME_SPOOF_CHARS = /[\u200E\u200F\u202A-\u202E\u2066-\u2069\u200B-\u200D\u2060\uFEFF]/g;
+
+/**
  * Structural checks on the file name itself — run before any byte is read.
  * Catches path traversal, null-byte truncation, RTL-override spoofing and
  * double extensions.
+ *
+ * A MISSING name is explicitly fine: photo-gallery / picker selections on
+ * Android and iOS frequently arrive unnamed (`""`) or without any extension
+ * (`image:47`, `1000012345`). An absent name carries no traversal or
+ * spoofing risk — the content checks in `validateFile` decide the type and
+ * `normalizeUploadedFile` gives the file a usable name afterwards.
  */
 function validateFilename(name: string): ValidationResult {
-  if (!name || name.length > MAX_FILENAME_LENGTH) {
+  if (!name) {
+    return { valid: true };
+  }
+  if (name.length > MAX_FILENAME_LENGTH) {
     return { valid: false, errorKey: 'invalidType' };
   }
   if (CONTROL_OR_NULL.test(name) || BIDI_SPOOF.test(name)) {
@@ -128,7 +159,8 @@ async function validateSvgContent(file: File): Promise<ValidationResult> {
 /** Validate a single file against a tool's format rule. */
 export async function validateFile(file: File, rule: FormatRule): Promise<ValidationResult> {
   // 0 — File name structure (traversal, spoofing, double extensions).
-  const nameCheck = validateFilename(file.name);
+  // An absent name (gallery picks) is fine; a present one must be safe.
+  const nameCheck = validateFilename(file.name || '');
   if (!nameCheck.valid) return { ...nameCheck, params: { types: rule.label } };
 
   // 0-byte check
@@ -142,76 +174,133 @@ export async function validateFile(file: File, rule: FormatRule): Promise<Valida
   if (file.size > ABSOLUTE_MAX_BYTES) {
     return { valid: false, errorKey: 'fileTooLarge', params: { size: String(rule.maxFileSizeMB) } };
   }
-  // Extension check
-  const ext = (file.name.split('.').pop() || '').toLowerCase();
-  if (!rule.extensions.includes(ext as UploadExtension)) {
-    return { valid: false, errorKey: 'invalidType', params: { types: rule.label } };
-  }
-  // PDF: verify the %PDF magic bytes instead of the image sniffer.
-  if (ext === 'pdf') {
-    const head = new Uint8Array(await file.slice(0, 5).arrayBuffer());
-    const magic = String.fromCharCode(...head.subarray(0, 4));
-    if (magic !== '%PDF') return { valid: false, errorKey: 'invalidPdf' };
-    return { valid: true };
+  // ── Type detection: CONTENT-FIRST ────────────────────────────────────────
+  // Photo-gallery / picker selections are notoriously sloppy compared to the
+  // file manager: names with no extension at all (`image:47`, `1000012345`),
+  // empty names, empty or generic MIME types — and galleries transcode on
+  // share (iOS hands out JPEG bytes inside a file still named `.HEIC`, some
+  // Android galleries flip screenshots between PNG and JPEG). The magic
+  // bytes are the only dependable signal, so they get the final word; the
+  // extension and MIME type are fallbacks, never gatekeepers.
+  const ext = normalizeFormatAlias(fileExt(file.name || ''));
+  const mimeExt = normalizeFormatAlias(extFromMime(file.type || ''));
+  const sniffedRaw = await sniffFormat(file);
+  const sniffed = sniffedRaw ? normalizeFormatAlias(sniffedRaw) : '';
+  const ruleFormats = new Set(rule.extensions.map((e) => normalizeFormatAlias(e)));
+  const wrongType = (): ValidationResult => ({
+    valid: false,
+    errorKey: 'invalidType',
+    params: { types: rule.label },
+  });
+  // Keep the `{types}` label on SVG scan failures so the message renders.
+  const withTypes = (r: ValidationResult): ValidationResult =>
+    r.valid ? r : { ...r, params: { types: rule.label, ...(r.params ?? {}) } };
+
+  // PDF: the %PDF magic bytes decide. A document picker that strips the
+  // `.pdf` suffix still delivers a usable PDF; an image tool that receives a
+  // PDF gets the usual clear "unsupported type" rejection.
+  if (sniffed === 'pdf') {
+    return ruleFormats.has('pdf') ? { valid: true } : wrongType();
   }
 
-  // Magic-byte verification (defense in depth). Alias groups such as
-  // jpg/jpeg and heic/heif are treated as interchangeable.
-  const normalizeAlias = (v: string) => {
-    if (v === 'jpeg') return 'jpg';
-    if (v === 'heif') return 'heic';
-    if (v === 'tif') return 'tiff';
-    return v;
-  };
-  const { sniffFormat } = await import('@/lib/image/format');
-  const sniffed = await sniffFormat(file);
-  // A null sniff (e.g. an uncommon HEIC brand) lets the decoder attempt a
-  // local conversion instead of rejecting the file outright.
-  if (sniffed && normalizeAlias(sniffed) !== normalizeAlias(ext)) {
-    return { valid: false, errorKey: 'mimeMismatch' };
+  // SVG content (i.e. really XML/markup): only tools that asked for SVG may
+  // receive it, it must not hide behind a raster extension (polyglot guard),
+  // and it must pass the active-content scan.
+  if (sniffed === 'svg') {
+    if (!ruleFormats.has('svg')) return wrongType();
+    if (ext && ext !== 'svg') return { valid: false, errorKey: 'mimeMismatch' };
+    return withTypes(await validateSvgContent(file));
   }
-  // Polyglot guard: a file that *sniffs* as SVG (i.e. is really XML/markup)
-  // must never be accepted by a tool that did not ask for SVG, whatever its
-  // extension or reported MIME type says.
-  if (sniffed === 'svg' && !rule.extensions.includes('svg')) {
-    return { valid: false, errorKey: 'mimeMismatch' };
+
+  // Raster images: the format identified from the BYTES — not the name —
+  // decides acceptance. Extension/MIME disagreements are normal for gallery
+  // picks (transcoded HEIC→JPEG, PNG↔JPEG screenshots) and must not reject
+  // the file as long as the tool supports the real content; the uploader
+  // re-labels such files to match their bytes before processing.
+  if (sniffed) {
+    return ruleFormats.has(sniffed) ? { valid: true } : wrongType();
   }
-  // Active-content scan for the tools that do accept SVG.
-  if (normalizeAlias(ext) === 'svg' || sniffed === 'svg') {
-    const svgCheck = await validateSvgContent(file);
-    if (!svgCheck.valid) return { ...svgCheck, params: { types: rule.label, ...svgCheck.params } };
+
+  // No content signal at all (e.g. an uncommon container brand the sniffer
+  // does not enumerate): fall back to the claimed extension, then the MIME
+  // type, and let the decoder attempt instead of rejecting outright — the
+  // historic leniency for exotic HEIC files. A PDF claim still requires the
+  // magic bytes, and a clearly non-image MIME stays rejected.
+  if (ext === 'pdf' || mimeExt === 'pdf') {
+    return ruleFormats.has('pdf') ? { valid: false, errorKey: 'invalidPdf' } : wrongType();
   }
-  // MIME check (do not trust extension alone)
-  if (file.type && file.type !== 'application/octet-stream') {
-    // A reported MIME type must itself be well-formed — some browsers pass the
-    // value straight through from the OS.
-    if (!/^[a-z0-9][a-z0-9!#$&^_.+-]{0,126}\/[a-z0-9][a-z0-9!#$&^_.+-]{0,126}$/i.test(file.type)) {
-      return { valid: false, errorKey: 'invalidType', params: { types: rule.label } };
-    }
-    const accepted = rule.mimes.some((m) => file.type === m);
-    if (!accepted) {
-      // If MIME is not in the accepted list but the extension+sniff passed, be lenient
-      // (browsers sometimes report generic MIME types). Only reject clearly wrong MIME.
-      const clearlyWrong =
-        /^(application\/pdf|text\/|audio\/|video\/|application\/(javascript|x-msdownload|x-sh|x-httpd-php|xhtml\+xml|zip|x-zip))/.test(
-          file.type,
-        );
-      if (clearlyWrong) {
-        return { valid: false, errorKey: 'invalidType', params: { types: rule.label } };
-      }
-    }
-  }
+  const claim = ruleFormats.has(ext) ? ext : ruleFormats.has(mimeExt) ? mimeExt : '';
+  if (!claim) return wrongType();
+  if (claim === 'svg') return withTypes(await validateSvgContent(file));
+  if (file.type && CLEARLY_WRONG_MIME.test(file.type)) return wrongType();
   return { valid: true };
+}
+
+/**
+ * Build a safe, usable file name for a picked file: strips path separators
+ * and filesystem-hostile characters (gallery names like `image:47`), control
+ * and bidi/zero-width spoofing characters, collapses whitespace, and appends
+ * the canonical extension of the detected format. Unnamed picks fall back to
+ * `image.<ext>`. Human-readable names — including Arabic ones — are kept.
+ */
+function buildUsableName(originalName: string | undefined, ext: string): string {
+  let base = stripExtension(originalName || '')
+    .replace(NAME_SPOOF_CHARS, '')
+    // eslint-disable-next-line no-control-regex
+    .replace(NAME_HOSTILE_CHARS, '_')
+    .replace(/^\.+/, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (base.length > 120) base = base.slice(0, 120).trim();
+  return `${base || 'image'}.${ext}`;
+}
+
+/**
+ * Re-label an accepted file so its NAME and MIME type match its actual
+ * CONTENT. Gallery/photo-picker selections routinely arrive mislabelled:
+ * JPEG bytes named `.HEIC` (iOS transcodes on share), PNG screenshots named
+ * `.jpg` (some Android galleries), names with no extension (`image:47`) or
+ * no name and no MIME type at all.
+ *
+ * Everything downstream — the HEIC-conversion routing, `<img>` previews,
+ * canvas encode format selection and output file names — derives the format
+ * from name/type, so repairing both here makes gallery picks behave exactly
+ * like file-manager picks. File CONTENTS are never touched: `new File([f])`
+ * just wraps the same blob. Files that are already consistent are returned
+ * unchanged (same reference), so this is idempotent.
+ */
+export async function normalizeUploadedFile(file: File): Promise<File> {
+  const target = await detectFileFormat(file);
+  if (!target) return file; // no signal at all — leave as-is, decoder will judge
+
+  const ext = normalizeFormatAlias(fileExt(file.name || ''));
+  const extOk = !!ext && ext === target;
+  const mime = (file.type || '').toLowerCase();
+  const typeOk =
+    !!mime && mime !== 'application/octet-stream' && normalizeFormatAlias(extFromMime(mime)) === target;
+  if (extOk && typeOk) return file; // already consistent — keep the original object
+
+  const name = extOk ? file.name : buildUsableName(file.name, target);
+  try {
+    return new File([file], name, {
+      type: mimeFromExt(target),
+      lastModified: file.lastModified || Date.now(),
+    });
+  } catch {
+    return file; // exotic environment without a usable File constructor
+  }
 }
 
 /**
  * Validate a whole batch: per-file rules plus the batch-level limits
  * (file count and combined size) that prevent memory-exhaustion attempts.
+ * On success the returned `files` are content-normalised copies (see
+ * `normalizeUploadedFile`) ready for the processing pipeline.
  */
 export async function validateFiles(
   files: File[],
   rule: FormatRule,
-): Promise<ValidationResult & { file?: string }> {
+): Promise<ValidationResult & { file?: string; files?: File[] }> {
   if (files.length > rule.maxFiles) {
     return { valid: false, errorKey: 'tooManyFiles', params: { max: String(rule.maxFiles) } };
   }
@@ -224,7 +313,8 @@ export async function validateFiles(
     const result = await validateFile(file, rule);
     if (!result.valid) return { ...result, file: file.name };
   }
-  return { valid: true };
+  const normalized = await Promise.all(files.map((f) => normalizeUploadedFile(f)));
+  return { valid: true, files: normalized };
 }
 
 export function defaultRuleFor(extensions: UploadExtension[], maxFiles = 10, maxFileSizeMB = 50): FormatRule {
