@@ -43,10 +43,20 @@ export async function loadDecoded(file: File): Promise<DecodedImage> {
   return decodeImage(file);
 }
 
+export interface EncodeBlobOptions {
+  /**
+   * CSS colour painted under the image before encoding. Required when an
+   * image with transparency is encoded to JPEG — canvas alpha otherwise
+   * collapses to BLACK in the JPEG output.
+   */
+  background?: string;
+}
+
 export async function encodeDecodedToBlob(
   decoded: DecodedImage,
   format: ImageFormat,
   quality = 0.92,
+  opts: EncodeBlobOptions = {},
 ): Promise<Blob> {
   if (decoded.bitmap) {
     // Encode directly from the bitmap via an OffscreenCanvas fast path.
@@ -55,6 +65,10 @@ export async function encodeDecodedToBlob(
         const off = new OffscreenCanvas(decoded.width, decoded.height);
         const octx = off.getContext('2d');
         if (octx) {
+          if (opts.background) {
+            octx.fillStyle = opts.background;
+            octx.fillRect(0, 0, decoded.width, decoded.height);
+          }
           octx.drawImage(decoded.bitmap, 0, 0);
           return canvasToBlob(off, { format, quality });
         }
@@ -62,10 +76,14 @@ export async function encodeDecodedToBlob(
         /* fall through */
       }
     }
-    const { canvas } = drawToCanvas(decoded.bitmap);
+    const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
+    if (opts.background) fillBackground(ctx, opts.background, canvas.width, canvas.height);
+    ctx.drawImage(decoded.bitmap, 0, 0);
     return canvasToBlob(canvas, { format, quality });
   }
-  const { canvas } = drawToCanvas(decoded.image);
+  const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
+  if (opts.background) fillBackground(ctx, opts.background, canvas.width, canvas.height);
+  ctx.drawImage(decoded.image, 0, 0);
   return canvasToBlob(canvas, { format, quality });
 }
 

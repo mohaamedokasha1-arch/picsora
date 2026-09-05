@@ -1,6 +1,7 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { nameOf, outputName } from '@/lib/image/process';
 import { canvasToBlob, supportsWebPEncode } from '@/lib/image/format';
+import { hasAlpha } from '@/lib/image/transparent';
 
 export interface ExactSizeOptions {
   /** Desired output size in kilobytes. */
@@ -19,12 +20,16 @@ export interface ExactSizeResult extends ProcessResult {
   finalQuality: number;
 }
 
-function drawScaled(decoded: DecodedImage, w: number, h: number): HTMLCanvasElement {
+function drawScaled(decoded: DecodedImage, w: number, h: number, background?: string): HTMLCanvasElement {
   const canvas = document.createElement('canvas');
   canvas.width = Math.max(1, Math.round(w));
   canvas.height = Math.max(1, Math.round(h));
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('no-2d-context');
+  if (background) {
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
   const src = (decoded.bitmap ?? decoded.image) as CanvasImageSource;
   ctx.drawImage(src, 0, 0, canvas.width, canvas.height);
   return canvas;
@@ -60,43 +65,48 @@ async function hitTarget(
   const fullW = decoded.width;
   const fullH = decoded.height;
 
+  // JPEG has no alpha channel: paint transparent sources on white so logos
+  // never come out on a black background (same rule as the other tools).
+  const background =
+    (format === 'jpg' || format === 'jpeg') && hasAlpha(decoded) ? '#ffffff' : undefined;
+  // PNG encoders ignore the quality argument — probing/bisecting it would
+  // only waste time, so lossless runs go straight to dimension scaling.
+  const qualityApplies = format !== 'png';
+
   const encode = async (w: number, h: number, q: number) =>
-    canvasToBlob(drawScaled(decoded, w, h), { format, quality: q });
+    canvasToBlob(drawScaled(decoded, w, h, background), { format, quality: q });
 
   // Phase 1 — probe a few qualities at full resolution to bracket the target.
-  const probes = [0.85, 0.6, 0.4, 0.2, 0.08];
-  let lo = 0.05;
-  let hi = 0.95;
+  const probes = qualityApplies ? [0.85, 0.6, 0.4, 0.2, 0.08] : [0.92];
   let best: { blob: Blob; q: number; w: number; h: number } | null = null;
 
   for (const q of probes) {
     const blob = await encode(fullW, fullH, q);
     if (blob.size <= targetBytes) {
       best = { blob, q, w: fullW, h: fullH };
-      lo = q;
       break;
     }
-    hi = q;
-    lo = Math.min(lo, q - 0.05);
   }
 
   // Phase 2 — bisect upwards for the best quality that still fits.
   if (best) {
-    let low = best.q;
-    let high = Math.min(0.95, best.q + 0.3);
-    // Verify the upper bound actually exceeds the target; if not, use it.
-    const highBlob = await encode(fullW, fullH, high);
-    if (highBlob.size <= targetBytes) {
-      best = { blob: highBlob, q: high, w: fullW, h: fullH };
-    } else {
-      for (let i = 0; i < 4; i += 1) {
-        const mid = (low + high) / 2;
-        const blob = await encode(fullW, fullH, mid);
-        if (blob.size <= targetBytes) {
-          best = { blob, q: mid, w: fullW, h: fullH };
-          low = mid;
-        } else {
-          high = mid;
+    if (qualityApplies) {
+      let low = best.q;
+      let high = Math.min(0.95, best.q + 0.3);
+      // Verify the upper bound actually exceeds the target; if not, use it.
+      const highBlob = await encode(fullW, fullH, high);
+      if (highBlob.size <= targetBytes) {
+        best = { blob: highBlob, q: high, w: fullW, h: fullH };
+      } else {
+        for (let i = 0; i < 4; i += 1) {
+          const mid = (low + high) / 2;
+          const blob = await encode(fullW, fullH, mid);
+          if (blob.size <= targetBytes) {
+            best = { blob, q: mid, w: fullW, h: fullH };
+            low = mid;
+          } else {
+            high = mid;
+          }
         }
       }
     }
@@ -110,24 +120,24 @@ async function hitTarget(
     const h = Math.max(16, Math.round(fullH * s));
     const probe = await encode(w, h, 0.72);
     if (probe.size <= targetBytes) {
-      let low = 0.3;
-      let high = 0.9;
       let cur: { blob: Blob; q: number; w: number; h: number } = { blob: probe, q: 0.72, w, h };
-      for (let i = 0; i < 3; i += 1) {
-        const mid = (low + high) / 2;
-        const blob = await encode(w, h, mid);
-        if (blob.size <= targetBytes) {
-          cur = { blob, q: mid, w, h };
-          low = mid;
-        } else {
-          high = mid;
+      if (qualityApplies) {
+        let low = 0.3;
+        let high = 0.9;
+        for (let i = 0; i < 3; i += 1) {
+          const mid = (low + high) / 2;
+          const blob = await encode(w, h, mid);
+          if (blob.size <= targetBytes) {
+            cur = { blob, q: mid, w, h };
+            low = mid;
+          } else {
+            high = mid;
+          }
         }
       }
       return finish(decoded, format, originalSize, targetBytes, cur, true);
     }
     best = { blob: probe, q: 0.72, w, h };
-    void hi;
-    void lo;
   }
 
   // Nothing fits — return the smallest we produced with an honest flag.

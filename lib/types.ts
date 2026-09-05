@@ -26,6 +26,12 @@ export interface ProcessResult {
   format: OutputFormat;
   /** Suggested download filename without extension. */
   name: string;
+  /**
+   * Byte size of THIS result's source file. Per-result values keep batch
+   * tools honest (comparing one output against the whole batch total would
+   * show inflated savings).
+   */
+  originalSize?: number;
 }
 
 export interface PaletteColor {

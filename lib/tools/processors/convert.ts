@@ -41,6 +41,11 @@ export async function convertMany(
   options: ConvertOptions,
 ): Promise<ProcessResult[]> {
   const out: ProcessResult[] = [];
-  for (const file of files) out.push(await convertImage([file], options));
+  for (const file of files) {
+    const r = await convertImage([file], options);
+    // Per-file source size keeps the result card's comparison honest for
+    // multi-image batches.
+    out.push({ ...r, originalSize: file.file.size });
+  }
   return out;
 }

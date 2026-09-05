@@ -95,6 +95,9 @@ export function stripExtension(name: string): string {
 export function encodableFormat(format: ImageFormat): ImageFormat {
   if (format === 'heic' || format === 'heif') return 'jpg';
   if (format === 'gif') return 'png';
+  // Without a WebP encoder, canvas.toBlob silently falls back to PNG bytes —
+  // mapping the label too keeps file name, MIME and content consistent.
+  if ((format === 'webp') && !supportsWebPEncode()) return 'png';
   return format;
 }
 
@@ -203,15 +206,20 @@ export async function detectFileFormat(file: File): Promise<string | null> {
   return null;
 }
 
+let webpEncodeSupport: boolean | null = null;
+
+/** Memoised: probing creates a canvas, and this runs inside encode loops. */
 export function supportsWebPEncode(): boolean {
+  if (webpEncodeSupport !== null) return webpEncodeSupport;
   try {
     const c = document.createElement('canvas');
     c.width = 2;
     c.height = 2;
-    return c.toDataURL('image/webp').startsWith('data:image/webp');
+    webpEncodeSupport = c.toDataURL('image/webp').startsWith('data:image/webp');
   } catch {
-    return false;
+    webpEncodeSupport = false;
   }
+  return webpEncodeSupport;
 }
 
 export function supportsOffscreenCanvas(): boolean {
@@ -266,7 +274,16 @@ export async function decodeImage(file: File): Promise<DecodedImage> {
     img = await new Promise<HTMLImageElement>((resolve, reject) => {
       const el = new Image();
       el.decoding = 'async';
-      el.onload = () => resolve(el);
+      el.onload = () => {
+        // `onload` can fire before the pixels are actually decoded (async
+        // decoding). Force the decode now, while the object URL is still
+        // alive, so later canvas draws can never hit a half-decoded image.
+        if (typeof el.decode === 'function') {
+          el.decode().then(() => resolve(el), () => resolve(el));
+        } else {
+          resolve(el);
+        }
+      };
       el.onerror = () => reject(new Error('decode-failed'));
       el.src = url;
     });

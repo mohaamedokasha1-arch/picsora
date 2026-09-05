@@ -11,7 +11,8 @@ import { Button } from '@/components/ui/button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
-import { compressImages } from '@/lib/tools/processors/compressor';
+import { Notice } from '@/components/tools/kit';
+import { compressImages, type SmartCompressedResult } from '@/lib/tools/processors/compressor';
 import type { ImageFormat } from '@/lib/types';
 
 export default function CompressorTool({ ctx }: { ctx: WorkspaceContext }) {
@@ -21,11 +22,21 @@ export default function CompressorTool({ ctx }: { ctx: WorkspaceContext }) {
   const [format, setFormat] = React.useState<'same' | ImageFormat>('same');
   const preview = useObjectUrl(ctx.files[0]);
 
-  const originalSize = ctx.files.reduce((sum, f) => sum + f.size, 0);
-
   const process = () => {
     run(() => compressImages(ctx.decoded, { quality, format }));
   };
+
+  // Surface no-gain outcomes instead of leaving the user guessing why the
+  // "compressed" file looks the same:
+  // - same-format runs on already-optimised images deliver the ORIGINAL back
+  //   (fellBack) — the notice explains that and hints at WebP/JPG output;
+  // - explicit-format runs always deliver the requested container, even when
+  //   it is not smaller (noReduction) — the notice states that honestly.
+  const typed = results as SmartCompressedResult[];
+  const fellBack = typed.filter((r) => r.message === 'original-fallback-inflation').length;
+  const noReduction = typed.filter(
+    (r) => !r.wasCompressed && r.message !== 'original-fallback-inflation',
+  ).length;
 
   return (
     <div className="space-y-5">
@@ -70,7 +81,21 @@ export default function CompressorTool({ ctx }: { ctx: WorkspaceContext }) {
 
       {processing && <ProcessingIndicator />}
       {error && <ErrorDisplay error={error} />}
-      <ResultPanel results={results} originalSize={originalSize} onReset={ctx.reset} />
+      {fellBack > 0 && (
+        <Notice variant={fellBack === typed.length ? 'warning' : 'info'}>
+          {fellBack === typed.length
+            ? t('compressor.noGainAll')
+            : t('compressor.noGainSome', { n: fellBack, total: typed.length })}
+        </Notice>
+      )}
+      {fellBack === 0 && noReduction > 0 && (
+        <Notice variant="info">
+          {noReduction === typed.length
+            ? t('compressor.noReduction')
+            : t('compressor.noReductionSome', { n: noReduction, total: typed.length })}
+        </Notice>
+      )}
+      <ResultPanel results={results} onReset={ctx.reset} />
     </div>
   );
 }

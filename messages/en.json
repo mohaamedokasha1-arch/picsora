@@ -3582,6 +3582,12 @@
     "baseHint": "Arbitrary-precision conversion using BigInt, so very large numbers stay exact.",
     "options": "Options"
   },
+  "compressor": {
+    "noGainAll": "No size reduction was possible with these settings — the image is already optimised for this format (PNG re-encoding ignores quality), so the original file was delivered unchanged. Tip: choose WebP or JPG output for a real reduction.",
+    "noGainSome": "{n} of {total} images were already optimised and could not be reduced — their originals were delivered unchanged. The rest were compressed successfully.",
+    "noReduction": "The output in the selected format is not smaller than the original — this image is already highly optimised. The converted file was delivered as requested.",
+    "noReductionSome": "{n} of {total} images did not get smaller in the selected format — they are already highly optimised. The converted files were delivered as requested."
+  },
   "exactKb": {
     "hitNote": "Target hit — output is {size}.",
     "missNote": "The target could not be met. Smallest possible output is {size}."
