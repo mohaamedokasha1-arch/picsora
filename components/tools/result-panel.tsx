@@ -95,6 +95,11 @@ function ResultCard({ result, originalSize, index }: { result: ProcessResult; or
           {orig === undefined && (
             <span className="text-foreground">{formatBytes(result.blob.size)}</span>
           )}
+          {typeof result.finalQuality === 'number' && ['jpg', 'jpeg', 'webp'].includes(result.format) && (
+            <span className="rounded bg-secondary px-1.5 py-0.5 text-muted-foreground">
+              {t('usedQuality')}: {result.finalQuality}%
+            </span>
+          )}
         </div>
         <DownloadButton blob={result.blob} filename={result.name} size="sm" className="w-full" />
       </div>

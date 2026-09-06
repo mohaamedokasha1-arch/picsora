@@ -50,7 +50,7 @@ async function main() {
   /* ═══════════════════════════ 1. COMPRESSOR ═══════════════════════════ */
   console.log('\n🗜️  image-compressor');
 
-  await test('JPEG photo: compress at 80% produces a smaller JPEG', async () => {
+  await test('JPEG photo: compress at 80% produces a smaller JPEG AT the ceiling when that already saves ≥40%', async () => {
     const file = await makePhotoFile('photo.jpg', 1200, 800, 'image/jpeg', 0.92);
     const decoded = await decode(file);
     const [r] = (await compressImages([decoded], { quality: 80, format: 'same' })) as SmartCompressedResult[];
@@ -62,20 +62,63 @@ async function main() {
     assert(r.outputSize < file.size, `output (${r.outputSize}) must be smaller than original (${file.size})`);
     assert(r.blob !== (file as unknown as Blob), 'must not return the original file object');
     assertEq(r.name, 'photo.jpg', 'output name');
+    // a q92 original re-encoded at q80 already saves ~40-50% → the user's
+    // ceiling must be honoured, not needlessly lowered
+    assertEq(r.finalQuality, 80, 'delivered at the requested ceiling');
   });
 
-  await test('already-compressed JPEG: output must stay CLOSE to original size (no over-degradation)', async () => {
-    // Original saved at q=0.55 → compressing at q=0.80 inflates → the tool
-    // must back off to the HIGHEST quality that still beats the original,
-    // not dive to near-minimum quality.
+  await test('phone-photo JPEG: default run delivers SERIOUS savings (≥40%) at quality ≥45', async () => {
+    // The reported complaint: an already-compressed phone photo saved only a
+    // few percent at the q80 ceiling ("not compressing seriously"). The tool
+    // must now search below the ceiling for real savings.
+    const file = await makePhotoFile('phone.jpg', 1600, 1200, 'image/jpeg', 0.85);
+    const decoded = await decode(file);
+    const [r] = (await compressImages([decoded], { quality: 80, format: 'same' })) as SmartCompressedResult[];
+    assert(r.wasCompressed, 'must compress');
+    const savings = 1 - r.outputSize / file.size;
+    assert(savings >= 0.4, `savings must be ≥40%, got ${(savings * 100).toFixed(1)}%`);
+    assert(
+      typeof r.finalQuality === 'number' && r.finalQuality >= 45 && r.finalQuality <= 80,
+      `quality (${r.finalQuality}) must stay within [45, 80]`,
+    );
+    const info = await inspectBlob(r.blob);
+    assertEq(info.mime, 'image/jpeg', 'still a JPEG');
+    assertEq(info.width, 1600, 'dimensions untouched');
+  });
+
+  await test('already-compressed JPEG: real savings but NEVER below the quality floors', async () => {
+    // Original saved at q=0.55 ("wrung-out" input): the old buggy code
+    // cratered it to ~5KB at q≈6; the conservative fix only reached ~0%
+    // savings. Contract now: target ≥40% savings, preferred floor q45,
+    // absolute floor q35 — whatever the encoder allows, never garbage.
     const file = await makePhotoFile('small.jpg', 1000, 700, 'image/jpeg', 0.55);
     const decoded = await decode(file);
     const [r] = (await compressImages([decoded], { quality: 80, format: 'same' })) as SmartCompressedResult[];
     assert(r.wasCompressed === true, 'wasCompressed must be true');
     assert(r.outputSize < file.size, `output (${r.outputSize}) must be < original (${file.size})`);
     assert(
-      r.outputSize >= file.size * 0.6,
-      `output (${r.outputSize}) is drastically smaller than original (${file.size}) — quality was needlessly destroyed`,
+      typeof r.finalQuality === 'number' && r.finalQuality >= 35,
+      `finalQuality (${r.finalQuality}) must respect the 35% absolute floor — no more q≈6 garbage`,
+    );
+    assert(
+      r.outputSize <= file.size * 0.92,
+      `savings must beat the do-nothing case for this wrung-out input, got ${((1 - r.outputSize / file.size) * 100).toFixed(1)}%`,
+    );
+  });
+
+  await test('web photo (q75 input): unlocks the deep savings band at/above the hard floor', async () => {
+    // Measured curve for a q75 original: q80 inflates, q65 saves 11%, q45
+    // saves 64% — the search must land at/above the target (≥40%) without
+    // diving below the floors.
+    const file = await makePhotoFile('web.jpg', 1200, 800, 'image/jpeg', 0.75);
+    const decoded = await decode(file);
+    const [r] = (await compressImages([decoded], { quality: 80, format: 'same' })) as SmartCompressedResult[];
+    assert(r.wasCompressed, 'must compress');
+    const savings = 1 - r.outputSize / file.size;
+    assert(savings >= 0.35, `savings must be serious, got ${(savings * 100).toFixed(1)}%`);
+    assert(
+      typeof r.finalQuality === 'number' && r.finalQuality >= 35 && r.finalQuality <= 80,
+      `finalQuality (${r.finalQuality}) within [35, 80]`,
     );
   });
 
@@ -85,7 +128,8 @@ async function main() {
     // and an explanatory message the UI can show.
     const file = makeOptimisedScreenshotPngFile('screenshot.png');
     const decoded = await decode(file);
-    const [r] = (await compressImages([decoded], { quality: 80, format: 'same' })) as SmartCompressedResult[];
+    const rs = (await compressImages([decoded], { quality: 80, format: 'same' })) as SmartCompressedResult[];
+    const r = rs[0];
     if (r.outputSize >= file.size) {
       assertEq(r.wasCompressed, false, 'no-gain result must set wasCompressed=false');
       assert(
@@ -101,10 +145,35 @@ async function main() {
         Buffer.from(await file.arrayBuffer()),
       );
       assertEq(same, 0, 'fallback blob must be byte-identical to the original');
+      // no WebP suggestion for this fixture: even WebP is bigger than a
+      // palette-optimised 1.6KB screenshot, and suggesting a LARGER file
+      // would be noise
+      assertEq(rs.length, 1, 'no suggestion card when WebP cannot beat the original');
     } else {
       assertEq(r.wasCompressed, true, 'smaller output must set wasCompressed=true');
       assertEq(r.message, 'compressed-success', 'success message');
     }
+  });
+
+  await test('photo-like PNG: fallback is paired with a much smaller WebP suggestion', async () => {
+    // A photo saved as PNG cannot be shrunk losslessly — but a WebP copy
+    // saves ~80%. The tool must deliver BOTH: the untouched original (same
+    // format promise) + a suggested WebP card the user can choose.
+    const file = await makePhotoFile('photo.png', 900, 700, 'image/png');
+    const decoded = await decode(file);
+    const rs = (await compressImages([decoded], { quality: 80, format: 'same' })) as SmartCompressedResult[];
+    const primary = rs.filter((x) => !x.suggested);
+    const suggestions = rs.filter((x) => x.suggested);
+    assertEq(primary.length, 1, 'one primary result');
+    assertEq(suggestions.length, 1, 'one WebP suggestion');
+    const s = suggestions[0];
+    assertEq(s.format, 'webp', 'suggestion is WebP');
+    assertEq(s.name, 'photo.webp', 'suggestion name');
+    assert(s.wasCompressed, 'suggestion is genuinely smaller');
+    assert(s.outputSize < file.size * 0.5, `WebP suggestion must be a serious win, got ${s.outputSize} vs ${file.size}`);
+    const info = await inspectBlob(s.blob);
+    assertEq(info.mime, 'image/webp', 'suggestion bytes are really WebP');
+    assertEq(info.width, 900, 'suggestion keeps dimensions');
   });
 
   await test('transparent PNG → same format: transparency is PRESERVED', async () => {

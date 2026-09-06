@@ -227,7 +227,8 @@
     "outputFormat": "Output format",
     "noPreviewYet": "Your processed image will appear here.",
     "quality": "Quality",
-    "noticeLarge": "This file is large and may take a moment to process."
+    "noticeLarge": "This file is large and may take a moment to process.",
+    "usedQuality": "Quality used"
   },
   "controls": {
     "quality": "Quality",
@@ -3586,7 +3587,10 @@
     "noGainAll": "No size reduction was possible with these settings — the image is already optimised for this format (PNG re-encoding ignores quality), so the original file was delivered unchanged. Tip: choose WebP or JPG output for a real reduction.",
     "noGainSome": "{n} of {total} images were already optimised and could not be reduced — their originals were delivered unchanged. The rest were compressed successfully.",
     "noReduction": "The output in the selected format is not smaller than the original — this image is already highly optimised. The converted file was delivered as requested.",
-    "noReductionSome": "{n} of {total} images did not get smaller in the selected format — they are already highly optimised. The converted files were delivered as requested."
+    "noReductionSome": "{n} of {total} images did not get smaller in the selected format — they are already highly optimised. The converted files were delivered as requested.",
+    "qualityMax": "Maximum quality",
+    "qualityHint": "The tool automatically picks the best quality that achieves a real reduction (targets ~40% smaller, never below 35% quality). The quality actually used is shown on each result.",
+    "webpSuggested": "We also added a WebP copy that is much smaller than the original — download whichever suits you."
   },
   "exactKb": {
     "hitNote": "Target hit — output is {size}.",

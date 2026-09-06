@@ -29,12 +29,15 @@ export default function CompressorTool({ ctx }: { ctx: WorkspaceContext }) {
   // Surface no-gain outcomes instead of leaving the user guessing why the
   // "compressed" file looks the same:
   // - same-format runs on already-optimised images deliver the ORIGINAL back
-  //   (fellBack) — the notice explains that and hints at WebP/JPG output;
+  //   (fellBack) — the notice explains that; when a smaller WebP copy could
+  //   be produced it is added as an extra `suggested` result card;
   // - explicit-format runs always deliver the requested container, even when
   //   it is not smaller (noReduction) — the notice states that honestly.
   const typed = results as SmartCompressedResult[];
-  const fellBack = typed.filter((r) => r.message === 'original-fallback-inflation').length;
-  const noReduction = typed.filter(
+  const primary = typed.filter((r) => !r.suggested);
+  const suggested = typed.length - primary.length;
+  const fellBack = primary.filter((r) => r.message === 'original-fallback-inflation').length;
+  const noReduction = primary.filter(
     (r) => !r.wasCompressed && r.message !== 'original-fallback-inflation',
   ).length;
 
@@ -43,15 +46,18 @@ export default function CompressorTool({ ctx }: { ctx: WorkspaceContext }) {
       <div className="grid gap-5 lg:grid-cols-[340px_1fr]">
         <ControlsCard>
           <h3 className="text-sm font-semibold text-foreground">{t('toolShell.settingsTitle')}</h3>
-          <Slider
-            label={t('controls.quality')}
-            min={1}
-            max={100}
-            value={quality}
-            onValueChange={setQuality}
-            valueSuffix="%"
-            disabled={processing}
-          />
+          <div className="space-y-1.5">
+            <Slider
+              label={t('compressor.qualityMax')}
+              min={1}
+              max={100}
+              value={quality}
+              onValueChange={setQuality}
+              valueSuffix="%"
+              disabled={processing}
+            />
+            <p className="text-xs leading-relaxed text-muted-foreground">{t('compressor.qualityHint')}</p>
+          </div>
           <div className="space-y-1.5">
             <label htmlFor="fmt" className="text-sm font-medium text-foreground">
               {t('toolShell.outputFormat')}
@@ -82,18 +88,21 @@ export default function CompressorTool({ ctx }: { ctx: WorkspaceContext }) {
       {processing && <ProcessingIndicator />}
       {error && <ErrorDisplay error={error} />}
       {fellBack > 0 && (
-        <Notice variant={fellBack === typed.length ? 'warning' : 'info'}>
-          {fellBack === typed.length
+        <Notice variant={suggested === 0 && fellBack === primary.length ? 'warning' : 'info'}>
+          {fellBack === primary.length
             ? t('compressor.noGainAll')
-            : t('compressor.noGainSome', { n: fellBack, total: typed.length })}
+            : t('compressor.noGainSome', { n: fellBack, total: primary.length })}
         </Notice>
       )}
       {fellBack === 0 && noReduction > 0 && (
         <Notice variant="info">
-          {noReduction === typed.length
+          {noReduction === primary.length
             ? t('compressor.noReduction')
-            : t('compressor.noReductionSome', { n: noReduction, total: typed.length })}
+            : t('compressor.noReductionSome', { n: noReduction, total: primary.length })}
         </Notice>
+      )}
+      {suggested > 0 && (
+        <Notice variant="privacy">{t('compressor.webpSuggested')}</Notice>
       )}
       <ResultPanel results={results} onReset={ctx.reset} />
     </div>
