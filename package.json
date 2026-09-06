@@ -10,7 +10,8 @@
     "lint": "next lint",
     "copy-pdf-worker": "node scripts/copy-pdf-worker.mjs",
     "predev": "npm run copy-pdf-worker",
-    "prebuild": "npm run copy-pdf-worker"
+    "prebuild": "npm run copy-pdf-worker",
+    "test:tools": "tsx scripts/tool-tests/run-tests.ts"
   },
   "dependencies": {
     "@cantoo/pdf-lib": "^2.9.1",
@@ -35,13 +36,16 @@
     "yaml": "^2.9.0"
   },
   "devDependencies": {
+    "@napi-rs/canvas": "^1.0.8",
     "@types/node": "^20.17.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
+    "sharp": "^0.35.4",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.23.13",
     "typescript": "^5.6.3"
   }
 }

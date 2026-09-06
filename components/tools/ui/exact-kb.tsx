@@ -36,6 +36,8 @@ export default function ExactKbTool({ ctx }: { ctx: WorkspaceContext }) {
 
   const typed = results as ExactSizeResult[];
   const allHit = typed.length > 0 && typed.every((r) => r.hit);
+  // For batches, the "miss" note must quote a result that actually missed.
+  const missSample = typed.find((r) => !r.hit) ?? typed[0];
 
   return (
     <div className="space-y-5">
@@ -100,7 +102,7 @@ export default function ExactKbTool({ ctx }: { ctx: WorkspaceContext }) {
         <Notice variant={allHit ? 'privacy' : 'warning'}>
           {allHit
             ? t('exactKb.hitNote', { size: formatBytes(typed[0].outputSize) })
-            : t('exactKb.missNote', { size: formatBytes(typed[0].outputSize) })}
+            : t('exactKb.missNote', { size: formatBytes(missSample.outputSize) })}
         </Notice>
       )}
       <ResultPanel results={results} originalSize={originalSize} onReset={ctx.reset} />

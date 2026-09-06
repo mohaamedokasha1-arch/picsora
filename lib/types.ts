@@ -26,6 +26,17 @@ export interface ProcessResult {
   format: OutputFormat;
   /** Suggested download filename without extension. */
   name: string;
+  /**
+   * Byte size of THIS result's source file. Per-result values keep batch
+   * tools honest (comparing one output against the whole batch total would
+   * show inflated savings).
+   */
+  originalSize?: number;
+  /**
+   * Encoder quality actually used (1-100, lossy image outputs only). Shown
+   * on the result card so smart quality decisions stay transparent.
+   */
+  finalQuality?: number;
 }
 
 export interface PaletteColor {

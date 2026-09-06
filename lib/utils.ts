@@ -20,6 +20,26 @@ export function formatPercent(original: number, current: number): string {
   return `${Math.max(0, Math.round(saved))}%`;
 }
 
+export type SizeChangeKind = 'saved' | 'grew' | 'same';
+
+/**
+ * Signed size-change for result cards. Hiding growth behind a "−0%" badge
+ * made outputs look like nothing happened; this reports the truth:
+ * saved (−X%), grew (+X%) or same (0%).
+ */
+export function formatSizeChange(
+  original: number,
+  current: number,
+): { text: string; kind: SizeChangeKind } {
+  if (!original || original <= 0) return { text: '0%', kind: 'same' };
+  const pct = ((current - original) / original) * 100;
+  const rounded = Math.round(Math.abs(pct));
+  if (rounded === 0) return { text: '0%', kind: 'same' };
+  return pct < 0
+    ? { text: `−${rounded}%`, kind: 'saved' }
+    : { text: `+${rounded}%`, kind: 'grew' };
+}
+
 /**
  * Escape a string so it is safe to embed in HTML.
  *
