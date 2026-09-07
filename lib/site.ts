@@ -101,10 +101,35 @@ export function siteOrigin(): string {
   return siteConfig.url.replace(/\/$/, '');
 }
 
+/**
+ * Strip everything that must never appear in a self-referencing canonical:
+ * query strings (`?sort=`, `?filter=`, `?ref=`, …), hash fragments and any
+ * trailing slash. Wrapped in a guard so a missing/invalid path can never throw
+ * while the <head> is being generated (avoids a crash / blank page); it just
+ * falls back to the site root.
+ */
+export function cleanPath(path: string | null | undefined): string {
+  try {
+    if (typeof path !== 'string') return '/';
+    // Drop query string and hash fragment.
+    let cleaned = path.split('#')[0].split('?')[0].trim();
+    if (!cleaned || cleaned === '/') return '/';
+    if (!cleaned.startsWith('/')) cleaned = `/${cleaned}`;
+    // Collapse any accidental trailing slash (except the bare root).
+    cleaned = cleaned.replace(/\/+$/, '');
+    return cleaned === '' ? '/' : cleaned;
+  } catch {
+    return '/';
+  }
+}
+
 /** Locale-prefixed path without a trailing slash (`/` → `/en`). */
 export function localizedPath(path: string, locale: string): string {
-  const normalized = !path || path === '/' ? '' : path.startsWith('/') ? path : `/${path}`;
-  return `/${locale}${normalized}`;
+  const safePath = cleanPath(path);
+  const safeLocale =
+    typeof locale === 'string' && locale.trim() ? locale.trim() : siteConfig.defaultLocale;
+  const normalized = safePath === '/' ? '' : safePath;
+  return `/${safeLocale}${normalized}`;
 }
 
 /** Absolute URL for a locale + path, never trailing-slash except the origin itself. */
