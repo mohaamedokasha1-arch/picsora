@@ -64,7 +64,12 @@ export function ToolWorkspace({ tool, rule, children }: ToolWorkspaceProps) {
             e instanceof Error
               ? (e as Error & { params?: Record<string, string | number> }).params
               : undefined;
-          const known = ['image-too-large', 'heic-convert-failed', 'decode-failed'];
+          const known = [
+            'image-too-large',
+            'heic-convert-failed',
+            'decode-failed',
+            'decode-unsupported-format',
+          ];
           setError({ key: known.includes(key) ? key : 'corruptImage', params });
           setFiles([]);
         }

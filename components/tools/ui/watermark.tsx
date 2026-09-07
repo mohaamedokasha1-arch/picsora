@@ -31,7 +31,7 @@ const POSITIONS: { value: WatermarkPosition; key: string }[] = [
 
 export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
   const t = useTranslations();
-  const { processing, results, error, run } = useToolRunner();
+  const { processing, results, error, run, setError } = useToolRunner();
   const decoded = ctx.decoded[0];
   const [type, setType] = React.useState<'text' | 'image'>('text');
   const [text, setText] = React.useState('© Piclizer');
@@ -112,8 +112,13 @@ export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
     try {
       await decodeImage(file);
       setWmFile(file);
-    } catch {
-      /* invalid file — ignore */
+      setError(null);
+    } catch (e) {
+      // An unreadable logo used to be dropped on the floor: the picker closed,
+      // nothing was selected, and Apply then complained about a missing
+      // watermark. Report the real reason (corrupt / too large / unsupported)
+      // and leave the previous selection untouched.
+      setError({ key: e instanceof Error && e.message ? e.message : 'watermark-decode-failed' });
     }
   };
 

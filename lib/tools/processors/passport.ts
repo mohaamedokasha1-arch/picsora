@@ -1,6 +1,6 @@
 import type { DecodedImage, ProcessResult } from '@/lib/types';
 import { nameOf } from '@/lib/image/process';
-import { canvasToBlob, supportsWebPEncode } from '@/lib/image/format';
+import { encodeCanvas } from '@/lib/image/format';
 
 export interface PassportPreset {
   id: string;
@@ -76,20 +76,17 @@ export async function makePassportPhoto(
     targetH,
   );
 
-  if (options.format === 'jpg') {
-    void supportsWebPEncode;
-  }
-  const blob = await canvasToBlob(canvas, {
-    format: options.format,
-    quality: 0.92,
-  });
+  // The output container is taken from the encoder's report rather than from
+  // the request, so the file name, MIME and bytes always agree.
+  const encoded = await encodeCanvas(canvas, { format: options.format, quality: 0.92 });
   canvas.width = 0;
   canvas.height = 0;
-  const ext = options.format;
+  const ext = encoded.format === 'jpeg' ? 'jpg' : encoded.format;
   return [
     {
-      blob,
-      format: ext,
+      blob: encoded.blob,
+      format: encoded.format,
+      ...(encoded.fallbackFrom ? { fallbackFrom: encoded.fallbackFrom } : {}),
       name: `${nameOf(decoded.file)}-passport-${preset.id}.${ext}`,
       width: targetW,
       height: targetH,

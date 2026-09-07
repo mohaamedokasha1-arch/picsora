@@ -63,6 +63,7 @@
     "fileTooLarge": "This file is too large. The maximum size is {size} MB.",
     "emptyFile": "This file is empty (0 bytes) and cannot be processed.",
     "corruptImage": "We couldn't read this image. It may be corrupted or in an unsupported format.",
+    "decodeUnsupportedFormat": "This browser cannot open {format} files, so nothing was processed. Try an up-to-date Chrome, Edge or Firefox — or convert the file to JPG/PNG first.",
     "noFile": "Please add at least one image first.",
     "mimeMismatch": "The file content does not match its extension and was rejected.",
     "tooManyFiles": "You can upload up to {max} files at once.",
@@ -2754,6 +2755,14 @@
     "title": "Something went wrong",
     "generic": "We couldn't complete this operation. Please try again with a different file.",
     "webpUnsupported": "Your browser can't encode WebP images. Please try an up-to-date browser such as Chrome, Edge or Firefox.",
+    "noCanvasContext": "This browser refused to hand the page a drawing canvas, so images cannot be processed here. Close other tabs (memory may be exhausted), let this site through any hardening extension, or update the browser.",
+    "pixelsUnavailable": "This image is too large for per-pixel editing in this browser — it ran out of image memory. Resize it first (any size under 4000 px works), then run the tool again.",
+    "paletteUnavailable": "Colour analysis runs in a background worker that your browser blocked. Reload this page and try again.",
+    "paletteTimeout": "Colour analysis took too long and was stopped so the page stayed responsive. Try again, or use a smaller image.",
+    "paletteFailed": "Colour analysis failed for this image. Please try another file.",
+    "noWatermarkImage": "Choose the logo or stamp image first, then apply the watermark.",
+    "watermarkDecodeFailed": "Your watermark image could not be read. Choose a normal PNG or JPG file that is not empty.",
+    "pdfImageFailed": "One of the images could not be embedded into the PDF. Convert it to JPG or PNG first, then try again.",
     "processingFailed": "The image could not be processed. It may be corrupted or too large.",
     "zipFailed": "We couldn't create the ZIP archive. Please try again.",
     "pdfFailed": "We couldn't generate the PDF. Please try again with a different image.",
@@ -2833,7 +2842,9 @@
   "formats": {
     "title": "Supported formats",
     "input": "Accepts",
-    "output": "Produces"
+    "output": "Produces",
+    "unsupportedTarget": "Your browser cannot write {from} files. The tool will deliver {to} instead — the same picture, in a container that works everywhere. Nothing will fail.",
+    "fellBack": "{n, plural, one {# file} other {# files}} could not be written as {from} by this browser, so {to} was delivered instead. The images are identical — only the container changed."
   },
   "related": {
     "title": "Related tools"

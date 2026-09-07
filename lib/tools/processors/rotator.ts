@@ -1,7 +1,8 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, nameOf, outputName } from '@/lib/image/process';
-import { canvasToBlob, encodableFormat } from '@/lib/image/format';
+import { encodableFormat, encodeCanvas } from '@/lib/image/format';
 import { hasAlpha, fillBackground, clearCanvas } from '@/lib/image/transparent';
+import { needsOpaqueBackground } from '@/lib/image/format-support';
 
 export interface RotateOptions {
   angle: number; // degrees 0..360
@@ -37,7 +38,9 @@ export async function rotateImage(
   const sh = decoded.height;
   const angle = ((options.angle % 360) + 360) % 360;
   const lossless = angle === 90 || angle === 180 || angle === 270;
-  const isJpg = options.format === 'jpg' || options.format === 'jpeg';
+  // Decide flattening from the container that will actually be written.
+  const target = encodableFormat(options.format);
+  const needsOpaque = needsOpaqueBackground(target);
 
   let canvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
@@ -49,7 +52,7 @@ export async function rotateImage(
     canvas = c;
     ctx = cctx;
     clearCanvas(ctx, canvas.width, canvas.height);
-    if (isJpg && sourceHasAlpha) fillBackground(ctx, '#ffffff', canvas.width, canvas.height);
+    if (needsOpaque && sourceHasAlpha) fillBackground(ctx, '#ffffff', canvas.width, canvas.height);
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate((angle * Math.PI) / 180);
     ctx.drawImage(src as CanvasImageSource, -sw / 2, -sh / 2, sw, sh);
@@ -64,11 +67,15 @@ export async function rotateImage(
     canvas = box.canvas;
     ctx = box.ctx;
     clearCanvas(ctx, nw, nh);
-    if (isJpg && sourceHasAlpha) fillBackground(ctx, '#ffffff', nw, nh);
+    if (needsOpaque && sourceHasAlpha) fillBackground(ctx, '#ffffff', nw, nh);
     drawRotated(ctx, src as CanvasImageSource, sw, sh, angle);
   }
 
-  const format = encodableFormat(options.format);
-  const blob = await canvasToBlob(canvas, { format, quality: 0.92 });
-  return { blob, format, name: outputName(nameOf(decoded.file), format) };
+  const encoded = await encodeCanvas(canvas, { format: options.format, quality: 0.92 });
+  return {
+    blob: encoded.blob,
+    format: encoded.format,
+    ...(encoded.fallbackFrom ? { fallbackFrom: encoded.fallbackFrom } : {}),
+    name: outputName(nameOf(decoded.file), encoded.format),
+  };
 }

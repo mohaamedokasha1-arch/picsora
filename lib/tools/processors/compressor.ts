@@ -1,7 +1,8 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
-import { encodeDecodedToBlob, nameOf, outputName } from '@/lib/image/process';
+import { encodeDecodedResolved, nameOf, outputName } from '@/lib/image/process';
 import { encodableFormat, supportsWebPEncode } from '@/lib/image/format';
 import { hasAlpha } from '@/lib/image/transparent';
+import { needsOpaqueBackground } from '@/lib/image/format-support';
 
 export interface CompressorOptions {
   quality: number; // 1..100 — the MAXIMUM quality the tool may use
@@ -128,13 +129,11 @@ export async function compressImages(
   files: DecodedImage[],
   options: CompressorOptions,
 ): Promise<SmartCompressedResult[]> {
-  // An explicit WebP request on a browser that cannot encode WebP must fail
-  // loudly (same contract as the converter tools) — otherwise canvas silently
-  // hands back PNG bytes mislabelled as .webp.
-  if (options.format === 'webp' && !supportsWebPEncode()) {
-    throw new Error('webp-unsupported');
-  }
-
+  // NOTE: an unsupported target format (e.g. WebP on older Safari) is NOT an
+  // error any more. The capability layer picks a container this browser can
+  // really write, the encode reports that container, and the UI tells the user
+  // what they got — so the tool always produces a file instead of the generic
+  // "Something went wrong" panel. See lib/image/format-support.ts.
   const results: SmartCompressedResult[] = [];
 
   for (const file of files) {
@@ -142,15 +141,27 @@ export async function compressImages(
     const originalSize = originalFile.size;
     const rawFormat = options.format === 'same' ? file.format : options.format;
     // `encodableFormat` also maps webp→png on browsers without a WebP encoder,
-    // so a 'same-format' run can never emit mislabelled bytes.
+    // so a 'same-format' run can never emit mislabelled bytes. All decisions
+    // below (lossy search, flattening) use this resolved container, while the
+    // encoder is handed the ORIGINAL request so it can report the substitution.
     const format: ImageFormat = encodableFormat(rawFormat);
 
     // Transparent source + opaque output → paint white (matches resizer/cropper).
     const background =
-      (format === 'jpg' || format === 'jpeg') && hasAlpha(file) ? '#ffffff' : undefined;
+      needsOpaqueBackground(format) && hasAlpha(file) ? '#ffffff' : undefined;
 
     const userQuality = Math.max(0.01, Math.min(1, options.quality / 100));
-    const encode = (q: number) => encodeDecodedToBlob(file, format, q, { background });
+    // The encoder reports the container it actually wrote (it may differ from
+    // `format` if the browser lied about its own support). Name and label the
+    // result from that report, never from the request.
+    let outFormat: ImageFormat = format;
+    let outFallbackFrom: ImageFormat | undefined;
+    const encode = async (q: number): Promise<Blob> => {
+      const outcome = await encodeDecodedResolved(file, rawFormat, q, { background });
+      outFormat = outcome.format;
+      outFallbackFrom = outcome.fallbackFrom;
+      return outcome.blob;
+    };
 
     const baseName = nameOf(originalFile);
     let blob = await encode(userQuality);
@@ -185,8 +196,9 @@ export async function compressImages(
     if (blob.size < originalSize) {
       results.push({
         blob,
-        format,
-        name: outputName(baseName, format),
+        format: outFormat,
+        ...(outFallbackFrom ? { fallbackFrom: outFallbackFrom } : {}),
+        name: outputName(baseName, outFormat),
         wasCompressed: true,
         originalSize,
         outputSize: blob.size,
@@ -199,8 +211,9 @@ export async function compressImages(
       // they asked for); the result badge shows the honest +X% change.
       results.push({
         blob,
-        format,
-        name: outputName(baseName, format),
+        format: outFormat,
+        ...(outFallbackFrom ? { fallbackFrom: outFallbackFrom } : {}),
+        name: outputName(baseName, outFormat),
         wasCompressed: false,
         originalSize,
         outputSize: blob.size,
@@ -229,15 +242,17 @@ export async function compressImages(
       if (supportsWebPEncode() && file.format !== 'webp') {
         const altQ = Math.min(0.8, userQuality);
         try {
-          const alt = await encodeDecodedToBlob(file, 'webp', altQ);
-          if (alt.size < originalSize) {
+          const alt = await encodeDecodedResolved(file, 'webp', altQ);
+          // Only offer it when the browser really wrote WebP: a PNG that fell
+          // back out of a WebP request would just duplicate the card above.
+          if (alt.format === 'webp' && alt.blob.size < originalSize) {
             results.push({
-              blob: alt,
+              blob: alt.blob,
               format: 'webp',
               name: outputName(baseName, 'webp'),
               wasCompressed: true,
               originalSize,
-              outputSize: alt.size,
+              outputSize: alt.blob.size,
               finalQuality: Math.round(altQ * 100),
               suggested: true,
               message: 'compressed-success',

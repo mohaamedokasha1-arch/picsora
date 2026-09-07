@@ -1,6 +1,7 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, fillBackground } from '@/lib/image/process';
-import { canvasToBlob, encodableFormat } from '@/lib/image/format';
+import { encodeCanvas } from '@/lib/image/format';
+import { needsOpaqueBackground } from '@/lib/image/format-support';
 
 export interface MergeOptions {
   direction: 'horizontal' | 'vertical';
@@ -24,7 +25,7 @@ export async function mergeImages(
   const canvasH = options.direction === 'vertical' ? maxH * n + totalSpacing : maxH;
 
   const { canvas, ctx } = createCanvas(canvasW, canvasH);
-  const needsOpaque = options.format === 'jpg' || options.format === 'jpeg';
+  const needsOpaque = needsOpaqueBackground(options.format);
   if (needsOpaque) fillBackground(ctx, options.background || '#ffffff', canvasW, canvasH);
 
   files.forEach((file, i) => {
@@ -37,7 +38,12 @@ export async function mergeImages(
     else ctx.drawImage(file.image, ox, oy);
   });
 
-  const format = encodableFormat(options.format);
-  const blob = await canvasToBlob(canvas, { format, quality: 0.92 });
-  return { blob, format, name: `merged.${format === 'jpeg' ? 'jpg' : format}` };
+  const encoded = await encodeCanvas(canvas, { format: options.format, quality: 0.92 });
+  const ext = encoded.format === 'jpeg' ? 'jpg' : encoded.format;
+  return {
+    blob: encoded.blob,
+    format: encoded.format,
+    ...(encoded.fallbackFrom ? { fallbackFrom: encoded.fallbackFrom } : {}),
+    name: `merged.${ext}`,
+  };
 }

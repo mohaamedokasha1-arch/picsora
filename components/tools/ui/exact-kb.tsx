@@ -13,6 +13,7 @@ import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
 import { Notice } from '@/components/tools/kit';
 import { compressToExactSize, type ExactSizeResult } from '@/lib/tools/processors/exact-size';
+import { formatOptionLabel, useFormatSupport } from './format-support';
 import type { ImageFormat } from '@/lib/types';
 import { formatBytes } from '@/lib/utils';
 
@@ -25,6 +26,7 @@ export default function ExactKbTool({ ctx }: { ctx: WorkspaceContext }) {
   const [targetKB, setTargetKB] = React.useState(100);
   const [format, setFormat] = React.useState<ImageFormat>('jpg');
   const preview = useObjectUrl(ctx.files[0]);
+  const support = useFormatSupport(['jpg', 'png', 'webp']);
 
   const originalSize = ctx.files.reduce((sum, f) => sum + f.size, 0);
 
@@ -82,9 +84,9 @@ export default function ExactKbTool({ ctx }: { ctx: WorkspaceContext }) {
               onChange={(e) => setFormat(e.target.value as ImageFormat)}
               disabled={processing}
               options={[
-                { value: 'jpg', label: 'JPG' },
-                { value: 'png', label: 'PNG' },
-                { value: 'webp', label: 'WebP' },
+                { value: 'jpg', label: formatOptionLabel('JPG', 'jpg', support) },
+                { value: 'png', label: formatOptionLabel('PNG', 'png', support) },
+                { value: 'webp', label: formatOptionLabel('WebP', 'webp', support) },
               ]}
             />
           </div>

@@ -1,7 +1,8 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { nameOf, outputName } from '@/lib/image/process';
-import { canvasToBlob, supportsWebPEncode } from '@/lib/image/format';
+import { encodableFormat, encodeCanvas } from '@/lib/image/format';
 import { hasAlpha } from '@/lib/image/transparent';
+import { needsOpaqueBackground } from '@/lib/image/format-support';
 
 export interface ExactSizeOptions {
   /** Desired output size in kilobytes. */
@@ -39,15 +40,16 @@ function drawScaled(decoded: DecodedImage, w: number, h: number, background?: st
  * Hit an exact file-size target by searching quality first (keeps full
  * resolution whenever possible) and only then stepping dimensions down.
  * Everything runs locally; every encode uses the browser's native encoder.
+ *
+ * If the requested container cannot be written by this browser the encoder
+ * layer substitutes a safe one (PNG) and reports it, so the tool still hits
+ * the size target and the delivered file's name/MIME always match its bytes.
  */
 export async function compressToExactSize(
   files: DecodedImage[],
   options: ExactSizeOptions,
 ): Promise<ExactSizeResult[]> {
   const targetBytes = Math.max(5 * 1024, Math.round(options.targetKB * 1024));
-  if (options.format === 'webp' && !supportsWebPEncode()) {
-    throw new Error('webp-unsupported');
-  }
 
   const results: ExactSizeResult[] = [];
   for (const file of files) {
@@ -64,17 +66,28 @@ async function hitTarget(
   const originalSize = decoded.file.size;
   const fullW = decoded.width;
   const fullH = decoded.height;
+  // Container we will really write (webp → png where the encoder is missing).
+  const target = encodableFormat(format);
 
   // JPEG has no alpha channel: paint transparent sources on white so logos
   // never come out on a black background (same rule as the other tools).
   const background =
-    (format === 'jpg' || format === 'jpeg') && hasAlpha(decoded) ? '#ffffff' : undefined;
+    needsOpaqueBackground(target) && hasAlpha(decoded) ? '#ffffff' : undefined;
   // PNG encoders ignore the quality argument — probing/bisecting it would
   // only waste time, so lossless runs go straight to dimension scaling.
-  const qualityApplies = format !== 'png';
+  const qualityApplies = target !== 'png';
 
-  const encode = async (w: number, h: number, q: number) =>
-    canvasToBlob(drawScaled(decoded, w, h, background), { format, quality: q });
+  // `encodeCanvas` reports the container it actually produced; the size search
+  // is driven by that, so a mid-run capability surprise can never leave the
+  // result named after bytes it does not contain.
+  let outFormat: ImageFormat = target;
+  let outFallbackFrom: ImageFormat | undefined;
+  const encode = async (w: number, h: number, q: number) => {
+    const outcome = await encodeCanvas(drawScaled(decoded, w, h, background), { format, quality: q });
+    outFormat = outcome.format;
+    outFallbackFrom = outcome.fallbackFrom;
+    return outcome.blob;
+  };
 
   // Phase 1 — probe a few qualities at full resolution to bracket the target.
   const probes = qualityApplies ? [0.85, 0.6, 0.4, 0.2, 0.08] : [0.92];
@@ -135,13 +148,13 @@ async function hitTarget(
           }
         }
       }
-      return finish(decoded, format, originalSize, targetBytes, cur, true);
+      return finish(decoded, outFormat, originalSize, targetBytes, cur, true, outFallbackFrom);
     }
     best = { blob: probe, q: 0.72, w, h };
   }
 
   // Nothing fits — return the smallest we produced with an honest flag.
-  return finish(decoded, format, originalSize, targetBytes, best!, false);
+  return finish(decoded, outFormat, originalSize, targetBytes, best!, false, outFallbackFrom);
 }
 
 function finish(
@@ -151,10 +164,13 @@ function finish(
   targetBytes: number,
   best: { blob: Blob; q: number; w: number; h: number },
   hit: boolean,
+  /** Set when this browser could not write the requested container. */
+  fallbackFrom?: ImageFormat,
 ): ExactSizeResult {
   return {
     blob: best.blob,
     format,
+    ...(fallbackFrom ? { fallbackFrom } : {}),
     name: outputName(nameOf(decoded.file), format),
     originalSize,
     outputSize: best.blob.size,

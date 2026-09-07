@@ -1,7 +1,8 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, nameOf, outputName } from '@/lib/image/process';
-import { canvasToBlob, decodeImage, encodableFormat } from '@/lib/image/format';
+import { decodeImage, encodableFormat, encodeCanvas } from '@/lib/image/format';
 import { hasAlpha, fillBackground, clearCanvas } from '@/lib/image/transparent';
+import { needsOpaqueBackground } from '@/lib/image/format-support';
 
 export type WatermarkPosition =
   | 'tl' | 'tc' | 'tr'
@@ -57,10 +58,14 @@ export async function applyWatermark(
   options: WatermarkOptions,
 ): Promise<ProcessResult> {
   const decoded = files[0];
+  const target = encodableFormat(options.format);
   const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
   clearCanvas(ctx, decoded.width, decoded.height);
   const sourceHasAlpha = hasAlpha(decoded);
-  const isOpaqueOutput = options.format === 'jpg' || options.format === 'jpeg';
+  // Flatten against the container that will really be written, not the one
+  // that was requested (a WebP request that safely becomes PNG must keep its
+  // transparency; a JPEG one must not come out with a black background).
+  const isOpaqueOutput = needsOpaqueBackground(target);
   if (isOpaqueOutput && sourceHasAlpha) {
     fillBackground(ctx, '#ffffff', decoded.width, decoded.height);
   }
@@ -93,30 +98,55 @@ export async function applyWatermark(
       ctx.fillText(text, x, y);
     }
   } else {
-    if (!options.watermarkFile) throw new Error('no-watermark');
-    const wm = await decodeImage(options.watermarkFile);
+    if (!options.watermarkFile) {
+      // Recoverable UI state (the user forgot to pick a logo), not a crash:
+      // the message is mapped to a dedicated, actionable sentence.
+      throw new Error('no-watermark-image');
+    }
+    let wm: Awaited<ReturnType<typeof decodeImage>>;
+    try {
+      wm = await decodeImage(options.watermarkFile);
+    } catch (error) {
+      const err = new Error('watermark-decode-failed') as Error & {
+        params?: Record<string, string | number>;
+        cause?: unknown;
+      };
+      err.params = { file: options.watermarkFile.name || '' };
+      err.cause = error;
+      throw err;
+    }
     const scale = Math.max(0.05, Math.min(1, options.watermarkScale / 100));
     const ww = Math.max(16, Math.round(decoded.width * scale));
     const wh = Math.max(16, Math.round(ww * (wm.height / wm.width)));
     const src = wm.bitmap ?? wm.image;
 
-    if (options.tile) {
-      const stepX = ww + Math.max(24, ww * 0.6);
-      const stepY = wh + Math.max(24, wh * 0.6);
-      for (let y = margin; y < decoded.height; y += stepY) {
-        for (let x = margin; x < decoded.width; x += stepX) {
-          ctx.drawImage(src as CanvasImageSource, x, y, ww, wh);
+    try {
+      if (options.tile) {
+        // Row/column steps are always >= 24px, so the loops can never spin.
+        const stepX = ww + Math.max(24, ww * 0.6);
+        const stepY = wh + Math.max(24, wh * 0.6);
+        for (let y = margin; y < decoded.height; y += stepY) {
+          for (let x = margin; x < decoded.width; x += stepX) {
+            ctx.drawImage(src as CanvasImageSource, x, y, ww, wh);
+          }
         }
+      } else {
+        const { x, y } = positionPoint(options.position, decoded.width, decoded.height, ww, wh, margin);
+        ctx.drawImage(src as CanvasImageSource, x, y, ww, wh);
       }
-    } else {
-      const { x, y } = positionPoint(options.position, decoded.width, decoded.height, ww, wh, margin);
-      ctx.drawImage(src as CanvasImageSource, x, y, ww, wh);
+    } finally {
+      // The decoded watermark bitmap must be released even when the draw
+      // throws (e.g. a canvas killed by memory pressure mid-run).
+      wm.bitmap?.close();
     }
-    wm.bitmap?.close();
   }
 
   ctx.globalAlpha = 1;
-  const format = encodableFormat(options.format);
-  const blob = await canvasToBlob(canvas, { format, quality: 0.92 });
-  return { blob, format, name: outputName(nameOf(decoded.file), format) };
+  const encoded = await encodeCanvas(canvas, { format: options.format, quality: 0.92 });
+  return {
+    blob: encoded.blob,
+    format: encoded.format,
+    ...(encoded.fallbackFrom ? { fallbackFrom: encoded.fallbackFrom } : {}),
+    name: outputName(nameOf(decoded.file), encoded.format),
+  };
 }

@@ -1,5 +1,12 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
-import { canvasToBlob, decodeImage, mimeFromExt, stripExtension } from '@/lib/image/format';
+import {
+  decodeImage,
+  encodeCanvas,
+  mimeFromExt,
+  stripExtension,
+  type EncodeOutcome,
+} from '@/lib/image/format';
+import { resolveEncodeFormat } from '@/lib/image/format-support';
 
 export interface CanvasBox {
   canvas: HTMLCanvasElement;
@@ -58,6 +65,27 @@ export async function encodeDecodedToBlob(
   quality = 0.92,
   opts: EncodeBlobOptions = {},
 ): Promise<Blob> {
+  const { blob } = await encodeDecodedResolved(decoded, format, quality, opts);
+  return blob;
+}
+
+/**
+ * Same pipeline as {@link encodeDecodedToBlob}, but it also reports the
+ * container that was really written. Processors use the reported format for the
+ * output name/MIME, so a browser without a WebP encoder produces a valid
+ * `foo.png` (plus a `fallbackFrom: 'webp'` note for the UI) instead of either
+ * crashing the tool or shipping PNG bytes named `.webp`.
+ */
+export async function encodeDecodedResolved(
+  decoded: DecodedImage,
+  format: ImageFormat,
+  quality = 0.92,
+  opts: EncodeBlobOptions = {},
+): Promise<EncodeOutcome> {
+  // Resolve the container up front: the OffscreenCanvas fast path below must
+  // ask for the MIME the browser can actually satisfy.
+  const target = resolveEncodeFormat(format).format;
+
   if (decoded.bitmap) {
     // Encode directly from the bitmap via an OffscreenCanvas fast path.
     if (typeof OffscreenCanvas !== 'undefined') {
@@ -70,21 +98,26 @@ export async function encodeDecodedToBlob(
             octx.fillRect(0, 0, decoded.width, decoded.height);
           }
           octx.drawImage(decoded.bitmap, 0, 0);
-          return canvasToBlob(off, { format, quality });
+          return finishEncode(await encodeCanvas(off, { format: target, quality }), format);
         }
       } catch {
-        /* fall through */
+        /* fall through to the 2D-canvas path */
       }
     }
     const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
     if (opts.background) fillBackground(ctx, opts.background, canvas.width, canvas.height);
     ctx.drawImage(decoded.bitmap, 0, 0);
-    return canvasToBlob(canvas, { format, quality });
+    return finishEncode(await encodeCanvas(canvas, { format: target, quality }), format);
   }
   const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
   if (opts.background) fillBackground(ctx, opts.background, canvas.width, canvas.height);
   ctx.drawImage(decoded.image, 0, 0);
-  return canvasToBlob(canvas, { format, quality });
+  return finishEncode(await encodeCanvas(canvas, { format: target, quality }), format);
+}
+
+/** Attribute a container switch to the format the CALLER asked for. */
+function finishEncode(outcome: EncodeOutcome, requested: ImageFormat): EncodeOutcome {
+  return { ...outcome, fallbackFrom: outcome.format === requested ? undefined : requested };
 }
 
 export function makeResult(blob: Blob, format: ImageFormat, name: string): ProcessResult {
@@ -102,6 +135,39 @@ export function outputName(base: string, format: ImageFormat): string {
 
 export function mimeOf(format: ImageFormat): string {
   return mimeFromExt(format);
+}
+
+/**
+ * Read a canvas' pixel buffer, converting an engine-level failure into a
+ * labelled error the UI can explain.
+ *
+ * Reading full-resolution pixels is the one step in the per-pixel tools
+ * (grayscale, background remover, signature maker) that can legitimately fail
+ * on a low-memory device with a large photo — the browser throws
+ * `IndexSizeError`/`NotFoundError` rather than returning anything useful. Left
+ * unguarded that surfaced as the generic "Something went wrong" panel with no
+ * hint of what to do about it, so it is turned into `pixels-unavailable`, which
+ * carries the offending file name for the message.
+ */
+export function readPixelsSafely(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  fileName?: string,
+): ImageData {
+  try {
+    const data = ctx.getImageData(0, 0, Math.max(1, Math.floor(width)), Math.max(1, Math.floor(height)));
+    if (!data || !data.data || data.data.length === 0) throw new Error('empty pixel buffer');
+    return data;
+  } catch (error) {
+    const err = new Error('pixels-unavailable') as Error & {
+      params?: Record<string, string | number>;
+      cause?: unknown;
+    };
+    err.params = { file: fileName ?? '' };
+    err.cause = error;
+    throw err;
+  }
 }
 
 /** Fill a canvas with a CSS color string. */

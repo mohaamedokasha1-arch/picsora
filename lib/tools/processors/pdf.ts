@@ -1,3 +1,4 @@
+import type { PDFImage } from 'pdf-lib';
 import type { DecodedImage, ProcessResult } from '@/lib/types';
 import { nameOf } from '@/lib/image/process';
 
@@ -24,10 +25,22 @@ async function makePdf(files: DecodedImage[], opts: PdfOptions): Promise<Uint8Ar
   for (const decoded of files) {
     const isJpg = decoded.format === 'jpg' || decoded.format === 'jpeg';
     // pdf-lib embeds JPG and PNG natively; re-encode anything else to PNG.
-    const bytes = isJpg
-      ? await decoded.file.arrayBuffer()
-      : await reencodeToPng(decoded);
-    const image = isJpg ? await doc.embedJpg(bytes) : await doc.embedPng(bytes);
+    //
+    // A `.jpg` that pdf-lib refuses to parse (CMYK / progressive / JPEG-2000
+    // bodies, which Photoshop and some phones do produce) used to abort the
+    // whole job with a raw pdf-lib error. Those cases now fall through to the
+    // canvas re-encode, which flattens the picture to PNG and keeps the batch
+    // working — the user still gets a PDF containing every page.
+    let image: PDFImage;
+    if (isJpg) {
+      try {
+        image = await doc.embedJpg(await decoded.file.arrayBuffer());
+      } catch {
+        image = await doc.embedPng(await reencodeToPng(decoded));
+      }
+    } else {
+      image = await doc.embedPng(await reencodeToPng(decoded));
+    }
 
     let [pw, ph] = pageDims(opts);
     if (opts.pageSize === 'fit') {
@@ -50,14 +63,27 @@ async function makePdf(files: DecodedImage[], opts: PdfOptions): Promise<Uint8Ar
   return doc.save();
 }
 
+/**
+ * Flatten any image to PNG bytes through the canvas (the universal path for
+ * formats pdf-lib cannot embed directly, and for JPEG variants it cannot parse).
+ * Failures are labelled with the offending file so a batch error says *which*
+ * image was at fault instead of showing the generic panel.
+ */
 async function reencodeToPng(decoded: DecodedImage): Promise<ArrayBuffer> {
   const { createCanvas } = await import('@/lib/image/process');
   const { canvasToBlob } = await import('@/lib/image/format');
-  const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
-  if (decoded.bitmap) ctx.drawImage(decoded.bitmap, 0, 0);
-  else ctx.drawImage(decoded.image, 0, 0);
-  const blob = await canvasToBlob(canvas, { format: 'png' });
-  return blob.arrayBuffer();
+  try {
+    const { canvas, ctx } = createCanvas(decoded.width, decoded.height);
+    if (decoded.bitmap) ctx.drawImage(decoded.bitmap, 0, 0);
+    else ctx.drawImage(decoded.image, 0, 0);
+    const blob = await canvasToBlob(canvas, { format: 'png' });
+    return await blob.arrayBuffer();
+  } catch (error) {
+    const err = new Error('pdf-image-failed') as Error & { params?: Record<string, string | number> };
+    err.params = { file: decoded.file?.name ?? '' };
+    err.cause = error;
+    throw err;
+  }
 }
 
 export async function imagesToPdf(

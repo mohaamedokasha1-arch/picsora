@@ -11,7 +11,10 @@
     "copy-pdf-worker": "node scripts/copy-pdf-worker.mjs",
     "predev": "npm run copy-pdf-worker",
     "prebuild": "npm run copy-pdf-worker",
-    "test:tools": "tsx scripts/tool-tests/run-tests.ts"
+    "test:tools": "tsx scripts/tool-tests/run-tests.ts",
+    "test:formats": "tsx scripts/tool-tests/format-support-tests.ts",
+    "test:canonical": "tsx scripts/tests/canonical.test.ts",
+    "test": "npm run test:tools && npm run test:formats && npm run test:canonical"
   },
   "dependencies": {
     "@cantoo/pdf-lib": "^2.9.1",

@@ -1,6 +1,6 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, nameOf, outputName } from '@/lib/image/process';
-import { canvasToBlob, encodableFormat } from '@/lib/image/format';
+import { encodeCanvas } from '@/lib/image/format';
 
 export interface FlipOptions {
   direction: 'horizontal' | 'vertical';
@@ -23,7 +23,11 @@ export async function flipImage(
   if (decoded.bitmap) ctx.drawImage(decoded.bitmap, 0, 0);
   else ctx.drawImage(decoded.image, 0, 0);
   ctx.setTransform(1, 0, 0, 1, 0, 0);
-  const format = encodableFormat(options.format);
-  const blob = await canvasToBlob(canvas, { format, quality: 0.92 });
-  return { blob, format, name: outputName(nameOf(decoded.file), format) };
+  const encoded = await encodeCanvas(canvas, { format: options.format, quality: 0.92 });
+  return {
+    blob: encoded.blob,
+    format: encoded.format,
+    ...(encoded.fallbackFrom ? { fallbackFrom: encoded.fallbackFrom } : {}),
+    name: outputName(nameOf(decoded.file), encoded.format),
+  };
 }

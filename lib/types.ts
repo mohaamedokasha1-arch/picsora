@@ -22,8 +22,15 @@ export interface DecodedImage {
 
 export interface ProcessResult {
   blob: Blob;
-  /** Detected or requested output format. */
+  /** Output format the bytes really are in (see `encodeCanvas`). */
   format: OutputFormat;
+  /**
+   * Set when the browser cannot encode the format the user asked for and the
+   * pipeline safely produced `format` instead. The UI turns this into an
+   * explanatory note — it is NOT an error: the user always gets a usable file
+   * whose name, MIME and bytes agree.
+   */
+  fallbackFrom?: ImageFormat;
   /** Suggested download filename without extension. */
   name: string;
   /**

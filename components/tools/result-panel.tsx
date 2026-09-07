@@ -5,7 +5,9 @@ import { FileText, ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ProcessResult } from '@/lib/types';
 import { formatBytes, formatSizeChange } from '@/lib/utils';
+import { formatLabel } from '@/lib/image/format-support';
 import { DownloadButton } from './download-button';
+import { FormatFallbackNotice } from './ui/format-support';
 
 interface ResultPanelProps {
   results: ProcessResult[];
@@ -95,6 +97,14 @@ function ResultCard({ result, originalSize, index }: { result: ProcessResult; or
           {orig === undefined && (
             <span className="text-foreground">{formatBytes(result.blob.size)}</span>
           )}
+          {result.fallbackFrom && (
+            // The requested container could not be written by this browser and
+            // the encoder substituted a safe one: say so on the card itself,
+            // because the file is valid and the user must not think it failed.
+            <span className="rounded bg-amber-500/10 px-1.5 py-0.5 font-medium text-amber-700 dark:text-amber-300">
+              {formatLabel(result.fallbackFrom)} → {formatLabel(result.format)}
+            </span>
+          )}
           {typeof result.finalQuality === 'number' && ['jpg', 'jpeg', 'webp'].includes(result.format) && (
             <span className="rounded bg-secondary px-1.5 py-0.5 text-muted-foreground">
               {t('usedQuality')}: {result.finalQuality}%
@@ -116,6 +126,9 @@ export function ResultPanel({ results, originalSize, onReset }: ResultPanelProps
         <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/15 text-xs text-emerald-600 dark:text-emerald-400">✓</span>
         {t('resultTitle')}
       </h3>
+      {/* Honest note whenever the encoder had to substitute a container: the
+          files below are valid, and the user is told what they actually are. */}
+      <FormatFallbackNotice results={results} />
       <div className={results.length > 1 ? 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3' : 'grid gap-4 sm:grid-cols-2'}>
         {results.map((r, i) => (
           <ResultCard key={`${r.name}-${i}`} result={r} originalSize={originalSize} index={i} />

@@ -1,5 +1,5 @@
 import type { DecodedImage, ProcessResult } from '@/lib/types';
-import { nameOf } from '@/lib/image/process';
+import { nameOf, readPixelsSafely } from '@/lib/image/process';
 import { canvasToBlob } from '@/lib/image/format';
 
 export interface BgRemoveOptions {
@@ -72,7 +72,9 @@ export async function removeBackground(
   const tol = (Math.max(0, Math.min(100, options.tolerance)) / 100) * 441.67;
   const feather = 1 + (Math.max(0, Math.min(100, options.feather)) / 100) * 160;
 
-  const img = ctx.getImageData(0, 0, w, h);
+  // Guarded read: on a low-memory device a full-resolution getImageData can
+  // fail outright, which used to abort the tool with an unexplained error.
+  const img = readPixelsSafely(ctx, w, h, decoded.file?.name);
   const d = img.data;
   for (let i = 0; i < d.length; i += 4) {
     const dr = d[i] - key.r;

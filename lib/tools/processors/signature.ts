@@ -1,5 +1,5 @@
 import type { DecodedImage, ProcessResult } from '@/lib/types';
-import { nameOf } from '@/lib/image/process';
+import { nameOf, readPixelsSafely } from '@/lib/image/process';
 import { canvasToBlob } from '@/lib/image/format';
 
 export interface SignatureOptions {
@@ -39,7 +39,7 @@ export async function makeSignature(
   if (!ctx) throw new Error('no-2d-context');
   ctx.drawImage((decoded.bitmap ?? decoded.image) as CanvasImageSource, 0, 0);
 
-  const img = ctx.getImageData(0, 0, w, h);
+  const img = readPixelsSafely(ctx, w, h, decoded.file?.name);
   const d = img.data;
   const thr = (Math.max(0, Math.min(100, options.threshold)) / 100) * 255;
   const ramp = 56;

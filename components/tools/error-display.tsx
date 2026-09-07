@@ -24,9 +24,21 @@ function resolveMessage(error: UploadError | string, t: (key: string, params?: R
     'image-too-large': 'validation.imageTooLarge',
     'heic-convert-failed': 'validation.heicFailed',
     'webp-unsupported': 'errors.webpUnsupported',
+    // Per-pixel tools: the canvas could not hand over its pixels (memory).
+    'pixels-unavailable': 'errors.pixelsUnavailable',
+    // Palette worker bridge: unavailable, wedged or failed.
+    'palette-unavailable': 'errors.paletteUnavailable',
+    'palette-timeout': 'errors.paletteTimeout',
+    'palette-failed': 'errors.paletteFailed',
+    // Watermark: missing or unreadable logo image.
+    'no-watermark-image': 'errors.noWatermarkImage',
+    'watermark-decode-failed': 'errors.watermarkDecodeFailed',
+    // image-to-pdf: an image pdf-lib could not embed.
+    'pdf-image-failed': 'errors.pdfImageFailed',
     'decode-failed': 'validation.corruptImage',
+    'decode-unsupported-format': 'validation.decodeUnsupportedFormat',
     'encode-failed': 'errors.processingFailed',
-    'no-2d-context': 'errors.processingFailed',
+    'no-2d-context': 'errors.noCanvasContext',
     'need-at-least-two': 'errors.processingFailed',
     'zip-failed': 'errors.zipFailed',
     'pdf-failed': 'errors.pdfFailed',

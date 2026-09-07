@@ -6,6 +6,12 @@
 import type { DecodedImage, ImageFormat } from '@/lib/types';
 import { convertHeicToBlob, isHeicFile } from '@/lib/image/heic';
 import { safeDownloadFilename } from '@/lib/security/sanitize';
+import {
+  blobMatchesFormat,
+  isFormatEncodable,
+  markFormatUnsupported,
+  resolveEncodeFormat,
+} from '@/lib/image/format-support';
 
 export const MAX_DIMENSION = 16000; // safety cap for canvas dimensions
 /** Safety cap for total pixels (~100 MP) so giant panoramas fail with a clear message. */
@@ -91,14 +97,14 @@ export function stripExtension(name: string): string {
   return idx > 0 ? name.slice(0, idx) : name;
 }
 
-/** Map an input format to one the browser canvas can actually encode. */
+/** Map an input format to one the browser canvas can actually encode.
+ *
+ * Thin wrapper over `resolveEncodeFormat` (see `lib/image/format-support.ts`)
+ * kept for its existing callers: the returned value is the container that will
+ * really be written, so a file name, its MIME and its bytes never disagree.
+ */
 export function encodableFormat(format: ImageFormat): ImageFormat {
-  if (format === 'heic' || format === 'heif') return 'jpg';
-  if (format === 'gif') return 'png';
-  // Without a WebP encoder, canvas.toBlob silently falls back to PNG bytes —
-  // mapping the label too keeps file name, MIME and content consistent.
-  if ((format === 'webp') && !supportsWebPEncode()) return 'png';
-  return format;
+  return resolveEncodeFormat(format).format;
 }
 
 /** Read the magic bytes of a file and verify they match the claimed extension. */
@@ -206,24 +212,38 @@ export async function detectFileFormat(file: File): Promise<string | null> {
   return null;
 }
 
-let webpEncodeSupport: boolean | null = null;
-
-/** Memoised: probing creates a canvas, and this runs inside encode loops. */
+/**
+ * WebP encoding support of the current browser.
+ *
+ * Now a thin alias for the general capability probe so there is exactly one
+ * answer to "can this browser write WebP?" — used by the UI to label the
+ * option and by the encoders to pick a safe fallback instead of failing.
+ */
 export function supportsWebPEncode(): boolean {
-  if (webpEncodeSupport !== null) return webpEncodeSupport;
-  try {
-    const c = document.createElement('canvas');
-    c.width = 2;
-    c.height = 2;
-    webpEncodeSupport = c.toDataURL('image/webp').startsWith('data:image/webp');
-  } catch {
-    webpEncodeSupport = false;
-  }
-  return webpEncodeSupport;
+  return isFormatEncodable('webp');
 }
 
 export function supportsOffscreenCanvas(): boolean {
   return typeof OffscreenCanvas !== 'undefined';
+}
+
+/**
+ * Containers that a subset of still-supported browsers cannot decode at all.
+ * Their decode failure is a capability problem, not a corrupt file.
+ */
+const DECODE_CAPABILITY_LIMITED = new Set(['webp', 'avif', 'tiff', 'bmp', 'svg']);
+
+/** Build the right decode error (with the offending file named) for `format`. */
+function decodeFailureError(
+  format: string,
+  fileName?: string,
+): Error & { params?: Record<string, string | number> } {
+  const key = DECODE_CAPABILITY_LIMITED.has(String(format).toLowerCase())
+    ? 'decode-unsupported-format'
+    : 'decode-failed';
+  const error = new Error(key) as Error & { params?: Record<string, string | number> };
+  error.params = { file: fileName ?? '', format: String(format).toUpperCase() };
+  return error;
 }
 
 /**
@@ -284,7 +304,14 @@ export async function decodeImage(file: File): Promise<DecodedImage> {
           resolve(el);
         }
       };
-      el.onerror = () => reject(new Error('decode-failed'));
+      el.onerror = () => {
+        // A decode failure has two very different causes, and telling them
+        // apart is the difference between "your file is broken" (wrong, and
+        // enraging) and "this browser cannot open this format" (actionable):
+        // Safari 13/14 cannot decode WebP, AVIF needs a recent browser, and
+        // some Linux/Windows setups have no TIFF codec installed at all.
+        reject(decodeFailureError(format, workFile.name));
+      };
       el.src = url;
     });
   } catch (error) {
@@ -329,54 +356,162 @@ export interface EncodeOptions {
   quality?: number; // 0..1 for jpeg/webp
 }
 
+/** Result of an encode: the bytes AND the format they really are in. */
+export interface EncodeOutcome {
+  blob: Blob;
+  /** Container actually written — always matches `blob.type` and the bytes. */
+  format: ImageFormat;
+  /** Set when `opts.format` could not be honoured and we safely switched. */
+  fallbackFrom?: ImageFormat;
+}
+
+function clampQuality(quality?: number): number {
+  const q = typeof quality === 'number' && Number.isFinite(quality) ? quality : 0.92;
+  return Math.max(0.01, Math.min(1, q));
+}
+
+function isLossyFormat(format: string): boolean {
+  return format === 'jpg' || format === 'jpeg' || format === 'webp';
+}
+
+/** `HTMLCanvasElement.toBlob` → Blob or null. Never throws, never rejects. */
+function toBlobFromCanvas(canvas: HTMLCanvasElement, mime: string, quality?: number): Promise<Blob | null> {
+  return new Promise((resolve) => {
+    try {
+      if (typeof canvas.toBlob !== 'function') return resolve(null);
+      const handle = (b: Blob | null) => resolve(b && b.size > 0 ? b : null);
+      if (typeof quality === 'number') canvas.toBlob(handle, mime, quality);
+      else canvas.toBlob(handle, mime);
+    } catch {
+      resolve(null);
+    }
+  });
+}
+
+/**
+ * `OffscreenCanvas.convertToBlob` → Blob or null.
+ *
+ * Awaited inside the try: an unsupported type makes this promise REJECT (it
+ * does not fall back to PNG like `toBlob` does), and a synchronous try/catch
+ * around `return convertToBlob(...)` cannot catch that — that unhandled
+ * rejection is what used to surface as a dead tool.
+ */
+async function toBlobFromOffscreen(
+  off: OffscreenCanvas,
+  mime: string,
+  quality?: number,
+): Promise<Blob | null> {
+  try {
+    if (typeof off.convertToBlob !== 'function') return null;
+    const blob = await (typeof quality === 'number'
+      ? off.convertToBlob({ type: mime, quality })
+      : off.convertToBlob({ type: mime }));
+    return blob && blob.size > 0 ? blob : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Copy any source into a real 2D canvas so `toBlob` can be used on it. */
+function as2dCanvas(source: HTMLCanvasElement | OffscreenCanvas | ImageBitmap): HTMLCanvasElement | null {
+  try {
+    if (source instanceof HTMLCanvasElement) return source;
+    const width = (source as { width?: number }).width ?? 0;
+    const height = (source as { height?: number }).height ?? 0;
+    if (width < 1 || height < 1) return null;
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.floor(width));
+    canvas.height = Math.max(1, Math.floor(height));
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    ctx.drawImage(source as CanvasImageSource, 0, 0);
+    return canvas;
+  } catch {
+    return null;
+  }
+}
+
+/** Try one container on one source; null means "this browser cannot write it". */
+async function encodeAttempt(
+  source: HTMLCanvasElement | OffscreenCanvas | ImageBitmap,
+  format: ImageFormat,
+  quality: number,
+): Promise<Blob | null> {
+  const mime = mimeFromExt(format);
+  const lossy = isLossyFormat(format) ? quality : undefined;
+
+  if (typeof OffscreenCanvas !== 'undefined' && source instanceof OffscreenCanvas) {
+    const fast = await toBlobFromOffscreen(source, mime, lossy);
+    if (fast && blobMatchesFormat(fast, format)) return fast;
+    // Rejected, empty, or bytes of another container (the silent PNG fallback):
+    // continue to the 2D-canvas path, which is the universal one.
+  }
+
+  const canvas = as2dCanvas(source);
+  if (!canvas) return null;
+  return toBlobFromCanvas(canvas, mime, lossy);
+}
+
+/**
+ * Encode a canvas/bitmap source, returning the bytes AND the format they
+ * really are in.
+ *
+ * Order of attempts: the requested container → PNG → JPEG. A container is only
+ * accepted when the browser actually produced that MIME type, so a file is
+ * never written under a name its bytes do not match (the "corrupted .webp"
+ * class of bug). A lie by the encoder is also remembered via
+ * `markFormatUnsupported`, so the capability table self-corrects for the rest
+ * of the session and the UI can stop offering that format.
+ */
+export async function encodeCanvas(
+  source: HTMLCanvasElement | OffscreenCanvas | ImageBitmap,
+  opts: EncodeOptions,
+): Promise<EncodeOutcome> {
+  const quality = clampQuality(opts.quality);
+  const requested = opts.format;
+  const preferred = resolveEncodeFormat(requested).format;
+
+  const attempts: ImageFormat[] = [];
+  for (const candidate of [preferred, 'png', 'jpg'] as ImageFormat[]) {
+    if (!attempts.includes(candidate)) attempts.push(candidate);
+  }
+
+  for (const format of attempts) {
+    const blob = await encodeAttempt(source, format, quality);
+    if (!blob) {
+      // A null usually means "this canvas is too big / the encoder was killed",
+      // not "this container is unsupported" — so it must not black-list PNG or
+      // JPEG for the rest of the session (that would silently turn lossless
+      // output into lossy output). Exotic containers are safe to remember.
+      if (format !== 'png' && format !== 'jpg' && format !== 'jpeg') markFormatUnsupported(format);
+      continue;
+    }
+    if (!blobMatchesFormat(blob, format)) {
+      // The engine returned another container's bytes: remember and retry with
+      // the honest label instead of shipping mislabelled data.
+      markFormatUnsupported(format);
+      continue;
+    }
+    return { blob, format, fallbackFrom: format === requested ? undefined : requested };
+  }
+
+  throw new Error('encode-failed');
+}
+
 /**
  * Encode a canvas/bitmap source to a Blob using the requested format.
- * Falls back to PNG when a format is unsupported.
+ * Falls back to PNG (then JPEG) when a format is unsupported, so an encode can
+ * only ever fail when the canvas itself is dead.
+ *
+ * Callers that also name a file should prefer `encodeCanvas`, which reports
+ * the container that was really written.
  */
-export function canvasToBlob(
+export async function canvasToBlob(
   source: HTMLCanvasElement | OffscreenCanvas | ImageBitmap,
   opts: EncodeOptions,
 ): Promise<Blob> {
-  const { quality = 0.92 } = opts;
-  // Safety net: never attempt to encode HEIC/GIF via canvas (toBlob yields null).
-  const format = encodableFormat(opts.format);
-  const mime = mimeFromExt(format);
-  const isLossy = format === 'jpg' || format === 'jpeg' || format === 'webp';
-
-  // Use OffscreenCanvas.convertToBlob when available (fast, worker-friendly).
-  if (typeof OffscreenCanvas !== 'undefined' && source instanceof OffscreenCanvas) {
-    try {
-      const off = source as OffscreenCanvas;
-      if (isLossy) {
-        return off.convertToBlob({ type: mime, quality }) as Promise<Blob>;
-      }
-      return off.convertToBlob({ type: mime }) as Promise<Blob>;
-    } catch {
-      /* fall through */
-    }
-  }
-  if (source instanceof HTMLCanvasElement) {
-    if (isLossy) {
-      return new Promise((resolve, reject) => {
-        source.toBlob(
-          (b) => (b ? resolve(b) : reject(new Error('encode-failed'))),
-          mime,
-          quality,
-        );
-      });
-    }
-    return new Promise((resolve, reject) => {
-      source.toBlob((b) => (b ? resolve(b) : reject(new Error('encode-failed'))), mime);
-    });
-  }
-  // ImageBitmap fallback: draw to a temp canvas.
-  const c = document.createElement('canvas');
-  c.width = (source as ImageBitmap).width;
-  c.height = (source as ImageBitmap).height;
-  const ctx = c.getContext('2d');
-  if (!ctx) return Promise.reject(new Error('no-2d-context'));
-  ctx.drawImage(source as ImageBitmap, 0, 0);
-  return canvasToBlob(c, opts);
+  const { blob } = await encodeCanvas(source, opts);
+  return blob;
 }
 
 /**

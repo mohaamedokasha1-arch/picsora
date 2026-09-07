@@ -28,26 +28,51 @@ export default function PaletteTool({ ctx }: { ctx: WorkspaceContext }) {
     try {
       const out = await extractPalette(ctx.decoded, { count });
       setPalette(out);
-    } catch {
-      setError({ key: 'processingFailed' });
+    } catch (e) {
+      // Forward the labelled failure (worker blocked / timed out / pixels
+      // unreadable) so the user gets the matching sentence and a way forward.
+      // Unrecognised messages still land on the generic text inside
+      // `ErrorDisplay`, so nothing raw is ever shown.
+      const key = e instanceof Error && e.message ? e.message : 'processingFailed';
+      setError({
+        key,
+        params: e instanceof Error ? (e as Error & { params?: Record<string, string | number> }).params : undefined,
+      });
     }
   };
 
   const exportPng = () => {
     if (!palette) return;
+    const fail = (key: string) => setError({ key });
+    setError(null);
     const size = 96;
     const canvas = document.createElement('canvas');
     canvas.width = size * palette.colors.length + (palette.colors.length - 1) * 4;
     canvas.height = size;
     const cctx = canvas.getContext('2d');
-    if (!cctx) return;
+    // A silent `return` here meant the Download button appeared dead.
+    if (!cctx) {
+      fail('no-2d-context');
+      return;
+    }
     palette.colors.forEach((c, i) => {
       cctx.fillStyle = c.hex;
       cctx.fillRect(i * (size + 4), 0, size, size);
     });
-    canvas.toBlob((blob) => {
-      if (blob) triggerDownload(blob, 'piclizer-palette.png');
-    }, 'image/png');
+    // PNG only — the one container every browser can write — but `toBlob` can
+    // still answer null under memory pressure, and a swigging null is exactly
+    // the "nothing happened" bug we are removing.
+    try {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          fail('encode-failed');
+          return;
+        }
+        triggerDownload(blob, 'piclizer-palette.png');
+      }, 'image/png');
+    } catch {
+      fail('encode-failed');
+    }
   };
 
   const exportJson = () => {

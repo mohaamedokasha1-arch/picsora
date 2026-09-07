@@ -1,7 +1,8 @@
 import type { DecodedImage, ImageFormat, ProcessResult } from '@/lib/types';
 import { createCanvas, nameOf, outputName } from '@/lib/image/process';
-import { canvasToBlob, encodableFormat } from '@/lib/image/format';
+import { encodableFormat, encodeCanvas } from '@/lib/image/format';
 import { hasAlpha, fillBackground, clearCanvas } from '@/lib/image/transparent';
+import { needsOpaqueBackground } from '@/lib/image/format-support';
 
 export interface ResizeOptions {
   width: number;
@@ -23,7 +24,7 @@ export async function resizeImage(
   // Always start transparent; for lossy JPEG output fill white if source has alpha.
   clearCanvas(ctx, options.width, options.height);
   const sourceHasAlpha = hasAlpha(decoded);
-  const isOpaqueOutput = format === 'jpg' || format === 'jpeg';
+  const isOpaqueOutput = needsOpaqueBackground(format);
   if (isOpaqueOutput && sourceHasAlpha) {
     fillBackground(ctx, '#ffffff', options.width, options.height);
   }
@@ -33,6 +34,15 @@ export async function resizeImage(
   } else {
     ctx.drawImage(decoded.image, 0, 0, options.width, options.height);
   }
-  const blob = await canvasToBlob(canvas, { format, quality: 0.92 });
-  return { blob, format, name: outputName(nameOf(decoded.file), format) };
+  // The encoder is handed the ORIGINAL request and reports the container it
+  // really wrote, so the name/MIME always match the bytes (a browser without a
+  // WebP encoder gets a valid .png plus a `fallbackFrom` note, never a broken
+  // file and never a crash).
+  const encoded = await encodeCanvas(canvas, { format: options.format, quality: 0.92 });
+  return {
+    blob: encoded.blob,
+    format: encoded.format,
+    ...(encoded.fallbackFrom ? { fallbackFrom: encoded.fallbackFrom } : {}),
+    name: outputName(nameOf(decoded.file), encoded.format),
+  };
 }

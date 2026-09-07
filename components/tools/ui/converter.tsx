@@ -12,6 +12,7 @@ import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
 import { convertMany } from '@/lib/tools/processors/convert';
+import { FormatSupportNotice } from './format-support';
 import type { ImageFormat } from '@/lib/types';
 
 interface ConverterConfig {
@@ -86,6 +87,9 @@ function ConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: Convert
 
       {processing && <ProcessingIndicator />}
       {error && <ErrorDisplay error={error} />}
+      {/* On a browser that cannot write the target container, say what will be
+          delivered instead — the tool still succeeds, it never crashes. */}
+      <FormatSupportNotice target={config.to} />
       <ResultPanel results={results} originalSize={originalSize} onReset={ctx.reset} />
     </div>
   );

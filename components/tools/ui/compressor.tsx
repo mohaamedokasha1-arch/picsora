@@ -13,6 +13,7 @@ import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
 import { Notice } from '@/components/tools/kit';
 import { compressImages, type SmartCompressedResult } from '@/lib/tools/processors/compressor';
+import { formatOptionLabel, useFormatSupport } from './format-support';
 import type { ImageFormat } from '@/lib/types';
 
 export default function CompressorTool({ ctx }: { ctx: WorkspaceContext }) {
@@ -21,6 +22,9 @@ export default function CompressorTool({ ctx }: { ctx: WorkspaceContext }) {
   const [quality, setQuality] = React.useState(80);
   const [format, setFormat] = React.useState<'same' | ImageFormat>('same');
   const preview = useObjectUrl(ctx.files[0]);
+  // Capability-aware labels: on a browser without a WebP encoder the option
+  // says what the user will actually receive instead of failing later.
+  const support = useFormatSupport(['jpg', 'png', 'webp']);
 
   const process = () => {
     run(() => compressImages(ctx.decoded, { quality, format }));
@@ -69,9 +73,9 @@ export default function CompressorTool({ ctx }: { ctx: WorkspaceContext }) {
               disabled={processing}
               options={[
                 { value: 'same', label: t('controls.outputSame') },
-                { value: 'jpg', label: 'JPG' },
-                { value: 'png', label: 'PNG' },
-                { value: 'webp', label: 'WebP' },
+                { value: 'jpg', label: formatOptionLabel('JPG', 'jpg', support) },
+                { value: 'png', label: formatOptionLabel('PNG', 'png', support) },
+                { value: 'webp', label: formatOptionLabel('WebP', 'webp', support) },
               ]}
             />
           </div>
