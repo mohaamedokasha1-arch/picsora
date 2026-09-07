@@ -14,6 +14,7 @@ import { compressToExactSize } from './exact-size';
 import { removeBackground } from './background';
 import { makePassportPhoto } from './passport';
 import { makeSignature } from './signature';
+import { upscaleImage } from './upscaler';
 
 /**
  * Maps a tool slug to its processing function.
@@ -46,6 +47,7 @@ export const processors: Record<string, ToolProcessor<any>> = {
   'background-remover': removeBackground,
   'passport-photo-maker': makePassportPhoto,
   'signature-maker': makeSignature,
+  'image-upscaler': upscaleImage,
 };
 
 export * from './types';

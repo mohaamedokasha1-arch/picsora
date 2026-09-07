@@ -40,6 +40,9 @@ const nextConfig = {
       { source: '/icons/:path*', headers: staticCache },
       { source: '/images/:path*', headers: staticCache },
       { source: '/workers/:path*', headers: staticCache },
+      // TF.js model weights for the AI upscaler: immutable, cacheable for a
+      // year, same-origin (the tool must work without any third-party CDN).
+      { source: '/models/:path*', headers: staticCache },
       { source: '/favicon.ico', headers: staticCache },
       // `.well-known` documents must stay readable cross-origin.
       {

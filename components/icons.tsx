@@ -62,6 +62,7 @@ import {
   TrendingUp,
   Type,
   Unlock,
+  WandSparkles,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -122,6 +123,7 @@ export const TOOL_ICONS: Record<string, LucideIcon> = {
   coins: Coins,
   // new image tools
   'id-card': IdCard,
+  'wand-sparkles': WandSparkles,
   'pen-line': PenLine,
   // developer tools
   'key-round': KeyRound,

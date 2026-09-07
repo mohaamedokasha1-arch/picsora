@@ -29,6 +29,18 @@ import { compressToExactSize } from '@/lib/tools/processors/exact-size';
 import { removeBackground } from '@/lib/tools/processors/background';
 import { makePassportPhoto } from '@/lib/tools/processors/passport';
 import { makeSignature } from '@/lib/tools/processors/signature';
+import { upscaleImage } from '@/lib/tools/processors/upscaler';
+import {
+  MAX_OUTPUT_EDGE,
+  TILE_OVERLAP,
+  assertUpscalableSize,
+  planTiles,
+  upscaleRgba,
+  type UpscaleFactor,
+} from '@/lib/ai/upscaler';
+import { createCanvas, sourceOf } from '@/lib/image/process';
+import { cpuTf, cropRgba, fileModelHandler, rgbaOfPng, FIXTURES_DIR } from './ai';
+import { join } from 'node:path';
 import { triggerDownload } from '@/lib/image/format';
 import {
   assert,
@@ -681,7 +693,275 @@ async function main() {
     assert(clear > 5, 'transparent pixels present');
   });
 
-  /* ═══════════════════════════ 16. DOWNLOAD FLOW ═══════════════════════════ */
+  /* ═══════════════════════ 16. AI UPSCALER (TensorFlow.js) ═══════════════════════ */
+  console.log('\n🔎 image-upscaler (ESRGAN + TensorFlow.js)');
+
+  // Real weights, real network — TensorFlow.js on the CPU backend, reading the
+  // same model files the browser fetches from /models/esrgan/.
+  const tfNode = await cpuTf();
+  const io2x = fileModelHandler(2 as UpscaleFactor);
+
+  /** What a plain canvas resample of the same source would produce. */
+  async function naiveResample(file: File, width: number, height: number) {
+    const decoded = await decode(file);
+    const { canvas, ctx } = createCanvas(width, height);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(sourceOf(decoded) as CanvasImageSource, 0, 0, width, height);
+    return canvasToBlob(canvas, { format: 'png' });
+  }
+
+  await test('planTiles covers every input pixel exactly once and keeps the halo inside the image', () => {
+    const width = 300;
+    const height = 140;
+    const plan = planTiles(width, height);
+    assert(plan.total > 1, `a ${width}×${height} image must be tiled, got ${plan.total} tile(s)`);
+    assertEq(plan.total, plan.tiles.length, 'tile count matches the plan');
+
+    const coverage = new Uint8Array(width * height);
+    for (const tile of plan.tiles) {
+      assert(tile.w > 0 && tile.h > 0, 'core is non-empty');
+      assert(tile.feedX >= 0 && tile.feedY >= 0, 'halo never starts before the image');
+      assert(tile.feedX + tile.feedW <= width, 'halo never exceeds the image width');
+      assert(tile.feedY + tile.feedH <= height, 'halo never exceeds the image height');
+      assert(tile.feedW - tile.w <= 2 * TILE_OVERLAP, 'horizontal halo is bounded');
+      assert(tile.feedH - tile.h <= 2 * TILE_OVERLAP, 'vertical halo is bounded');
+      // 12 Conv2D(3×3) ⇒ a 25 px receptive field, so interior tiles need ≥12 px
+      // of context on each side or the stitched result would show seams.
+      if (tile.x > 0) assert(tile.x - tile.feedX >= 12, 'left halo reaches the receptive field');
+      if (tile.y > 0) assert(tile.y - tile.feedY >= 12, 'top halo reaches the receptive field');
+      if (tile.x + tile.w < width) assert(tile.feedX + tile.feedW - (tile.x + tile.w) >= 12, 'right halo');
+      if (tile.y + tile.h < height) assert(tile.feedY + tile.feedH - (tile.y + tile.h) >= 12, 'bottom halo');
+      for (let y = tile.y; y < tile.y + tile.h; y += 1) {
+        for (let x = tile.x; x < tile.x + tile.w; x += 1) coverage[y * width + x] += 1;
+      }
+    }
+    assert(coverage.every((n) => n === 1), 'every input pixel is owned by exactly one tile core');
+  });
+
+  await test('ESRGAN at 2× reproduces the upstream reference output (input range + tensor layout)', async () => {
+    const fixture = await rgbaOfPng(join(FIXTURES_DIR, 'esrgan-fixture.png'));
+    const reference = await rgbaOfPng(join(FIXTURES_DIR, 'esrgan-x2-reference.png'));
+    const scale: UpscaleFactor = 2;
+    const crop = 64; // keeps the CPU pass quick; the interior is still a full-context result
+    const src = cropRgba(fixture.data, fixture.width, 0, 0, crop, crop);
+
+    const out = await upscaleRgba(src, crop, crop, { scale, tf: tfNode, ioHandler: io2x });
+    assertEq(out.width, crop * scale, 'output width');
+    assertEq(out.height, crop * scale, 'output height');
+    assertEq(out.backend, 'cpu', 'the injected backend ran the inference');
+
+    // Compare the interior only: the crop's far edges lack the reference's context.
+    const interior = crop * scale - 2 * TILE_OVERLAP * scale;
+    let total = 0;
+    let worst = 0;
+    let samples = 0;
+    let opaque = 0;
+    for (let y = 0; y < interior; y += 1) {
+      for (let x = 0; x < interior; x += 1) {
+        const mine = (y * out.width + x) * 4;
+        const theirs = (y * reference.width + x) * 4;
+        if (out.data[mine + 3] === 255) opaque += 1;
+        for (let c = 0; c < 3; c += 1) {
+          const diff = Math.abs(out.data[mine + c] - reference.data[theirs + c]);
+          total += diff;
+          if (diff > worst) worst = diff;
+          samples += 1;
+        }
+      }
+    }
+    assertEq(opaque, interior * interior, 'RGB output is fully opaque');
+    assertNear(total / samples, 0, 1.5, 'mean channel difference vs the upstream reference');
+    assert(worst <= 8, `worst channel difference ${worst} must stay within float rounding`);
+  });
+
+  await test('processor: 48×32 photo → 96×64 PNG whose pixels are NOT a plain resample', async () => {
+    const file = await makePhotoFile('small.png', 48, 32, 'image/png', 1);
+    const decoded = await decode(file);
+    const result = await upscaleImage([decoded], { scale: 2, format: 'png', tf: tfNode, ioHandler: io2x });
+    const info = await inspectBlob(result.blob);
+    assertEq(info.mime, 'image/png', 'png output');
+    assertEq(info.width, 96, 'width doubled');
+    assertEq(info.height, 64, 'height doubled');
+    assertEq(result.name, 'small-2x.png', 'download name');
+    assertEq(result.originalSize, file.size, 'original size reported');
+
+    const naive = await inspectBlob(await naiveResample(file, 96, 64));
+    let diff = 0;
+    let samples = 0;
+    for (let i = 0; i < info.rgba.length; i += 4) {
+      diff += Math.abs(info.rgba[i] - naive.rgba[i]);
+      diff += Math.abs(info.rgba[i + 1] - naive.rgba[i + 1]);
+      diff += Math.abs(info.rgba[i + 2] - naive.rgba[i + 2]);
+      samples += 3;
+    }
+    const meanDiff = diff / samples;
+    assert(meanDiff > 2, `network output must differ from interpolation (mean diff ${meanDiff.toFixed(2)})`);
+    assert(meanDiff < 40, `output must still be the same picture (mean diff ${meanDiff.toFixed(2)})`);
+  });
+
+  await test('processor: a transparent PNG keeps its alpha channel at 2×', async () => {
+    const file = await makeTransparentPngFile('logo.png', 48, 48);
+    const decoded = await decode(file);
+    const result = await upscaleImage([decoded], { scale: 2, format: 'png', tf: tfNode, ioHandler: io2x });
+    const info = await inspectBlob(result.blob);
+    assertEq(info.mime, 'image/png', 'png output');
+    assertEq(info.width, 96, 'width doubled');
+    assertEq(info.height, 96, 'height doubled');
+    let transparent = 0;
+    let opaque = 0;
+    for (let i = 3; i < info.rgba.length; i += 4) {
+      if (info.rgba[i] === 0) transparent += 1;
+      if (info.rgba[i] === 255) opaque += 1;
+    }
+    assert(transparent > 100, `transparency survives (got ${transparent} clear pixels)`);
+    assert(opaque > 100, `the opaque subject survives (got ${opaque} solid pixels)`);
+  });
+
+  await test('processor: JPEG output flattens transparency onto white, never black', async () => {
+    const file = await makeTransparentPngFile('logo.png', 48, 48);
+    const decoded = await decode(file);
+    const result = await upscaleImage([decoded], { scale: 2, format: 'jpg', tf: tfNode, ioHandler: io2x });
+    const info = await inspectBlob(result.blob);
+    assertEq(info.mime, 'image/jpeg', 'jpeg output');
+    assertEq(result.name, 'logo-2x.jpg', 'jpg name');
+    const corner = pixelAt(info.rgba, info.width, 0, 0);
+    assert(
+      corner.r > 200 && corner.g > 200 && corner.b > 200,
+      `transparent corner must flatten to white, got rgb(${corner.r},${corner.g},${corner.b})`,
+    );
+  });
+
+  await test('the size guard refuses bitmaps no browser canvas can hold', () => {
+    let thrown: (Error & { params?: Record<string, string | number> }) | null = null;
+    try {
+      assertUpscalableSize(5000, 5000, 4, 'huge.jpg');
+    } catch (e) {
+      thrown = e as Error & { params?: Record<string, string | number> };
+    }
+    assert(thrown !== null, 'a 20 000 px result must be refused before any work starts');
+    assertEq(thrown!.message, 'upscaler-too-large', 'error key shown to the user');
+    assertEq(thrown!.params?.edge, MAX_OUTPUT_EDGE.toLocaleString('en-US'), 'the limit is reported');
+    assertEq(thrown!.params?.w, '20,000', 'the offending width is reported');
+    assertUpscalableSize(1200, 800, 4, 'photo.jpg'); // 4800×3200 is fine
+  });
+
+  await test('all three vendored scales (2×, 3×, 4×) load and upscale correctly', async () => {
+    const W = 16;
+    const H = 12;
+    const src = new Uint8ClampedArray(W * H * 4);
+    for (let i = 0; i < W * H; i += 1) {
+      src[i * 4] = (i * 7) % 256;
+      src[i * 4 + 1] = (i * 13) % 256;
+      src[i * 4 + 2] = (i * 29) % 256;
+      src[i * 4 + 3] = 255;
+    }
+    for (const scale of [2, 3, 4] as UpscaleFactor[]) {
+      const out = await upscaleRgba(src, W, H, { scale, tf: tfNode, ioHandler: fileModelHandler(scale) });
+      assertEq(out.width, W * scale, `x${scale} width`);
+      assertEq(out.height, H * scale, `x${scale} height`);
+      // A wrongly scaled network would saturate or flatten the colours; the
+      // synthetic input averages 127.5, so the output must stay in that range.
+      let sum = 0;
+      let channels = 0;
+      for (let i = 0; i < out.data.length; i += 4) {
+        sum += out.data[i] + out.data[i + 1] + out.data[i + 2];
+        channels += 3;
+      }
+      const mean = sum / channels;
+      assertNear(mean, 127.5, 20, `x${scale} mean channel value`);
+    }
+  });
+
+  await test('the upscaler UI renders in both locales with the live output dimensions', async () => {
+    const React = await import('react');
+    const { renderToStaticMarkup } = await import('react-dom/server');
+    const { NextIntlClientProvider } = await import('next-intl');
+    const { default: ImageUpscalerTool } = await import('@/components/tools/ui/upscaler');
+    const en = (await import('@/messages/en.json')) as Record<string, unknown>;
+    const ar = (await import('@/messages/ar.json')) as Record<string, unknown>;
+    const file = new File([new Uint8Array(10)], 'photo.png', { type: 'image/png' });
+    const ctx = {
+      decoded: [{ image: {} as HTMLImageElement, bitmap: null, width: 640, height: 480, format: 'png' as const, file }],
+      files: [file],
+      reset: () => {},
+      setError: () => {},
+      busy: false,
+      setBusy: () => {},
+    };
+
+    for (const [locale, messages, label] of [
+      ['en', en, 'Upscale image'],
+      ['ar', ar, 'تكبير الصورة'],
+    ] as const) {
+      const html = renderToStaticMarkup(
+        React.createElement(
+          NextIntlClientProvider as never,
+          { locale, timeZone: 'UTC', messages: messages as never },
+          React.createElement(ImageUpscalerTool, { ctx }),
+        ),
+      );
+      assert(html.includes('640 × 480'), `${locale}: shows the source dimensions`);
+      assert(html.includes('1280') && html.includes('960'), `${locale}: previews the 2× output size`);
+      for (const factor of ['2×', '3×', '4×']) {
+        assert(html.includes(factor), `${locale}: offers the ${factor} model`);
+      }
+      assert(html.includes(label), `${locale}: renders its own button label`);
+    }
+
+    // An oversized source must warn and disable the run button before any work starts.
+    const huge = new File([new Uint8Array(10)], 'huge.png', { type: 'image/png' });
+    const hugeHtml = renderToStaticMarkup(
+      React.createElement(
+        NextIntlClientProvider as never,
+        { locale: 'en', timeZone: 'UTC', messages: en as never },
+        React.createElement(ImageUpscalerTool, {
+          ctx: {
+            ...ctx,
+            decoded: [{ image: {} as HTMLImageElement, bitmap: null, width: 9000, height: 9000, format: 'png' as const, file: huge }],
+            files: [huge],
+          },
+        }),
+      ),
+    );
+    assert(hugeHtml.includes('bigger than a browser canvas can hold'), 'oversized images warn before running');
+    assert(/<button[^>]*disabled[^>]*>/.test(hugeHtml), 'the run button is disabled for oversized images');
+  });
+
+  await test('registry, processor map and both locales know about the upscaler', async () => {
+    const { getTool } = await import('@/lib/tools/registry');
+    const { processors } = await import('@/lib/tools/processors');
+    const tool = getTool('image-upscaler');
+    assert(Boolean(tool), 'the tool is registered');
+    assertEq(tool!.kind, 'image', 'it renders inside the image workspace');
+    assertEq(tool!.category, 'resize', 'listed under resize');
+    assert(tool!.inputFormats.includes('heic'), 'iPhone photos accepted');
+    assertEq(processors['image-upscaler'], upscaleImage, 'the processor is wired up');
+
+    const en = (await import('@/messages/en.json')) as Record<string, any>;
+    const ar = (await import('@/messages/ar.json')) as Record<string, any>;
+    for (const [locale, dict] of [['en', en], ['ar', ar]] as const) {
+      const copy = dict.tools['image-upscaler'];
+      for (const field of ['name', 'short', 'description', 'intro']) {
+        assert(typeof copy?.[field] === 'string' && copy[field].length > 0, `${locale}: tools.image-upscaler.${field}`);
+      }
+      assert(Array.isArray(copy.howTo) && copy.howTo.length >= 3, `${locale}: howTo steps`);
+      assert(Array.isArray(copy.faqs) && copy.faqs.length >= 3, `${locale}: faqs`);
+      for (const key of ['run', 'scaleHint', 'loadingModel', 'upscaling', 'modelNote', 'backend', 'backendWebgl', 'backendCpu', 'tooLarge', 'suggest', 'slowNote']) {
+        assert(typeof dict.upscaler?.[key] === 'string' && dict.upscaler[key].length > 0, `${locale}: upscaler.${key}`);
+      }
+      assert(typeof dict.controls?.upscalerScale === 'string', `${locale}: controls.upscalerScale`);
+      assert(typeof dict.errors?.upscalerTooLarge === 'string', `${locale}: errors.upscalerTooLarge`);
+      // Placeholders the component interpolates must exist in the copy.
+      assert(dict.upscaler.upscaling.includes('{percent}'), `${locale}: upscaler.upscaling needs {percent}`);
+      assert(dict.upscaler.loadingModel.includes('{size}'), `${locale}: upscaler.loadingModel needs {size}`);
+      assert(dict.errors.upscalerTooLarge.includes('{edge}'), `${locale}: errors.upscalerTooLarge needs {edge}`);
+      assert(dict.upscaler.suggest.includes('{scale}'), `${locale}: upscaler.suggest needs {scale}`);
+      assert(dict.upscaler.tooLarge.includes('{edge}'), `${locale}: upscaler.tooLarge needs {edge}`);
+    }
+  });
+
+  /* ═══════════════════════════ 17. DOWNLOAD FLOW ═══════════════════════════ */
   console.log('\n⬇️  download flow');
 
   await test('triggerDownload delivers the PROCESSED blob under a safe name', async () => {

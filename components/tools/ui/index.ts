@@ -37,4 +37,5 @@ export const toolComponents: Record<string, ToolUIComponent> = {
   'passport-photo-maker': dynamic(() => import('./passport-photo')),
   'signature-maker': dynamic(() => import('./signature-maker')),
   'image-ocr': dynamic(() => import('./image-ocr')),
+  'image-upscaler': dynamic(() => import('./upscaler')),
 };

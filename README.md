@@ -1,8 +1,9 @@
 # Piclizer — Free, private, browser-based image tools
 
-Piclizer is a production-ready SaaS-style platform of **20 image tools** that run **100% in the browser**.
-No uploads, no accounts, no servers touching your images. Every tool works with real files using the
-Canvas, Blob, File and Web Worker APIs.
+Piclizer is a production-ready SaaS-style platform of **78 tools** (28 of them image tools) that run
+**100% in the browser**. No uploads, no accounts, no servers touching your images. Every tool works
+with real files using the Canvas, Blob, File and Web Worker APIs — including the AI upscaler, which
+runs a neural network on the visitor's own device.
 
 ## Tech stack
 
@@ -12,6 +13,7 @@ Canvas, Blob, File and Web Worker APIs.
 - **next-intl** for English + Arabic with full RTL support
 - **next-themes** for light/dark/system theming
 - **pdf-lib** (client-side PDF), **JSZip** (client-side ZIP)
+- **@tensorflow/tfjs** for the AI image upscaler (ESRGAN super-resolution on WebGL, CPU fallback)
 - **Web Workers** for CPU-heavy palette extraction
 - No external image APIs, no paid AI APIs, no server-side uploads
 
@@ -52,17 +54,40 @@ Copy `.env.example` to `.env.local` and adjust. Everything is optional — the s
 /components         UI: layout, tools, ui primitives, consent, theme, ads, analytics
 /lib
   /tools           registry (single source of truth) + per-tool processors
+  /ai              TensorFlow.js super-resolution engine (on-device upscaling)
   /image           Canvas/format/encode utilities
   /seo             metadata + JSON-LD builders
   /validation      file validation (magic bytes, MIME, size)
 /messages          en.json / ar.json translation files
-/public            icons, OG image, workers/palette.worker.js
+/public            icons, OG image, workers/palette.worker.js, models/esrgan/…
 ```
 
 ### The tool registry
 
 `lib/tools/registry.ts` is the single source of truth. Every tool page, category page, search index,
 sitemap and related-tools section derives from it.
+
+### The AI image upscaler
+
+`image-upscaler` is the one tool that runs a neural network — and it still never uploads anything.
+
+- **Engine**: `lib/ai/upscaler.ts` — ESRGAN generators (2×, 3×, 4×) loaded with `tf.loadLayersModel`
+  and executed on the **WebGL** backend, falling back to **CPU** when the GPU is missing or
+  blacklisted. TensorFlow.js is imported dynamically, so it is only downloaded on that tool's page.
+- **Weights**: vendored in `public/models/esrgan/x{2,3,4}/` (≈0.9 MB each, MIT © Kevin Scott /
+  UpscalerJS) and served from our own origin — no CDN, and the tool keeps working offline once the
+  browser has cached them. `npm run models:check` verifies the committed checksums;
+  `node scripts/fetch-ai-models.mjs` re-downloads them from npm.
+- **Memory**: the image is processed in 128 px tiles padded with a 16 px halo, which is discarded
+  afterwards. The model's receptive field is 25 px, so the retained cores are identical to a
+  full-image pass and the tiles leave no seams — a 12 MP photo stays within GPU memory.
+- **Transparency**: the network is RGB-only, so the alpha channel is upscaled separately with the
+  browser's high-quality resampler and re-attached. JPEG output flattens onto white, never black.
+- **Guards**: results are capped at 8 000 px per side / 48 MP (`MAX_OUTPUT_EDGE`,
+  `MAX_OUTPUT_PIXELS`) and refused *before* any heavy work with a precise message.
+- **Tests**: `npm run test:tools` runs the real network on the CPU backend and asserts the output
+  matches the upstream ESRGAN reference pixels (`scripts/tool-tests/fixtures/`), plus the processor,
+  alpha handling, size guard and i18n coverage.
 
 ## Adding a new tool (Tool #21)
 

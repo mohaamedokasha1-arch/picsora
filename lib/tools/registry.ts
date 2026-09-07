@@ -249,7 +249,7 @@ for (const tool of IMAGE_TOOLS) {
 /** Smarter internal linking: point existing tools at the new helpers. */
 const RELATED_PATCH: Record<string, string[]> = {
   'image-compressor': ['image-to-exact-kb', 'heic-to-jpg'],
-  'image-resizer': ['passport-photo-maker', 'image-to-exact-kb'],
+  'image-resizer': ['image-upscaler', 'passport-photo-maker', 'image-to-exact-kb'],
   'image-cropper': ['passport-photo-maker', 'background-remover'],
   'jpg-to-png': ['heic-to-png', 'png-to-webp'],
   'png-to-jpg': ['heic-to-jpg', 'jpg-to-webp'],
@@ -361,6 +361,32 @@ const NEW_IMAGE_TOOLS: ToolDef[] = [
       ['pdf-ocr', 'pdf-to-text', 'word-counter', 'heic-to-jpg'],
       true,
       5,
+    ),
+    isNew: true,
+  },
+  {
+    // AI super-resolution: an ESRGAN generator runs in TensorFlow.js on the
+    // visitor's own GPU/CPU, so "AI" here still means zero uploads.
+    ...T(
+      'image-upscaler',
+      'resize',
+      'wand-sparkles',
+      [
+        'ai upscaler',
+        'image upscaler',
+        'super resolution',
+        'enhance image quality',
+        'increase resolution',
+        'upscale 4x',
+        'tensorflow.js',
+        'تكبير الصورة بالذكاء الاصطناعي',
+        'رفع دقة الصورة',
+      ],
+      ['jpg', 'png', 'webp', 'heic'],
+      ['jpg', 'png', 'webp'],
+      ['image-resizer', 'image-compressor', 'background-remover', 'image-to-exact-kb'],
+      true,
+      1,
     ),
     isNew: true,
   },

@@ -232,6 +232,7 @@
   },
   "controls": {
     "quality": "Quality",
+    "upscalerScale": "Magnification",
     "width": "Width",
     "height": "Height",
     "pixels": "px",
@@ -2539,6 +2540,44 @@
         }
       ]
     },
+    "image-upscaler": {
+      "name": "AI Image Upscaler",
+      "short": "Enlarge photos with on-device AI super-resolution.",
+      "description": "Upscale JPG, PNG and WebP images 2×, 3× or 4× with an ESRGAN neural network that runs in TensorFlow.js inside your browser. Free, no upload, no sign-up.",
+      "intro": "Turn a small or soft image into a bigger, sharper one. A real super-resolution network (ESRGAN) runs on your own graphics hardware through TensorFlow.js, so detail is reconstructed instead of merely stretched — and your photo never leaves your device.",
+      "howTo": [
+        "Add the image you want to enlarge.",
+        "Pick a magnification: 2×, 3× or 4×.",
+        "Choose an output format, then press Upscale image.",
+        "The model loads once (about 1 MB) and the network runs locally — wait for the progress bar, then download your result."
+      ],
+      "faqs": [
+        {
+          "q": "Is my image uploaded to a server?",
+          "a": "No. The neural network runs in TensorFlow.js on your own device (WebGL/GPU, with a CPU fallback). Only the model weights — about 1 MB per scale — are downloaded from this site once and then cached by your browser."
+        },
+        {
+          "q": "How is this different from simply resizing?",
+          "a": "A resizer interpolates the pixels you already have, so enlarging makes an image softer. This tool runs an ESRGAN super-resolution network that reconstructs edges and texture while enlarging, which usually looks noticeably sharper."
+        },
+        {
+          "q": "Which magnification should I choose?",
+          "a": "2× is the fastest and is ideal for screenshots, logos and icons. 4× gives the biggest enlargement for photos, but takes roughly four times longer and needs four times the memory."
+        },
+        {
+          "q": "How large can the result be?",
+          "a": "The upscaled image may be up to 8,000 px on its longest side and 48 megapixels in total, because that is what a browser canvas can safely hold. Larger requests are refused before any processing starts."
+        },
+        {
+          "q": "Is transparency preserved?",
+          "a": "Yes. The network works on colour only, so the alpha channel of a transparent PNG is upscaled separately with your browser's high-quality resampler and re-attached before export."
+        },
+        {
+          "q": "Why is it slow on my phone?",
+          "a": "Without a usable GPU the network falls back to the CPU, which can be several times slower. Try a smaller photo or the 2× model, and keep the tab in the foreground while it runs."
+        }
+      ]
+    },
     "pdf-to-text": {
       "name": "PDF to Text",
       "short": "Extract all text from a PDF as .txt.",
@@ -2796,6 +2835,7 @@
     "ocrFailed": "Text recognition failed for this file. Try a clearer, higher-contrast image.",
     "ocrModelFailed": "The OCR language files could not be downloaded. Check your internet connection and try again — your files never leave your device.",
     "ocrTooLarge": "This file is too large for on-device OCR. Try a smaller image (under 25 MB).",
+    "upscalerTooLarge": "The upscaled image would be {w} × {h} px, which is too large to process in a browser. The limit is {edge} px per side — try a lower magnification or a smaller photo.",
     "jwtInvalid": "This does not look like a valid JWT. It should have three Base64URL parts separated by dots.",
     "markdownSyntax": "Markdown error: {message}",
     "yamlParse": "YAML error: {message}",
@@ -3623,6 +3663,19 @@
     "resultTitle": "Recognised text",
     "pageProgress": "{file} — page {done} of {total}",
     "pageLimitNote": "To keep your browser fast and stable, OCR processes the first {max} pages of each document."
+  },
+  "upscaler": {
+    "run": "Upscale image",
+    "scaleHint": "Model size: {size}",
+    "loadingModel": "Loading the AI model ({size})…",
+    "upscaling": "Upscaling… {percent}%",
+    "modelNote": "An ESRGAN neural network runs on your device with TensorFlow.js. The weights ({size}) are downloaded once from this site and cached by your browser — your image is never uploaded.",
+    "backend": "Running on",
+    "backendWebgl": "GPU (WebGL)",
+    "backendCpu": "CPU (slower)",
+    "tooLarge": "At this magnification the result would be bigger than a browser canvas can hold (limit: {edge} px per side, 48 megapixels). Choose a smaller factor or start from a smaller image.",
+    "suggest": "The largest magnification this image supports is {scale}×.",
+    "slowNote": "AI upscaling is compute-heavy: a large photo can take tens of seconds even on a fast machine. Keep this tab in the foreground while it runs."
   },
   "jwt": {
     "tokenLabel": "JWT token",
