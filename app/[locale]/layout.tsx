@@ -11,6 +11,7 @@ import { AnalyticsProvider } from '@/components/analytics/analytics-provider';
 import { MonetagVignette } from '@/components/ads/monetag-vignette';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
+import { CanonicalSelfReference } from '@/components/seo/canonical-self-reference';
 import '../globals.css';
 
 const locales = siteConfig.locales as readonly string[];
@@ -109,6 +110,10 @@ export default async function LocaleLayout({
           crossOrigin="anonymous"
           referrerPolicy="strict-origin-when-cross-origin"
         />
+        {/* SEO: keeps <link rel="canonical"> self-referencing and free of
+            ?query / #fragment on every page. Renders nothing — it only guards
+            the head tag, so no markup, styling or behaviour changes. */}
+        <CanonicalSelfReference />
       </head>
       <body className="min-h-screen">
         <a href="#main-content" className="skip-link">

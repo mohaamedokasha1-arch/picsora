@@ -1,6 +1,7 @@
 import { getLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig, siteOrigin } from '@/lib/site';
+import { canonicalAlternates, canonicalOrigin, canonicalUrl } from '@/lib/seo/canonical';
 
 export interface SEOInput {
   title?: string;
@@ -34,20 +35,41 @@ const NOINDEX_ROBOTS = {
 
 export { absoluteUrl };
 
+/**
+ * hreflang partners of a page.
+ *
+ * Delegates to the canonical layer so every alternate is built from the same
+ * clean, parameter-free path as `<link rel="canonical">`: canonical and hreflang
+ * pointing at different URLs is one of the classic reasons Google ignores both
+ * and reports "Duplicate without user-selected canonical".
+ */
 export function hreflangMap(path: string): Record<string, string> {
-  const languages: Record<string, string> = {};
-  for (const locale of siteConfig.locales) {
-    languages[locale] = absoluteUrl(path, locale);
-  }
-  languages['x-default'] = absoluteUrl(path, siteConfig.defaultLocale);
-  return languages;
+  return canonicalAlternates(path);
 }
 
 export function buildMetadata(input: SEOInput, locale: string): Metadata {
   const title = input.title ?? siteConfig.name;
   const description = input.description ?? siteConfig.description;
   const path = input.path ?? '/';
-  const canonical = absoluteUrl(path, locale);
+  /**
+   * Self-referencing canonical for this page: absolute, locale-prefixed, and
+   * stripped of `?query` / `#fragment` (no ?sort=, ?filter=, ?ref=, ?utm_*),
+   * so every parameterised variant of the URL funnels its signals into the one
+   * clean address Google should index.
+   *
+   * Wrapped defensively on top of the helpers' own null-checks: if a page ever
+   * calls us without a usable `path` (or anything here throws), <head> still
+   * gets a valid canonical for the locale homepage instead of a crashed render.
+   */
+  let canonical: string;
+  let languages: Record<string, string>;
+  try {
+    canonical = canonicalUrl(path, locale);
+    languages = hreflangMap(path);
+  } catch {
+    canonical = canonicalOrigin();
+    languages = {};
+  }
   const ogLocale = locale === 'ar' ? 'ar_EG' : 'en_US';
   const ogType = input.type ?? 'website';
   const ogImage = {
@@ -92,7 +114,7 @@ export function buildMetadata(input: SEOInput, locale: string): Metadata {
     formatDetection: { telephone: false, email: false, address: false },
     alternates: {
       canonical,
-      languages: hreflangMap(path),
+      languages,
     },
     openGraph,
     twitter: {
