@@ -20,6 +20,7 @@ import {
   stripParamsFromHref,
 } from '../../lib/seo/canonical';
 import { buildMetadata, hreflangMap } from '../../lib/seo/metadata';
+import { siteOrigin } from '../../lib/site';
 
 let fails = 0;
 const eq = (name: string, a: unknown, b: unknown) => {
@@ -36,8 +37,11 @@ const ok = (name: string, cond: boolean) => {
 };
 
 const ORIGIN = canonicalOrigin();
-ok('origin is https without trailing slash', /^https:\/\/[^/]+$/.test(ORIGIN));
-
+const DEV_ORIGIN = /^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/;
+// The canonical origin must always equal the site's resolved origin — https in
+// production, the localhost dev origin when NEXT_PUBLIC_SITE_URL says so.
+eq('origin matches the resolved site origin', ORIGIN, siteOrigin());
+ok('origin is a bare https origin or the dev localhost origin', DEV_ORIGIN.test(ORIGIN) || /^https:\/\/[^/]+$/.test(ORIGIN));
 /* ── path cleaning ─────────────────────────────────────────────────────── */
 eq('trailing slash stripped', cleanCanonicalPath('/tools/image-compressor/'), '/tools/image-compressor');
 eq('query stripped (?sort=)', cleanCanonicalPath('/tools?sort=asc'), '/tools');
@@ -53,7 +57,10 @@ eq('space + quotes + control chars removed', cleanCanonicalPath('/tools/my "tool
 /* ── null / hostile input must degrade, never throw ────────────────────── */
 for (const bad of [null, undefined, '', '   ', 0 as unknown as string, {} as unknown as string]) {
   ok(`cleanCanonicalPath(${JSON.stringify(bad) ?? String(bad)}) → '/'`, cleanCanonicalPath(bad) === '/');
-  ok(`canonicalUrl(${JSON.stringify(bad) ?? String(bad)}) is absolute`, /^https:\/\//.test(canonicalUrl(bad, 'en')));
+  ok(
+    `canonicalUrl(${JSON.stringify(bad) ?? String(bad)}) is absolute`,
+    /^https?:\/\/[^/]+\/en$/.test(canonicalUrl(bad, 'en')),
+  );
 }
 eq('missing locale → default', normalizeCanonicalLocale(undefined), 'en');
 eq('unknown locale → default', normalizeCanonicalLocale('de-DE'), 'en');

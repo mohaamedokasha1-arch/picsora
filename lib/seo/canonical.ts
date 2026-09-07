@@ -65,7 +65,12 @@ export function canonicalOrigin(): string {
     const origin = typeof siteOrigin === 'function' ? siteOrigin() : '';
     if (typeof origin === 'string') {
       const trimmed = origin.trim().replace(/\/+$/, '');
+      // Production canonicals are always https…
       if (/^https:\/\/[^/\s?#]+$/i.test(trimmed)) return trimmed;
+      // …while `lib/site` deliberately allows a localhost origin for local dev
+      // (and the sandboxed preview). Honour it so a dev server never writes a
+      // canonical for another host into its own <head>.
+      if (/^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d{1,5})?$/i.test(trimmed)) return trimmed;
     }
   } catch {
     // Fall through to the verified production origin.
