@@ -1,0 +1,198 @@
+{
+  "pdf-merger": {
+    "title": "Many PDFs, one document",
+    "paragraphs": [
+      "The PDF Merger combines up to twenty PDF documents into a single file, in exactly the order you choose. Drag files in, rearrange them until the sequence is right, and download one clean, bookmark-free, watermark-free document — assembled entirely in your browser.",
+      "Fragmented documents are an everyday reality: invoices split across months, scanned chapters saved separately, forms plus attachments. Merging them makes filing, printing and sharing dramatically simpler — one attachment reaches the recipient in reading order, every time.",
+      "The merge runs locally using pdf-lib: pages are copied into a fresh document on your device, so confidential contracts and financial records never travel to a server. There is no file-size upload limit, because there is no upload — only what your browser can comfortably hold in memory."
+    ],
+    "useCases": [
+      "Combining monthly invoices or statements into one archive file",
+      "Assembling a CV, cover letter and certificates into a single application PDF",
+      "Merging scanned chapters into one e-book or course reader",
+      "Bundling a form with its supporting attachments for submission"
+    ]
+  },
+  "pdf-splitter": {
+    "title": "Split a PDF wherever you need",
+    "paragraphs": [
+      "The PDF Splitter cuts one PDF document into several smaller ones. Give it page ranges — 1–3, 5, 8–12 — and it produces a separate PDF for each range, or splits the file at fixed intervals into equal chunks. The original file is never modified.",
+      "Splitting is the counterpart of merging, and just as useful: pull a handful of relevant pages out of a 200-page report, divide a combined scan into its logical documents, or break a large file into pieces that clear an e-mail attachment limit. Each output PDF contains only the pages you asked for, at full original quality.",
+      "Like all Piclizer PDF tools, splitting happens in your browser with pdf-lib — the document is parsed on your device and the output files are generated there too. Sensitive paperwork never leaves your computer, and there is no upload wait even for large documents."
+    ],
+    "useCases": [
+      "Extracting one chapter or section from a long report",
+      "Dividing a combined scanner batch into individual documents",
+      "Shrinking a PDF below an e-mail attachment limit by volume",
+      "Distributing single pages or ranges to different recipients"
+    ]
+  },
+  "pdf-delete-pages": {
+    "title": "Remove the pages you don't need",
+    "paragraphs": [
+      "The Delete Pages tool removes specific pages from a PDF and returns a clean document with everything else intact. Type the pages — single numbers, ranges like 4–9, or a mix — preview them, confirm, and download the trimmed file. The source PDF stays untouched on your disk.",
+      "Every long document accumulates pages you would rather not share: blank scanner pages, outdated annexes, internal notes, duplicate cover sheets. Deleting them produces a tighter, more professional file that is faster to open, print and read.",
+      "Deletion is performed locally with pdf-lib: your browser copies the pages you keep into a fresh document. Confidential material in the removed pages never leaves your device — which matters when you are cleaning a document precisely because it contains something private."
+    ],
+    "useCases": [
+      "Removing blank or duplicated pages from scans",
+      "Stripping internal or confidential pages before sharing",
+      "Deleting outdated annexes from a contract pack",
+      "Cleaning up e-book downloads and print previews"
+    ]
+  },
+  "pdf-reorder-pages": {
+    "title": "Put every page in its right place",
+    "paragraphs": [
+      "The Reorder Pages tool lets you drag pages of a PDF into exactly the order you want and produces a re-sequenced document. Visual thumbnails show each page, so you arrange by what you see rather than by page numbers you have to remember.",
+      "Scanner batches arrive out of order, combined reports mix sections, and print double-sides sometimes swap sheets. A document in the wrong order confuses readers and looks careless; one drag-and-drop session fixes it permanently, and the output keeps every page at original quality.",
+      "Reordering happens entirely in your browser: pages are re-assembled locally into a new PDF. Nothing is uploaded, nothing is watermarked, and the original file remains untouched on your device."
+    ],
+    "useCases": [
+      "Fixing the page order of misfed scanner batches",
+      "Rearranging sections of a merged report into reading order",
+      "Sorting photographed document pages before archiving",
+      "Preparing presentations and handouts in a logical flow"
+    ]
+  },
+  "pdf-rotate-pages": {
+    "title": "Straighten pages inside a PDF",
+    "paragraphs": [
+      "The Rotate Pages tool turns individual pages — or the whole document — by 90° or 180° inside a PDF, without touching the content itself. Rotate a sideways-scanned contract, flip an upside-down page, or turn a landscape diagram so it reads naturally on screen and in print.",
+      "Rotation is applied as metadata on each page, which means it is lossless: text stays selectable, images keep their quality, and file size stays essentially the same. You choose whether to rotate every page uniformly or only specific ones.",
+      "The tool works locally in your browser — the document is parsed and rewritten on your device. Sensitive contracts, application papers and financial statements never leave your computer, and the whole operation takes seconds even for large files."
+    ],
+    "useCases": [
+      "Fixing sideways or upside-down scanned pages",
+      "Rotating landscape charts and tables to readable orientation",
+      "Preparing mixed-orientation documents for consistent printing",
+      "Correcting the view of single pages without re-scanning"
+    ]
+  },
+  "pdf-extract-pages": {
+    "title": "Pull out exactly the pages you need",
+    "paragraphs": [
+      "The Extract Pages tool copies a selection of pages from a PDF into a brand-new document. Specify single pages, ranges, or both — 1, 4–7, 12 — and download a compact PDF containing only what you selected, in the order you specified.",
+      "Extraction is the precise way to share: instead of sending a 150-page document and telling the recipient which parts matter, you send five pages that do. It is equally useful for collecting a signature page, a table of figures, or the two charts someone asked for.",
+      "Everything is assembled locally with pdf-lib — your browser reads the source file and writes the new one without any server involvement. Original quality is preserved page-for-page, and the source document is never altered."
+    ],
+    "useCases": [
+      "Sharing only the relevant pages of a long report",
+      "Collecting signature and initial pages into one signing file",
+      "Extracting charts and exhibits for a presentation",
+      "Creating reading excerpts from course material"
+    ]
+  },
+  "pdf-protect": {
+    "title": "Add password protection to any PDF",
+    "paragraphs": [
+      "The Protect tool wraps a PDF with standard encryption so it opens only with the password you set. Anyone who receives the file — by e-mail, cloud link or USB stick — must know the password to read a single page. Choose a strong password and your document is sealed.",
+      "Password protection is the minimum courtesy for sensitive documents: contracts, salary certificates, medical results, school reports. It is not a substitute for secure delivery, but it ensures that a misdirected attachment is a locked file rather than a leaked one.",
+      "Encryption is applied locally in your browser; your file and your password are never transmitted anywhere. Keep a note of the password — properly applied PDF encryption is not something anyone can simply click around, including us."
+    ],
+    "useCases": [
+      "Sealing contracts and agreements before e-mail delivery",
+      "Protecting salary certificates and financial statements",
+      "Sharing medical or academic documents safely",
+      "Archiving private records on shared drives"
+    ]
+  },
+  "pdf-unlock": {
+    "title": "Open password-protected PDFs you own",
+    "paragraphs": [
+      "The Unlock tool removes password protection from a PDF when you know its password — the everyday fix for protected files whose password you have but whose protection blocks printing, copying or merging. Enter the password once, and receive a clean, unrestricted copy of the document.",
+      "Many protected PDFs arrive with trivially shared passwords (a booking reference, a date of birth) that make daily use awkward: you retype the password every time, printers refuse, tools reject the file. Unlocking produces a normal PDF you can read, print and archive freely.",
+      "The tool is designed for documents you are authorised to open — you must supply the correct password for it to work at all, and everything happens locally in your browser. It is not a password cracker and cannot open files you do not have the password for."
+    ],
+    "useCases": [
+      "Removing a known password from files you receive regularly",
+      "Preparing protected documents for printing or archiving",
+      "Combining unlocked pages from a protected statement with other files",
+      "Eliminating repetitive password entry for shared-password documents"
+    ]
+  },
+  "pdf-to-images": {
+    "title": "Turn PDF pages into image files",
+    "paragraphs": [
+      "The PDF to Images tool renders each page of a PDF as a JPG or PNG image, individually or bundled in a ZIP. Slides become shareable pictures, scanned artwork becomes editable imagery, and single pages become previews for chats and social platforms.",
+      "Images travel where PDFs cannot: messaging apps preview them instantly, content systems accept them as uploads, and design tools import them as layers. Rendering happens in your browser with pdf.js at a quality level you choose, so text stays crisp for screenshots and documentation.",
+      "The conversion is entirely local — the document never leaves your device, which matters for confidential reports and contracts. Choose PNG for maximum fidelity or JPG for smaller, easily shared files."
+    ],
+    "useCases": [
+      "Exporting presentation slides as images for sharing",
+      "Creating previews of PDF pages for websites and chats",
+      "Converting scanned drawings into editable image files",
+      "Publishing document excerpts as visual content"
+    ]
+  },
+  "pdf-compressor": {
+    "title": "Shrink heavy PDFs intelligently",
+    "paragraphs": [
+      "The PDF Compressor reduces the size of scanned and image-heavy PDF documents by re-encoding their embedded images at an optimised quality. Text pages stay razor sharp, while the photographic layers that dominate file size shrink dramatically — often by half or more.",
+      "Oversized PDFs are the classic blocker: e-mail systems reject them, portals time out, cloud storage fills up. Compression solves this without re-scanning anything. You control the balance — aggressive for archives, conservative for documents that must stay presentation-ready.",
+      "Compression runs in your browser: pages are rendered and re-assembled locally, so confidential documents never touch a server. For image-only PDFs from a scanner, pair this tool with Images to PDF after extracting pages as pictures — sometimes that route compresses even further."
+    ],
+    "useCases": [
+      "Fitting scanned documents under e-mail and portal size limits",
+      "Reducing cloud storage usage across an archive",
+      "Speeding up document downloads on slow connections",
+      "Preparing large files for upload systems with strict caps"
+    ]
+  },
+  "pdf-page-counter": {
+    "title": "Instantly count any PDF's pages",
+    "paragraphs": [
+      "The Page Counter tells you exactly how many pages a PDF contains — plus document metadata such as title and creation date — the moment you drop it in. No opening a reader, no scrolling to the end: one drop, one number.",
+      "Printers quote per-page prices, submission portals set page limits, and contracts reference page counts. Having the exact number before you print, submit or sign prevents surprises, and checking a merged or split file's page count confirms your document assembly worked as planned.",
+      "The count is read locally in your browser from the file's internal page tree — the same structure every PDF reader uses — so the number is authoritative. Nothing is uploaded, and the file is not modified in any way."
+    ],
+    "useCases": [
+      "Checking page counts before printing cost estimates",
+      "Verifying a document meets a submission's page limit",
+      "Confirming merged or split PDFs contain the right pages",
+      "Cataloguing document archives by page volume"
+    ]
+  },
+  "pdf-to-text": {
+    "title": "Extract clean text from any PDF",
+    "paragraphs": [
+      "The PDF to Text tool pulls the text layer out of PDF documents and hands it to you as plain, selectable text — page by page, ready to copy, edit or save. Quotes for a report, clauses for a summary, data for analysis: the words leave the PDF layout and become yours to work with.",
+      "Copy-paste from PDF viewers is notoriously broken: line breaks in wrong places, hyphenation artefacts, missing spaces. This tool reads the document's actual text structure and produces clean paragraphs, with batch processing for multiple files and ZIP download for the results.",
+      "Extraction runs locally in your browser. For scanned PDFs without a text layer, use the PDF OCR tool instead — it recognises characters from the page images. Between the two, no document keeps its text from you."
+    ],
+    "useCases": [
+      "Quoting and summarising content from reports and papers",
+      "Extracting contract clauses for review and comparison",
+      "Recovering text from PDFs for translation or editing",
+      "Feeding document content into notes and knowledge bases"
+    ]
+  },
+  "pdf-to-word": {
+    "title": "From fixed PDF to editable Word",
+    "paragraphs": [
+      "The PDF to Word tool converts PDF documents into DOC files that Microsoft Word, Google Docs and LibreOffice open for editing. Headings, paragraphs and the text flow are reconstructed so you can revise, reformat and reuse the content instead of retyping it.",
+      "PDF is a final-destination format: great for reading, terrible for editing. When a colleague sends the PDF version of a document whose source file is long gone, conversion is the only sane path back to an editable draft. The tool processes several documents per batch and returns them individually or as a ZIP.",
+      "Conversion happens locally in your browser — the document never leaves your device. Complex multi-column layouts and scanned pages may need touch-ups after conversion; for scans without a text layer, run PDF OCR first to generate the text, then bring it into your editor."
+    ],
+    "useCases": [
+      "Recovering an editable version of a document you only have as PDF",
+      "Updating reports and CVs without starting from scratch",
+      "Migrating legacy PDF content into office document workflows",
+      "Preparing translated or annotated versions of existing documents"
+    ]
+  },
+  "pdf-ocr": {
+    "title": "Recognise text in scanned PDFs",
+    "paragraphs": [
+      "The PDF OCR tool reads scanned PDF pages with Tesseract optical character recognition, entirely in your browser, and returns the recognised text as plain text files. Scan a contract, receive a photocopied form, archive an old letter — OCR makes their content searchable and copyable again.",
+      "Scanned PDFs are photographs of paper: you cannot select, search or quote a single word. OCR bridges that gap, recognising dozens of languages and outputting clean text with per-file organisation for multi-document batches.",
+      "Recognition runs on your device — important for confidential material such as personal correspondence, medical documents and financial papers, which are exactly the documents that tend to exist only on paper. Pair it with PDF to Text for born-digital files that already have a text layer."
+    ],
+    "useCases": [
+      "Making scanned contracts and forms searchable",
+      "Extracting text from photocopied or faxed documents",
+      "Digitising archived letters and paper records",
+      "Quoting content from scanned books and articles"
+    ]
+  }
+}

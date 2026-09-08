@@ -26,7 +26,19 @@ export default async function ContactPage({ params }: { params: { locale: string
       <div className="mx-auto max-w-xl">
         <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{t('title')}</h1>
         <p className="mt-2 text-muted-foreground">{t('intro')}</p>
-        <div className="mt-8 rounded-xl border border-border bg-card p-6">
+
+        <div className="mt-6 rounded-xl border border-border bg-card p-5">
+          <p className="text-sm font-semibold text-foreground">{tc('emailLabel')}</p>
+          <a
+            href={`mailto:${siteConfig.contactEmail}`}
+            className="mt-1 inline-flex items-center gap-2 text-base font-medium text-primary hover:underline"
+          >
+            {siteConfig.contactEmail}
+          </a>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">{tc('replyNote')}</p>
+        </div>
+
+        <div className="mt-6 rounded-xl border border-border bg-card p-6">
           <ContactForm />
         </div>
       </div>

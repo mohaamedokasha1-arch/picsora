@@ -1,0 +1,142 @@
+{
+  "age-calculator": {
+    "title": "Your exact age, down to the day",
+    "paragraphs": [
+      "The Age Calculator computes precise age from a date of birth — years, months and days — plus useful extras such as total days lived, the next birthday countdown and the day of the week you were born. Type a date, get an exact answer instantly.",
+      "“How old exactly?” sounds trivial until a form asks for age in years and months, a milestone needs a countdown, or a legal deadline counts from a specific birthday. Manual date arithmetic trips over month lengths and leap years; the calculator never does.",
+      "The calculation runs locally in your browser and handles any birth date from the distant past to today. It is also handy in reverse scenarios: enter a historical date to find what weekday events fell on, or how many days separate two moments in a family timeline."
+    ],
+    "useCases": [
+      "Filling forms that require age in years, months and days",
+      "Counting down to birthdays and anniversaries",
+      "Checking eligibility dates for exams, licences and benefits",
+      "Settling debates about the day of the week of a birth date"
+    ]
+  },
+  "bmi-calculator": {
+    "title": "Body Mass Index, calculated and explained",
+    "paragraphs": [
+      "The BMI Calculator computes your Body Mass Index from height and weight, in metric or imperial units, and places the result on the standard WHO scale — underweight, normal, overweight or obese — with the healthy weight range for your height spelled out.",
+      "BMI is a screening number, not a diagnosis: it tells you where your weight sits relative to height so you can track changes over time and know when to seek professional advice. The tool shows both the number and its category, so a value means the same thing every time you check.",
+      "Everything is computed in your browser; no measurement is stored or sent anywhere. Use it consistently — same time of day, same scale — and treat the trend, not a single reading, as the meaningful signal. For medical decisions, always consult a healthcare professional."
+    ],
+    "useCases": [
+      "Tracking fitness progress against the standard BMI scale",
+      "Checking the healthy weight range for a given height",
+      "Completing health forms that request BMI values",
+      "Setting realistic weight goals for training plans"
+    ]
+  },
+  "percentage-calculator": {
+    "title": "Every percentage question, one tool",
+    "paragraphs": [
+      "The Percentage Calculator answers all three classic percentage questions: what is X% of Y, what percentage is X of Y, and what is the percentage change from one value to another. Each mode is a separate input, so there is no wondering which number goes where.",
+      "Percentages trip people up because the question direction changes the computation: a 20% increase is not undone by a 20% decrease, percentage points are not percentages, and “X% of Y” is easy to flip accidentally. The tool makes each direction explicit and shows the arithmetic so you can verify it.",
+      "All calculations run locally and instantly. Use it for marks, taxes, interest, discounts, statistics and any daily figure that involves “percent” — the most common source of quick mental-math errors in everyday arithmetic."
+    ],
+    "useCases": [
+      "Computing exam scores and grade percentages",
+      "Measuring price changes and growth rates",
+      "Calculating tax and commission amounts",
+      "Converting fractions of totals into percentages for reports"
+    ]
+  },
+  "interest-calculator": {
+    "title": "See exactly what borrowing or saving costs",
+    "paragraphs": [
+      "The Interest Calculator projects the growth of a loan or savings balance over time, supporting both simple and compound interest. Enter the principal, annual rate, term and compounding frequency, and see the total interest and final balance at every interval.",
+      "Compound interest is famously hard to estimate mentally — even small rate differences snowball over years. Seeing a 5-year loan's interest side by side at two different rates, or a savings balance with monthly versus annual compounding, turns an abstract percentage into a concrete decision.",
+      "The schedule is computed locally in your browser with standard financial formulas. Use it to compare loan offers, sanity-check bank quotes, set savings expectations and understand amortisation before you sign anything. It is an estimator, not a substitute for your lender's official schedule."
+    ],
+    "useCases": [
+      "Comparing loan offers with different rates and terms",
+      "Projecting savings and deposit growth over years",
+      "Understanding the cost difference between compounding frequencies",
+      "Planning early repayments and their interest savings"
+    ]
+  },
+  "date-difference-calculator": {
+    "title": "The exact distance between two dates",
+    "paragraphs": [
+      "The Date Difference Calculator measures the time between any two dates in years, months, days and total days — plus business days, which exclude weekends. Enter a start and end date and read the full breakdown instantly.",
+      "Human date arithmetic is unreliable across months of different lengths and leap years — exactly the situations where the answer matters: contract periods, notice periods, project timelines, visa durations, pregnancy weeks. The tool handles the calendar correctly every time.",
+      "Business-day counting is where it earns its keep: deadlines and delivery estimates usually mean working days, not calendar days. Both counts run locally in your browser, and future or past dates both work — count down to an event or forward from a milestone."
+    ],
+    "useCases": [
+      "Computing contract, notice and warranty periods",
+      "Planning project timelines in working days",
+      "Checking visa or insurance coverage durations",
+      "Counting down to deadlines, events and milestones"
+    ]
+  },
+  "unit-converter": {
+    "title": "Convert any unit, precisely",
+    "paragraphs": [
+      "The Unit Converter translates measurements across categories: length, weight, temperature, volume, area, speed and data size. Choose the category, type a value, and every related unit updates at once — metres, feet, kilograms, pounds, Celsius, Fahrenheit, litres, gallons, megabytes and more.",
+      "Unit mistakes are not small: confusing feet with metres ruins a furniture order, mixing fluid ounces with millilitres spoils a recipe, and misreading kilobytes from megabytes breaks a download estimate. Converting properly once beats eyeballing every time.",
+      "Conversions use exact standard factors and run locally in your browser. Recipes from abroad, hardware orders, travel plans, science homework and file-size budgets all resolve in one place, with the full family of units visible simultaneously for comparison."
+    ],
+    "useCases": [
+      "Converting recipes between metric and imperial measurements",
+      "Checking product dimensions listed in foreign units",
+      "Preparing travel plans with local units",
+      "Converting file sizes and data allowances"
+    ]
+  },
+  "discount-calculator": {
+    "title": "Know the real price after every discount",
+    "paragraphs": [
+      "The Discount Calculator computes the final price after any discount — single percentage, fixed amount, or stacked promotions like “20% off, then an extra 10%”. Enter the original price and the discount terms; get the exact amount you will pay and exactly how much you save.",
+      "Retail maths is designed to be confusing: percentages off percentages, “buy two get one free”, plus-tax-versus-with-tax. Stacked discounts rarely add up the way shoppers guess — 20% then 10% is 28% off, not 30% — and the tool shows the true arithmetic so you can compare offers fairly.",
+      "Calculations run locally and instantly. Use it at sales, when comparing coupon codes, when budgeting bulk purchases, or when setting your own promotional prices as a seller — the same math that protects a buyer guides a fair discount."
+    ],
+    "useCases": [
+      "Comparing sale prices and stacked coupon offers",
+      "Budgeting purchases during seasonal promotions",
+      "Setting discount prices for your own products",
+      "Splitting bulk-buy savings across a group order"
+    ]
+  },
+  "gpa-calculator": {
+    "title": "Your GPA, computed the way registrars do",
+    "paragraphs": [
+      "The GPA Calculator computes your grade point average from your courses, credits and grades, supporting the common scales — 4.0, 5.0 and percentage-based systems. Add each course with its credit weight, and the tool produces your weighted average instantly, semester by semester or cumulatively.",
+      "GPA is credit-weighted, which is what makes mental calculation unreliable: an A in a five-credit course moves the needle more than an A in a two-credit seminar. The tool does the weighting correctly and shows how each course contributes, so you know exactly where improvement pays off most.",
+      "Calculations run locally — grades are private, and they stay on your device. Plan target GPAs by testing hypothetical grades for upcoming courses, and check scholarship or admission thresholds before applications are due."
+    ],
+    "useCases": [
+      "Tracking semester and cumulative GPA across courses",
+      "Testing what grades are needed to reach a target average",
+      "Checking eligibility for scholarships and programmes",
+      "Comparing performance across grading scales"
+    ]
+  },
+  "tip-calculator": {
+    "title": "Fair tips and clean bill splits",
+    "paragraphs": [
+      "The Tip Calculator computes the tip for any bill at any percentage, adds it to the total, and splits everything evenly across any number of people — each person sees their exact share, down to the cent.",
+      "Tipping customs vary from country to country and mood to mood: 10% somewhere, 20% elsewhere, rounding up in between. The tool keeps the maths honest while you decide the social part. Group dinners stop being awkward when the per-person amount is exact and everyone pays their share.",
+      "The calculation is instant and local. Adjust the percentage with quick presets or a custom value, round the per-person amount if you prefer neat figures, and settle the table in seconds — no phone-passing arithmetic at the end of a nice meal."
+    ],
+    "useCases": [
+      "Calculating tips at restaurants and cafés",
+      "Splitting group bills evenly with exact per-person amounts",
+      "Applying local tipping percentages while travelling",
+      "Computing service charges for events and deliveries"
+    ]
+  },
+  "currency-converter": {
+    "title": "Convert amounts between world currencies",
+    "paragraphs": [
+      "The Currency Converter translates any amount between major world currencies — dollars, euros, pounds, riyals, dirhams, yen and more. Enter an amount, pick two currencies, and see the converted result instantly with the exchange rate used displayed transparently.",
+      "Travellers, online shoppers and freelancers all meet currency friction daily: a price in a foreign store, an invoice in another currency, a budget for a trip. Quick, clear conversion prevents both overspending and the mental tax of doing exchange-rate arithmetic in your head.",
+      "The conversion runs in your browser using the rate data your session provides. Exchange rates move constantly, so treat results as close estimates for planning and check the live rate before large transactions — the tool's value is speed and clarity, not market timing."
+    ],
+    "useCases": [
+      "Budgeting purchases from international online stores",
+      "Planning travel spending in a foreign currency",
+      "Pricing freelance invoices for foreign clients",
+      "Understanding foreign prices while shopping or investing"
+    ]
+  }
+}

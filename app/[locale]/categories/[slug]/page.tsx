@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo/metadata';
 import { siteConfig } from '@/lib/site';
 import { getCategory, toolsInCategory, CATEGORIES } from '@/lib/tools/registry';
+import { getCategoryArticle } from '@/lib/content/category-articles';
 import { Breadcrumb } from '@/components/layout/breadcrumb';
 import { ToolCard } from '@/components/tools/tool-card';
 import { Accordion } from '@/components/ui/accordion';
@@ -112,6 +113,26 @@ export default async function CategoryPage({ params }: { params: { locale: strin
             </div>
           </div>
         </section>
+
+        {/* Long-form editorial article about this category */}
+        {(() => {
+          const article = getCategoryArticle(cat.slug, params.locale);
+          if (!article) return null;
+          return (
+            <section className="mt-12 max-w-3xl" aria-labelledby="category-article-title">
+              <h2 id="category-article-title" className="text-xl font-bold text-foreground sm:text-2xl">
+                {article.title}
+              </h2>
+              <div className="mt-4 space-y-4">
+                {article.paragraphs.map((p, i) => (
+                  <p key={i} className="text-sm leading-7 text-muted-foreground sm:text-base">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
       </div>
     </>
   );

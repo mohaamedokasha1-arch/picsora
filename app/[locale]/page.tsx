@@ -1,10 +1,11 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Sparkles, Zap, ShieldCheck, Globe, Upload, Wand2, Download } from 'lucide-react';
+import { Sparkles, Zap, ShieldCheck, Globe, Upload, Wand2, Download, ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo/metadata';
 import { websiteSchema, organizationSchema, faqSchema, StructuredData } from '@/lib/seo/schema';
 import { siteConfig } from '@/lib/site';
 import { CATEGORIES, TOOLS, getNewTools, getPopularTools } from '@/lib/tools/registry';
+import { getAllGuides } from '@/lib/guides';
 import { Link } from '@/lib/i18n/navigation';
 import { ToolCard } from '@/components/tools/tool-card';
 import { ToolsGrid } from '@/components/tools/tools-grid';
@@ -250,6 +251,62 @@ export default async function HomePage({ params }: { params: { locale: string } 
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* Guides & tutorials */}
+      <section className="border-y border-border bg-secondary/20 py-12">
+        <div className="container">
+          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">{t('home.guidesTitle')}</h2>
+          <p className="mt-2 text-muted-foreground">{t('home.guidesSubtitle')}</p>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {getAllGuides(params.locale).map((guide) => (
+              <Link
+                key={guide.slug}
+                href={`/guides/${guide.slug}`}
+                className="group flex h-full flex-col rounded-xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+              >
+                <h3 className="text-base font-semibold text-foreground group-hover:text-primary">
+                  {guide.title}
+                </h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {guide.description}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+                  {t('home.guidesCta')}
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
+                  <span className="sr-only">— {guide.minutes} {t('home.readTime')}</span>
+                  <span aria-hidden="true" className="ms-auto text-xs font-normal text-muted-foreground">
+                    {guide.minutes} {t('home.readTime')}
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Editorial: what is Piclizer */}
+      <section className="container py-12">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">{t('home.aboutTitle')}</h2>
+          <div className="mt-5 space-y-4">
+            <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP1')}</p>
+            <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP2')}</p>
+            <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP3')}</p>
+            <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP4')}</p>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-2 text-sm">
+            <Link href="/about" className="rounded-lg border border-input bg-background px-4 py-2 font-medium text-foreground transition-colors hover:bg-accent">
+              {t('common.about')}
+            </Link>
+            <Link href="/guides" className="rounded-lg border border-input bg-background px-4 py-2 font-medium text-foreground transition-colors hover:bg-accent">
+              {t('home.guidesTitle')}
+            </Link>
+            <Link href="/contact" className="rounded-lg border border-input bg-background px-4 py-2 font-medium text-foreground transition-colors hover:bg-accent">
+              {t('common.contact')}
+            </Link>
+          </div>
         </div>
       </section>
 

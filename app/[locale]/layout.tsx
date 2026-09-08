@@ -84,32 +84,29 @@ export default async function LocaleLayout({
   const dir = params.locale === 'ar' ? 'rtl' : 'ltr';
 
   return (
-    <html lang={params.locale} dir={dir} suppressHydrationWarning>
-      <head>
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZC19QS3RHY" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-ZC19QS3RHY');",
-          }}
-        />
-        {/* Google Search Console verification */}
-        <meta name="google-site-verification" content="6nwKbe3UwHbbzzDg0S8a6TRE_rEEIAdyGgIJD6q6ua4" />
-        {/* Monetag site verification */}
-        <meta name="monetag" content="a0ac60af89b9b55d82647e019146c160" />
-        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
-        {/* Google AdSense */}
-        <script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(
-            siteConfig.adsensePublisherId,
-          )}`}
-          crossOrigin="anonymous"
-          referrerPolicy="strict-origin-when-cross-origin"
-        />
-      </head>
+      <html lang={params.locale} dir={dir} suppressHydrationWarning>
+        <head>
+          {/*
+            Analytics is loaded by the consent-gated AnalyticsProvider only
+            after the visitor accepts analytics cookies (and only when
+            NEXT_PUBLIC_ANALYTICS_ENABLED=true). No analytics script may be
+            hardcoded here — that would bypass the consent system and violate
+            privacy/ads policies (GDPR, Google AdSense programme policies).
+          */}
+          {/* Google Search Console verification */}
+          <meta name="google-site-verification" content="6nwKbe3UwHbbzzDg0S8a6TRE_rEEIAdyGgIJD6q6ua4" />
+          <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+          <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
+          {/* Google AdSense */}
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(
+              siteConfig.adsensePublisherId,
+            )}`}
+            crossOrigin="anonymous"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        </head>
       <body className="min-h-screen">
         <a href="#main-content" className="skip-link">
           {t('skipToContent')}

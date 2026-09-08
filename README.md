@@ -64,6 +64,22 @@ Copy `.env.example` to `.env.local` and adjust. Everything is optional — the s
 `lib/tools/registry.ts` is the single source of truth. Every tool page, category page, search index,
 sitemap and related-tools section derives from it.
 
+### Long-form editorial content
+
+AdSense-quality editorial text (tool deep-dive articles, category articles and the legal documents)
+lives in `lib/content/` as server-side JSON — deliberately **not** in `messages/*.json`, because the
+messages bundle ships to the client on every page while this text is only needed by server
+components:
+
+- `lib/content/legal.{en,ar}.json` — About, Privacy Policy, Terms, Cookie Policy, Disclaimer
+  (rendered by `components/legal/legal-content.tsx`).
+- `lib/content/articles/*.{en,ar}.json` — one unique deep-dive article per tool, rendered below the
+  tool UI by `components/tools/deep-dive.tsx`.
+- `lib/content/category-articles.{en,ar}.json` — one article per category page.
+
+When adding a new tool, add matching entries to both `articles/*.en.json` and `articles/*.ar.json`
+so every tool page keeps a full-length, original article.
+
 ## Adding a new tool (Tool #21)
 
 1. Add an entry to `TOOLS` in `lib/tools/registry.ts` (slug, i18n keys, category, icon, formats, keywords, related tools).
@@ -91,16 +107,19 @@ after advertising consent is given.
 
 ### Monetag Vignette Banner
 
-To enable the Monetag Vignette ad:
+The Monetag Vignette ad is **disabled by default** (`NEXT_PUBLIC_MONETAG_ENABLED=false`). Vignette/
+interstitial third-party ads conflict with the Google AdSense programme policies while the site is
+under AdSense review, so the component only ever runs when the flag is explicitly `true` **and** the
+visitor has consented to advertising cookies.
+
+To enable it deliberately:
 
 1. In your Monetag dashboard, create a **Vignette Banner** zone and copy its numeric zone id.
-2. Set `NEXT_PUBLIC_MONETAG_VIGNETTE_ZONE_ID=<zone id>` in your environment. The default zone id
-   shipped in `.env.example` is `11719435`; if you use the tag exactly as provided by Monetag, it
-   is built into `components/ads/monetag-vignette.tsx` as well.
-3. Done. `MonetagVignette` (mounted from `app/[locale]/layout.tsx`) injects Monetag's official
-   Vignette script (`https://n6wxm.com/vignette.min.js`) with its `data-zone` attribute as soon as
-   the client page hydrates — it does **not** wait for cookie consent (per site owner request).
-   The CSP in `next.config.mjs` already allow-lists `https://n6wxm.com` (Monetag's Vignette host).
+2. Set `NEXT_PUBLIC_MONETAG_ENABLED=true` and `NEXT_PUBLIC_MONETAG_VIGNETTE_ZONE_ID=<zone id>` in
+   your environment. The default zone id shipped in `.env.example` is `11719435`.
+3. `MonetagVignette` (mounted from `app/[locale]/layout.tsx`) injects Monetag's official Vignette
+   script (`https://n6wxm.com/vignette.min.js`) with its `data-zone` attribute. The CSP in
+   `next.config.mjs` already allow-lists `https://n6wxm.com` (Monetag's Vignette host).
 
 ## Activating PWA mode
 
