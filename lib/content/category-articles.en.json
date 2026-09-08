@@ -1,0 +1,74 @@
+{
+  "compress": {
+    "title": "Why image compression matters",
+    "paragraphs": [
+      "Every unoptimised image is a tax on your visitors: slower page loads, drained mobile data, and e-mail attachments that bounce at the worst moment. Compression removes bytes your audience never sees — invisible colour noise, redundant metadata, oversized dimensions — while leaving the picture they do see effectively unchanged.",
+      "Different jobs deserve different pressure. Website heroes tolerate moderate compression that still renders beautifully on large screens; thumbnails and chat attachments can be compressed aggressively because nobody inspects them closely. The tools in this category expose the quality dial transparently, so you decide the trade-off instead of accepting a one-size-fits-all result.",
+      "All compression here happens locally in your browser. Your photos — family, clients or unreleased products — are re-encoded by your own device and never uploaded, which is exactly the behaviour you want from tools you run regularly on private material."
+    ]
+  },
+  "resize": {
+    "title": "Right-size every image for its destination",
+    "paragraphs": [
+      "Displays come in fixed sizes: a theme's content column, a marketplace's product grid, a passport form's photo box. Sending a 6000-pixel original to any of them wastes bandwidth and processing on every view — resizing to the actual target dimensions is the cheapest optimisation available.",
+      "Good resizing preserves what matters: locked aspect ratios prevent distortion, high-quality resampling keeps edges and text legible, and downscaling before compression produces dramatically smaller files than compression alone. This category's tools give you pixel-exact control with a live preview of the target size.",
+      "Because resizing runs in your browser, even large camera originals process in seconds without upload queues. Pair resizing with compression for web delivery, or with cropping when the framing needs to change along with the dimensions."
+    ]
+  },
+  "convert": {
+    "title": "The right format for every purpose",
+    "paragraphs": [
+      "Image formats are tools, not fashion: JPG for universal photo compatibility, PNG when transparency and lossless detail matter, WebP when page weight is the priority, and HEIC decoding for photos that arrive from iPhones. Choosing correctly can halve file sizes or make an upload possible at all.",
+      "Conversion direction matters as much as destination. Converting JPG to PNG guarantees no further loss but grows the file; converting PNG photos to JPG shrinks them dramatically; converting anything to WebP is usually the modern sweet spot. The converters here accept every common input — including HEIC/HEIF straight from an iPhone — and produce clean, correctly encoded output.",
+      "Every conversion runs locally: your browser decodes the source and re-encodes the target without any server involvement. Batch support means a whole folder of photos converts in one pass, downloadable individually or as an archive."
+    ]
+  },
+  "edit": {
+    "title": "Everyday image editing without the software",
+    "paragraphs": [
+      "Most image editing needs are small and specific: crop a screenshot to the relevant region, straighten a sideways scan, flip a selfie that faces the wrong way, merge three product shots into one comparison, or stamp a brand watermark before publishing. None of these justify opening a full photo editor.",
+      "This category bundles those micro-edits into focused tools that do one thing well. Because each operation is pixel-exact — crops don't resample, flips and quarter-turn rotations don't lose quality — the output is technically as good as the input, just better framed or arranged.",
+      "Editing happens entirely on your device, so private photos and unreleased material never touch a server. Chain the tools freely: crop, then rotate, then watermark, then compress — each step runs locally and each output feeds the next tool."
+    ]
+  },
+  "color": {
+    "title": "Read the colours hiding in your images",
+    "paragraphs": [
+      "Colour decisions get easier when you can measure instead of guess. Sampling the exact pixel of a logo, extracting the dominant palette from a hero photograph, or checking a colour's contrast against text turns subjective debates into concrete values you can hand to designers, developers and printers.",
+      "This category's tools speak every colour notation — HEX, RGB, HSL and beyond — and keep them in sync, so the value you copy into CSS matches the swatch you approved. Extracted palettes come with copy-ready codes and export options for documentation and developer handoff.",
+      "Sampling and extraction run locally in your browser: zoom into any photo, probe any pixel, analyse any palette. Client material, unreleased designs and personal photos stay on your machine throughout."
+    ]
+  },
+  "pdf-tools": {
+    "title": "Complete PDF workflows in your browser",
+    "paragraphs": [
+      "PDF is where documents end up — contracts, statements, scans, manuals — and real work means merging, splitting, reordering, rotating, compressing, protecting and extracting from those files. This category covers the full lifecycle: assemble documents from images or other PDFs, restructure them page by page, then secure and shrink the result.",
+      "Two principles define these tools. First, quality: merges, splits and rotations copy pages losslessly, so text stays selectable and images keep their fidelity. Second, privacy: every operation runs locally via in-browser PDF engines, which matters because the documents people need to fix — contracts, medical records, financial papers — are exactly the documents that should never be uploaded.",
+      "Beyond structure, the text tools extract what's inside: page counts for printing decisions, text layers for quoting, OCR for scanned pages, and Word conversion for editing. Whatever state your PDF is in, there is a one-click path to what you need."
+    ]
+  },
+  "text-tools": {
+    "title": "Text utilities that save real time",
+    "paragraphs": [
+      "Text problems look tiny until they repeat: counting words against a limit, cleaning PDF-pasted line breaks, deduplicating a merged list, comparing two document versions, generating URL slugs. Each takes seconds with the right tool and disproportionate patience without one.",
+      "This category covers the writing and data-cleaning loop end to end. Counters give live statistics as you type; cleaners normalise spacing, quotes and invisible characters; converters fix casing and slugs; and the diff shows exactly what changed between versions — character-precise, colour-coded.",
+      "Everything processes locally in your browser, including the content you'd least want to upload: draft contracts, private notes, unreleased manuscripts. Paste, fix, copy back — your text never leaves the tab."
+    ]
+  },
+  "calculator-tools": {
+    "title": "Practical calculators with explained results",
+    "paragraphs": [
+      "Good calculators do more than produce a number: they show the right number for the right question. Percentage direction, credit-weighted GPA, business-day date differences, compound interest schedules — these are the calculations people get wrong mentally precisely because the naive shortcut is wrong.",
+      "Each calculator in this category handles one everyday domain properly: ages in years-months-days, BMI against the standard scale, loan and savings growth over time, discounts including stacked offers, tips split across a group, units and currencies, and numbers written out in words for cheques and contracts.",
+      "All calculations run locally and instantly — no accounts, no data retention, no rounding surprises. Values are never stored, which is exactly what you want from tools that process salaries, grades and personal measurements."
+    ]
+  },
+  "developer-tools": {
+    "title": "A daily-driver toolkit for developers",
+    "paragraphs": [
+      "Development is full of small conversions and inspections: format a JSON response, decode a JWT, escape HTML, test a regex, generate a UUID, verify a file hash, convert colour notations. Each is thirty seconds of work — if the tool is one click away and doesn't ship your data to a third party.",
+      "This category covers the full daily loop with professional depth: formatters and validators for JSON, XML, SQL, CSS, JavaScript and YAML with real error line reporting; encoding and decoding for URLs, HTML entities and Base64 including image data URIs; and generators for UUIDs and cryptographic hashes via the browser's native crypto engine.",
+      "Local processing is the headline for this category in particular: tokens, API responses and config files routinely contain secrets, and every tool here parses them in your browser only. Nothing is transmitted, logged or stored — paste, inspect, copy, clear."
+    ]
+  }
+}

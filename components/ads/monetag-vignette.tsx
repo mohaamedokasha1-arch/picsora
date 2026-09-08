@@ -1,17 +1,19 @@
 'use client';
 
 import * as React from 'react';
+import { useConsent } from '@/components/consent/consent-provider';
 
 /**
- * Monetag Vignette Banner (loads immediately).
+ * Monetag Vignette Banner — DISABLED BY DEFAULT.
  *
- * Injects the official Monetag Vignette tag — the same self-injecting tag
- * Monetag gives you in the dashboard ("Get tag" -> Vignette Banner), which
- * creates a `<script>` element and sets `src` + `data-zone` on it.
+ * This component is now dual-gated for advertising-policy compliance:
+ *   1. It only runs when NEXT_PUBLIC_MONETAG_ENABLED === 'true' (default off).
+ *   2. It only runs after the visitor consents to advertising cookies.
  *
- * It loads as soon as the client page is hydrated, without waiting for cookie
- * consent (per site owner request). If you need to make this consent-gated
- * again, remove the comment below and remount it with <useConsent />.
+ * Rationale: vignette/interstitial-style third-party ads conflict with the
+ * Google AdSense programme policies (intrusive/interfering ad formats and
+ * competing ad implementations) while an AdSense application is under
+ * review. Enable the flag deliberately if this network is ever wanted again.
  */
 const MONETAG_VIGNETTE_SRC = 'https://n6wxm.com/vignette.min.js';
 const DEFAULT_MONETAG_ZONE_ID = '11719435';
@@ -27,9 +29,13 @@ function safeZoneId(value: string | undefined): string {
 }
 
 export function MonetagVignette() {
+  const { consent } = useConsent();
+  const enabled = process.env.NEXT_PUBLIC_MONETAG_ENABLED === 'true';
   const zoneId = safeZoneId(process.env.NEXT_PUBLIC_MONETAG_VIGNETTE_ZONE_ID);
 
   React.useEffect(() => {
+    if (!enabled || !consent?.advertising) return;
+
     // Guard against double injection (React StrictMode / re-renders).
     if (document.getElementById(VIGNETTE_SCRIPT_ID)) return;
 
@@ -47,7 +53,7 @@ export function MonetagVignette() {
     // Do not leak the exact tool page the visitor is on to the ad network.
     script.referrerPolicy = 'strict-origin-when-cross-origin';
     document.body.appendChild(script);
-  }, [zoneId]);
+  }, [enabled, consent?.advertising, zoneId]);
 
   return null;
 }

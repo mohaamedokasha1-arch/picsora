@@ -1,0 +1,282 @@
+{
+  "image-compressor": {
+    "title": "Smaller images without the visible cost",
+    "paragraphs": [
+      "The Image Compressor squeezes JPG, PNG and WebP files down to a fraction of their original size while keeping them visually indistinguishable from the source. It re-encodes your pictures with an optimised quality setting, strips invisible metadata such as camera EXIF records, and only writes pixels that actually change the picture. The result is a file that loads faster, uploads on the first try, and still looks sharp at 100% zoom.",
+      "Compression quality is a sliding scale, and this tool treats it that way: dial it down aggressively for thumbnails and chat attachments, or keep it high for portfolio shots where every detail matters. Because everything runs locally in your browser, a batch of twenty photos compresses as fast as your device can process it — no upload queue, no waiting for a server, no file-size ceiling beyond what your browser can hold in memory.",
+      "If you work with images regularly, this single tool pays for itself immediately: faster websites, emails that clear attachment limits, and storage that stops filling up. Pair it with the Image Resizer to shrink dimensions first — fewer pixels means even smaller files — or convert to WebP for an extra 25–35% saving at the same visual quality."
+    ],
+    "useCases": [
+      "Preparing product photos for an online store where page speed directly affects sales",
+      "Fitting photo attachments under a 10 MB or 25 MB email limit",
+      "Reducing a website's image payload to improve Core Web Vitals scores",
+      "Freeing up phone or cloud storage by shrinking old photo backups"
+    ]
+  },
+  "image-resizer": {
+    "title": "Exact dimensions in a couple of clicks",
+    "paragraphs": [
+      "The Image Resizer changes the width and height of JPG, PNG, WebP and GIF pictures to whatever your project needs. Type an exact pixel size, keep the aspect ratio locked so nothing gets stretched, or scale by percentage — the tool resamples the image cleanly so edges stay crisp and text in screenshots stays readable.",
+      "Resizing down is also the most underrated compression trick there is. A 4000-pixel camera photo displayed on a website at 1200 pixels wastes more than 80% of its bytes; resizing first and compressing second produces dramatically smaller files than compression alone. The tool always shows the target dimensions before you process, so what you see is exactly what you get.",
+      "Everything happens on your device: the picture is decoded, resampled and re-encoded by your browser without ever touching a server. That makes the tool safe for unreleased product shots, personal documents and any other image you would rather not upload anywhere."
+    ],
+    "useCases": [
+      "Making blog and hero images exactly the pixel size a theme or CMS expects",
+      "Shrinking phone photos to sensible dimensions before sending them in chat apps",
+      "Producing consistent thumbnail sets for galleries and product listings",
+      "Preparing avatar and profile pictures that meet a platform's square or size rules"
+    ]
+  },
+  "image-cropper": {
+    "title": "Cut to the frame that matters",
+    "paragraphs": [
+      "The Image Cropper trims JPG, PNG and WebP images down to the region you actually want. Drag or set the crop area, choose a free-form or fixed aspect ratio — 1:1, 4:3, 16:9 and friends — and the tool removes everything outside it. Cropping never resamples the kept pixels, so the part you save stays at full original quality.",
+      "Cropping is composition: it removes distracting edges, recentres a subject, or converts a horizontal photo into a square or vertical format for a specific platform. Because the output only contains the pixels you kept, cropped files are also smaller and faster to share.",
+      "The tool runs entirely in your browser, so unreleased designs, personal photos and private documents never leave your device. When you need the same picture in several shapes, crop once and then use the Image Resizer to generate each target size."
+    ],
+    "useCases": [
+      "Framing profile and cover images to a platform's required aspect ratio",
+      "Removing cluttered backgrounds and empty margins from product photos",
+      "Cutting a wide screenshot down to the one dialog box or chart you need",
+      "Converting landscape photos into square or vertical crops for social media"
+    ]
+  },
+  "image-rotator": {
+    "title": "Straighten any photo in seconds",
+    "paragraphs": [
+      "The Image Rotator turns JPG, PNG and WebP pictures by exact 90° or 180° steps, in either direction. It is the fastest fix for photos that arrive sideways from a camera or scanner, and for graphics whose orientation no longer matches the document or layout they belong in.",
+      "Rotating by exact quarter-turns has a practical benefit beyond convenience: no pixel is resampled, so the image loses zero quality — unlike small arbitrary-angle rotations, which must smear pixels to fill the corners. Dimensions simply swap places, and the output keeps every bit of sharpness the original had.",
+      "Like every Piclizer tool, rotation happens locally in your browser. Sensitive scans, ID documents and unreleased renders never leave your device, and there is no upload wait even for large, high-resolution files."
+    ],
+    "useCases": [
+      "Fixing phone photos that open sideways in documents and emails",
+      "Turning scanned pages upright before combining them into a PDF",
+      "Rotating charts, diagrams and signage artwork to match a layout",
+      "Correcting the orientation of screenshots for documentation"
+    ]
+  },
+  "flip-image-horizontal": {
+    "title": "Mirror any image instantly",
+    "paragraphs": [
+      "The Horizontal Flip tool mirrors JPG, PNG and WebP images left-to-right, producing a perfect reflection along the vertical axis. It is the classic fix for selfies and portraits that feel wrong because the subject faces away from where the layout expects them to, and for logo or artwork mock-ups that need to read in the opposite direction.",
+      "A flip is a pure pixel re-arrangement: no resampling, no quality loss, no change in file dimensions or format. What changes is direction — text will read backwards, which is exactly why the tool is also handy for creating symmetrical design elements and mirrored watermarks on purpose.",
+      "The whole operation runs in your browser in well under a second for typical photos, and your file never touches a server. For a top-to-bottom reflection, use the companion Vertical Flip tool; combine both to rotate an image by 180°."
+    ],
+    "useCases": [
+      "Correcting the direction a subject faces so it points into the page or layout",
+      "Fixing mirrored selfies where text and scenery appear reversed",
+      "Building symmetrical designs and mirrored reflection effects",
+      "Preparing artwork for prints where the design must face the opposite way"
+    ]
+  },
+  "flip-image-vertical": {
+    "title": "Turn images upside down — cleanly",
+    "paragraphs": [
+      "The Vertical Flip tool reflects JPG, PNG and WebP images top-to-bottom along the horizontal axis. It is the precise fix for scans and camera images captured upside down, for reflections in water-style design compositions, and for artwork that needs to read from the bottom up.",
+      "Because a vertical flip rearranges rather than resamples pixels, image quality is completely untouched: every detail, colour and gradient survives exactly as it was, and the file's dimensions stay identical. It is the pixel-perfect equivalent of turning a photograph over, without any of the degradation you would get from approximating the effect with rotation.",
+      "Processing happens entirely on your device — the image never leaves your browser — so private scans and unreleased work stay private. Pair it with the Horizontal Flip to produce a 180° rotation, or use it alone for creative reflection effects."
+    ],
+    "useCases": [
+      "Righting scans and photos that were captured upside down",
+      "Creating realistic water and glass reflection effects in design work",
+      "Preparing print layouts where artwork must run inverted",
+      "Combining with a horizontal flip to achieve a lossless 180° turn"
+    ]
+  },
+  "jpg-to-png": {
+    "title": "From JPG to PNG in one drop",
+    "paragraphs": [
+      "The JPG to PNG converter turns JPG and JPEG pictures into crisp PNG files — and it accepts far more than JPG in the drop zone. You can feed it photos from an iPhone (HEIC/HEIF), WebP, BMP, TIFF, AVIF, SVG or GIF, and it will output clean PNG every time. Conversion happens in your browser: decode locally, re-encode locally, download locally.",
+      "PNG is a lossless format, which makes it the right destination when you need transparency support, pixel-exact screenshots, or an image that will survive further editing without accumulating artefacts. Converting a JPG to PNG does not restore detail that JPG compression already removed, but it guarantees no further loss from that point on.",
+      "There is no account, no watermark and no upload: your pictures are decoded on your device's own processor and the PNG files are generated there too. Batch up to ten images at once and download them individually or as a set."
+    ],
+    "useCases": [
+      "Preparing images that need transparent or alpha-channel support",
+      "Converting iPhone HEIC photos into universally accepted PNG files",
+      "Creating stable, lossless copies of graphics before further editing",
+      "Meeting upload forms and platforms that accept PNG only"
+    ]
+  },
+  "png-to-jpg": {
+    "title": "Lighter files with JPG conversion",
+    "paragraphs": [
+      "The PNG to JPG converter produces standard JPG files from PNG sources — or from almost anything else you drop in, including HEIC iPhone photos, WebP, GIF, BMP, TIFF and AVIF. JPG is still the world's most compatible image format, and converting to it is the quickest way to shrink oversized files and satisfy forms that reject anything else.",
+      "PNG files often look heavier than they should because lossless encoding and alpha channels cost bytes. JPG compresses photographs far more efficiently; the tool handles transparency sensibly during conversion, flattening it onto a clean background instead of producing ugly fringes, and lets you keep the quality balance where you want it.",
+      "Conversion runs entirely on your device — no uploads, no queues, no watermark — and you can batch up to ten images per pass. If you also need smaller dimensions, run the Image Resizer first; resampling before JPG encoding yields the cleanest, smallest result."
+    ],
+    "useCases": [
+      "Satisfying upload forms, portals and marketplaces that accept JPG only",
+      "Shrinking PNG screenshots and exports that are far too heavy for email",
+      "Converting iPhone HEIC photos into universally readable JPG files",
+      "Flattening transparent PNGs onto a solid background for print shops"
+    ]
+  },
+  "jpg-to-webp": {
+    "title": "Modernise images with WebP",
+    "paragraphs": [
+      "The JPG to WebP converter re-encodes JPG and JPEG pictures — or HEIC, PNG, GIF, BMP, TIFF, AVIF and SVG sources — into WebP, the modern format built for the web. At the same visual quality, WebP typically lands 25–35% smaller than an equivalent JPG, which translates directly into faster page loads and lower bandwidth bills.",
+      "WebP is supported by every current browser, so serving it no longer requires fallback gymnastics for mainstream audiences. The tool keeps the quality-versus-size trade-off under your control: favour fidelity for hero images, or lean hard on compression for thumbnails and decorative graphics.",
+      "As always, conversion is local — your browser decodes and re-encodes the file without any server involvement. Batch-convert up to ten images at once, and use the Image Compressor afterwards if a specific file must fit under an exact byte limit."
+    ],
+    "useCases": [
+      "Cutting a website's image payload to improve loading speed and SEO",
+      "Reducing CDN and hosting bandwidth costs across a photo-heavy catalogue",
+      "Future-proofing an image library with a widely supported modern format",
+      "Slimming newsletter and campaign images without visible quality loss"
+    ]
+  },
+  "png-to-webp": {
+    "title": "WebP conversion that keeps transparency",
+    "paragraphs": [
+      "The PNG to WebP converter turns PNG images — plus JPG, HEIC, GIF, BMP, TIFF and AVIF sources — into WebP files, preserving the alpha transparency that PNG users depend on. You get the format efficiency of WebP with the see-through backgrounds that logos, icons and interface graphics need.",
+      "Lossless-style PNG files are notorious for their size, and WebP routinely halves it while supporting the same alpha channel. For photographic content converted from PNG, even bigger savings are possible with lossy WebP at high quality settings — the tool exposes the dial so you can choose per image.",
+      "Conversion happens locally in your browser with no uploads and no watermarks, and batches of up to ten files are handled in one pass. Drop the results straight into a website or app and enjoy the immediate loading-speed difference."
+    ],
+    "useCases": [
+      "Shrinking logos, icons and UI assets while keeping their transparency",
+      "Optimising screenshot-heavy documentation pages that load too slowly",
+      "Migrating a design system's asset library to a modern format",
+      "Reducing app bundle sizes by converting built-in PNG resources"
+    ]
+  },
+  "webp-to-jpg": {
+    "title": "WebP files wherever JPG is required",
+    "paragraphs": [
+      "The WebP to JPG converter turns WebP images into standard JPG files that open absolutely everywhere — every operating system, every photo app, every upload form. It also happily accepts PNG, HEIC, GIF, BMP, TIFF and AVIF inputs, making it a reliable escape hatch from any modern-format dead end.",
+      "Some pipelines still refuse WebP: older desktop software, certain government and corporate portals, many photo-printing services. Converting to JPG restores universal compatibility, and the tool flattens any transparency onto a solid background in the process so the result looks exactly as intended.",
+      "The conversion runs on your device in your browser — the file never leaves it. Batch up to ten images per pass, keep the quality where you want it, and if the destination also has dimension rules, run the Image Resizer first for a clean one-shot result."
+    ],
+    "useCases": [
+      "Opening web-saved images in older desktop software and photo printers",
+      "Submitting pictures to portals and forms that reject WebP uploads",
+      "Sharing images with recipients whose devices or apps struggle with WebP",
+      "Archiving web graphics in the most universally supported format"
+    ]
+  },
+  "webp-to-png": {
+    "title": "Lossless PNG output from WebP sources",
+    "paragraphs": [
+      "The WebP to PNG converter extracts WebP images into lossless PNG files — keeping transparency intact where the source has it. Beyond WebP, the same drop zone accepts JPG, HEIC iPhone photos, GIF, BMP, TIFF and AVIF, so one tool covers virtually every conversion direction you will ever need.",
+      "PNG is the format of choice whenever you need pixel-exact, uncompressed-look results: design handoffs, further photo editing, documentation screenshots, or platform rules that demand PNG. Converting from WebP to PNG preserves everything visible in the source; the file may weigh more, but it will survive any future processing without new artefacts.",
+      "Everything is processed locally — decode in your browser, encode in your browser, download from your browser. No accounts, no watermarks, no upload limits beyond your device's memory, and batches of up to ten files at a time."
+    ],
+    "useCases": [
+      "Preparing web-downloaded graphics for transparent-overlay design work",
+      "Meeting upload systems and design tools that accept PNG only",
+      "Creating stable editing masters before cropping, resizing or annotating",
+      "Extracting transparent logos and icons from WebP exports"
+    ]
+  },
+  "image-to-pdf": {
+    "title": "One photo, one tidy PDF",
+    "paragraphs": [
+      "The Image to PDF tool wraps a single JPG, PNG or WebP picture into a clean, standard PDF document. The PDF is the universal document format — it opens the same way on every phone, laptop and print shop system, it is harder to alter casually than a bare image, and email systems treat it as a document rather than a media attachment.",
+      "This tool is the quick path for one-file jobs: sending a signed form photo to an office that accepts PDF only, archiving a receipt, or submitting a single-page assignment. The image is embedded at its native resolution, so text stays sharp when the recipient zooms in or prints.",
+      "Processing is entirely local — your photo never leaves the device — and the generated PDF contains nothing but your image. Need several pictures in one document? Use Images to PDF, which stacks up to thirty photos into a multi-page file with page-order control."
+    ],
+    "useCases": [
+      "Submitting a filled form, ID copy or receipt to a portal that requires PDF",
+      "Emailing a document-style attachment instead of a raw photo",
+      "Archiving single documents in a format that prints predictably",
+      "Protecting a photo from casual edits by sharing it inside a PDF"
+    ]
+  },
+  "images-to-pdf": {
+    "title": "Many photos, one multi-page PDF",
+    "paragraphs": [
+      "Images to PDF merges up to thirty JPG, PNG or WebP pictures into one multi-page PDF document, in exactly the order you arrange them. Scanned contracts, photographed receipts, page-by-page assignments, a series of whiteboard shots — drop them in, order them, and download a single tidy file.",
+      "Recipients see a real document: consistent pages, predictable printing, one attachment instead of thirty. The tool keeps each image at its native resolution, and because everything is assembled in your browser, even sensitive paperwork — IDs, contracts, medical documents — never leaves your device.",
+      "Page order is fully under your control before generation, and the output PDF contains only your images with no watermark and no branding. For jobs that start from a scanner producing one file per page, this tool is the missing final step that turns a pile of images into a presentable document."
+    ],
+    "useCases": [
+      "Combining photographed contract or form pages into one submission file",
+      "Assembling scanned receipts and invoices for expense reporting",
+      "Building multi-page assignments and portfolios from photo sources",
+      "Turning a series of whiteboard or notebook photos into shareable notes"
+    ]
+  },
+  "merge-images": {
+    "title": "Combine images side by side or stacked",
+    "paragraphs": [
+      "Merge Images combines up to ten JPG, PNG or WebP pictures into a single image — arranged side by side in a row, stacked in a column, or both, depending on the layout you choose. Spacing, alignment and background handling are taken care of automatically so the composite looks deliberate rather than pasted together.",
+      "This is the fastest way to build before/after comparisons, step-by-step tutorials, gallery strips and product shots from multiple angles without opening a design application. The tool aligns images intelligently and exports the composite as PNG (perfect quality) or JPG (smaller file).",
+      "Everything is stitched together locally in your browser — no uploads, no design skills needed, no watermark. For the reverse operation, Split Image cuts one large picture back into a grid of tiles, for example to produce carousel-ready slices from one wide graphic."
+    ],
+    "useCases": [
+      "Building before/after comparisons for tutorials and case studies",
+      "Stitching screenshot steps into a single instruction image",
+      "Creating product collages that show several angles in one shot",
+      "Combining chat screenshots for a help-desk or bug report"
+    ]
+  },
+  "split-image": {
+    "title": "Slice one image into perfect tiles",
+    "paragraphs": [
+      "Split Image cuts a JPG, PNG or WebP picture into an exact grid of tiles — 2×2, 3×3, custom rows and columns — and hands you the pieces as individual files or a ZIP download. The cut lines are pixel-exact: every tile is the same size, and nothing is lost or duplicated at the seams.",
+      "The most popular use is social media: slicing one wide or square artwork into the multi-post grid format that displays as a single image on a profile. It is just as useful for print work — splitting a poster into A4-sized printable sections — and for sprite sheets, where a game or interface consumes tiles individually.",
+      "Splitting runs entirely in your browser, so large artworks process in seconds without any upload. If you need the opposite direction, Merge Images reassembles separate pictures into one composite; together the two tools cover both halves of the tile workflow."
+    ],
+    "useCases": [
+      "Preparing Instagram grid posts from a single large artwork",
+      "Splitting a poster into sections that fit standard printers",
+      "Cutting sprite sheets or atlas textures into individual assets",
+      "Breaking a wide panoramic photo into printable panels"
+    ]
+  },
+  "image-color-picker": {
+    "title": "Pick any pixel's colour precisely",
+    "paragraphs": [
+      "The Image Color Picker turns any JPG, PNG or WebP photo into a source of exact colour values. Hover or tap anywhere on the picture and the tool reports the colour under the cursor in HEX, RGB and HSL — ready to copy with one click into CSS, design software or a brand palette document.",
+      "Matching colours by eye is unreliable: monitors, lighting and memory all drift. Sampling the actual pixel removes the guesswork, whether you are rebuilding a website's palette from a screenshot, matching a photo background to a design, or extracting the exact shade of a client's logo for print collateral.",
+      "Sampling runs locally in your browser — zoom into a photo, inspect a single pixel, and copy the value; nothing is uploaded anywhere. Combine it with the Color Palette Extractor when you want not just one colour but the dominant set that defines an image's overall look."
+    ],
+    "useCases": [
+      "Matching a website or app theme to colours from a reference screenshot",
+      "Sampling brand colours from a client's logo photo",
+      "Checking the exact shade of a product image against print colours",
+      "Building CSS palettes from photographs and mood boards"
+    ]
+  },
+  "color-palette-extractor": {
+    "title": "Extract the palette hidden in any image",
+    "paragraphs": [
+      "The Color Palette Extractor analyses a JPG, PNG or WebP image and distils its dominant colours into a tidy, copy-ready palette. Instead of sampling one lucky pixel, it evaluates the whole picture and surfaces the handful of colours that actually define its character — perfect for designing around a photograph rather than fighting it.",
+      "Each extracted colour is shown with its HEX, RGB and HSL values and can be copied instantly. Export the full palette as JSON for developer handoff or as a PNG swatch strip for documentation and mood boards. The extraction runs locally via a web worker, so even large photos analyse in moments.",
+      "Designers use palettes extracted from real imagery to pick backgrounds, accents and text colours that are guaranteed to harmonise with the hero image. Developers use the same palettes to theme generated assets. Either way, the source photo never leaves your device."
+    ],
+    "useCases": [
+      "Deriving website colour schemes from hero photography",
+      "Matching presentation slide themes to a brand photo",
+      "Creating mood boards and style tiles from reference images",
+      "Documenting a project's visual identity as a reusable palette file"
+    ]
+  },
+  "image-to-grayscale": {
+    "title": "Black-and-white conversions with control",
+    "paragraphs": [
+      "The Grayscale tool converts JPG, PNG and WebP images to true black and white using proper luminance weighting — greens, reds and blues are translated to the greys human vision actually perceives, rather than the flat, muddy result of naively averaging channels.",
+      "Monochrome is a stylistic choice with practical edges: it removes distracting colour casts from old scans, makes text-heavy screenshots easier to read, unifies mismatched photo sets into a coherent look, and often compresses smaller than the colour original. The conversion is applied in one pass in your browser, with the original file untouched on your disk.",
+      "Because processing is local, there is no privacy trade-off even for personal photos. Convert, preview, download — and if the mood changes, simply re-run the original through the tool again; nothing about the operation is destructive to your source file."
+    ],
+    "useCases": [
+      "Giving a photo set a consistent, timeless black-and-white style",
+      "Cleaning up yellowed or colour-shifted old scans and documents",
+      "Preparing high-contrast monochrome graphics for engraving and print",
+      "Reducing visual noise in screenshots used in documentation"
+    ]
+  },
+  "image-watermark": {
+    "title": "Protect your images with a custom watermark",
+    "paragraphs": [
+      "The Image Watermark tool stamps your JPG, PNG or WebP pictures with text — your name, brand, handle or copyright notice — positioned exactly where you want it. Control the size, colour, opacity and placement so the mark is clearly visible to would-be thieves but never obscures the image itself.",
+      "Publishing photos online without a watermark is an open invitation for uncredited reuse; a subtle, well-placed mark makes your images self-attributing as they travel. The tool applies the watermark as part of the image pixels, so it survives downloading, screenshots and re-uploads to other platforms.",
+      "Watermarking runs entirely in your browser: your originals — and their protected versions — never leave your device. Batch-apply the same mark across up to twenty files in one pass, and combine with the Image Compressor to publish protected, fast-loading images in one workflow."
+    ],
+    "useCases": [
+      "Marking portfolio and stock photos with your brand before publishing",
+      "Protecting client proofs until final payment is received",
+      "Labelling product images with store or marketplace branding",
+      "Adding a consistent signature across a social media photo series"
+    ]
+  }
+}

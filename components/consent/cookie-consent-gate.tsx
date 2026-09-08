@@ -5,33 +5,35 @@ import { useTranslations } from 'next-intl';
 import { Cookie } from 'lucide-react';
 import { readConsentCookie } from '@/lib/consent';
 import { useConsent } from './consent-provider';
+import { Link } from '@/lib/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 type Phase = 'pending' | 'open' | 'leaving' | 'closed';
 
 /**
- * Cookie consent gate — a FULL-SCREEN overlay shown on first visit.
+ * Cookie consent banner — a non-blocking notice pinned to the bottom of the
+ * viewport on first visit.
  *
- * The visitor cannot use the site until they choose Accept or Reject:
+ * Previously this was a full-screen modal that left the site inert until a
+ * choice was made. That behaviour was changed on purpose:
  *
- * - The overlay covers the whole viewport above everything else.
- * - While it is open the app behind it is inert (`inert`) and body scrolling
- *   is locked, so nothing on the page can be clicked, scrolled or focused.
- * - Accept / Reject persists the choice in a cookie, so the gate closes for
- *   good — it won't come back during the session (or on later visits).
+ * - Google AdSense reviews penalise content hidden behind interstitials, and
+ *   a first-time visitor (or a reviewer) saw a wall instead of the site.
+ * - Consent remains fully valid: no analytics/advertising script runs until
+ *   the visitor accepts, the choice persists in a cookie, and the choice can
+ *   be changed any time via "Cookie Settings" in the footer.
  *
- * The gate is rendered outside `#app-root` so it is never affected by the
- * `inert` state it applies to the site.
+ * The banner never blocks reading or navigation; it simply asks, and stays
+ * out of the way afterwards.
  */
 export function CookieConsentGate() {
   const t = useTranslations('consent');
   const { acceptAll, rejectAll } = useConsent();
   const [phase, setPhase] = React.useState<Phase>('pending');
-  const acceptRef = React.useRef<HTMLButtonElement>(null);
   const timerRef = React.useRef<number | undefined>(undefined);
 
-  // Reveal the gate right after the first paint, unless the visitor already
+  // Reveal the banner right after the first paint, unless the visitor already
   // made a choice on a previous visit (stored consent cookie).
   React.useEffect(() => {
     if (readConsentCookie() !== null) {
@@ -41,25 +43,6 @@ export function CookieConsentGate() {
     const id = window.requestAnimationFrame(() => setPhase('open'));
     return () => window.cancelAnimationFrame(id);
   }, []);
-
-  // While the gate is open/leaving: lock scrolling and make the site behind
-  // it inert so it cannot be interacted with until a choice is made.
-  React.useEffect(() => {
-    if (phase === 'pending' || phase === 'closed') return;
-    const appRoot = document.getElementById('app-root');
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    if (appRoot) appRoot.inert = true;
-    let focusId: number | undefined;
-    if (phase === 'open') {
-      focusId = window.setTimeout(() => acceptRef.current?.focus(), 80);
-    }
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      if (appRoot) appRoot.inert = false;
-      if (focusId !== undefined) window.clearTimeout(focusId);
-    };
-  }, [phase]);
 
   const choose = (apply: () => void) => {
     if (phase !== 'open') return;
@@ -71,54 +54,46 @@ export function CookieConsentGate() {
     }, 200);
   };
 
+  React.useEffect(() => () => {
+    if (timerRef.current !== undefined) window.clearTimeout(timerRef.current);
+  }, []);
+
   if (phase === 'pending' || phase === 'closed') return null;
 
   const open = phase === 'open';
 
   return (
     <div
-      role="dialog"
-      aria-modal="true"
+      role="region"
       aria-label={t('title')}
-      aria-hidden={open ? undefined : true}
       className={cn(
-        'fixed inset-0 z-[80] overflow-y-auto bg-background/70 backdrop-blur-sm transition-opacity duration-200 supports-[backdrop-filter]:bg-background/60',
-        open ? 'opacity-100' : 'pointer-events-none opacity-0',
+        'fixed inset-x-0 bottom-0 z-[80] border-t border-border bg-card/95 shadow-[0_-8px_30px_rgb(0_0_0/0.08)] backdrop-blur transition-all duration-300',
+        open ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0',
       )}
     >
-      <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
-        <div className="animate-fade-in w-full max-w-md rounded-2xl border border-border bg-card p-6 text-center shadow-2xl sm:p-8">
-          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-            <Cookie className="h-6 w-6" aria-hidden="true" />
+      <div className="container flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:gap-6">
+        <div className="flex flex-1 items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <Cookie className="h-5 w-5" aria-hidden="true" />
           </span>
-
-          <h1 className="mt-4 text-lg font-semibold leading-snug text-foreground sm:text-xl">
-            {t('title')}
-          </h1>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t('text')}</p>
-
-          <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              tabIndex={open ? 0 : -1}
-              className="w-full flex-1"
-              onClick={() => choose(rejectAll)}
-            >
-              {t('reject')}
-            </Button>
-            <Button
-              ref={acceptRef}
-              type="button"
-              size="lg"
-              tabIndex={open ? 0 : -1}
-              className="w-full flex-1"
-              onClick={() => choose(acceptAll)}
-            >
-              {t('accept')}
-            </Button>
+          <div>
+            <p className="text-sm font-semibold text-foreground">{t('title')}</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              {t('text')}{' '}
+              <Link href="/cookie-policy" className="font-medium text-primary hover:underline">
+                {t('policy')}
+              </Link>
+            </p>
           </div>
+        </div>
+
+        <div className="flex shrink-0 gap-2.5">
+          <Button type="button" variant="outline" onClick={() => choose(rejectAll)}>
+            {t('reject')}
+          </Button>
+          <Button type="button" onClick={() => choose(acceptAll)}>
+            {t('accept')}
+          </Button>
         </div>
       </div>
     </div>

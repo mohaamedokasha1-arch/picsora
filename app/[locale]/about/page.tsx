@@ -18,7 +18,7 @@ export default function AboutPage({ params }: { params: { locale: string } }) {
   setRequestLocale(params.locale);
   return (
     <div className="container py-12">
-      <LegalContent kind="about" />
+      <LegalContent kind="about" locale={params.locale} />
     </div>
   );
 }

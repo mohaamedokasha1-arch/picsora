@@ -1,0 +1,343 @@
+{
+  "about": {
+    "title": "About Us",
+    "intro": "Piclizer is a free online toolbox for images, PDFs, text, calculations and code — built for people who want fast, practical results without uploading their files to anyone's server.",
+    "sections": [
+      {
+        "h": "Who we are",
+        "ps": [
+          "Piclizer is an independent web platform created by a small team of engineers and designers who were tired of two things: online tools that are free but plaster the screen with intrusive ads, and professional software that costs a monthly subscription just to resize a photo.",
+          "We believe everyday file tasks — compressing a photo for an email, merging a couple of PDFs, formatting a JSON config — should take seconds, cost nothing, and never put your private files at risk. That belief is the reason every Piclizer tool runs entirely inside your browser rather than on a remote server."
+        ]
+      },
+      {
+        "h": "Our mission",
+        "ps": [
+          "Our mission is to make high-quality file utilities freely available to everyone, in plain language, in both English and Arabic. We want a student preparing an assignment, a photographer delivering client proofs, and an office worker handling paperwork to all be able to finish their task in under a minute — without creating an account, installing software, or sending their documents to a stranger's cloud."
+        ]
+      },
+      {
+        "h": "What we offer",
+        "ps": [
+          "Piclizer currently ships more than 70 free tools organised into nine categories:",
+          "Every tool page includes a short walkthrough, answers to frequently asked questions, and a growing library of step-by-step guides that explain the underlying concepts — how image compression actually works, when to choose WebP over JPG, or how to prepare a passport photo that meets official requirements."
+        ],
+        "bullets": [
+          "Image tools — compress, resize, crop, rotate, flip, merge, split and watermark photos",
+          "Format converters — JPG, PNG, WebP, HEIC and PDF conversions, including iPhone photos",
+          "PDF tools — merge, split, rotate, reorder, protect, unlock, compress and extract content",
+          "Text tools — word counting, case conversion, cleanup, diffing and slugs",
+          "Calculators — percentages, loans and interest, dates, BMI, GPA, tips, units and currency",
+          "Developer tools — JSON, XML, SQL, CSS and JavaScript formatters, JWT decoding, hashing and more"
+        ]
+      },
+      {
+        "h": "How Piclizer works",
+        "ps": [
+          "When you drop a file into a Piclizer tool, the file is read by your own browser using standard web technology. All decoding, editing and encoding happens on your device's processor. Your images, PDFs and text are never transmitted to us, never stored on a server, and never seen by our team. Close the tab and the working copies are gone.",
+          "This local-first design has three practical benefits: your files stay private by default, the tools work even on a slow connection once the page has loaded, and we can offer everything free of charge because we do not pay for heavy server-side processing."
+        ]
+      },
+      {
+        "h": "Our principles",
+        "ps": [
+          "Three principles guide every decision we make. Privacy first: we do not want your files, so we built a site that cannot take them. Honest free: the tools are free, and our only revenue comes from clearly separated advertising that never blocks or interferes with a tool mid-task. Plain language: we explain what each tool does, what it accepts, and what it produces before you use it — no dark patterns, no surprise paywalls at the download button."
+        ]
+      },
+      {
+        "h": "Who uses Piclizer",
+        "ps": [
+          "Our visitors include students and teachers preparing course material, photographers and designers optimising images for the web, developers debugging APIs and formatting configuration files, and administrative staff who need to combine, compress or protect PDF documents daily. Because the site works in both English and Arabic, it is used across Europe, the Middle East, North Africa and beyond."
+        ]
+      },
+      {
+        "h": "Get in touch",
+        "ps": [
+          "We read every message. If a tool is missing a feature you need, produced an unexpected result, or if you simply want to say hello, visit our contact page or email us directly. Feedback from real users is how we decide what to build next, and several of our newest tools started as suggestions from visitors like you."
+        ]
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "intro": "This Privacy Policy explains what information Piclizer collects, why, and what we deliberately do not collect. The short version: your files are processed on your own device and never reach our servers, and we collect almost nothing about you.",
+    "sections": [
+      {
+        "h": "1. Overview",
+        "ps": [
+          "Piclizer (“we”, “us”, “our”) operates the website piclizer.vercel.app and its subpages (the “Service”). This policy describes our practices regarding information collected through the Service. By using the Service you agree to this policy. If you do not agree, please discontinue use.",
+          "The Service is designed around a privacy-first architecture: file processing happens locally in your web browser using client-side technology. We do not operate an upload pipeline for your documents, images or text."
+        ]
+      },
+      {
+        "h": "2. Information we do NOT collect",
+        "ps": [
+          "We do not collect or receive the files you process. Images, PDFs and text you place into a tool are decoded, converted and encoded by your browser on your device. We never see them, never store them and cannot recover them. We also do not require registration: there are no accounts, so we hold no names, usernames or passwords."
+        ]
+      },
+      {
+        "h": "3. Information collected automatically",
+        "ps": [
+          "Like virtually all websites, our hosting infrastructure records standard technical log data for security and operation: IP address, browser user-agent, referring page, and the time of each request. This data is used to prevent abuse, diagnose errors and keep the Service available. It is not used to build advertising profiles and we do not attempt to identify individuals from it."
+        ]
+      },
+      {
+        "h": "4. Cookies and similar technologies",
+        "ps": [
+          "Cookies are small text files a website stores in your browser. We use the minimum needed to operate:",
+          "You can change or withdraw your choice at any time through the “Cookie Settings” link in the footer. Withdrawing consent stops non-essential cookies from being set on future visits; essential preference cookies cannot be switched off because the site cannot function without them."
+        ],
+        "bullets": [
+          "Essential storage — remembers your cookie-consent choice, language and light/dark theme. These are first-party and stored only in your browser.",
+          "Analytics cookies — loaded only if you explicitly consent and only when the analytics module is enabled. Off by default.",
+          "Advertising cookies — loaded only if you explicitly consent and only when advertising is enabled. Off by default. See section 6."
+        ]
+      },
+      {
+        "h": "5. Analytics",
+        "ps": [
+          "If, and only if, you consent to analytics cookies and the analytics module is enabled, we load Google Analytics 4 with IP anonymisation to understand aggregate usage (which tools are popular, which browsers need better support). Google Analytics is governed by Google's Privacy Policy. If you decline, no analytics script is loaded at all — not a reduced version, nothing."
+        ]
+      },
+      {
+        "h": "6. Advertising and third-party vendors",
+        "ps": [
+          "We use advertising to keep the Service free. Where advertising is enabled and you have consented to advertising cookies:",
+          "Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this or other websites. Google's use of advertising cookies (such as the DoubleClick DART cookie) enables it and its partners to serve ads to you based on your visit to our site and/or other sites on the Internet. You may opt out of personalised advertising by visiting Google Ads Settings, and you may opt out of third-party vendor cookies for personalised advertising at aboutads.info.",
+          "We do not control third-party ad networks and are not responsible for their practices; each operates under its own privacy policy. Advertising is always clearly separated from tool output and never interrupts an in-progress operation."
+        ],
+        "bullets": [
+          "Google AdSense may be served, which uses cookies and device identifiers to select and measure ads.",
+          "Non-personalised ads may be shown to users who consent to advertising but not to personalisation, where supported.",
+          "No advertising script runs at all if you decline advertising cookies."
+        ]
+      },
+      {
+        "h": "7. Data retention",
+        "ps": [
+          "Your files: never stored — processing is local, so there is nothing to retain. Consent cookies: stored until you clear them or change your setting. Technical logs: kept by our hosting provider for a limited operational period, after which they are automatically deleted. We do not maintain any user database."
+        ]
+      },
+      {
+        "h": "8. Data sharing and transfers",
+        "ps": [
+          "We do not sell, rent or trade personal information. The only parties that may process minimal technical data are our hosting provider (site delivery and security logs) and — strictly with your consent — the analytics and advertising providers described above. Our hosting infrastructure may be located outside your country; where that involves transfer of personal data (for example from the EEA), standard safeguards such as adequacy decisions or contractual clauses applied by the processor are relied upon."
+        ]
+      },
+      {
+        "h": "9. Your rights",
+        "ps": [
+          "Depending on your jurisdiction (including the GDPR for EEA/UK residents and the CCPA/CPRA for California residents) you have rights of access, correction, deletion, restriction, portability and objection, and the right not to be discriminated against for exercising them. Because we hold no personal data about you, there is generally nothing to access, correct or delete — the most effective way to exercise control is the Cookie Settings panel, which can switch analytics and advertising off instantly.",
+          "California residents may also use the “Do Not Sell My Personal Information” right — we do not sell personal information as defined by the CCPA. To make any request or ask a question, contact us via the contact page or the email listed there; we respond within 30 days."
+        ]
+      },
+      {
+        "h": "10. Children's privacy",
+        "ps": [
+          "The Service is not directed at children under 13 (or under 16 in the EEA), and we do not knowingly collect personal data from children. Since we collect almost nothing from anyone, a child using the tools exposes no personal information; nevertheless, we encourage parents and guardians to supervise children's internet use."
+        ]
+      },
+      {
+        "h": "11. Security",
+        "ps": [
+          "The Service is served exclusively over HTTPS. Because file processing is client-side and no user database exists, the most common breach risks — stolen file archives and leaked account databases — are structurally impossible. We still apply strict security headers, input validation and dependency updates as part of routine maintenance."
+        ]
+      },
+      {
+        "h": "12. Changes to this policy",
+        "ps": [
+          "We may update this Privacy Policy to reflect changes in the Service or the law. The “last updated” date at the top of this page always shows the current version, and material changes will be highlighted on the homepage for a reasonable period."
+        ]
+      },
+      {
+        "h": "13. Contact us",
+        "ps": [
+          "Questions about this policy or your data? Use the contact page or email privacy@piclizer.app. We aim to reply within two business days."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "intro": "These Terms of Service (“Terms”) govern your use of Piclizer. By accessing or using the Service you agree to be bound by these Terms. If you do not agree, please do not use the Service.",
+    "sections": [
+      {
+        "h": "1. The Service",
+        "ps": [
+          "Piclizer provides free, browser-based utilities for images, PDFs, text, calculations and developer tasks. All file processing is performed locally in your browser; files are not uploaded to or stored on our servers. The Service is offered free of charge for personal and commercial use."
+        ]
+      },
+      {
+        "h": "2. Acceptable use",
+        "ps": [
+          "You agree to use the Service lawfully and respectfully. You must not:",
+          "We reserve the right to restrict or terminate access to anyone who violates these rules, or who places unreasonable automated load on the Service."
+        ],
+        "bullets": [
+          "Use the tools to process content you have no right to use, including copyrighted material you do not own or have permission to process.",
+          "Attempt to process unlawful, harmful, fraudulent, defamatory or obscene material.",
+          "Interfere with the Service's operation, probe or scan its security, or attempt to gain unauthorised access to any system.",
+          "Scrape, mirror or resell the Service, or misrepresent it as your own product.",
+          "Use the Service to violate any applicable local, national or international law or regulation."
+        ]
+      },
+      {
+        "h": "3. Your files and content",
+        "ps": [
+          "You keep every right in the files you process. Because processing happens on your device, we receive no copy and claim no licence over your content. You are solely responsible for the files you choose to process and for keeping your own originals and outputs; we cannot recover anything processed in a browser session."
+        ]
+      },
+      {
+        "h": "4. Intellectual property",
+        "ps": [
+          "The Piclizer name, logo, site design, text and code are owned by us or our licensors and are protected by intellectual-property laws. You may not copy or reuse substantial parts of the site without written permission. The tools' output — your own processed files — belongs entirely to you."
+        ]
+      },
+      {
+        "h": "5. Third-party services and advertising",
+        "ps": [
+          "The Service is funded by advertising. With your consent, third-party providers such as Google AdSense may serve ads and set cookies; those providers operate under their own terms and privacy policies. Links to external websites are provided for convenience; we do not control and are not responsible for their content or practices. Your interaction with advertisers or third-party sites is solely between you and them."
+        ]
+      },
+      {
+        "h": "6. Availability and changes",
+        "ps": [
+          "We work hard to keep every tool online, but the Service is provided without any uptime guarantee. We may add, change, suspend or remove any tool or feature at any time, and may modify these Terms; the current version is always published on this page with its last-updated date. Continued use after changes take effect constitutes acceptance of the revised Terms."
+        ]
+      },
+      {
+        "h": "7. Disclaimer of warranties",
+        "ps": [
+          "The Service is provided “as is” and “as available”, without warranties of any kind, express or implied, including merchantability, fitness for a particular purpose and non-infringement. We do not warrant that the tools will meet your requirements, be uninterrupted, timely, secure or error-free, or that results (such as compression ratios or OCR accuracy) will be accurate or reliable. Always keep your own backups of important files."
+        ]
+      },
+      {
+        "h": "8. Limitation of liability",
+        "ps": [
+          "To the maximum extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential or punitive damages, or any loss of data, profits or goodwill, arising from your use of or inability to use the Service — even if we have been advised of the possibility of such damages. Because the Service is free, our total aggregate liability for any claim shall not exceed one hundred US dollars (US $100) or the amount required by applicable law, whichever is less."
+        ]
+      },
+      {
+        "h": "9. Indemnification",
+        "ps": [
+          "You agree to indemnify and hold harmless Piclizer and its operators from any claim or demand, including reasonable legal fees, arising out of your misuse of the Service or your violation of these Terms or of any law or third-party right."
+        ]
+      },
+      {
+        "h": "10. Termination",
+        "ps": [
+          "You may stop using the Service at any time. We may suspend or terminate access to the Service, with or without notice, for conduct that we believe violates these Terms or is harmful to other users or to us. Sections 7, 8, 9 and 11 survive termination."
+        ]
+      },
+      {
+        "h": "11. Governing law",
+        "ps": [
+          "These Terms are governed by the laws of the operator's principal place of business, without regard to conflict-of-law rules. Where mandatory consumer-protection law in your country of residence grants you stronger rights, those rights prevail. Any dispute will be resolved in the courts of that jurisdiction, unless local law grants you a different forum."
+        ]
+      },
+      {
+        "h": "12. Contact",
+        "ps": [
+          "Questions about these Terms? Contact us via the contact page or email privacy@piclizer.app."
+        ]
+      }
+    ]
+  },
+  "cookiePolicy": {
+    "title": "Cookie Policy",
+    "intro": "This Cookie Policy explains what cookies are, which ones Piclizer uses, and how you can control them. It complements our Privacy Policy.",
+    "sections": [
+      {
+        "h": "1. What are cookies?",
+        "ps": [
+          "Cookies (and similar browser storage such as localStorage) are small text files that websites save in your browser. They let a site remember your actions and preferences over time, and are widely used to make websites work, to remember choices, and — only with consent — to measure usage and support advertising."
+        ]
+      },
+      {
+        "h": "2. How we use cookies",
+        "ps": [
+          "Piclizer is deliberately light on cookies. Storage falls into four clearly separated groups:",
+          "Only the essential group is active by default. Analytics and advertising storage are created solely after you press “Accept” in the consent banner, and never before."
+        ],
+        "bullets": [
+          "Strictly necessary — your cookie-consent choice, selected language and light/dark theme. Without these the site cannot remember your basic preferences.",
+          "Preferences — optional conveniences such as recently used settings inside a tool (kept in your browser only).",
+          "Analytics — set by Google Analytics only after you consent, to measure aggregate usage anonymously (IP anonymised).",
+          "Advertising — set by Google AdSense only after you consent, used to select and measure ads."
+        ]
+      },
+      {
+        "h": "3. Third-party cookies",
+        "ps": [
+          "When advertising or analytics is consented to, the corresponding provider (currently Google) may set its own cookies from its domains. Google uses cookies such as the DART cookie to serve ads based on your visits to this and other sites. You can review Google's practices in Google's Privacy & Terms. We do not place any third-party marketing cookie ourselves and no such cookie is set if you decline."
+        ]
+      },
+      {
+        "h": "4. Managing your consent",
+        "ps": [
+          "You can accept or reject non-essential storage in the banner shown on your first visit, and change your mind at any time via the “Cookie Settings” link in the footer. Rejecting removes consent for future analytics/advertising scripts immediately; already-set third-party cookies can be cleared in one step from the same panel."
+        ]
+      },
+      {
+        "h": "5. Browser controls",
+        "ps": [
+          "Every modern browser lets you view, delete and block cookies from its settings (usually under Privacy & Security). Blocking strictly necessary storage may prevent the site from remembering your language or consent choice, but the tools themselves will keep working, since all file processing is independent of cookies."
+        ]
+      },
+      {
+        "h": "6. Do Not Track",
+        "ps": [
+          "We honour consent choices made in our banner. Where a browser sends a Global Privacy Control (GPC) signal, we treat it as a rejection of analytics and advertising storage."
+        ]
+      },
+      {
+        "h": "7. Changes and contact",
+        "ps": [
+          "If our cookie usage changes, this policy and the consent banner will be updated accordingly. Questions? Visit the contact page or email privacy@piclizer.app."
+        ]
+      }
+    ]
+  },
+  "disclaimer": {
+    "title": "Disclaimer",
+    "intro": "The information and tools on Piclizer are provided free of charge, in good faith and for general informational and utility purposes only.",
+    "sections": [
+      {
+        "h": "1. General information",
+        "ps": [
+          "While we work hard to keep every tool accurate and up to date, Piclizer makes no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability or completeness of any information or tool output on the Service. Use of the site and reliance on any output is strictly at your own risk."
+        ]
+      },
+      {
+        "h": "2. Not professional advice",
+        "ps": [
+          "Calculators (BMI, loan interest, GPA, currency and unit conversions, discounts and tips) are convenience aids only. They do not constitute medical, financial, legal, tax or educational advice, and results may differ from those of professional instruments due to rounding, data sources or assumptions. Always verify important results with a qualified professional before acting on them."
+        ]
+      },
+      {
+        "h": "3. File processing",
+        "ps": [
+          "All file processing happens locally in your browser. We are not responsible for data loss, overwriting or quality changes resulting from processing your files — always keep your original files in a safe place. Results such as compression ratios, OCR accuracy and format conversions depend on the input file and on browser capabilities beyond our control."
+        ]
+      },
+      {
+        "h": "4. External links",
+        "ps": [
+          "The Service may link to external websites that are not provided or maintained by us. We do not guarantee the accuracy, relevance, timeliness or completeness of any information on those external sites and are not responsible for their content or privacy practices."
+        ]
+      },
+      {
+        "h": "5. Advertising disclosure",
+        "ps": [
+          "Piclizer is funded by advertising. Ads are served by third-party networks (with your consent), are clearly separated from tool interfaces and content, and do not constitute our endorsement of the advertised products or services."
+        ]
+      },
+      {
+        "h": "6. Contact",
+        "ps": [
+          "If you require clarification about anything on this page, please reach us via the contact page or email privacy@piclizer.app."
+        ]
+      }
+    ]
+  }
+}

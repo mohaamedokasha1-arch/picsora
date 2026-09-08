@@ -1,0 +1,142 @@
+{
+  "word-counter": {
+    "title": "Every count your text needs, live",
+    "paragraphs": [
+      "The Word Counter analyses text as you type or paste it, reporting words, characters (with and without spaces), sentences, paragraphs, reading time and speaking time in real time. No button to press — the statistics update with every keystroke.",
+      "Word and character limits govern modern writing: essays demand minimums, meta descriptions have maximums, social platforms truncate ruthlessly, and translators quote per word. Knowing your exact counts while writing beats discovering them after submission.",
+      "The analysis runs entirely in your browser — draft confidential letters, unreleased articles and private notes with the same confidence as any other Piclizer tool. Paste in a chapter or type from scratch; the counts are instant either way."
+    ],
+    "useCases": [
+      "Meeting essay and assignment word-count requirements",
+      "Keeping titles and meta descriptions within SEO limits",
+      "Estimating reading and speaking time for scripts",
+      "Checking character counts for social media posts"
+    ]
+  },
+  "remove-extra-spaces": {
+    "title": "Clean spacing in one click",
+    "paragraphs": [
+      "The Remove Extra Spaces tool normalises all whitespace in your text: collapses double spaces to single ones, strips leading and trailing spaces from every line, removes empty lines, and converts stray tabs. One paste, one click, and the mess is gone.",
+      "Messy spacing comes from everywhere — OCR output, PDF copy-paste, converted documents, hasty typing. Double spaces slip past the eye but break justified text, inflate character counts and look unprofessional in published copy. Automated cleanup is faster and more reliable than hunting spaces by hand.",
+      "Processing is instant and local: your text is cleaned in your browser and never leaves your device. Pair it with the Text Cleaner for a full deep-clean, or the Case Converter to fix letter formatting in the same editing session."
+    ],
+    "useCases": [
+      "Cleaning up text copied from PDFs and scanned documents",
+      "Normalising OCR output before further editing",
+      "Fixing spacing in manuscripts before submission",
+      "Tidying data pasted from spreadsheets and forms"
+    ]
+  },
+  "case-converter": {
+    "title": "Every letter case, applied perfectly",
+    "paragraphs": [
+      "The Case Converter transforms text between UPPERCASE, lowercase, Title Case, Sentence case, camelCase, snake_case, kebab-case and more — with intelligent handling that keeps small words lowercase in titles and respects existing acronyms.",
+      "Case mistakes are the typos everyone notices last: a headline typed in caps lock, a URL slug with spaces, a database field with mixed conventions. Whether you are formatting headings, writing code identifiers, or normalising a list of names, choosing the right convention takes one click instead of retyping.",
+      "Conversion is instant and local — your text is processed in your browser. Developers will find the programming cases (camelCase, snake_case, CONSTANT_CASE) particularly handy for renaming variables across documentation and code."
+    ],
+    "useCases": [
+      "Fixing accidentally capitalised headlines and paragraphs",
+      "Generating URL slugs and file names with consistent casing",
+      "Converting variable names between programming conventions",
+      "Normalising imported data lists to a single style"
+    ]
+  },
+  "text-cleaner": {
+    "title": "A deep clean for messy text",
+    "paragraphs": [
+      "The Text Cleaner strips everything that does not belong in your text: broken line breaks from PDF copies, smart quotes and special dashes, zero-width and invisible characters, repeated punctuation, and HTML artefacts. It is the one-stop wash for text that arrived through converters, scanners and copy-paste chains.",
+      "Invisible characters are the sneakiest problem in digital text: a zero-width space pasted into a form field breaks searches and lookups, curly quotes corrupt code strings, and hidden formatting characters crash parsers. Cleaning text before it enters a database, spreadsheet or codebase prevents hours of debugging.",
+      "All cleaning options are toggleable so you keep what you need and remove only what you don't, and everything runs locally in your browser. For simple spacing problems, the lighter Remove Extra Spaces tool does the job in one click."
+    ],
+    "useCases": [
+      "Sanitising text copied from PDFs and word processors",
+      "Removing invisible characters that break forms and code",
+      "Normalising quotes and dashes for consistent typography",
+      "Preparing user-submitted text for databases"
+    ]
+  },
+  "lorem-ipsum-generator": {
+    "title": "Placeholder text whenever you design",
+    "paragraphs": [
+      "The Lorem Ipsum Generator produces classic placeholder text in the exact amount you need: paragraphs, sentences, words or list items, with optional HTML wrapping. Copy with one click and drop it straight into a mock-up, template or CMS.",
+      "Real sample text distracts design review — readers start proofreading instead of looking at the layout. Lorem ipsum's letterforms and rhythm mimic natural language without meaning anything, which is exactly why it has been the design industry's standard filler since the days of metal type.",
+      "Generation is instant and local. Choose how many paragraphs, start with the traditional opening or vary the content, and wrap in <p> tags when you are drafting HTML. The output is yours to shorten, style and eventually replace with real copy."
+    ],
+    "useCases": [
+      "Filling website mock-ups and wireframes with realistic-looking text",
+      "Testing page layouts with varying content lengths",
+      "Drafting HTML templates with properly wrapped paragraphs",
+      "Creating design samples for client presentations"
+    ]
+  },
+  "text-reverser": {
+    "title": "Flip your text forwards or backwards",
+    "paragraphs": [
+      "The Text Reverser flips text in whichever direction you need: reverse the whole string, reverse each line's order, or mirror the characters within every word. Options are one click each, so you can preview every interpretation of “reversed” instantly.",
+      "Reversal sounds niche until you need it: checking palindromes in word puzzles, generating test data that exercises right-to-left handling, creating mirror-text effects for design, or un-reversing text that arrived backwards from a faulty export. Developers use it to sanity-test string handling in their own code.",
+      "The transformation runs locally in your browser and handles Unicode correctly — accented letters, Arabic script and emoji survive the flip intact. Paste, choose a direction, copy the result."
+    ],
+    "useCases": [
+      "Testing and verifying palindromes and word puzzles",
+      "Creating mirrored text effects for design work",
+      "Fixing text exported in reverse order",
+      "Generating reversed test data for string-handling code"
+    ]
+  },
+  "remove-duplicate-lines": {
+    "title": "Deduplicate lists in one pass",
+    "paragraphs": [
+      "The Remove Duplicate Lines tool scans your text line by line and eliminates repeated entries, keeping one copy of each. Toggle case sensitivity, choose whether to keep the first or last occurrence, and optionally trim surrounding whitespace so near-identical lines are caught too.",
+      "Duplicate data sneaks in from everywhere: merged e-mail lists, exported logs, concatenated CSV files, copy-pasted keyword research. Duplicates skew statistics, waste e-mail sends and make lists look amateurish. A single pass through this tool reduces a bloated list to its unique entries in seconds.",
+      "Processing is local and instant — even lists with tens of thousands of lines deduplicate in your browser without any upload. Output preserves the original order of first appearances unless you choose to sort the result."
+    ],
+    "useCases": [
+      "Cleaning merged e-mail and contact lists",
+      "Deduplicating keyword and tag lists for SEO",
+      "Removing repeated log entries before analysis",
+      "Normalising data exported from multiple sources"
+    ]
+  },
+  "text-to-slug": {
+    "title": "Clean URL slugs from any title",
+    "paragraphs": [
+      "The Text to Slug tool converts any title or sentence into a clean, URL-safe slug: lowercase, spaces to hyphens, accents transliterated, special characters removed. “Café Gros Plan — Été 2026!” becomes a tidy, shareable path segment in one click.",
+      "Good slugs help search engines understand a page and help humans trust a link. Bad ones — spaces, symbols, encoded gibberish — hurt readability and click-through. Generating the slug correctly the first time matters because URLs are painful to change after publication.",
+      "The converter runs locally, handles both Latin and Arabic input, and offers separator choices (hyphen or underscore) to match your platform's conventions. Paste a title, copy a slug, publish with confidence."
+    ],
+    "useCases": [
+      "Generating SEO-friendly URLs for blog posts and pages",
+      "Creating clean file names from document titles",
+      "Normalising product names for e-commerce paths",
+      "Producing consistent identifiers from multilingual titles"
+    ]
+  },
+  "text-diff": {
+    "title": "Spot every change between two texts",
+    "paragraphs": [
+      "The Text Diff tool compares two versions of text and highlights exactly what changed — added lines in one colour, removed lines in another, changed segments inline. Paste both versions, and the differences appear instantly, character-precise.",
+      "Proofreading a revision against its original, checking what a colleague changed in shared copy, or verifying that a translation preserved every sentence — visual comparison catches what eyes miss. Contract revisions benefit especially: the diff shows precisely which clauses moved, changed or disappeared.",
+      "Comparison runs entirely in your browser — confidential drafts never leave your device. Switch between line-level and character-level views depending on whether you care about structure or wording, and copy a change report when you need to summarise the edits."
+    ],
+    "useCases": [
+      "Reviewing revisions between document versions",
+      "Verifying that translations cover every source sentence",
+      "Comparing contract drafts to spot changed clauses",
+      "Checking configuration or code snippets before deployment"
+    ]
+  },
+  "number-to-words": {
+    "title": "Numbers written out, correctly",
+    "paragraphs": [
+      "The Number to Words tool spells out any number in full words — 1,234 becomes “one thousand two hundred thirty-four” (and its Arabic equivalent), in your choice of English or Arabic. Large numbers, decimals and negatives are all handled correctly.",
+      "Cheques, invoices, legal contracts and official forms frequently require amounts written in words alongside figures — both to prevent fraud and to remove ambiguity. Writing them by hand invites errors; the tool spells every number flawlessly, every time.",
+      "Conversion runs locally in your browser and supports both number systems' conventions. Paste or type a figure, choose the language, and copy the written form directly into your document — the fastest way to make financial and legal paperwork precise."
+    ],
+    "useCases": [
+      "Writing cheque amounts in words",
+      "Drafting invoices and receipts with written totals",
+      "Preparing legal contracts where figures must be spelled out",
+      "Teaching and checking number names in English or Arabic"
+    ]
+  }
+}

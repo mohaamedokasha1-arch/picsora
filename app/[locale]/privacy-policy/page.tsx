@@ -18,7 +18,7 @@ export default function PrivacyPage({ params }: { params: { locale: string } }) 
   setRequestLocale(params.locale);
   return (
     <div className="container py-12">
-      <LegalContent kind="privacy" />
+      <LegalContent kind="privacy" locale={params.locale} />
     </div>
   );
 }

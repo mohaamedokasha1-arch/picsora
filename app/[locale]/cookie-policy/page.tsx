@@ -18,7 +18,7 @@ export default function CookiePolicyPage({ params }: { params: { locale: string 
   setRequestLocale(params.locale);
   return (
     <div className="container py-12">
-      <LegalContent kind="cookiePolicy" />
+      <LegalContent kind="cookiePolicy" locale={params.locale} />
     </div>
   );
 }

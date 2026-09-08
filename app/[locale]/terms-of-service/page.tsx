@@ -18,7 +18,7 @@ export default function TermsPage({ params }: { params: { locale: string } }) {
   setRequestLocale(params.locale);
   return (
     <div className="container py-12">
-      <LegalContent kind="terms" />
+      <LegalContent kind="terms" locale={params.locale} />
     </div>
   );
 }

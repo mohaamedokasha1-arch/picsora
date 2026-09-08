@@ -15,6 +15,7 @@ export async function Footer() {
   const year = new Date().getFullYear();
 
   const legalLinks = [
+    { href: '/about', label: t('common.about') },
     { href: '/privacy-policy', label: t('common.privacy') },
     { href: '/cookie-policy', label: t('common.cookiePolicy') },
     { href: '/terms-of-service', label: t('common.terms') },

@@ -8,6 +8,7 @@ import { Breadcrumb } from '@/components/layout/breadcrumb';
 import { ToolClient } from '@/components/tools/tool-client';
 import { HowToUse } from '@/components/tools/how-to-use';
 import { FAQSection } from '@/components/tools/faq-section';
+import { ToolDeepDive } from '@/components/tools/deep-dive';
 import { RelatedTools } from '@/components/tools/related-tools';
 import { webAppSchema, faqSchema, howToSchema, StructuredData } from '@/lib/seo/schema';
 import { ToolIcon } from '@/components/icons';
@@ -151,6 +152,9 @@ export default async function ToolPage({ params }: { params: { locale: string; s
             </div>
           </section>
         )}
+
+        {/* Long-form editorial article about this tool */}
+        <ToolDeepDive slug={tool.slug} toolName={name} />
 
         <AdPlacement slot="tool-below-faq" className="mt-8" />
 

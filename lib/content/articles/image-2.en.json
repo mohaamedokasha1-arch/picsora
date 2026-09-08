@@ -1,0 +1,100 @@
+{
+  "heic-to-jpg": {
+    "title": "Open iPhone photos everywhere",
+    "paragraphs": [
+      "The HEIC to JPG converter decodes Apple's HEIC/HEIF photos — the format every modern iPhone shoots in — and re-encodes them as standard JPG files that any device, app or website accepts. The decoding happens right in your browser via the heic2any decoder, so there is no plug-in to install and nothing to upload.",
+      "HEIC is efficient, but the world still runs on JPG: Windows viewers, Android phones, online forms, printers and older photo apps frequently reject Apple's format. One drag-and-drop produces a universally readable JPG while preserving the photo's resolution and colour fidelity.",
+      "Because decoding is local, private photo libraries — family pictures, ID scans, documents — never leave your device. Batch-convert a whole camera roll selection at once, and if you need transparency or lossless output instead, the same drop zone also offers HEIC to PNG."
+    ],
+    "useCases": [
+      "Sharing iPhone photos with Windows or Android recipients",
+      "Uploading photos to portals and forms that reject HEIC",
+      "Preparing iPhone shots for printing services and photo labs",
+      "Importing Apple photos into older editing software"
+    ]
+  },
+  "heic-to-png": {
+    "title": "iPhone photos as lossless PNG",
+    "paragraphs": [
+      "The HEIC to PNG converter turns Apple HEIC/HEIF photos into PNG files — the lossless format that supports transparency and survives every subsequent editing step. Decoding runs in your browser, locally, with no upload and no software to install.",
+      "Choose PNG over JPG when the image is destined for further work: cropping, compositing, annotations or repeated re-saving. PNG never accumulates compression artefacts, so an iPhone photo converted here is a stable master for whatever you do next.",
+      "The tool keeps the photo's original resolution and processes several files per batch. Combined with Piclizer's resizer and compressor, it forms a complete pipeline: decode iPhone photos locally, shape them to size, and publish them in any format the destination requires."
+    ],
+    "useCases": [
+      "Creating lossless editing masters from iPhone photos",
+      "Converting HEIC screenshots and graphics that need transparency",
+      "Meeting design workflows that accept PNG masters only",
+      "Archiving Apple photos in a future-proof, open format"
+    ]
+  },
+  "image-to-exact-kb": {
+    "title": "Hit an exact file size in kilobytes",
+    "paragraphs": [
+      "The Exact Size tool does what ordinary compressors cannot: it makes a JPG, PNG or WebP image land precisely under a kilobyte target you type — 100 KB, 50 KB, whatever the form demands. Instead of guessing quality values, you state the size and the tool searches the encoding space automatically until the file fits.",
+      "Government portals, visa applications, scholarship systems and job sites famously enforce hard limits like “maximum 100 KB”. Overshooting means rejection; compressing blindly means losing far more quality than necessary. This tool hits the limit with the highest quality the target allows, nothing wasted in either direction.",
+      "Everything is computed locally in your browser: the image is re-encoded repeatedly on your device until the target is met, then offered for download. For consistent results across a whole set of images, process them one by one — each gets its own optimal setting for the same size cap."
+    ],
+    "useCases": [
+      "Meeting strict upload limits on government and visa application portals",
+      "Fitting profile photos into platforms with exact KB requirements",
+      "Preparing images for legacy systems with hard size caps",
+      "Normalising an image set to a predictable size budget"
+    ]
+  },
+  "background-remover": {
+    "title": "Clean transparent backgrounds, locally",
+    "paragraphs": [
+      "The Background Remover isolates the subject of a JPG, PNG, WebP or HEIC image and makes everything else transparent, handing you a clean PNG cut-out. Edge handling is tuned for real-world photos — hair, soft shadows and curved products — so the result drops naturally onto any new background.",
+      "Transparent cut-outs are the workhorse of modern visuals: product cards on white marketplaces, profile stickers, presentation graphics, marketing banners. Traditionally this meant Photoshop and careful manual masking; here it is one drop and one click, powered by an in-browser algorithm that analyses colour and edge structure to separate foreground from background.",
+      "Processing runs entirely on your device — the photo never touches a server — which makes the tool safe for unreleased products and private subjects. Follow up with the Image Resizer to produce platform-specific dimensions, or the Watermark tool to brand the cut-out before publishing."
+    ],
+    "useCases": [
+      "Creating white-background product shots for marketplaces",
+      "Making transparent stickers, avatars and profile cut-outs",
+      "Isolating subjects for presentations and marketing banners",
+      "Preparing composite images and mock-ups for design work"
+    ]
+  },
+  "passport-photo-maker": {
+    "title": "Compliant passport photos without the studio",
+    "paragraphs": [
+      "The Passport Photo Maker turns an ordinary photo into a biometric ID photo that matches official specifications. Choose the standard — 35×45 mm Schengen, 2×2 inch US visa, and other common formats — and the tool crops, scales and frames the picture so the head occupies the required proportion of the frame.",
+      "Governments are strict: wrong head height, wrong background or wrong aspect ratio and an application bounces. This tool enforces the geometry for you, producing a correctly proportioned file you can print at a photo shop or upload directly to an online application. It also accepts HEIC, so iPhone shots go straight in.",
+      "Your face is sensitive data — this is exactly the tool that should never involve an upload. Everything is computed locally in your browser; the photo never leaves your device. Capture against a plain background following the on-screen guidance, and you have passport-grade photos in minutes, free."
+    ],
+    "useCases": [
+      "Preparing visa and passport applications without a photo studio",
+      "Producing correctly proportioned ID photos for driving licences",
+      "Generating sets of prints at standard photo sizes",
+      "Meeting strict biometric photo rules for online submissions"
+    ]
+  },
+  "signature-maker": {
+    "title": "A reusable transparent signature image",
+    "paragraphs": [
+      "The Signature Maker converts a photo of your handwritten signature into a clean PNG with a transparent background — the asset you paste into PDFs, contracts and letters instead of printing, signing and scanning every time. Write on plain white paper, photograph or scan it, drop it in, and the tool isolates the ink from the paper.",
+      "The output is a high-contrast, transparent PNG that layers perfectly over document text: no white box, no grey paper texture, just your signature. Keep it once and reuse it in Word, Google Docs, PDF editors and e-mail — signing digital documents becomes a two-second paste.",
+      "Like every Piclizer tool, processing is local: your signature — legally sensitive material — is analysed in your browser and never uploaded. Store the result safely, exactly as you would protect a physical signature card."
+    ],
+    "useCases": [
+      "Signing digital contracts and PDF documents without printing",
+      "Creating an electronic signature stamp for office paperwork",
+      "Preparing a transparent signature for email footers",
+      "Reusing one clean signature asset across all your tools"
+    ]
+  },
+  "image-ocr": {
+    "title": "Copy text straight out of any picture",
+    "paragraphs": [
+      "The Image OCR tool extracts editable text from JPG, PNG, WebP, HEIC and other images using Tesseract's optical character recognition, running entirely in your browser. Photograph a page, screenshot a message, save a poster — drop it in and the words become selectable, copyable text in seconds.",
+      "Retyping printed text is one of the most tedious tasks in any office; OCR eliminates it. The tool recognises dozens of languages, handles screenshots and camera photos alike, and outputs plain text you can paste into notes, e-mails, translators or documents. Multi-file batches let you process a stack of photos in one pass.",
+      "Because recognition runs on your device, confidential pages — contracts, medical results, personal letters — stay private. The extracted text never touches a server either. For PDF documents rather than images, use the dedicated PDF OCR tool, which applies the same local recognition to whole documents."
+    ],
+    "useCases": [
+      "Extracting text from photographed documents and book pages",
+      "Copying text out of screenshots that cannot be selected",
+      "Digitising receipts, business cards and printed notes",
+      "Making printed handouts searchable and quotable"
+    ]
+  }
+}
