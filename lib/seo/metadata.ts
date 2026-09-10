@@ -28,8 +28,8 @@ const INDEXING_ROBOTS = {
 
 const NOINDEX_ROBOTS = {
   index: false,
-  follow: false,
-  googleBot: { index: false, follow: false },
+  follow: true,
+  googleBot: { index: false, follow: true },
 };
 
 export { absoluteUrl };

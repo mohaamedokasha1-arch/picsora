@@ -39,12 +39,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const slug of CATEGORY_SLUGS) add(`/categories/${slug}`, 0.7, 'weekly');
   for (const slug of GUIDE_SLUGS) add(`/guides/${slug}`, 0.85, 'monthly');
 
-  add('/about', 0.4, 'monthly');
-  add('/contact', 0.4, 'monthly');
-  add('/privacy-policy', 0.3, 'monthly');
-  add('/cookie-policy', 0.3, 'monthly');
-  add('/terms-of-service', 0.3, 'monthly');
-  add('/disclaimer', 0.3, 'monthly');
+  /*
+   * Thin / low-value pages are intentionally excluded from the sitemap.
+   *
+   * Privacy policy, cookie policy, terms of service, disclaimer, about and
+   * contact pages carry no unique search value and Google consistently marks
+   * them "Crawled – currently not indexed". Listing them wastes crawl budget
+   * and inflates the "Discovered – currently not indexed" count in GSC.
+   *
+   * They remain accessible and linked from the site footer; they simply are
+   * no longer *promoted* to Google via the sitemap. A `noindex` robots meta
+   * tag on each page (set via `buildMetadata({ noIndex: true })`) tells
+   * Google explicitly not to index them, which removes them from the
+   * "Crawled – currently not indexed" bucket.
+   */
 
   return urls;
 }

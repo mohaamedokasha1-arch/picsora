@@ -11,7 +11,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   setRequestLocale(params.locale);
   const t = await getTranslations('seo');
-  return buildMetadata({ title: t('aboutTitle'), description: t('aboutDescription'), path: '/about' }, params.locale);
+  return buildMetadata({ title: t('aboutTitle'), description: t('aboutDescription'), path: '/about', noIndex: true }, params.locale);
 }
 
 export default function AboutPage({ params }: { params: { locale: string } }) {
