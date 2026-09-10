@@ -11,7 +11,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   setRequestLocale(params.locale);
   const t = await getTranslations('seo');
-  return buildMetadata({ title: t('privacyTitle'), description: t('privacyDescription'), path: '/privacy-policy' }, params.locale);
+  return buildMetadata({ title: t('privacyTitle'), description: t('privacyDescription'), path: '/privacy-policy', noIndex: true }, params.locale);
 }
 
 export default function PrivacyPage({ params }: { params: { locale: string } }) {

@@ -3,6 +3,7 @@ export default function RootNotFound() {
     <html lang="en">
       <head>
         <meta name="robots" content="noindex, follow" />
+        <link rel="canonical" href="https://piclizer.vercel.app/en" />
         <title>Page not found | Piclizer</title>
       </head>
       <body>

@@ -11,7 +11,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   setRequestLocale(params.locale);
   const t = await getTranslations('seo');
-  return buildMetadata({ title: t('cookiePolicyTitle'), description: t('cookiePolicyDescription'), path: '/cookie-policy' }, params.locale);
+  return buildMetadata({ title: t('cookiePolicyTitle'), description: t('cookiePolicyDescription'), path: '/cookie-policy', noIndex: true }, params.locale);
 }
 
 export default function CookiePolicyPage({ params }: { params: { locale: string } }) {
