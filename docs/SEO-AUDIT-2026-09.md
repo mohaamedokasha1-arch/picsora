@@ -37,7 +37,7 @@ Discovered by crawling the rendered site from `/en` and `/ar`, not by reading co
 | Categories index | 1 | `/{locale}/categories` |
 | Category pages | 9 | `/{locale}/categories/{slug}` |
 | Guides index | 1 | `/{locale}/guides` |
-| Guide pages | 6 | `/{locale}/guides/{slug}` |
+| Guide pages | 11 | `/{locale}/guides/{slug}` |
 | Legal/utility | 6 | about, contact, privacy-policy, terms-of-service, cookie-policy, disclaimer |
 
 **Category breakdown (95 tools):** compress 2 · resize 1 · convert 9 · edit 17 ·
@@ -282,18 +282,19 @@ property is verified.
 1. **Custom domain.** `piclizer.vercel.app` is a subdomain of a shared host; a branded
    domain is the single biggest long-term authority lever. Code is already prepared —
    add the origin to `VERIFIED_SITE_ORIGINS` in `lib/site.ts`.
-2. **More guides.** Only 6 exist. Highest-intent gaps matching your tools:
-   *reduce PDF size*, *PDF to Word*, *images to PDF*, *extract text from PDF (OCR)*,
-   *compress to an exact KB*. Quality over volume.
-3. **Guide → tool coverage.** All 6 guides are image-focused; PDF tools (your largest
-   category, 21 tools) have no guide traffic feeding them.
+2. **More guides.** ✅ *Addressed after the main pass — see §10.* Five PDF guides were
+   added. The remaining gap is *compress to an exact KB*, plus text / developer /
+   calculator guides. Quality over volume.
+3. **Guide → tool coverage.** ✅ *Addressed after the main pass — see §10.* PDF tools
+   (21) now have five guides feeding them. Text, developer and calculator categories
+   still have none.
 4. **Per-tool OG images.** All pages share one generic image; per-tool cards improve
    social CTR.
 5. **Real `dateModified` per tool/guide.** Currently one site-wide constant; per-page
    dates are a stronger freshness signal.
 6. **Category descriptions are thin** for `color`, `convert`, `resize`, `edit` (33–52
    chars). Worth expanding.
-7. **Arabic guide content** — verify with a native speaker that the 6 AR guides read
+7. **Arabic guide content** — verify with a native speaker that the 11 AR guides read
    naturally rather than as translations.
 8. **Backlinks/digital PR** — off-code, and the main remaining ranking constraint.
 9. **Field Core Web Vitals** — lab numbers are healthy; confirm with real CrUX data
@@ -320,3 +321,73 @@ property is verified.
 | Broken links / status codes | ✅ 247-URL crawl, 100% HTTP 200 |
 | Content accuracy | ✅ Privacy claims now match implementation |
 | Tests | ✅ 85/85 passing · build clean |
+
+
+---
+
+## 10. Addendum — PDF guides (added after the main pass)
+
+Items 2 and 3 of §8 were the highest-value remaining content work, so they were
+implemented in a follow-up commit (`20850bd`).
+
+### What was added
+
+The guides hub was already titled **"Image & PDF guides"**, but all six guides were
+image-only — so the label was aspirational and the PDF category (21 tools, the largest
+on the site) had no guide coverage feeding it. Five guides now close that gap, in both
+locales (10 new pages):
+
+| Guide | Primary intent | Tools it feeds |
+|---|---|---|
+| `reduce-pdf-size` | "reduce pdf size", "compress pdf" | pdf-compressor, pdf-splitter, pdf-grayscale, pdf-delete-pages |
+| `convert-pdf-to-word` | "pdf to word", "edit a pdf" | pdf-to-word, pdf-to-text, pdf-ocr, pdf-extract-images |
+| `convert-images-to-pdf` | "images to pdf", "jpg to pdf" | images-to-pdf, image-to-pdf, image-compressor, pdf-merger |
+| `extract-text-from-pdf` | "extract text from pdf", "copy text from pdf" | pdf-to-text, pdf-ocr, pdf-to-word, word-counter |
+| `ocr-scanned-pdf` | "ocr pdf", "searchable scanned pdf", Arabic OCR | pdf-ocr, image-ocr, pdf-to-text, pdf-splitter |
+
+### How the content was kept honest
+
+Every guide was written against **real tool behaviour read out of the codebase**, not
+generic advice: the lossless-vs-rasterising split between compression levels, the
+110 DPI re-render at maximum, the 30-page / 3-file OCR caps, the 50 MB per-image
+limit, and the text-first nature of the Word conversion. Each guide states its limits
+plainly — what does not survive conversion, why a text-only PDF barely shrinks, why
+OCR output must be proofread — rather than overselling the tools.
+
+Privacy claims follow the same per-tool accuracy rule applied in §3: the OCR guide says
+the recognition engine downloads once from a public CDN and pages are read locally,
+instead of claiming the tool is fully offline.
+
+Arabic was **written natively, not translated** — matching the standard of the existing
+six AR guides.
+
+### Structural notes
+
+- Content lives in `lib/content/guides-extra.{en,ar}.json`, reusing the established
+  `tool-articles` JSON pattern so `lib/guides.ts` stays readable at ~52 KB.
+- `GUIDE_SLUGS` is now composed from `IMAGE_GUIDE_SLUGS + PDF_GUIDE_SLUGS`, and the JSON
+  is assigned to `Record<PdfGuideSlug, GuideContent>` **without a cast** — a missing
+  locale, slug or field is a compile error, not a runtime 404.
+- **12 reciprocal `relatedGuides` links** (6 image guides × 2 locales) were added so the
+  internal-link graph flows both ways instead of one-way into the PDF set.
+- Guide keywords now derive from the slug instead of hardcoding `'image guide'`; the hub
+  keyword list covers PDF intents. No new URL patterns, no template changes, no schema
+  invented — the existing guide page renders all of it.
+
+### Verification
+
+| Check | Result |
+|---|---|
+| Build | ✅ exit 0 |
+| Tool tests | ✅ 85/85 passing |
+| Crawl | ✅ 257 URLs, 100% HTTP 200 |
+| New pages | ✅ 10/10 self-canonical, `index, follow`, single H1 |
+| Titles / descriptions | ✅ 250 HTML pages, 0 duplicates, 0 over-length |
+| hreflang | ✅ reciprocal en / ar / x-default on all new pages |
+| Structured data | ✅ valid Article + FAQPage + BreadcrumbList, `inLanguage` correct |
+| Sitemap | ✅ 238 URLs (+10), all 200 and indexable |
+| Arabic rendering | ✅ `lang="ar" dir="rtl"`, native copy, no placeholder text |
+
+Guides went from **6 → 11** and sitemap URLs from **228 → 238**. One extra manual GSC
+action follows from this: **request indexing for the 10 new guide URLs** (in addition to
+the four actions in §6).
