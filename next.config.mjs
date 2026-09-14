@@ -18,6 +18,9 @@ const nextConfig = {
   reactStrictMode: true,
   // Do not advertise the framework/version to attackers.
   poweredByHeader: false,
+  // Allow the sandboxed live-preview host to load dev assets without the
+  // cross-origin warning (dev-only setting, ignored in production).
+  allowedDevOrigins: ['*.e2b.app'],
   compress: true,
   trailingSlash: false,
   // Keep stack traces and source paths out of the production bundle.

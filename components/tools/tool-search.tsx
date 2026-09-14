@@ -39,11 +39,14 @@ export function ToolSearch({
   onNavigate,
   className,
   autoFocus,
+  size = 'default',
 }: {
   placeholder?: string;
   onNavigate?: () => void;
   className?: string;
   autoFocus?: boolean;
+  /** `lg` gives the hero search a taller, more prominent field. */
+  size?: 'default' | 'lg';
 }) {
   const t = useTranslations('common');
   const router = useRouter();
@@ -96,7 +99,13 @@ export function ToolSearch({
   return (
     <div ref={boxRef} className={cn('relative w-full', className)}>
       <div className="relative">
-        <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+        <Search
+          className={cn(
+            'pointer-events-none absolute top-1/2 -translate-y-1/2 text-muted-foreground',
+            size === 'lg' ? 'start-3.5 h-5 w-5' : 'start-3 h-4 w-4',
+          )}
+          aria-hidden="true"
+        />
         <input
           ref={inputRef}
           type="search"
@@ -113,7 +122,12 @@ export function ToolSearch({
           }}
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
-          className="h-10 w-full rounded-lg border border-input bg-background ps-9 pe-3 text-sm text-foreground shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className={cn(
+            'w-full border border-input bg-background text-foreground shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+            size === 'lg'
+              ? 'h-12 rounded-xl pe-4 ps-11 text-base'
+              : 'h-10 rounded-lg pe-3 ps-9 text-sm',
+          )}
         />
       </div>
 

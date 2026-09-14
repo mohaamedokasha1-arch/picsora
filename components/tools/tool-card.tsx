@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import { Link } from '@/lib/i18n/navigation';
 import { ToolIcon } from '@/components/icons';
 import { Badge } from '@/components/ui/badge';
@@ -38,11 +39,11 @@ export function ToolCard({
       )}
     >
       <div className="mb-3 flex items-start gap-3">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
           <ToolIcon name={icon} className="h-5 w-5" />
         </span>
         {/* Badges sit at the end so every card starts its title on the same line. */}
-        <span className="ms-auto flex min-w-0 flex-wrap items-center justify-end gap-2">
+        <span className="ms-auto flex min-w-0 flex-wrap items-center justify-end gap-1.5">
           {isNew && <Badge className="bg-primary text-primary-foreground">{newLabel ?? 'New'}</Badge>}
           {categoryLabel && <Badge variant="secondary">{categoryLabel}</Badge>}
         </span>
@@ -51,9 +52,10 @@ export function ToolCard({
       <p className="mt-1 flex-1 text-sm leading-relaxed text-muted-foreground">{description}</p>
       <span className="mt-4 inline-flex items-center text-sm font-medium text-primary">
         {ctaLabel ?? name}
-        <span aria-hidden="true" className="ms-1 transition-transform group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5">
-          →
-        </span>
+        <ArrowRight
+          aria-hidden="true"
+          className="ms-1 h-4 w-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
+        />
       </span>
     </Link>
   );

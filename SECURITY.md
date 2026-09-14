@@ -2,7 +2,8 @@
 
 ## Reporting a vulnerability
 
-Please report security issues privately to **privacy@piclizer.app**.
+Please report security issues privately via the site's contact page at
+<https://piclizer.vercel.app/en/contact>.
 Machine-readable contact information: [`/.well-known/security.txt`](./public/.well-known/security.txt).
 
 Please do not open a public GitHub issue for a security report.

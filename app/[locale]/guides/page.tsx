@@ -73,7 +73,7 @@ export default async function GuidesPage({ params }: { params: { locale: string 
               href={`/guides/${guide.slug}`}
               className="group flex flex-col rounded-xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+              <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                 <BookOpen className="h-5 w-5" aria-hidden="true" />
               </span>
               <h2 className="mt-4 text-base font-semibold leading-snug text-foreground">
