@@ -442,3 +442,76 @@ would have falsely reported six pages as over-length.
 | Titles / descriptions | ✅ 250 HTML pages, 0 duplicates, 0 over-length, 0 thin categories |
 | Canonical / H1 / JSON-LD | ✅ 0 mismatches, 0 multi-H1, 0 invalid JSON-LD |
 | Sitemap | ✅ 238 URLs, all 200 / indexable / self-canonical |
+
+
+---
+
+## 12. Final sitemap review (verification only — no changes made)
+
+A dedicated end-to-end review of `sitemap.xml` against every requested criterion. **No
+file was modified**, because no real defect was found. Full check script:
+`/tmp/sitemap-audit.mjs`.
+
+### Result: 30 / 30 checks passed
+
+| # | Check | Result |
+|---|---|---|
+| 1 | `sitemap.xml` reachable at the correct path | ✅ HTTP 200 |
+| 2 | Content-Type | ✅ `application/xml` |
+| 3 | XML parses cleanly (real parser, not regex) | ✅ 238 `<url>` elements, 0 missing `<loc>` |
+| 4 | Correct sitemaps.org namespace | ✅ |
+| 5 | Not itself `noindex` via X-Robots-Tag | ✅ no header |
+| 6 | All URLs absolute | ✅ 238/238 |
+| 7 | All URLs HTTPS | ✅ 238/238 |
+| 8 | All on the canonical host | ✅ no `localhost` / preview-host leakage |
+| 9 | No query strings or fragments | ✅ |
+| 10 | No trailing slashes / uppercase / double slashes | ✅ |
+| 11 | No duplicate URLs | ✅ 238 total = 238 unique |
+| 12 | Every URL has `<lastmod>` | ✅ 238/238 |
+| 13 | No future-dated `lastmod` | ✅ |
+| 14 | **No 404s** | ✅ all 238 return 200 |
+| 15 | **No redirects** | ✅ 0 entries return 3xx |
+| 16 | **No `noindex` / `nofollow`** | ✅ 0 entries |
+| 17 | **Every URL self-canonical** (`canonical == loc`) | ✅ 238/238 |
+| 18 | No two entries sharing one canonical | ✅ |
+| 19 | Legal pages excluded | ✅ privacy, cookie, terms, disclaimer |
+| 20 | About / contact excluded | ✅ |
+| 21 | `/api/` and `_next` excluded | ✅ |
+| 22 | Locale-less root `/` excluded (it is noindex) | ✅ |
+| 23 | **Coverage: no indexable page missing** | ✅ 238 indexable crawled = 238 listed |
+| 24 | All 12 noindex pages absent from sitemap | ✅ |
+| 25 | hreflang on every entry (en / ar / x-default) | ✅ 238/238, 0 malformed |
+| 26 | en / ar balance | ✅ 119 each |
+| 27 | Within Google's limits | ✅ 238 URLs / 116 KB (max 50,000 / 50 MB) |
+| 28 | `robots.txt` references the sitemap | ✅ absolute HTTPS URL |
+| 29 | `robots.txt` does not block any sitemap URL | ✅ only `/api/` is disallowed |
+| 30 | Locale-less paths redirect 307 to a 200 page | ✅ and none are listed in the sitemap |
+
+### Composition (238 URLs)
+
+| Type | Count |
+|---|---|
+| Tool pages | 190 (95 × 2 locales) |
+| Guide pages | 22 (11 × 2) |
+| Category pages | 18 (9 × 2) |
+| Hubs (`/tools`, `/categories`, `/guides`) | 6 |
+| Locale homepages | 2 |
+
+### Coverage proof
+
+Rather than only validating what *is* listed, the crawler's 250 HTML pages were diffed
+against the sitemap in both directions:
+
+- Indexable pages **missing** from the sitemap: **0**
+- Sitemap URLs that are **not** indexable: **0**
+- 250 crawled = 238 indexable + 12 intentionally `noindex` (legal / about / contact)
+
+### ⚠️ Deployment gap (not a sitemap defect)
+
+The **live** site at `piclizer.vercel.app` still serves the pre-audit build: its sitemap
+has **228 URLs**, only 6 guides, and `lastmod 2026-09-08`. All work from this audit sits
+on branch `arena/01a0a0a9-picsora`, **6 commits ahead of `main` and not yet merged or
+deployed**. The 238-URL sitemap verified above is the local production build.
+
+**Nothing further is needed in code** — the sitemap becomes correct in production the
+moment the branch is merged and Vercel redeploys.
