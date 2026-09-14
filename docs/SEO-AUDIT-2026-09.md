@@ -293,7 +293,7 @@ property is verified.
 5. **Real `dateModified` per tool/guide.** Currently one site-wide constant; per-page
    dates are a stronger freshness signal.
 6. **Category descriptions are thin** for `color`, `convert`, `resize`, `edit` (33–52
-   chars). Worth expanding.
+   chars). ✅ *Addressed after the main pass — see §11.*
 7. **Arabic guide content** — verify with a native speaker that the 11 AR guides read
    naturally rather than as translations.
 8. **Backlinks/digital PR** — off-code, and the main remaining ranking constraint.
@@ -391,3 +391,54 @@ six AR guides.
 Guides went from **6 → 11** and sitemap URLs from **228 → 238**. One extra manual GSC
 action follows from this: **request indexing for the 10 new guide URLs** (in addition to
 the four actions in §6).
+
+
+---
+
+## 11. Addendum — category meta descriptions
+
+Item 6 of §8. Ten of the 18 category pages carried meta descriptions under 70
+characters, the shortest being 33 (`ar/color`: "التقط واستخرج الألوان من أي صورة."). A
+33-character description throws away most of the SERP snippet and omits the head terms
+searchers actually type.
+
+### What changed
+
+Each description was rewritten against the **real tool inventory read from the
+registry**, so it names what the category genuinely contains rather than gesturing at it:
+
+| Page | Before | After | Now names |
+|---|---|---|---|
+| `en/resize` | 63 | 142 | presets for profile pictures, banners, print |
+| `en/convert` | 59 | 129 | HEIC alongside JPG / PNG / WebP |
+| `en/edit` | 59 | 133 | watermark, blur, passport photo, signature |
+| `en/color` | 39 | 135 | HEX, RGB, HSL, palette extraction |
+| `ar/compress` | 61 | 115 | the exact-KB tool, previously unmentioned |
+| `ar/resize` | 52 | 133 | precise pixel dimensions, presets |
+| `ar/convert` | 40 | 108 | HEIC alongside JPG / PNG / WebP |
+| `ar/edit` | 45 | 118 | watermark, blur, passport photo, signature |
+| `ar/color` | 33 | 114 | HEX, RGB, HSL, palette extraction |
+| `ar/developer-tools` | 62 | 122 | JSON, SQL, YAML, regex, Base64 |
+
+**No tool counts are hardcoded into the copy.** Writing "9 conversion tools" would go
+stale the moment a tool is added — the same failure mode as the homepage count rule in
+§4. The descriptions name capabilities instead, which stay true as the registry grows.
+
+The longer `categoryIntros` (102–294 chars, all distinct and well written) were already
+good and are **untouched** — only the `categoryMeta` descriptions were thin. This follows
+the audit's decision rule: fix what is incomplete, leave what is correct.
+
+### Verification
+
+All 18 category descriptions now measure **71–142 characters** — measured as Unicode
+characters rather than bytes, since a byte count inflates Arabic by roughly 1.8× and
+would have falsely reported six pages as over-length.
+
+| Check | Result |
+|---|---|
+| Build | ✅ exit 0 |
+| Tool tests | ✅ 85/85 passing |
+| Crawl | ✅ 282 URLs, 100% HTTP 200 |
+| Titles / descriptions | ✅ 250 HTML pages, 0 duplicates, 0 over-length, 0 thin categories |
+| Canonical / H1 / JSON-LD | ✅ 0 mismatches, 0 multi-H1, 0 invalid JSON-LD |
+| Sitemap | ✅ 238 URLs, all 200 / indexable / self-canonical |
