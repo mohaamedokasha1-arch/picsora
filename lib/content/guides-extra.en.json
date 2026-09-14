@@ -1,0 +1,367 @@
+{
+  "reduce-pdf-size": {
+    "slug": "reduce-pdf-size",
+    "title": "How to Reduce PDF File Size Without Wrecking It",
+    "description": "Shrink a PDF that is too big to email or upload. Learn which compression level to use, why some PDFs barely shrink, and how to do it free in your browser.",
+    "intro": [
+      "Almost every upload form has a limit — 5 MB for a job portal, 10 MB for an email attachment, 2 MB for a government form — and scanned documents sail past all of them. A 40-page scan can easily reach 30 MB.",
+      "This guide explains where the weight in a PDF actually comes from, which compression level to pick for your document, and the one trade-off you need to understand before choosing the most aggressive option. Everything runs in your browser with Piclizer, so contracts and ID documents are never uploaded."
+    ],
+    "minutes": 6,
+    "sections": [
+      {
+        "heading": "Find out what is making your PDF big",
+        "paragraphs": [
+          "PDF size is almost never caused by the text. A 100-page text document is typically under 1 MB, because text is stored as characters and font references — extremely compact. The weight comes from images: scanned pages, embedded photos, and high-resolution logos repeated on every page.",
+          "This matters because it tells you in advance how much you can expect to save. A text-heavy report will barely shrink no matter what tool you use, and that is not a failure of the tool — there is simply nothing large left to remove. A scanned or photo-heavy document, on the other hand, can often drop by 70% or more."
+        ],
+        "bullets": [
+          "Text-only documents (reports, contracts, invoices) → expect 5–20% savings",
+          "Documents with a few embedded photos → expect 30–60%",
+          "Scanned pages (every page is an image) → expect 60–90%"
+        ],
+        "toolSlug": "pdf-page-counter"
+      },
+      {
+        "heading": "Start with lossless compression",
+        "paragraphs": [
+          "The light and medium levels in the PDF Compressor are lossless. They rewrite the file structure, strip unused objects left behind by the program that produced the file, and pack the internal object streams more efficiently. Nothing on the page changes at all.",
+          "This is always worth running first. Files exported from Word, PowerPoint or design software frequently carry a surprising amount of dead weight — orphaned resources, duplicated fonts, revision leftovers — and removing it costs you nothing in quality. Your text stays selectable, searchable and copyable."
+        ],
+        "toolSlug": "pdf-compressor"
+      },
+      {
+        "heading": "Use maximum compression only when you understand the trade-off",
+        "paragraphs": [
+          "The maximum level works differently: it re-renders every page as a JPEG image at 110 DPI and rebuilds the PDF from those pictures. The savings are dramatic, and for a scanned document — which was already images — you lose almost nothing.",
+          "But for a text-based PDF this is a one-way door. Once each page is a picture, the text is no longer selectable, no longer searchable, and no longer readable by screen readers. Do not use maximum on a contract someone needs to search, a CV that an applicant tracking system will parse, or any document that must remain accessible.",
+          "Always keep your original file. Compression discards data permanently, and you cannot recover selectable text from a rasterised page without running OCR over it afterwards."
+        ],
+        "bullets": [
+          "Scanned documents → maximum is safe and very effective",
+          "Contracts, CVs, anything searchable → stick to light or medium",
+          "Documents that must stay accessible → never rasterise"
+        ]
+      },
+      {
+        "heading": "Other ways to get under the limit",
+        "paragraphs": [
+          "If compression alone is not enough, attack the problem from a different angle. Splitting a long document and sending the relevant chapter is often better than sending a degraded copy of everything. Removing pages you do not need — cover sheets, blank separator pages, appendices — is instant and lossless.",
+          "For colour scans destined for print or archive, converting to grayscale frequently cuts the size substantially and improves legibility on a badly lit scan at the same time.",
+          "And if the PDF was built from your own images, the most effective fix is upstream: compress the images first, then build the PDF. A photo compressed to 300 KB before it goes into the document will never need to be fixed afterwards."
+        ],
+        "bullets": [
+          "Split out only the pages you actually need to send",
+          "Delete blank and cover pages",
+          "Convert colour scans to grayscale",
+          "Compress source images before creating the PDF"
+        ],
+        "toolSlug": "pdf-splitter"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Why did my PDF barely get smaller?",
+        "a": "It is almost certainly a text-based document, which is already efficient. Large savings come from documents full of images or scans. If a text PDF is unexpectedly huge, the cause is usually embedded fonts or a high-resolution logo repeated on every page."
+      },
+      {
+        "q": "Does compressing a PDF reduce its quality?",
+        "a": "The light and medium levels are lossless — nothing on the page changes. Only the maximum level reduces quality, because it re-renders pages as images at 110 DPI."
+      },
+      {
+        "q": "Will my text still be searchable afterwards?",
+        "a": "Yes with light and medium. No with maximum, which turns each page into a picture. Choose based on whether anyone needs to search, copy from, or screen-read the document."
+      },
+      {
+        "q": "Is my document uploaded to compress it?",
+        "a": "No. The PDF is parsed and rewritten inside your browser, so confidential documents never leave your device."
+      }
+    ],
+    "relatedTools": ["pdf-compressor", "pdf-splitter", "pdf-grayscale", "pdf-delete-pages"],
+    "relatedGuides": ["convert-pdf-to-word", "convert-images-to-pdf", "compress-image"]
+  },
+  "convert-pdf-to-word": {
+    "slug": "convert-pdf-to-word",
+    "title": "How to Convert a PDF to Word for Editing",
+    "description": "Turn a PDF into an editable Word document free in your browser. Learn what transfers cleanly, what does not, and what to do when the PDF is a scan.",
+    "intro": [
+      "PDF is a final-form format — it was designed to look identical everywhere, not to be edited. So when the only copy of a document you need to change is a PDF, you need to get the text back out into something editable.",
+      "This guide covers how conversion actually works, what you should realistically expect to survive the trip, and the separate route you need when your PDF is a scan rather than a real text document."
+    ],
+    "minutes": 5,
+    "sections": [
+      {
+        "heading": "Check whether your PDF contains real text",
+        "paragraphs": [
+          "This is the single most important step, and it takes five seconds. Open the PDF and try to select a sentence with your cursor. If the text highlights, the document contains embedded text and converts directly. If nothing highlights — or the whole page selects as one block — it is a scan, which is a picture of text.",
+          "Getting this wrong is the usual cause of a conversion that returns an empty document. There is no text to extract from a picture, and no converter can change that. Scans need character recognition first, which is covered in the last section."
+        ],
+        "toolSlug": "pdf-to-text"
+      },
+      {
+        "heading": "Convert to an editable .doc file",
+        "paragraphs": [
+          "The PDF to Word tool extracts the text in reading order and builds a Word-compatible .doc file with headings and page breaks preserved. It opens in Microsoft Word, LibreOffice and Google Docs, and you can edit it straight away.",
+          "You can queue up to five PDFs at once and download them individually or together as a ZIP, which is the efficient route when you are converting a batch of similar documents."
+        ],
+        "toolSlug": "pdf-to-word"
+      },
+      {
+        "heading": "Know what transfers and what does not",
+        "paragraphs": [
+          "This is a text-first conversion, and being clear about that saves disappointment. Paragraph text, headings and page breaks come through cleanly. Complex multi-column tables, embedded images and pixel-exact styling do not — a PDF stores text as positioned glyphs rather than as a table structure, so reconstructing the original layout is guesswork that often produces a worse result than clean text.",
+          "In practice this suits the most common need perfectly: you want the words so you can rewrite, quote or update them. If you specifically need the pictures out of the document, extract them separately and place them yourself — that gives a better result than any automatic layout reconstruction."
+        ],
+        "bullets": [
+          "Transfers well: paragraphs, headings, reading order, page breaks",
+          "Does not transfer: complex tables, images, exact fonts and spacing",
+          "Need the images? Extract them separately and re-insert them"
+        ],
+        "toolSlug": "pdf-extract-images"
+      },
+      {
+        "heading": "If your PDF is a scan, run OCR first",
+        "paragraphs": [
+          "For scanned documents the order is: recognise the text, then edit it. The PDF OCR tool renders each page and reads the characters with an on-device recognition engine, producing text you can paste into Word.",
+          "Accuracy depends almost entirely on the quality of the scan. A straight, well-lit page at 200 DPI or more recognises very reliably; a skewed phone photo of a page in bad light does not. Arabic, English and mixed bilingual documents are all supported."
+        ],
+        "toolSlug": "pdf-ocr"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What file format do I get?",
+        "a": "A Word-compatible .doc file that opens for editing in Microsoft Word, LibreOffice and Google Docs."
+      },
+      {
+        "q": "Why is my converted document empty?",
+        "a": "The PDF is almost certainly a scan — a picture of text with no embedded characters to extract. Run the PDF OCR tool on it first."
+      },
+      {
+        "q": "Will the layout look exactly like the PDF?",
+        "a": "No. This is a text-first conversion that preserves reading order, headings and page breaks, but not complex tables, images or exact styling."
+      },
+      {
+        "q": "Is my PDF uploaded to a server?",
+        "a": "No. The conversion runs entirely in your browser, so confidential documents stay on your device."
+      }
+    ],
+    "relatedTools": ["pdf-to-word", "pdf-to-text", "pdf-ocr", "pdf-extract-images"],
+    "relatedGuides": ["extract-text-from-pdf", "ocr-scanned-pdf", "reduce-pdf-size"]
+  },
+  "convert-images-to-pdf": {
+    "slug": "convert-images-to-pdf",
+    "title": "How to Convert Images to PDF",
+    "description": "Combine photos and scans into a single PDF document free in your browser. Learn how to set page order, choose a page size, and keep the file small.",
+    "intro": [
+      "Sending eight separate photos of a signed contract is awkward to receive and easy to lose track of. One PDF, with the pages in the right order, is what almost every office, school and government portal actually wants.",
+      "This guide covers turning a single image into a PDF, combining many images into one multi-page document, and the practical details — page order, page size and file size — that decide whether the result is accepted."
+    ],
+    "minutes": 5,
+    "sections": [
+      {
+        "heading": "One image or many?",
+        "paragraphs": [
+          "Use Image to PDF when you have a single picture — one receipt, one certificate, one signed page. Use Images to PDF when you have several and want them in one document, which is the usual case for a scanned contract or a set of ID photos.",
+          "With the multi-image tool, each image becomes one page in the order you arrange them. Drag the thumbnails before generating: getting the order right up front is far easier than reordering pages in the finished PDF afterwards."
+        ],
+        "toolSlug": "images-to-pdf"
+      },
+      {
+        "heading": "Choose the right page size",
+        "paragraphs": [
+          "A4 or Letter centres each image on a standard page with margins. This is what you want for anything that will be printed, filed or submitted to an official form — it produces a document that looks like a document.",
+          "Fit-to-image makes each page exactly the size of the picture it holds, with no border. That is the better choice for screenshots, comic panels or artwork, where a white frame around the content looks wrong and wastes space.",
+          "If you are submitting to a portal, check its requirements first. Many public-sector forms specify A4 explicitly and reject anything else."
+        ],
+        "bullets": [
+          "Printing, filing or official submission → A4 or Letter",
+          "Screenshots, artwork, digital-only use → fit to image",
+          "Mixed orientations → set orientation before generating"
+        ],
+        "toolSlug": "image-to-pdf"
+      },
+      {
+        "heading": "Compress the images first",
+        "paragraphs": [
+          "This is the step most people skip, and it is the difference between a 2 MB document and a 25 MB one. Modern phone photos are 3–8 MB each; put ten of them straight into a PDF and the result will exceed almost every upload limit.",
+          "Compressing each image to around 300 KB first produces a PDF that is perfectly legible on screen and in print, but small enough to email. If a form imposes a hard cap, the Image to Exact KB tool lets you hit a specific target before you build the document."
+        ],
+        "bullets": [
+          "Compress photos to ~300 KB before building the PDF",
+          "Resize oversized images down to about 1600–2000 px wide",
+          "Still too big? Compress the finished PDF afterwards"
+        ],
+        "toolSlug": "image-compressor"
+      },
+      {
+        "heading": "Finish the document",
+        "paragraphs": [
+          "Once the PDF exists you can treat it like any other document. Add page numbers if it is long enough that someone will need to reference a specific page. Add a watermark if it is a draft or confidential. Merge it with an existing PDF if it is an appendix to a larger submission.",
+          "All of these run in your browser, which matters here — the documents people scan are usually contracts, invoices and identity papers, and those should not be uploaded to a stranger's server to be turned into a PDF."
+        ],
+        "toolSlug": "pdf-merger"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How many images can I put in one PDF?",
+        "a": "You can add many at once, up to 50 MB per image. Each becomes one page, in the order you arrange the thumbnails."
+      },
+      {
+        "q": "Can I change the page order after adding the images?",
+        "a": "Yes — drag the thumbnails into the order you want before pressing Create PDF."
+      },
+      {
+        "q": "Which image formats are supported?",
+        "a": "JPG, PNG and WebP. iPhone HEIC photos should be converted to JPG first with the HEIC to JPG tool."
+      },
+      {
+        "q": "Why is my PDF so large?",
+        "a": "Because the images inside it are large. Compress them to around 300 KB each before building the document, or compress the finished PDF afterwards."
+      }
+    ],
+    "relatedTools": ["images-to-pdf", "image-to-pdf", "image-compressor", "pdf-merger"],
+    "relatedGuides": ["reduce-pdf-size", "compress-image", "convert-heic-to-jpg"]
+  },
+  "extract-text-from-pdf": {
+    "slug": "extract-text-from-pdf",
+    "title": "How to Extract Text From a PDF",
+    "description": "Get clean, usable text out of a PDF free in your browser. Learn why copy and paste breaks, how reading order works, and what to do with scanned pages.",
+    "intro": [
+      "Copying text out of a PDF by hand usually goes badly. Line breaks land in the wrong places, columns interleave into nonsense, and a long document is impossible to do page by page.",
+      "This guide explains why that happens, how to extract the whole document cleanly in one step, and how to handle the case where the PDF turns out to contain no real text at all."
+    ],
+    "minutes": 5,
+    "sections": [
+      {
+        "heading": "Why copy and paste mangles PDF text",
+        "paragraphs": [
+          "A PDF does not store paragraphs. It stores individual glyphs with coordinates — this character at this position, in this font, at this size. What looks like a flowing paragraph on screen is really a set of positioned marks that your eye assembles into lines.",
+          "When you select and copy, the viewer has to guess how those marks group into words, lines and paragraphs. It usually guesses adequately for a simple page and badly for anything with two columns, a header, a footer or a sidebar — which is why pasted text so often arrives with a page number wedged into the middle of a sentence."
+        ]
+      },
+      {
+        "heading": "Extract the whole document at once",
+        "paragraphs": [
+          "The PDF to Text tool reads the embedded text directly out of the document structure rather than scraping what is on screen, and returns it in reading order with page markers so you can see where each page began.",
+          "It handles up to five files at a time and gives you a .txt per document, or all of them as a ZIP. For anything longer than a page or two this is both faster and considerably cleaner than manual copying."
+        ],
+        "toolSlug": "pdf-to-text"
+      },
+      {
+        "heading": "Understand what you get back",
+        "paragraphs": [
+          "You get the words in reading order, not a visual reproduction. Columns are flattened into sequence, and tables come out as runs of text rather than as a grid — because the grid was never stored in the file, only the positions of the characters that make it look like one.",
+          "For the usual reasons people extract text — searching it, quoting it, feeding it into another document, counting the words, analysing terminology — this is exactly what you want. If you need editable formatting instead of raw text, convert to Word; if you need the images, extract those separately."
+        ],
+        "bullets": [
+          "Need raw text to search or quote → PDF to Text",
+          "Need an editable document → PDF to Word",
+          "Need the pictures → PDF Image Extractor"
+        ],
+        "toolSlug": "pdf-to-word"
+      },
+      {
+        "heading": "When nothing comes out",
+        "paragraphs": [
+          "If extraction returns an empty file, the PDF is a scan: every page is an image, and there are no characters in the file to extract. This is normal for anything that came from a scanner, a fax or a phone camera.",
+          "Those documents need optical character recognition, which reads the shapes of the letters and reconstructs the text. Run the PDF OCR tool on them instead.",
+          "A different failure is a password-protected file, which cannot be read until it is unlocked. Remove the protection first with the PDF Unlock tool, then extract."
+        ],
+        "toolSlug": "pdf-ocr"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Why is my extracted file empty?",
+        "a": "The PDF is a scan — pictures of text with no embedded characters. Use the PDF OCR tool, which recognises the letters visually."
+      },
+      {
+        "q": "Is the original layout preserved?",
+        "a": "No. Text comes out in reading order with page markers. Exact visual layout, columns and table grids are not reconstructed, because a PDF does not store them as such."
+      },
+      {
+        "q": "Can I extract text from a password-protected PDF?",
+        "a": "Not directly. Remove the protection with the PDF Unlock tool first, then extract."
+      },
+      {
+        "q": "Does my document get uploaded?",
+        "a": "No. The PDF is parsed in your browser and the text never leaves your device."
+      }
+    ],
+    "relatedTools": ["pdf-to-text", "pdf-ocr", "pdf-to-word", "word-counter"],
+    "relatedGuides": ["ocr-scanned-pdf", "convert-pdf-to-word", "reduce-pdf-size"]
+  },
+  "ocr-scanned-pdf": {
+    "slug": "ocr-scanned-pdf",
+    "title": "How to OCR a Scanned PDF (English and Arabic)",
+    "description": "Turn a scanned PDF into searchable, copyable text free in your browser. Learn how OCR works, how to get accurate results, and how to handle Arabic scans.",
+    "intro": [
+      "A scanner produces pictures, not text. That is why you cannot search a scanned contract, cannot copy a paragraph out of a scanned book, and get an empty file when you try to extract its text.",
+      "Optical character recognition solves this by reading the shapes of the letters and reconstructing the words. This guide explains how to run it, what determines whether the result is accurate, and how Arabic scans differ from English ones. Recognition runs on your device — the engine downloads once from a public CDN, but your pages are read locally."
+    ],
+    "minutes": 6,
+    "sections": [
+      {
+        "heading": "Confirm you actually need OCR",
+        "paragraphs": [
+          "OCR is slower and less perfect than reading embedded text, so only use it when you have to. Try selecting a sentence in your PDF: if the text highlights, it contains real characters and the PDF to Text tool will extract them instantly and exactly.",
+          "Only if nothing selects — or the page highlights as a single block — are you dealing with a scan that needs recognition. Many documents are a mix, with some pages typed and others scanned."
+        ],
+        "toolSlug": "pdf-to-text"
+      },
+      {
+        "heading": "Run recognition on the document",
+        "paragraphs": [
+          "The PDF OCR tool renders each page with pdf.js and passes it to a recognition engine running inside your browser. You choose the language, watch per-page progress, and download the recognised text as a .txt file.",
+          "There is a 30-page cap per document and a limit of three documents at a time. Rendering plus recognition is genuinely heavy work — the cap is there so a long scan does not make the tab unresponsive. For a longer document, split it first and process it in parts."
+        ],
+        "toolSlug": "pdf-ocr"
+      },
+      {
+        "heading": "Scan quality decides accuracy",
+        "paragraphs": [
+          "This is the part within your control, and it matters more than any setting. Recognition works by matching letter shapes, so anything that distorts those shapes costs you accuracy: low resolution, skew, shadows, uneven lighting, and creases in the page.",
+          "Aim for a straight, evenly lit scan at 200 DPI or more with good contrast between the text and the paper. If you are photographing a page with a phone rather than scanning it, hold the camera parallel to the page rather than at an angle, and avoid casting your own shadow across it.",
+          "If a scan is faint or greyish, increasing the contrast before recognition often produces a noticeably better result than feeding the washed-out original straight in."
+        ],
+        "bullets": [
+          "200 DPI or higher, straight and evenly lit",
+          "Good contrast between ink and paper",
+          "Photograph pages square-on, not at an angle",
+          "Boost contrast first if the scan looks washed out"
+        ],
+        "toolSlug": "pdf-grayscale"
+      },
+      {
+        "heading": "Arabic, English and mixed documents",
+        "paragraphs": [
+          "You can recognise English, Arabic, or both together. Choose the mode that matches the document: selecting a single language when the document really is monolingual generally gives cleaner results than the bilingual mode, because the engine has a narrower set of shapes to match against.",
+          "Arabic is intrinsically harder to recognise than Latin script — letters join, change form depending on position in the word, and carry dots and diacritics that a marginal scan can blur together. Expect to proofread Arabic output more carefully, and give Arabic scans the best resolution you can manage.",
+          "Whatever the language, treat OCR output as a draft. It is dramatically faster than retyping a document, but it is a reconstruction rather than a copy, and proper nouns, numbers and anything in an unusual font deserve a check."
+        ]
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How accurate is OCR?",
+        "a": "Very good on clear, straight, high-contrast text at 200 DPI or more. Accuracy falls with blurry, skewed, low-resolution or heavily stylised text. Always proofread the result."
+      },
+      {
+        "q": "Does it support Arabic?",
+        "a": "Yes — Arabic, English, or a bilingual mode for mixed documents. Arabic is harder to recognise because letters join and change shape, so use the best scan quality you can."
+      },
+      {
+        "q": "Why is there a 30-page limit?",
+        "a": "Rendering each page and then recognising it is heavy work. The cap keeps your browser responsive. Split longer documents and process them in parts."
+      },
+      {
+        "q": "Is my document uploaded for recognition?",
+        "a": "No. Pages are rendered and read inside your browser. Only the recognition engine and its language data download once from a public CDN, then stay cached."
+      }
+    ],
+    "relatedTools": ["pdf-ocr", "image-ocr", "pdf-to-text", "pdf-splitter"],
+    "relatedGuides": ["extract-text-from-pdf", "convert-pdf-to-word", "reduce-pdf-size"]
+  }
+}
