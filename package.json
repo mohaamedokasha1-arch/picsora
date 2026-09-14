@@ -2,7 +2,7 @@
   "name": "piclizer",
   "version": "1.0.0",
   "private": true,
-  "description": "Piclizer — free, private, browser-based image tools. 20 tools that process images 100% locally in the browser.",
+  "description": "Piclizer \u2014 free, private, browser-based tools. 95 image, PDF, text, calculator and developer tools that process files 100% locally in the browser.",
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
@@ -11,7 +11,7 @@
     "copy-pdf-worker": "node scripts/copy-pdf-worker.mjs",
     "predev": "npm run copy-pdf-worker",
     "prebuild": "npm run copy-pdf-worker",
-    "test:tools": "tsx scripts/tool-tests/run-tests.ts"
+    "test:tools": "tsx scripts/tool-tests/run-tests.ts && tsx scripts/tool-tests/run-new-tools.ts && tsx scripts/tool-tests/run-search.ts"
   },
   "dependencies": {
     "@cantoo/pdf-lib": "^2.9.1",

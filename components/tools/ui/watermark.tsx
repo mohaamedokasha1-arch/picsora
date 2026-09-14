@@ -206,7 +206,9 @@ export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
                   title={t(`controls.${p.key}` as never)}
                   onClick={() => setPosition(p.value)}
                   className={cn(
-                    'flex h-9 items-center justify-center rounded-md border border-input text-xs transition-colors',
+                    // min-h + wrapping labels keep "Bottom center" readable in a
+                    // narrow phone column instead of clipping it.
+                    'flex min-h-9 items-center justify-center rounded-md border border-input px-1 py-1.5 text-center text-[11px] leading-tight transition-colors sm:text-xs',
                     position === p.value ? 'border-primary bg-primary text-primary-foreground' : 'bg-background hover:bg-accent',
                   )}
                 >

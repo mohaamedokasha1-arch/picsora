@@ -37,14 +37,15 @@ export function ToolCard({
         className,
       )}
     >
-      <div className="mb-3 flex items-center gap-3">
-        <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+      <div className="mb-3 flex items-start gap-3">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
           <ToolIcon name={icon} className="h-5 w-5" />
         </span>
-        {categoryLabel && <Badge variant="secondary">{categoryLabel}</Badge>}
-        {isNew && (
-          <Badge className="bg-primary text-primary-foreground">{newLabel ?? 'New'}</Badge>
-        )}
+        {/* Badges sit at the end so every card starts its title on the same line. */}
+        <span className="ms-auto flex min-w-0 flex-wrap items-center justify-end gap-2">
+          {isNew && <Badge className="bg-primary text-primary-foreground">{newLabel ?? 'New'}</Badge>}
+          {categoryLabel && <Badge variant="secondary">{categoryLabel}</Badge>}
+        </span>
       </div>
       <h3 className="text-base font-semibold text-foreground">{name}</h3>
       <p className="mt-1 flex-1 text-sm leading-relaxed text-muted-foreground">{description}</p>

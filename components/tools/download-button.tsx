@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
-import { formatBytes } from '@/lib/utils';
+import { cn, formatBytes } from '@/lib/utils';
 import { triggerDownload } from '@/lib/image/format';
 
 interface DownloadButtonProps {
@@ -26,11 +26,13 @@ export function DownloadButton({ blob, filename, label, size = 'default', classN
   };
 
   return (
-    <Button onClick={onClick} size={size} className={className}>
+    <Button onClick={onClick} size={size} className={cn('max-w-full', className)}>
       <Download className="h-4 w-4" />
-      <span className="flex flex-col items-start leading-tight">
+      <span className="flex min-w-0 max-w-full flex-col items-start leading-tight">
         <span>{label ?? t('download')}</span>
-        <span className="text-[10px] font-normal opacity-80">
+        {/* Long document names are truncated instead of pushing the button
+            (and the card around it) past the edge of a phone screen. */}
+        <span className="max-w-full truncate text-[10px] font-normal opacity-80" title={filename}>
           {filename} · {formatBytes(blob.size)}
         </span>
       </span>

@@ -55,7 +55,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
             {t('home.heroHighlight')}
           </span>
           <h1 className="mx-auto max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
-            {t('home.heroTitle')}
+            {/* The count comes from the registry, so the headline stays true
+                however many tools the catalogue holds. */}
+            {t('home.heroTitle', { count: TOOLS.length })}
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
             {t('home.heroSubtitle')}
@@ -140,8 +142,18 @@ export default async function HomePage({ params }: { params: { locale: string } 
               categoryLabel={catName(tool.category)}
               isNew={tool.isNew}
               newLabel={t('common.new')}
+              ctaLabel={t('common.useTool')}
             />
           ))}
+        </div>
+        <div className="mt-6">
+          <Link
+            href="/tools"
+            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            {t('common.exploreTools')}
+            <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
+          </Link>
         </div>
       </section>
 
@@ -160,15 +172,30 @@ export default async function HomePage({ params }: { params: { locale: string } 
               categoryLabel={catName(tool.category)}
               isNew
               newLabel={t('common.new')}
+              ctaLabel={t('common.useTool')}
             />
           ))}
+        </div>
+        <div className="mt-6">
+          <Link
+            href="/tools"
+            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            {t('common.exploreTools')}
+            <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
+          </Link>
         </div>
       </section>
 
       {/* All tools */}
       <section className="border-y border-border bg-secondary/20 py-12">
         <div className="container">
-          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">{t('home.allToolsTitle')}</h2>
+          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
+            {t('home.allToolsTitle')}{' '}
+            <span className="text-lg font-semibold text-primary sm:text-xl">
+              {t('common.toolsCount', { count: TOOLS.length })}
+            </span>
+          </h2>
           <p className="mt-2 text-muted-foreground">{t('home.allToolsSubtitle')}</p>
           <div className="mt-8">
             <ToolsGrid

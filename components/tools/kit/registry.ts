@@ -29,6 +29,11 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'pdf-to-text': dynamic(() => import('../pdf/to-text')),
   'pdf-to-word': dynamic(() => import('../pdf/to-word')),
   'pdf-ocr': dynamic(() => import('../pdf/ocr')),
+  'pdf-page-numbers': dynamic(() => import('../pdf/page-numbers')),
+  'pdf-watermark': dynamic(() => import('../pdf/watermark')),
+  'pdf-grayscale': dynamic(() => import('../pdf/grayscale')),
+  'pdf-metadata-editor': dynamic(() => import('../pdf/metadata-editor')),
+  'pdf-extract-images': dynamic(() => import('../pdf/extract-images')),
 
   /* ----------------------------------------------------------- text */
   'word-counter': dynamic(() => import('../text/word-counter')),
@@ -41,6 +46,9 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'text-to-slug': dynamic(() => import('../text/slug')),
   'text-diff': dynamic(() => import('../text/diff')),
   'number-to-words': dynamic(() => import('../text/number-to-words')),
+  'line-sorter': dynamic(() => import('../text/line-sorter')),
+  'text-extractor': dynamic(() => import('../text/extractor')),
+  'text-frequency-counter': dynamic(() => import('../text/frequency')),
 
   /* ----------------------------------------------------- calculators */
   'age-calculator': dynamic(() => import('../calculators/age')),
@@ -71,4 +79,8 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'sql-formatter': dynamic(() => import('../developer/sql')),
   'yaml-formatter': dynamic(() => import('../developer/yaml')),
   'markdown-formatter': dynamic(() => import('../developer/markdown')),
+  'json-csv-converter': dynamic(() => import('../developer/json-csv')),
+  'url-parser': dynamic(() => import('../developer/url-parser')),
+  'timestamp-converter': dynamic(() => import('../developer/timestamp')),
+  'cron-generator': dynamic(() => import('../developer/cron')),
 };

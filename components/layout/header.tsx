@@ -100,7 +100,7 @@ export function Header() {
 
       {searchOpen && (
         <div className="border-t border-border px-4 py-3 lg:hidden">
-          <HeaderSearch onNavigate={() => setSearchOpen(false)} />
+          <HeaderSearch onNavigate={() => setSearchOpen(false)} className="w-full" />
         </div>
       )}
 

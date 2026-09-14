@@ -14,6 +14,7 @@ import { compressToExactSize } from './exact-size';
 import { removeBackground } from './background';
 import { makePassportPhoto } from './passport';
 import { makeSignature } from './signature';
+import { adjustImage, applyFilterEffect, blurImage, pixelateImage, roundCorners } from './effects';
 
 /**
  * Maps a tool slug to its processing function.
@@ -40,6 +41,11 @@ export const processors: Record<string, ToolProcessor<any>> = {
   'split-image': splitImage,
   'image-to-grayscale': toGrayscale,
   'image-watermark': applyWatermark,
+  'image-blur': blurImage,
+  'image-pixelate': pixelateImage,
+  'brightness-contrast': adjustImage,
+  'image-filters': applyFilterEffect,
+  'rounded-corners': roundCorners,
   'heic-to-jpg': convertImage,
   'heic-to-png': convertImage,
   'image-to-exact-kb': compressToExactSize,

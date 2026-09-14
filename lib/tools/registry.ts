@@ -162,6 +162,11 @@ interface NewToolOptions {
   maxFileSizeMB?: number;
   maxFiles?: number;
   popular?: boolean;
+  /**
+   * Shows the "New" badge. Only genuinely recent additions set this — a badge
+   * on every tool would tell the user nothing.
+   */
+  isNew?: boolean;
 }
 
 const N = (
@@ -190,7 +195,7 @@ const N = (
   maxFiles: options.maxFiles ?? 1,
   relatedTools,
   popular: options.popular ?? false,
-  isNew: true,
+  isNew: options.isNew ?? false,
 });
 
 const PDF_TOOLS: ToolDef[] = [
@@ -208,7 +213,7 @@ const PDF_TOOLS: ToolDef[] = [
 ];
 
 const TEXT_TOOLS: ToolDef[] = [
-  N('word-counter', 'text-tools', 'text', 'type', ['word counter', 'character count', 'reading time', 'text statistics', 'عداد الكلمات'], ['remove-extra-spaces', 'case-converter', 'text-cleaner', 'remove-duplicate-lines'], { popular: true }),
+  N('word-counter', 'text-tools', 'text', 'type', ['word counter', 'character count', 'reading time', 'text statistics', 'عداد الكلمات'], ['remove-extra-spaces', 'case-converter', 'text-frequency-counter', 'remove-duplicate-lines'], { popular: true }),
   N('remove-extra-spaces', 'text-tools', 'text', 'space', ['remove extra spaces', 'trim whitespace', 'clean spaces', 'إزالة المسافات الزائدة'], ['text-cleaner', 'word-counter', 'remove-duplicate-lines', 'case-converter'], {}),
   N('case-converter', 'text-tools', 'text', 'case-sensitive', ['case converter', 'uppercase', 'lowercase', 'title case', 'camelcase', 'تحويل حالة الأحرف'], ['text-to-slug', 'word-counter', 'text-reverser', 'remove-extra-spaces'], { popular: true }),
   N('text-cleaner', 'text-tools', 'text', 'eraser', ['text cleaner', 'remove html tags', 'strip urls', 'clean text', 'تنظيف النصوص'], ['remove-extra-spaces', 'remove-duplicate-lines', 'word-counter', 'text-diff'], {}),
@@ -262,7 +267,9 @@ const RELATED_PATCH: Record<string, string[]> = {
 
 for (const tool of IMAGE_TOOLS) {
   const extra = RELATED_PATCH[tool.slug];
-  if (extra) tool.relatedTools = [...extra, ...tool.relatedTools].slice(0, 6);
+  // Set() so a tool that is already suggested by the tool itself (or by two
+  // patch lists) is never listed twice.
+  if (extra) tool.relatedTools = [...new Set([...extra, ...tool.relatedTools])].slice(0, 6);
 }
 
 const NEW_IMAGE_TOOLS: ToolDef[] = [
@@ -367,16 +374,16 @@ const NEW_IMAGE_TOOLS: ToolDef[] = [
 ];
 
 const NEW_PDF_TOOLS: ToolDef[] = [
-  N('pdf-to-text', 'pdf-tools', 'pdf', 'file-text', ['pdf to text', 'extract text from pdf', 'pdf to txt', 'copy text pdf', 'استخراج النص من pdf'], ['pdf-to-word', 'pdf-ocr', 'pdf-to-images', 'word-counter'], { inputFormats: ['pdf'], outputFormats: ['txt', 'zip'], maxFileSizeMB: 50, maxFiles: 5, popular: true }),
-  N('pdf-to-word', 'pdf-tools', 'pdf', 'file-type', ['pdf to word', 'pdf to doc', 'convert pdf editable', 'pdf word converter', 'تحويل pdf الى وورد'], ['pdf-to-text', 'pdf-ocr', 'pdf-merger', 'text-to-slug'], { inputFormats: ['pdf'], outputFormats: ['doc', 'zip'], maxFileSizeMB: 50, maxFiles: 5, popular: true }),
-  N('pdf-ocr', 'pdf-tools', 'pdf', 'scan-text', ['pdf ocr', 'scanned pdf to text', 'ocr pdf online', 'searchable pdf text', 'pdf ممسوح ضوئيا نص'], ['image-ocr', 'pdf-to-text', 'pdf-to-images', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['txt', 'zip'], maxFileSizeMB: 50, maxFiles: 3 }),
+  N('pdf-to-text', 'pdf-tools', 'pdf', 'file-text', ['pdf to text', 'extract text from pdf', 'pdf to txt', 'copy text pdf', 'استخراج النص من pdf'], ['pdf-to-word', 'pdf-ocr', 'pdf-to-images', 'word-counter'], { inputFormats: ['pdf'], outputFormats: ['txt', 'zip'], maxFileSizeMB: 50, maxFiles: 5, popular: true, isNew: true }),
+  N('pdf-to-word', 'pdf-tools', 'pdf', 'file-type', ['pdf to word', 'pdf to doc', 'convert pdf editable', 'pdf word converter', 'تحويل pdf الى وورد'], ['pdf-to-text', 'pdf-ocr', 'pdf-merger', 'text-to-slug'], { inputFormats: ['pdf'], outputFormats: ['doc', 'zip'], maxFileSizeMB: 50, maxFiles: 5, popular: true, isNew: true }),
+  N('pdf-ocr', 'pdf-tools', 'pdf', 'scan-text', ['pdf ocr', 'scanned pdf to text', 'ocr pdf online', 'searchable pdf text', 'pdf ممسوح ضوئيا نص'], ['image-ocr', 'pdf-to-text', 'pdf-to-images', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['txt', 'zip'], maxFileSizeMB: 50, maxFiles: 3, isNew: true }),
 ];
 
 const NEW_DEVELOPER_TOOLS: ToolDef[] = [
-  N('jwt-decoder', 'developer-tools', 'developer', 'key-round', ['jwt decoder', 'jwt debugger', 'decode token', 'json web token', 'verify jwt', 'فك تشفير jwt'], ['base64-encoder-decoder', 'json-formatter', 'hash-generator', 'url-encoder-decoder'], { popular: true }),
-  N('sql-formatter', 'developer-tools', 'developer', 'database', ['sql formatter', 'format sql', 'beautify sql', 'sql minify', 'تنسيق sql'], ['json-formatter', 'xml-formatter', 'text-cleaner', 'javascript-formatter'], {}),
-  N('yaml-formatter', 'developer-tools', 'developer', 'file-json', ['yaml formatter', 'yaml validator', 'yaml to json', 'beautify yaml', 'تنسيق yaml'], ['json-formatter', 'xml-formatter', 'markdown-formatter', 'javascript-formatter'], {}),
-  N('markdown-formatter', 'developer-tools', 'developer', 'book-open', ['markdown formatter', 'format markdown', 'prettify md', 'markdown preview', 'تنسيق ماركداون'], ['html-encoder-decoder', 'text-to-slug', 'json-formatter', 'lorem-ipsum-generator'], { popular: true }),
+  N('jwt-decoder', 'developer-tools', 'developer', 'key-round', ['jwt decoder', 'jwt debugger', 'decode token', 'json web token', 'verify jwt', 'فك تشفير jwt'], ['base64-encoder-decoder', 'json-formatter', 'hash-generator', 'url-encoder-decoder'], { popular: true, isNew: true }),
+  N('sql-formatter', 'developer-tools', 'developer', 'database', ['sql formatter', 'format sql', 'beautify sql', 'sql minify', 'تنسيق sql'], ['json-formatter', 'xml-formatter', 'text-cleaner', 'javascript-formatter'], { isNew: true }),
+  N('yaml-formatter', 'developer-tools', 'developer', 'file-json', ['yaml formatter', 'yaml validator', 'yaml to json', 'beautify yaml', 'تنسيق yaml'], ['json-formatter', 'xml-formatter', 'markdown-formatter', 'javascript-formatter'], { isNew: true }),
+  N('markdown-formatter', 'developer-tools', 'developer', 'book-open', ['markdown formatter', 'format markdown', 'prettify md', 'markdown preview', 'تنسيق ماركداون'], ['html-encoder-decoder', 'text-to-slug', 'json-formatter', 'lorem-ipsum-generator'], { popular: true, isNew: true }),
 ];
 
 const DEVELOPER_TOOLS: ToolDef[] = [
@@ -394,16 +401,170 @@ const DEVELOPER_TOOLS: ToolDef[] = [
   N('number-base-converter', 'developer-tools', 'developer', 'binary', ['base converter', 'binary to decimal', 'hex converter', 'octal', 'محول الأنظمة العددية'], ['hash-generator', 'unit-converter', 'number-to-words', 'uuid-generator'], {}),
 ];
 
+/**
+ * Effect & utility tools added on top of the original image set. They reuse
+ * the existing image workspace (upload → live preview → download) and run
+ * entirely on canvas ImageData.
+ */
+const EFFECT_TOOLS: ToolDef[] = [
+  {
+    ...T(
+      'image-blur',
+      'edit',
+      'blur',
+      ['blur image', 'blur photo', 'blur face', 'blur a face', 'blur number plate', 'blur license plate', 'hide number plate', 'censor', 'hide face', 'redact', 'hide personal information', 'gaussian blur', 'mosaic', 'تمويه الصورة', 'طمس الوجه', 'اخفاء معلومات'],
+      ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'avif', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['image-pixelate', 'image-cropper', 'image-filters', 'image-compressor'],
+      true,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'image-pixelate',
+      'edit',
+      'pixelate',
+      ['pixelate image', 'pixelate photo', 'pixelate number plate', 'mosaic', 'censor', 'blur a face', 'hide face', 'hide number', 'hide text in photo', 'redact screenshot', 'تمويه', 'بيكسل', 'اخفاء الوجه'],
+      ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'avif', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['image-blur', 'image-cropper', 'image-filters', 'image-compressor'],
+      true,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'brightness-contrast',
+      'edit',
+      'brightness',
+      ['brightness and contrast', 'adjust brightness', 'adjust contrast', 'darken image', 'brighten image', 'lighten photo', 'exposure fix', 'تحسين الصورة', 'السطوع', 'التباين', 'تفتيح الصورة'],
+      ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'avif', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['image-filters', 'image-to-grayscale', 'image-compressor', 'image-resizer'],
+      true,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'image-filters',
+      'edit',
+      'sliders-h',
+      ['image filters', 'photo filters', 'sepia filter', 'invert colors', 'negative image', 'sharpen image', 'black and white filter', 'فلتر الصور', 'سيبيا', 'عكس الالوان', 'زيادة الحدة'],
+      ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'avif', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['image-to-grayscale', 'brightness-contrast', 'image-compressor', 'image-watermark'],
+      false,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'rounded-corners',
+      'edit',
+      'squircle',
+      ['rounded corners', 'round image corners', 'circle corners', 'border radius image', 'round photo', 'profile picture round', 'زوايا دائرية', 'تدوير الحواف'],
+      ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'avif', 'heic', 'heif'],
+      ['png', 'webp', 'jpg'],
+      ['image-resizer', 'image-cropper', 'image-compressor', 'image-watermark'],
+      false,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'image-metadata',
+      'edit',
+      'file-search',
+      ['image metadata', 'exif viewer', 'exif data', 'photo metadata', 'check gps', 'camera information', 'image info', 'بيانات الصورة', 'exif', 'معلومات الصورة'],
+      ['jpg', 'jpeg', 'png', 'webp', 'gif', 'heic', 'heif'],
+      ['json'],
+      ['image-compressor', 'image-blur', 'image-resizer', 'image-to-grayscale'],
+      false,
+      1,
+    ),
+    isNew: true,
+  },
+];
+
+const NEW_PDF_TOOLS_2: ToolDef[] = [
+  N('pdf-page-numbers', 'pdf-tools', 'pdf', 'file-digit', ['add page numbers to pdf', 'pdf page numberer', 'number pdf pages', 'paginate pdf', 'ترقيم صفحات pdf', 'اضافة ارقام للصفحات'], ['pdf-watermark', 'pdf-rotate-pages', 'pdf-merger', 'pdf-reorder-pages'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 100, popular: true, isNew: true }),
+  N('pdf-watermark', 'pdf-tools', 'pdf', 'stamp', ['pdf watermark', 'watermark pdf', 'add watermark', 'draft stamp', 'confidential stamp', 'علامة مائية pdf', 'ختم pdf'], ['pdf-page-numbers', 'image-watermark', 'pdf-protect', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 100, popular: true, isNew: true }),
+  N('pdf-grayscale', 'pdf-tools', 'pdf', 'contrast', ['pdf grayscale', 'pdf black and white', 'convert pdf to grayscale', 'monochrome pdf', 'تحويل pdf الى ابيض واسود', 'رمادي'], ['pdf-compressor', 'pdf-watermark', 'pdf-to-images', 'image-to-grayscale'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 50, isNew: true }),
+  N('pdf-metadata-editor', 'pdf-tools', 'pdf', 'file-pen', ['pdf metadata', 'edit pdf metadata', 'change pdf title', 'pdf author', 'pdf properties', 'تعديل بيانات pdf', 'عنوان الملف'], ['pdf-extract-images', 'pdf-compressor', 'pdf-page-counter', 'pdf-protect'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 100, isNew: true }),
+  N('pdf-extract-images', 'pdf-tools', 'pdf', 'images', ['extract images from pdf', 'pdf image extractor', 'save photos from pdf', 'get images pdf', 'استخراج الصور من pdf'], ['pdf-to-images', 'pdf-metadata-editor', 'images-to-pdf', 'image-compressor'], { inputFormats: ['pdf'], outputFormats: ['jpg', 'png', 'zip'], maxFileSizeMB: 50, isNew: true }),
+];
+
+const NEW_TEXT_TOOLS_2: ToolDef[] = [
+  N('line-sorter', 'text-tools', 'text', 'arrow-down-a-z', ['sort lines', 'sort list alphabetically', 'alphabetize', 'sort a to z', 'sort numbers', 'order list', 'ترتيب الاسطر', 'ترتيب ابجدي', 'ترتيب القائمة'], ['remove-duplicate-lines', 'text-cleaner', 'word-counter', 'case-converter'], { popular: true, isNew: true }),
+  N('text-extractor', 'text-tools', 'text', 'text-search', ['extract urls', 'extract emails', 'extract phone numbers', 'find links in text', 'email extractor', 'استخراج الروابط', 'استخراج الايميلات', 'استخراج الارقام'], ['word-counter', 'text-cleaner', 'remove-duplicate-lines', 'url-parser'], { popular: true, isNew: true }),
+  N('text-frequency-counter', 'text-tools', 'text', 'hash', ['word frequency', 'character frequency', 'count how many times a word appears', 'find repeated words', 'letter frequency', 'word frequency counter', 'تكرار الكلمات', 'تكرار الحروف'], ['word-counter', 'line-sorter', 'text-extractor', 'remove-duplicate-lines'], { popular: true, isNew: true }),
+];
+
+const NEW_DEVELOPER_TOOLS_2: ToolDef[] = [
+  N('json-csv-converter', 'developer-tools', 'developer', 'file-spreadsheet', ['json to csv', 'csv to json', 'convert json csv', 'excel csv', 'json spreadsheet', 'تحويل json الى csv', 'تحويل csv'], ['json-formatter', 'yaml-formatter', 'xml-formatter', 'number-base-converter'], { popular: true, isNew: true }),
+  N('url-parser', 'developer-tools', 'developer', 'waypoints', ['url parser', 'parse url', 'query string parser', 'url components', 'break down url', 'تحليل الرابط', 'مكونات الرابط'], ['url-encoder-decoder', 'json-formatter', 'text-extractor', 'base64-encoder-decoder'], { isNew: true }),
+  N('timestamp-converter', 'developer-tools', 'developer', 'calendar-clock', ['unix timestamp', 'epoch converter', 'timestamp to date', 'date to timestamp', 'convert epoch', 'محول التوقيت', 'الطابع الزمني'], ['date-difference-calculator', 'cron-generator', 'age-calculator', 'json-formatter'], { popular: true, isNew: true }),
+  N('cron-generator', 'developer-tools', 'developer', 'timer', ['cron generator', 'cron expression', 'cron builder', 'cron schedule', 'crontab', 'مولد cron', 'تعبير cron'], ['timestamp-converter', 'regex-tester', 'json-formatter', 'hash-generator'], { isNew: true }),
+];
+
+/** Point established tools at the new helpers (and back) so discovery flows. */
+const RELATED_PATCH_2: Record<string, string[]> = {
+  'image-cropper': ['image-blur', 'image-pixelate'],
+  'image-resizer': ['rounded-corners', 'brightness-contrast'],
+  'image-to-grayscale': ['image-filters', 'brightness-contrast'],
+  'image-compressor': ['image-metadata', 'image-filters'],
+  'png-to-jpg': ['rounded-corners', 'image-blur'],
+  'images-to-pdf': ['pdf-page-numbers', 'pdf-watermark'],
+  'image-to-pdf': ['pdf-page-numbers', 'pdf-extract-images'],
+  'pdf-merger': ['pdf-page-numbers', 'pdf-watermark', 'pdf-metadata-editor'],
+  'pdf-splitter': ['pdf-extract-images', 'pdf-page-numbers'],
+  'pdf-to-images': ['pdf-extract-images', 'pdf-grayscale'],
+  'pdf-compressor': ['pdf-grayscale', 'pdf-watermark'],
+  'pdf-protect': ['pdf-metadata-editor', 'pdf-watermark'],
+  'pdf-page-counter': ['pdf-page-numbers', 'pdf-metadata-editor'],
+  'word-counter': ['text-frequency-counter', 'line-sorter', 'text-extractor'],
+  'text-cleaner': ['line-sorter', 'text-extractor'],
+  'remove-duplicate-lines': ['line-sorter', 'text-extractor'],
+  'case-converter': ['line-sorter', 'text-diff'],
+  'json-formatter': ['json-csv-converter', 'url-parser', 'timestamp-converter', 'jwt-decoder'],
+  'xml-formatter': ['json-csv-converter', 'json-formatter', 'url-parser', 'sql-formatter'],
+  'yaml-formatter': ['json-csv-converter', 'json-formatter', 'timestamp-converter'],
+  'url-encoder-decoder': ['url-parser', 'text-extractor', 'json-formatter'],
+  'date-difference-calculator': ['timestamp-converter', 'cron-generator'],
+  'regex-tester': ['cron-generator', 'text-extractor'],
+  'uuid-generator': ['timestamp-converter', 'hash-generator'],
+  // Inbound links so no tool is a dead end in the "related tools" graph.
+  'percentage-calculator': ['gpa-calculator'],
+  'base64-encoder-decoder': ['jwt-decoder'],
+};
+
 export const TOOLS: ToolDef[] = [
   ...IMAGE_TOOLS,
+  ...EFFECT_TOOLS,
   ...NEW_IMAGE_TOOLS,
   ...PDF_TOOLS,
   ...NEW_PDF_TOOLS,
+  ...NEW_PDF_TOOLS_2,
   ...TEXT_TOOLS,
+  ...NEW_TEXT_TOOLS_2,
   ...CALCULATOR_TOOLS,
   ...DEVELOPER_TOOLS,
   ...NEW_DEVELOPER_TOOLS,
+  ...NEW_DEVELOPER_TOOLS_2,
 ];
+
+for (const tool of TOOLS) {
+  const extra = RELATED_PATCH_2[tool.slug];
+  if (extra) tool.relatedTools = [...new Set([...extra, ...tool.relatedTools])].slice(0, 6);
+}
+
 
 export function getTool(slug: string): ToolDef | undefined {
   return TOOLS.find((t) => t.slug === slug);
@@ -418,16 +579,49 @@ export function toolsInCategory(slug: CategorySlug): ToolDef[] {
 }
 
 export function getNewTools(limit = 6): ToolDef[] {
-  return TOOLS.filter((t) => t.isNew && t.popular).slice(0, limit);
+  const fresh = TOOLS.filter((t) => t.isNew && t.popular);
+  // Round-robin across categories: registry order alone would fill the whole
+  // homepage strip with image tools and hide the PDF / text / developer
+  // additions, which are just as new.
+  const buckets = new Map<CategorySlug, ToolDef[]>();
+  for (const tool of fresh) {
+    const list = buckets.get(tool.category) ?? [];
+    list.push(tool);
+    buckets.set(tool.category, list);
+  }
+  const queues = [...buckets.values()];
+  const out: ToolDef[] = [];
+  for (let round = 0; out.length < limit; round++) {
+    let added = false;
+    for (const queue of queues) {
+      if (out.length >= limit) break;
+      const next = queue[round];
+      if (next) {
+        out.push(next);
+        added = true;
+      }
+    }
+    if (!added) break;
+  }
+  return out;
 }
 
 export function getRelatedTools(slug: string): ToolDef[] {
   const tool = getTool(slug);
   if (!tool) return [];
-  return tool.relatedTools
-    .map((s) => getTool(s))
-    .filter((t): t is ToolDef => Boolean(t))
-    .slice(0, 4);
+  // Several tools gain suggestions from more than one patch list, and the same
+  // neighbour must never be rendered twice.
+  const seen = new Set<string>();
+  const related: ToolDef[] = [];
+  for (const relatedSlug of tool.relatedTools) {
+    if (relatedSlug === slug || seen.has(relatedSlug)) continue;
+    const found = getTool(relatedSlug);
+    if (!found) continue;
+    seen.add(relatedSlug);
+    related.push(found);
+    if (related.length === 4) break;
+  }
+  return related;
 }
 
 export function getPopularTools(): ToolDef[] {

@@ -201,10 +201,15 @@ export function Notice({
   );
 }
 
-/** Every new tool shows the same local-processing reassurance. */
+/**
+ * Every tool shows the same local-processing reassurance. The default wording
+ * is the file-neutral one — PDF, text, calculator and developer pages used to
+ * inherit the image sentence ("your images never leave your device"). Image
+ * tools that want the image wording pass it in explicitly.
+ */
 export function PrivacyNotice({ text }: { text?: string }) {
   const t = useTranslations('common');
-  return <Notice variant="privacy">{text ?? t('allProcessingLocal')}</Notice>;
+  return <Notice variant="privacy">{text ?? t('allProcessingFiles')}</Notice>;
 }
 
 /* ------------------------------------------------------------------ error */
@@ -269,7 +274,9 @@ export function ToggleGroup<T extends string>({
             onClick={() => onChange(option.value)}
             title={option.hint}
             className={cn(
-              'rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors',
+              // Same idea as the Button sizes: comfortable on touch, compact
+              // from the `sm` breakpoint up.
+              'min-h-10 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors sm:min-h-0',
               value === option.value
                 ? 'border-primary bg-primary text-primary-foreground'
                 : 'border-input bg-background text-foreground hover:bg-accent',

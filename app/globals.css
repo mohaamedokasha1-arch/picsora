@@ -116,6 +116,22 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+/* Touch screens: a slightly taller track (8px instead of 6px) and a larger
+   handle so sliders are easy to grab with a thumb. Pointer devices keep the
+   original 6px track and 18px handle. */
+@media (pointer: coarse) {
+  .slider-native {
+    height: 8px;
+  }
+  .slider-native::-webkit-slider-thumb {
+    width: 22px;
+    height: 22px;
+  }
+  .slider-native::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+  }
+}
 
 /* Skip link (moves into view on focus) */
 .skip-link {

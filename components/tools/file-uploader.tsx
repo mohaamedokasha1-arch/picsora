@@ -162,9 +162,12 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
                 type="button"
                 onClick={() => removeAt(i)}
                 aria-label={`${t('common.close')} — ${file.name}`}
-                className="absolute end-1.5 top-1.5 rounded-md bg-black/60 p-1 text-white opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100"
+                /* Always visible on touch screens (there is no hover on a
+                   phone); on pointer devices it keeps the original
+                   hover-to-reveal behaviour. */
+                className="absolute end-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-md bg-black/60 text-white transition-opacity focus-visible:opacity-100 sm:h-6 sm:w-6 sm:opacity-0 sm:group-hover:opacity-100"
               >
-                <X className="h-3.5 w-3.5" />
+                <X className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
               </button>
             </li>
           ))}
