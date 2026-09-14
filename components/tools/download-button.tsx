@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Download } from 'lucide-react';
+import { Check, Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { cn, formatBytes } from '@/lib/utils';
@@ -27,7 +27,7 @@ export function DownloadButton({ blob, filename, label, size = 'default', classN
 
   return (
     <Button onClick={onClick} size={size} className={cn('max-w-full', className)}>
-      <Download className="h-4 w-4" />
+      <Download className="h-4 w-4" aria-hidden="true" />
       <span className="flex min-w-0 max-w-full flex-col items-start leading-tight">
         <span>{label ?? t('download')}</span>
         {/* Long document names are truncated instead of pushing the button
@@ -36,7 +36,7 @@ export function DownloadButton({ blob, filename, label, size = 'default', classN
           {filename} · {formatBytes(blob.size)}
         </span>
       </span>
-      {downloaded && <span className="text-xs">✓</span>}
+      {downloaded && <Check className="h-4 w-4" aria-hidden="true" />}
     </Button>
   );
 }

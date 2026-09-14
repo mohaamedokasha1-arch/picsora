@@ -1,10 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { FileText, ImageIcon } from 'lucide-react';
+import { Check, FileText, ImageIcon, RotateCcw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ProcessResult } from '@/lib/types';
 import { formatBytes, formatSizeChange } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import { DownloadButton } from './download-button';
 
 interface ResultPanelProps {
@@ -113,7 +114,9 @@ export function ResultPanel({ results, originalSize, onReset }: ResultPanelProps
   return (
     <div className="space-y-4">
       <h3 className="flex items-center gap-2 text-base font-semibold text-foreground">
-        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/15 text-xs text-emerald-600 dark:text-emerald-400">✓</span>
+        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
+          <Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden="true" />
+        </span>
         {t('resultTitle')}
       </h3>
       <div className={results.length > 1 ? 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3' : 'grid gap-4 sm:grid-cols-2'}>
@@ -122,13 +125,10 @@ export function ResultPanel({ results, originalSize, onReset }: ResultPanelProps
         ))}
       </div>
       {onReset && (
-        <button
-          type="button"
-          onClick={onReset}
-          className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-        >
+        <Button type="button" variant="outline" size="sm" onClick={onReset} className="gap-1.5">
+          <RotateCcw className="h-4 w-4" aria-hidden="true" />
           {t('processAnother')}
-        </button>
+        </Button>
       )}
     </div>
   );

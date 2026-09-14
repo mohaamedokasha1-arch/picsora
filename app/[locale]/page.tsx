@@ -44,7 +44,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
       <StructuredData data={structured} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
+      <section className="relative border-b border-border">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-gradient-to-b from-accent/60 via-background to-background"
@@ -62,7 +62,12 @@ export default async function HomePage({ params }: { params: { locale: string } 
           <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
             {t('home.heroSubtitle')}
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          {/* Search sits in the hero itself so the first screen answers
+              "what is this, and where do I start" in one glance. */}
+          <div className="mx-auto mt-8 max-w-2xl">
+            <ToolSearch size="lg" />
+          </div>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/tools"
               className="inline-flex h-12 items-center rounded-lg bg-primary px-6 text-base font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
@@ -89,13 +94,6 @@ export default async function HomePage({ params }: { params: { locale: string } 
               </li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      {/* Search */}
-      <section className="container -mt-6 relative z-10 pb-4">
-        <div className="mx-auto max-w-2xl">
-          <ToolSearch />
         </div>
       </section>
 
@@ -158,7 +156,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
       </section>
 
       {/* Just added */}
-      <section className="container pb-12">
+      <section className="container py-12">
         <h2 className="text-2xl font-bold text-foreground sm:text-3xl">{t('home.newTitle')}</h2>
         <p className="mt-2 text-muted-foreground">{t('home.newSubtitle')}</p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -225,7 +223,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
             { icon: Globe, title: t('home.benefitAnywhereTitle'), text: t('home.benefitAnywhereText') },
           ].map(({ icon: Icon, title, text }, i) => (
             <div key={i} className="rounded-xl border border-border bg-card p-5">
-              <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+              <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent text-accent-foreground">
                 <Icon className="h-5 w-5" />
               </span>
               <h3 className="mt-3 text-base font-semibold text-foreground">{title}</h3>
@@ -324,13 +322,13 @@ export default async function HomePage({ params }: { params: { locale: string } 
             <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP4')}</p>
           </div>
           <div className="mt-6 flex flex-wrap gap-2 text-sm">
-            <Link href="/about" className="rounded-lg border border-input bg-background px-4 py-2 font-medium text-foreground transition-colors hover:bg-accent">
+            <Link href="/about" className="inline-flex h-10 items-center rounded-lg border border-input bg-background px-4 font-medium text-foreground transition-colors hover:bg-accent">
               {t('common.about')}
             </Link>
-            <Link href="/guides" className="rounded-lg border border-input bg-background px-4 py-2 font-medium text-foreground transition-colors hover:bg-accent">
+            <Link href="/guides" className="inline-flex h-10 items-center rounded-lg border border-input bg-background px-4 font-medium text-foreground transition-colors hover:bg-accent">
               {t('home.guidesTitle')}
             </Link>
-            <Link href="/contact" className="rounded-lg border border-input bg-background px-4 py-2 font-medium text-foreground transition-colors hover:bg-accent">
+            <Link href="/contact" className="inline-flex h-10 items-center rounded-lg border border-input bg-background px-4 font-medium text-foreground transition-colors hover:bg-accent">
               {t('common.contact')}
             </Link>
           </div>

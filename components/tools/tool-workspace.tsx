@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
+import { AlertTriangle } from 'lucide-react';
 import type { ToolDef } from '@/lib/tools/registry';
 import type { FormatRule } from '@/lib/validation';
 import { defaultRuleFor } from '@/lib/validation';
@@ -101,7 +102,10 @@ export function ToolWorkspace({ tool, rule, children }: ToolWorkspaceProps) {
       {!decoding && files.length > 0 && decoded.length === files.length && (
         <>
           {anyLarge && (
-            <p className="text-xs text-muted-foreground">⚠ {t('toolShell.noticeLarge')}</p>
+            <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-hidden="true" />
+              {t('toolShell.noticeLarge')}
+            </p>
           )}
           <FileUploader rule={rule} files={files} onFilesChange={setFiles} onError={setError} disabled={busy} />
           {children({ decoded, files, reset, setError, busy, setBusy })}

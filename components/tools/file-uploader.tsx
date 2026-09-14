@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { UploadCloud, X, ImageIcon } from 'lucide-react';
+import { UploadCloud, X, ImageIcon, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { FormatRule } from '@/lib/validation';
 import { validateFiles } from '@/lib/validation';
@@ -176,9 +176,10 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="w-full rounded-lg border border-dashed border-border p-3 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-border p-3 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
           >
-            + {t('toolShell.uploadTitle')}
+            <Plus className="h-4 w-4" aria-hidden="true" />
+            {t('toolShell.uploadTitle')}
           </button>
         )}
         <input

@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
+import { ArrowRight } from 'lucide-react';
 import { buildMetadata } from '@/lib/seo/metadata';
 import { siteConfig } from '@/lib/site';
 import { CATEGORIES, TOOLS } from '@/lib/tools/registry';
@@ -62,8 +63,12 @@ export default async function CategoriesPage({ params }: { params: { locale: str
               </span>
               <h2 className="mt-4 text-lg font-semibold text-foreground">{t(cat.nameKey as never)}</h2>
               <p className="mt-1 text-sm text-muted-foreground">{t(cat.descriptionKey as never)}</p>
-              <span className="mt-3 inline-block text-sm font-medium text-primary">
+              <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary">
                 {count === 1 ? t('common.oneTool') : t('common.toolsCount', { count })}
+                <ArrowRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
+                />
               </span>
             </Link>
           );
