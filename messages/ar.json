@@ -3485,11 +3485,28 @@
     "successText": "شكرًا لتواصلك — سنرد عليك قريبًا.",
     "notConfiguredTitle": "تفضّل البريد الإلكتروني؟",
     "notConfiguredText": "أسرع طريقة للوصول إلينا هي البريد الإلكتروني: راسلنا على privacy@piclizer.app وسنعود إليك.",
+    "reportTitle": "واجهت مشكلة أو وجدت خطأ؟",
+    "reportIntro": "إن واجهتك أي مشكلة أو خطأ أثناء استخدام الموقع، أخبرنا بها عبر النموذج أدناه — كل بلاغ يساعدنا على إصلاحها بوقت أسرع.",
+    "reportName": "الاسم (اختياري)",
+    "reportNamePlaceholder": "محمد أحمد",
+    "reportEmail": "البريد الإلكتروني (اختياري)",
+    "reportEmailPlaceholder": "you@example.com",
+    "reportDetails": "وصف المشكلة أو الخطأ",
+    "reportDetailsPlaceholder": "ما المشكلة التي واجهتها؟ اذكر الأداة وما كنت تفعله إن أمكن.",
+    "reportSend": "إرسال البلاغ",
+    "reportSending": "جارٍ الإرسال…",
+    "reportSuccessTitle": "تم إرسال البلاغ بنجاح",
+    "reportSuccessText": "شكرًا لمساعدتنا في تحسين Piclizer ❤️",
+    "reportMailSubject": "بلاغ مشكلة أو خطأ — Piclizer",
+    "reportMailtoTitle": "تم تجهيز بلاغك",
+    "reportMailtoText": "فتحنا تطبيق البريد لديك والبلاغ جاهز وموجّه إلى {email} — اضغط «إرسال» من بريدك ليصلنا. إن لم يفتح البريد تلقائيًا، يمكنك مراسلتنا مباشرة على {email}. شكرًا لمساعدتنا في تحسين Piclizer ❤️",
+    "reportErrorText": "عذرًا — تعذّر إرسال البلاغ. حاول مرة أخرى، أو راسلنا مباشرة على {email}.",
     "validation": {
       "nameRequired": "يرجى إدخال اسمك.",
       "emailRequired": "يرجى إدخال بريدك الإلكتروني.",
       "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح.",
-      "messageRequired": "يرجى إدخال رسالة."
+      "messageRequired": "يرجى إدخال رسالة.",
+      "detailsRequired": "يرجى وصف المشكلة أو الخطأ."
     }
   },
   "pdfTools": {
