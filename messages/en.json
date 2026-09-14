@@ -64,6 +64,7 @@
     "emailLabel": "Email us directly",
     "replyNote": "We read every message and usually reply within 1–2 business days.",
     "allProcessingText": "All processing happens locally in your browser. Your text never leaves your device.",
+    "allProcessingFiles": "All processing happens locally in your browser. Your files never leave your device.",
     "useToolLabel": "Use tool"
   },
   "validation": {
@@ -3492,6 +3493,8 @@
     }
   },
   "pdfTools": {
+    "dropzoneTitle": "Drop your PDF here",
+    "dropzoneHint": "Drag & drop a PDF here, or click to browse",
     "allPages": "All pages",
     "allowCopying": "Allow copying text",
     "allowEditing": "Allow editing",

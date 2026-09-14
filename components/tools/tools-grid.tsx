@@ -48,7 +48,7 @@ export function ToolsGrid({ tools }: { tools: GridTool[] }) {
           aria-selected={active === 'all'}
           onClick={() => setActive('all')}
           className={cn(
-            'rounded-full border px-4 py-2 text-sm font-medium transition-colors sm:py-1.5',
+            'min-h-10 rounded-full border px-4 py-2 text-sm font-medium transition-colors sm:min-h-0 sm:py-1.5',
             active === 'all'
               ? 'border-primary bg-primary text-primary-foreground'
               : 'border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground',
@@ -64,7 +64,7 @@ export function ToolsGrid({ tools }: { tools: GridTool[] }) {
             aria-selected={active === slug}
             onClick={() => setActive(slug)}
             className={cn(
-              'rounded-full border px-4 py-2 text-sm font-medium transition-colors sm:py-1.5',
+              'min-h-10 rounded-full border px-4 py-2 text-sm font-medium transition-colors sm:min-h-0 sm:py-1.5',
               active === slug
                 ? 'border-primary bg-primary text-primary-foreground'
                 : 'border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground',

@@ -122,7 +122,7 @@ export function PdfDropzone({
     <div
       role="button"
       tabIndex={disabled ? -1 : 0}
-      aria-label={t('toolShell.clickOrDrag')}
+      aria-label={t('pdfTools.dropzoneHint')}
       onClick={() => !disabled && inputRef.current?.click()}
       onKeyDown={(e) => {
         if ((e.key === 'Enter' || e.key === ' ') && !disabled) {
@@ -148,8 +148,9 @@ export function PdfDropzone({
       )}
     >
       <UploadCloud className={cn('mb-4 h-12 w-12 text-primary transition-transform', dragging && 'scale-110')} aria-hidden="true" />
-      <p className="text-base font-medium text-foreground">{t('toolShell.dropHere')}</p>
-      <p className="mt-1 text-sm text-muted-foreground">{t('toolShell.clickOrDrag')}</p>
+      {/* PDF-specific wording: this zone never accepts images. */}
+      <p className="text-base font-medium text-foreground">{t('pdfTools.dropzoneTitle')}</p>
+      <p className="mt-1 text-sm text-muted-foreground">{t('pdfTools.dropzoneHint')}</p>
       <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
         <span className="rounded-full bg-secondary px-2.5 py-1">{t('toolShell.maxSize', { n: maxFileSizeMB })}</span>
         {maxFiles > 1 && <span className="rounded-full bg-secondary px-2.5 py-1">{t('toolShell.maxFiles', { n: maxFiles })}</span>}

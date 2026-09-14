@@ -938,6 +938,81 @@ async function main() {
     assertEq(TOOLS.length, slugs.size, 'no duplicate slugs');
   });
 
+  await test('every tool is wired to a UI, named uniquely and free of network calls', async () => {
+    const { readFileSync, readdirSync } = await import('node:fs');
+    const { join } = await import('node:path');
+    const { TOOLS } = await import('@/lib/tools/registry');
+
+    /* 1. Component wiring — a tool registered without an entry in the UI
+       registry would render a blank tool area on its page. */
+    const uiIndex = readFileSync(join(process.cwd(), 'components/tools/ui/index.ts'), 'utf8');
+    const kitRegistry = readFileSync(join(process.cwd(), 'components/tools/kit/registry.ts'), 'utf8');
+    const wired = new Set(
+      [...uiIndex.matchAll(/['"]([a-z0-9-]+)['"]\s*:/g), ...kitRegistry.matchAll(/['"]([a-z0-9-]+)['"]\s*:/g)].map(
+        (m) => m[1],
+      ),
+    );
+    const unwired = TOOLS.filter((tool) => !wired.has(tool.slug)).map((tool) => tool.slug);
+    assertEq(unwired.length, 0, `tools without a component: ${unwired.join(', ')}`);
+
+    /* 2. Unique names per locale (duplicate tool names are how duplicates
+       sneak into a growing catalogue). */
+    for (const locale of ['en', 'ar'] as const) {
+      const messages = JSON.parse(
+        readFileSync(join(process.cwd(), 'messages', `${locale}.json`), 'utf8'),
+      ) as { tools?: Record<string, { name?: string }> };
+      const seen = new Map<string, string>();
+      const dupes: string[] = [];
+      for (const tool of TOOLS) {
+        const name = messages.tools?.[tool.slug]?.name?.trim().toLowerCase();
+        if (!name) continue;
+        const previous = seen.get(name);
+        if (previous) dupes.push(`${previous} / ${tool.slug}`);
+        else seen.set(name, tool.slug);
+      }
+      assertEq(dupes.length, 0, `${locale}: duplicate tool names: ${dupes.join(', ')}`);
+    }
+
+    /* 3. No tool may call an external service: everything processes locally.
+       lib/ocr is the single documented exception — it downloads the
+       recognition engine and its language data once and then runs in the
+       browser; documents still never leave the device. */
+    const roots = [
+      'lib/image',
+      'lib/tools/processors',
+      'lib/pdf-processing',
+      'lib/text-processing',
+      'lib/developer-tools',
+      'lib/calculators',
+      'components/tools',
+    ];
+    const offenders: string[] = [];
+    const walk = (dir: string) => {
+      for (const entry of readdirSync(join(process.cwd(), dir), { withFileTypes: true })) {
+        const rel = join(dir, entry.name);
+        if (entry.isDirectory()) {
+          walk(rel);
+          continue;
+        }
+        if (!/\.(ts|tsx)$/.test(entry.name)) continue;
+        const source = readFileSync(join(process.cwd(), rel), 'utf8')
+          .replace(/\/\*[\s\S]*?\*\//g, '')
+          .replace(/^\s*\/\/.*$/gm, '');
+        for (const pattern of ['fetch(', 'XMLHttpRequest', 'axios', 'new WebSocket', 'sendBeacon']) {
+          if (source.includes(pattern)) offenders.push(`${rel}: ${pattern}`);
+        }
+      }
+    };
+    for (const root of roots) walk(root);
+    assertEq(offenders.length, 0, `network calls found: ${offenders.slice(0, 5).join(' | ')}`);
+
+    /* 4. Every tool is reachable from a category listing. */
+    const { CATEGORIES, toolsInCategory } = await import('@/lib/tools/registry');
+    const listed = new Set(CATEGORIES.flatMap((category) => toolsInCategory(category.slug).map((t) => t.slug)));
+    const unreachable = TOOLS.filter((tool) => !listed.has(tool.slug)).map((tool) => tool.slug);
+    assertEq(unreachable.length, 0, `tools in no category: ${unreachable.join(', ')}`);
+  });
+
   process.exitCode = summary();
 }
 

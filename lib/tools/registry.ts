@@ -579,7 +579,31 @@ export function toolsInCategory(slug: CategorySlug): ToolDef[] {
 }
 
 export function getNewTools(limit = 6): ToolDef[] {
-  return TOOLS.filter((t) => t.isNew && t.popular).slice(0, limit);
+  const fresh = TOOLS.filter((t) => t.isNew && t.popular);
+  // Round-robin across categories: registry order alone would fill the whole
+  // homepage strip with image tools and hide the PDF / text / developer
+  // additions, which are just as new.
+  const buckets = new Map<CategorySlug, ToolDef[]>();
+  for (const tool of fresh) {
+    const list = buckets.get(tool.category) ?? [];
+    list.push(tool);
+    buckets.set(tool.category, list);
+  }
+  const queues = [...buckets.values()];
+  const out: ToolDef[] = [];
+  for (let round = 0; out.length < limit; round++) {
+    let added = false;
+    for (const queue of queues) {
+      if (out.length >= limit) break;
+      const next = queue[round];
+      if (next) {
+        out.push(next);
+        added = true;
+      }
+    }
+    if (!added) break;
+  }
+  return out;
 }
 
 export function getRelatedTools(slug: string): ToolDef[] {

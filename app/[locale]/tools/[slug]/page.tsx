@@ -98,10 +98,10 @@ export default async function ToolPage({ params }: { params: { locale: string; s
         />
 
         <div className="flex items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-accent-foreground">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">
             <ToolIcon name={tool.icon} className="h-6 w-6" />
           </span>
-          <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{name}</h1>
+          <h1 className="min-w-0 break-words text-3xl font-bold text-foreground sm:text-4xl">{name}</h1>
         </div>
         <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">{intro}</p>
 
@@ -111,6 +111,16 @@ export default async function ToolPage({ params }: { params: { locale: string; s
         </div>
 
         <AdPlacement slot="tool-below" className="mt-8" />
+
+        {/* Related tools — kept right below the tool, where people look for
+            "what else can I do with this file" instead of at the very bottom
+            of the page behind the FAQ and the long-form article. */}
+        <section className="mt-12">
+          <h2 className="text-xl font-bold text-foreground">{t('related.title')}</h2>
+          <div className="mt-4">
+            <RelatedTools slug={tool.slug} />
+          </div>
+        </section>
 
         {/* How to use */}
         <section className="mt-12 grid gap-8 lg:grid-cols-2">
@@ -157,14 +167,6 @@ export default async function ToolPage({ params }: { params: { locale: string; s
         <ToolDeepDive slug={tool.slug} toolName={name} />
 
         <AdPlacement slot="tool-below-faq" className="mt-8" />
-
-        {/* Related tools */}
-        <section className="mt-12">
-          <h2 className="text-xl font-bold text-foreground">{t('related.title')}</h2>
-          <div className="mt-4">
-            <RelatedTools slug={tool.slug} />
-          </div>
-        </section>
       </div>
     </>
   );

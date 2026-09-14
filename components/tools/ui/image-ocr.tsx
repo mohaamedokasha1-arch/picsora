@@ -135,7 +135,8 @@ export default function ImageOcrTool({ ctx }: { ctx: WorkspaceContext }) {
       )}
 
       {!busy && texts.length === 0 && !error && <InlineError message={null} />}
-      <PrivacyNotice />
+      {/* Image tool — keeps the "your images never leave your device" wording. */}
+      <PrivacyNotice text={t('common.allProcessingLocal')} />
     </div>
   );
 }

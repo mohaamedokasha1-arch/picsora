@@ -1,8 +1,16 @@
-# Piclizer — Free, private, browser-based image tools
+# Piclizer — Free, private, browser-based tools
 
-Piclizer is a production-ready SaaS-style platform of **20 image tools** that run **100% in the browser**.
-No uploads, no accounts, no servers touching your images. Every tool works with real files using the
-Canvas, Blob, File and Web Worker APIs.
+Piclizer is a production-ready SaaS-style platform of **95 tools** — image, PDF, text, calculator and
+developer utilities — that run **100% in the browser**. No uploads, no accounts, no servers touching
+your files. Every tool works with real files using the Canvas, Blob, File and Web Worker APIs.
+
+| Category | Tools | Examples |
+| --- | --- | --- |
+| Image compress / resize / convert / edit / colour | 31 | Image Compressor, HEIC to JPG, Image Blur, Rounded Corners |
+| PDF tools | 21 | PDF Merger, PDF Watermark, PDF Page Numberer, PDF Images Extractor |
+| Text tools | 13 | Word Counter, Line Sorter, Text Extractor |
+| Calculators | 10 | Percentage, BMI, Unit Converter |
+| Developer tools | 20 | JSON Formatter, JSON ↔ CSV, URL Parser, Cron Generator |
 
 ## Tech stack
 
@@ -13,7 +21,8 @@ Canvas, Blob, File and Web Worker APIs.
 - **next-themes** for light/dark/system theming
 - **pdf-lib** (client-side PDF), **JSZip** (client-side ZIP)
 - **Web Workers** for CPU-heavy palette extraction
-- No external image APIs, no paid AI APIs, no server-side uploads
+- No external image APIs, no paid AI APIs, no server-side uploads (OCR downloads its recognition
+  engine and language data once, then runs entirely in the browser)
 
 ## Local development
 
