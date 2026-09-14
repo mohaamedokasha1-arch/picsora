@@ -37,6 +37,11 @@ const AR_STOP_WORDS = new Set(
   ),
 );
 
+/** Stop words for the language `analyzeText` was told to ignore. */
+export function stopWordsFor(lang: 'en' | 'ar'): Set<string> {
+  return lang === 'ar' ? AR_STOP_WORDS : EN_STOP_WORDS;
+}
+
 /** Unicode-aware word splitting that works for both Latin and Arabic script. */
 export function splitWords(input: string): string[] {
   const matches = input.match(/[\p{L}\p{N}][\p{L}\p{N}'’_-]*/gu);

@@ -12,10 +12,12 @@ const variants = {
 
 const sizes = {
   default: 'h-10 px-4 py-2',
-  sm: 'h-8 rounded-md px-3 text-xs',
+  // Small buttons grow to a comfortable tap target on phones and keep their
+  // original compact size from the `sm` breakpoint up.
+  sm: 'h-9 rounded-md px-3 text-xs sm:h-8',
   lg: 'h-12 rounded-lg px-6 text-base',
   icon: 'h-10 w-10',
-  'icon-sm': 'h-8 w-8',
+  'icon-sm': 'h-9 w-9 sm:h-8 sm:w-8',
 } as const;
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

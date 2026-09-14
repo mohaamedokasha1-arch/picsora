@@ -17,6 +17,7 @@ export async function RelatedTools({ slug }: { slug: string }) {
           icon={tool.icon}
           isNew={tool.isNew}
           newLabel={t('common.new')}
+          ctaLabel={t('common.useTool')}
         />
       ))}
     </div>

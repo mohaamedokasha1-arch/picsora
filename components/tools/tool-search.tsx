@@ -5,67 +5,9 @@ import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/lib/i18n/navigation';
 import { TOOLS } from '@/lib/tools/registry';
+import { normalizeQuery, searchTools, type SearchItem } from '@/lib/tools/search';
 import { ToolIcon } from '@/components/icons';
 import { cn } from '@/lib/utils';
-
-interface SearchItem {
-  slug: string;
-  name: string;
-  description: string;
-  icon: string;
-  category: string;
-  popular: boolean;
-  nameNorm: string;
-  descNorm: string;
-  keysNorm: string;
-  catNorm: string;
-}
-
-/** Normalise Latin + Arabic queries: case, diacritics, alef/hamza variants. */
-export function normalizeQuery(raw: string): string {
-  return raw
-    .toLowerCase()
-    .replace(/[\u064B-\u065F\u0670]/g, '')
-    .replace(/[أإآٱ]/g, 'ا')
-    .replace(/ة/g, 'ه')
-    .replace(/ى/g, 'ي')
-    .replace(/ؤ/g, 'و')
-    .replace(/ئ/g, 'ي')
-    .replace(/[^a-z0-9\u0600-\u06FF\s-]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-/** True when every char of `needle` appears in order inside `haystack`. */
-function subsequence(needle: string, haystack: string): boolean {
-  if (!needle) return true;
-  let j = 0;
-  for (let i = 0; i < haystack.length && j < needle.length; i += 1) {
-    if (haystack[i] === needle[j]) j += 1;
-  }
-  return j === needle.length;
-}
-
-function scoreItem(item: SearchItem, tokens: string[], raw: string): number {
-  let score = 0;
-  const compactName = item.nameNorm.replace(/[\s-]+/g, '');
-  for (const token of tokens) {
-    if (!token) continue;
-    if (item.nameNorm.includes(token)) score += token.length >= 3 ? 100 : 60;
-    else if (compactName.includes(token.replace(/[\s-]+/g, ''))) score += 70;
-    else if (item.keysNorm.includes(token)) score += 45;
-    else if (item.descNorm.includes(token)) score += 25;
-    else if (item.catNorm.includes(token)) score += 12;
-    else if (subsequence(token, compactName)) score += 18;
-    else if (subsequence(token, item.keysNorm.replace(/\s+/g, ''))) score += 8;
-    else return -1; // every token must match something
-  }
-  // Exact / prefix matches rank first.
-  if (item.nameNorm.startsWith(raw)) score += 60;
-  else if (item.nameNorm.includes(raw)) score += 30;
-  if (item.popular) score += 5;
-  return score;
-}
 
 function useSearchIndex(): SearchItem[] {
   const t = useTranslations();
@@ -112,17 +54,7 @@ export function ToolSearch({
   const boxRef = React.useRef<HTMLDivElement>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  const results = React.useMemo(() => {
-    const raw = normalizeQuery(query);
-    if (!raw) return [];
-    const tokens = raw.split(' ').filter(Boolean);
-    return index
-      .map((item) => ({ item, score: scoreItem(item, tokens, raw) }))
-      .filter((r) => r.score >= 0)
-      .sort((a, b) => b.score - a.score || a.item.slug.localeCompare(b.item.slug))
-      .slice(0, 8)
-      .map((r) => r.item);
-  }, [query, index]);
+  const results = React.useMemo(() => searchTools(index, query), [query, index]);
 
   React.useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -225,6 +157,12 @@ export function ToolSearch({
   );
 }
 
-export function HeaderSearch({ onNavigate }: { onNavigate?: () => void }) {
-  return <ToolSearch onNavigate={onNavigate} className="w-64" />;
+export function HeaderSearch({
+  onNavigate,
+  className,
+}: {
+  onNavigate?: () => void;
+  className?: string;
+}) {
+  return <ToolSearch onNavigate={onNavigate} className={className ?? 'w-64'} />;
 }

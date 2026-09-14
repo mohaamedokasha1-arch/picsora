@@ -169,6 +169,7 @@ export default async function GuidePage({ params }: { params: { locale: string; 
                   icon={tool.icon}
                   isNew={tool.isNew}
                   newLabel={t('common.new')}
+                  ctaLabel={t('common.useTool')}
                 />
               ))}
             </div>
