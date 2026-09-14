@@ -55,7 +55,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
             {t('home.heroHighlight')}
           </span>
           <h1 className="mx-auto max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
-            {t('home.heroTitle')}
+            {/* The count comes from the registry, so the headline stays true
+                however many tools the catalogue holds. */}
+            {t('home.heroTitle', { count: TOOLS.length })}
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
             {t('home.heroSubtitle')}

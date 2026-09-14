@@ -71,8 +71,9 @@ export const siteConfig = {
   /** Raster OG image — social crawlers do not reliably fetch SVG. */
   ogImage: '/images/og-image.jpg',
   description:
-    'Free online tools that run 100% in your browser. Compress images, convert iPhone HEIC photos, edit PDFs, extract text and format code — privately.',
+    'Free online tools that run 100% in your browser: images, PDFs, text, calculators and developer utilities in one place — privately.',
   keywords: [
+    'online tools',
     'image tools',
     'image compressor',
     'image resizer',
@@ -83,6 +84,13 @@ export const siteConfig = {
     'pdf to text',
     'ocr online',
     'developer tools',
+    'pdf merger',
+    'pdf watermark',
+    'json to csv',
+    'line sorter',
+    'url parser',
+    'unix timestamp converter',
+    'cron generator',
     'jpg to png',
     'online image editor',
     'free image tools',
