@@ -3485,11 +3485,28 @@
     "successText": "Thanks for reaching out — we'll get back to you soon.",
     "notConfiguredTitle": "Prefer email?",
     "notConfiguredText": "The fastest way to reach us is email: write to privacy@piclizer.app and we will get back to you.",
+    "reportTitle": "Facing a problem or found a bug?",
+    "reportIntro": "If you ran into any problem or error while using the site, tell us about it with the form below — every report helps us fix it faster.",
+    "reportName": "Name (optional)",
+    "reportNamePlaceholder": "Jane Doe",
+    "reportEmail": "Email address (optional)",
+    "reportEmailPlaceholder": "you@example.com",
+    "reportDetails": "Describe the problem or error",
+    "reportDetailsPlaceholder": "What went wrong? Mention the tool and what you were doing, if you can.",
+    "reportSend": "Send report",
+    "reportSending": "Sending…",
+    "reportSuccessTitle": "Report sent successfully",
+    "reportSuccessText": "Thanks for helping us improve Piclizer ❤️",
+    "reportMailSubject": "Problem or bug report — Piclizer",
+    "reportMailtoTitle": "Your report is ready to send",
+    "reportMailtoText": "We opened your email app with the report already written and addressed to {email} — just press send there. If it did not open, you can email us directly at {email}. Thanks for helping us improve Piclizer ❤️",
+    "reportErrorText": "Sorry — the report could not be sent. Please try again, or email us directly at {email}.",
     "validation": {
       "nameRequired": "Please enter your name.",
       "emailRequired": "Please enter your email address.",
       "emailInvalid": "Please enter a valid email address.",
-      "messageRequired": "Please enter a message."
+      "messageRequired": "Please enter a message.",
+      "detailsRequired": "Please describe the problem or error."
     }
   },
   "pdfTools": {

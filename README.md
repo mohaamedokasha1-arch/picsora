@@ -53,6 +53,7 @@ Copy `.env.example` to `.env.local` and adjust. Everything is optional — the s
 | `NEXT_PUBLIC_ADS_ENABLED` / `NEXT_PUBLIC_ADS_CLIENT_ID` | AdSense (consent-gated, off by default) |
 | `NEXT_PUBLIC_MONETAG_VIGNETTE_ZONE_ID` | Monetag Vignette Banner zone id (consent-gated, off unless set) |
 | `NEXT_PUBLIC_CONTACT_ENDPOINT` | Optional URL that receives `POST {name, email, message}` |
+| `NEXT_PUBLIC_REPORT_ENDPOINT` | Optional URL that receives bug-report `POST {name, email, message}` delivered to `piclizer@gmail.com`; when unset the bug-report form falls back to a prefilled email opened in the visitor's mail app |
 
 ## Architecture
 
