@@ -97,7 +97,6 @@ export const siteConfig = {
   ],
   defaultLocale: 'en',
   locales: ['en', 'ar'] as const,
-  contactEmail: 'privacy@piclizer.app',
   /** Bug / error reports submitted from the contact page go here. */
   reportEmail: 'piclizer@gmail.com',
   adsensePublisherId: 'ca-pub-5770911159315916',

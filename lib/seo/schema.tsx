@@ -50,7 +50,6 @@ export function organizationSchema(url: string, name: string) {
     '@type': 'Organization',
     name,
     url: origin,
-    email: siteConfig.contactEmail,
     logo: {
       '@type': 'ImageObject',
       url: `${origin}/icons/icon-512.png`,

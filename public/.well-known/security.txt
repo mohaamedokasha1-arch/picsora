@@ -1,4 +1,4 @@
-Contact: mailto:privacy@piclizer.app
+Contact: https://piclizer.vercel.app/en/contact
 Expires: 2027-09-04T00:00:00.000Z
 Preferred-Languages: en, ar
 Canonical: https://piclizer.vercel.app/.well-known/security.txt
@@ -6,4 +6,4 @@ Policy: https://piclizer.vercel.app/en/privacy-policy
 
 # Piclizer processes every file locally in the visitor's browser.
 # No uploads, no accounts, no server-side storage of user content.
-# Please report any security issue to the address above.
+# Please report any security issue via the contact page above.
