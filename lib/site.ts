@@ -101,7 +101,7 @@ export const siteConfig = {
   reportEmail: 'piclizer@gmail.com',
   adsensePublisherId: 'ca-pub-5770911159315916',
   /** Used for Article datePublished / sitemap lastmod when a page has no own date. */
-  contentUpdatedAt: '2026-09-08',
+  contentUpdatedAt: '2026-09-14',
 };
 
 export type Locale = (typeof siteConfig.locales)[number];

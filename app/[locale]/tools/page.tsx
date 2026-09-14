@@ -50,7 +50,10 @@ export default async function ToolsPage({ params }: { params: { locale: string }
       {/* Same search field as the header and the homepage, so people who land
           straight on the listing can jump to a tool without scrolling. */}
       <div className="mt-6 max-w-2xl">
-        <ToolSearch />
+        {/* `readUrlQuery` makes the WebSite SearchAction target (/tools?q=…)
+            actually work, so a shared or schema-driven search link lands on
+            results instead of an empty field. */}
+        <ToolSearch readUrlQuery />
       </div>
       <div className="mt-8">
         <ToolsGrid

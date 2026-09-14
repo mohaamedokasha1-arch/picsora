@@ -64,27 +64,50 @@ function harden(response: NextResponse): NextResponse {
  * that resolves to another host (scheme-relative `//evil.com`, control
  * characters stripped by the URL parser, …) must never leave this middleware.
  * See CVE-2026-40299 for the class of bug this defends against.
+ *
+ * SEO NOTE — the previous implementation rejected *any* `Location` matching
+ * `^(\/\/|[a-z][a-z0-9+.-]*:)`, which also matches a perfectly safe absolute
+ * same-origin URL such as `https://piclizer.vercel.app/en/tools/heic-to-jpg`
+ * (it starts with the `https:` scheme). next-intl emits exactly that shape,
+ * so every un-prefixed URL — `/tools/image-compressor`, `/categories/pdf-tools`,
+ * `/guides/compress-image` — was redirected to the bare `/en` home page
+ * instead of its locale-prefixed equivalent. Googlebot and any visitor
+ * following an un-prefixed link (old backlinks, shared links, typed URLs)
+ * landed on the homepage, so the destination page lost the link signal and
+ * the redirect looked like a soft-404 to Search.
+ *
+ * The check now compares the resolved *origin* (which is what actually
+ * matters for an open redirect) and only treats protocol-relative URLs
+ * (`//host`, `/\host`) as hostile, because those are the shapes that change
+ * host without an explicit scheme. Foreign schemes/hosts are still rejected.
  */
 function assertSameOriginRedirect(response: NextResponse, request: NextRequest): NextResponse {
   const location = response.headers.get('location');
   if (!location) return response;
 
+  const origin = request.nextUrl.origin;
+  const fallback = () => harden(NextResponse.redirect(new URL('/en', origin), 307));
+
   let target: URL;
   try {
-    target = new URL(location, request.nextUrl.origin);
+    target = new URL(location, origin);
   } catch {
-    return harden(NextResponse.redirect(new URL('/en', request.nextUrl.origin), 307));
+    return fallback();
   }
 
-  const sameOrigin = target.origin === request.nextUrl.origin;
-  const schemeRelative = /^\s*(\/\/|[a-z][a-z0-9+.-]*:)/i.test(location);
+  // Protocol-relative (`//evil.com`, `/\evil.com`, `\/\/evil.com`) switches
+  // host without naming a scheme — never legitimate here.
+  if (/^[\s]*[\\/]{2}/.test(location)) return fallback();
 
-  if (!sameOrigin || schemeRelative) {
-    return harden(NextResponse.redirect(new URL('/en', request.nextUrl.origin), 307));
-  }
+  // Anything that resolves to another origin (including `javascript:`,
+  // `data:` and absolute URLs on a foreign host) is refused.
+  if (target.origin !== origin) return fallback();
 
-  // Normalise to a relative Location so no absolute host can be injected.
-  response.headers.set('location', `${target.pathname}${target.search}${target.hash}`);
+  // Same-origin: keep the real destination, rewritten from the parsed URL so
+  // only the origin we just verified can appear in the header. Kept absolute
+  // because the Edge runtime re-parses `Location` without a base and throws
+  // on a relative value.
+  response.headers.set('location', `${origin}${target.pathname}${target.search}${target.hash}`);
   return response;
 }
 
