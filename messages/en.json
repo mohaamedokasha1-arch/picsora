@@ -183,19 +183,19 @@
     },
     "resize": {
       "name": "Image Resizers",
-      "description": "Change image dimensions precisely with presets or custom sizes."
+      "description": "Resize images to exact pixel dimensions — presets for profile pictures, banners and print, or your own width and height. Free in your browser."
     },
     "convert": {
       "name": "Image Converters",
-      "description": "Convert images between JPG, PNG and WebP formats instantly."
+      "description": "Convert images between JPG, PNG, WebP and iPhone HEIC without quality loss. Free, instant and processed entirely in your browser."
     },
     "edit": {
       "name": "Image Editors",
-      "description": "Crop, rotate, flip, merge, split and transform your images."
+      "description": "Crop, rotate, flip, merge, split, watermark, blur and retouch images — plus passport photos and signatures. All free in your browser."
     },
     "color": {
       "name": "Color Tools",
-      "description": "Pick and extract colors from any image."
+      "description": "Pick HEX, RGB and HSL values from any pixel and extract a full colour palette from an image. Free, instant and private in your browser."
     },
     "pdf-tools": {
       "name": "PDF Tools",
