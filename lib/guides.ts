@@ -5,6 +5,9 @@
  * tools — internal linking without spam or duplicate pages.
  */
 
+import extraEn from './content/guides-extra.en.json';
+import extraAr from './content/guides-extra.ar.json';
+
 export interface GuideSection {
   heading: string;
   paragraphs: string[];
@@ -24,7 +27,7 @@ export interface GuideContent {
   relatedGuides: string[];
 }
 
-export const GUIDE_SLUGS = [
+const IMAGE_GUIDE_SLUGS = [
   'compress-image',
   'reduce-image-size',
   'convert-heic-to-jpg',
@@ -33,9 +36,27 @@ export const GUIDE_SLUGS = [
   'convert-jpg-to-png',
 ] as const;
 
+/** PDF guides live in ./content/guides-extra.*.json (same shape, kept out of
+ *  this file only because of its size). */
+const PDF_GUIDE_SLUGS = [
+  'reduce-pdf-size',
+  'convert-pdf-to-word',
+  'convert-images-to-pdf',
+  'extract-text-from-pdf',
+  'ocr-scanned-pdf',
+] as const;
+
+export const GUIDE_SLUGS = [...IMAGE_GUIDE_SLUGS, ...PDF_GUIDE_SLUGS] as const;
+
+type ImageGuideSlug = (typeof IMAGE_GUIDE_SLUGS)[number];
+type PdfGuideSlug = (typeof PDF_GUIDE_SLUGS)[number];
 export type GuideSlug = (typeof GUIDE_SLUGS)[number];
 
-const GUIDES_EN: Record<GuideSlug, GuideContent> = {
+/** Plain typed assignments (not `as`) so a missing locale or field is a build error. */
+const PDF_GUIDES_EN: Record<PdfGuideSlug, GuideContent> = extraEn;
+const PDF_GUIDES_AR: Record<PdfGuideSlug, GuideContent> = extraAr;
+
+const GUIDES_EN: Record<ImageGuideSlug, GuideContent> = {
   'compress-image': {
     slug: 'compress-image',
     title: 'How to Compress an Image Without Losing Quality',
@@ -95,7 +116,7 @@ const GUIDES_EN: Record<GuideSlug, GuideContent> = {
       { q: 'Why is my PNG still huge?', a: 'PNG is lossless. For photos, switch the output to JPG or WebP; use PNG only for graphics, logos and screenshots.' },
     ],
     relatedTools: ['image-compressor', 'image-to-exact-kb', 'jpg-to-webp', 'heic-to-jpg'],
-    relatedGuides: ['reduce-image-size', 'convert-heic-to-jpg', 'convert-jpg-to-png'],
+    relatedGuides: ['reduce-image-size', 'convert-heic-to-jpg', 'convert-jpg-to-png', 'reduce-pdf-size'],
   },
   'reduce-image-size': {
     slug: 'reduce-image-size',
@@ -151,7 +172,7 @@ const GUIDES_EN: Record<GuideSlug, GuideContent> = {
       { q: 'The form still rejects my file. Why?', a: 'Check three things: file size, dimensions (some forms cap pixels too), and format — many portals accept only JPG.' },
     ],
     relatedTools: ['image-to-exact-kb', 'image-compressor', 'image-resizer', 'passport-photo-maker'],
-    relatedGuides: ['compress-image', 'resize-image', 'compress-iphone-photos'],
+    relatedGuides: ['compress-image', 'resize-image', 'compress-iphone-photos', 'reduce-pdf-size'],
   },
   'convert-heic-to-jpg': {
     slug: 'convert-heic-to-jpg',
@@ -205,7 +226,7 @@ const GUIDES_EN: Record<GuideSlug, GuideContent> = {
       { q: 'Can I convert HEIC on Windows?', a: 'Yes — the tool runs in any modern browser on Windows, Mac, Android or iPhone itself.' },
     ],
     relatedTools: ['heic-to-jpg', 'heic-to-png', 'image-compressor', 'image-to-exact-kb'],
-    relatedGuides: ['compress-iphone-photos', 'compress-image', 'convert-jpg-to-png'],
+    relatedGuides: ['compress-iphone-photos', 'compress-image', 'convert-jpg-to-png', 'convert-images-to-pdf'],
   },
   'compress-iphone-photos': {
     slug: 'compress-iphone-photos',
@@ -261,7 +282,7 @@ const GUIDES_EN: Record<GuideSlug, GuideContent> = {
       { q: 'Are my personal photos uploaded?', a: 'Never. Conversion and compression run inside your browser — safe even for sensitive photos.' },
     ],
     relatedTools: ['heic-to-jpg', 'image-compressor', 'image-to-exact-kb', 'image-resizer'],
-    relatedGuides: ['convert-heic-to-jpg', 'reduce-image-size', 'compress-image'],
+    relatedGuides: ['convert-heic-to-jpg', 'reduce-image-size', 'compress-image', 'convert-images-to-pdf'],
   },
   'resize-image': {
     slug: 'resize-image',
@@ -318,7 +339,7 @@ const GUIDES_EN: Record<GuideSlug, GuideContent> = {
       { q: 'Can I resize transparent PNGs?', a: 'Yes. Resizing preserves the alpha channel when the output stays PNG or WebP.' },
     ],
     relatedTools: ['image-resizer', 'image-cropper', 'passport-photo-maker', 'image-compressor'],
-    relatedGuides: ['compress-image', 'reduce-image-size', 'convert-jpg-to-png'],
+    relatedGuides: ['compress-image', 'reduce-image-size', 'convert-jpg-to-png', 'convert-images-to-pdf'],
   },
   'convert-jpg-to-png': {
     slug: 'convert-jpg-to-png',
@@ -373,11 +394,11 @@ const GUIDES_EN: Record<GuideSlug, GuideContent> = {
       { q: 'JPG, PNG or WebP for my website?', a: 'Photos: WebP (smallest) or JPG (universal). Graphics with sharp edges or transparency: PNG or WebP.' },
     ],
     relatedTools: ['jpg-to-png', 'png-to-jpg', 'png-to-webp', 'background-remover'],
-    relatedGuides: ['compress-image', 'convert-heic-to-jpg', 'resize-image'],
+    relatedGuides: ['compress-image', 'convert-heic-to-jpg', 'resize-image', 'convert-images-to-pdf'],
   },
 };
 
-const GUIDES_AR: Record<GuideSlug, GuideContent> = {
+const GUIDES_AR: Record<ImageGuideSlug, GuideContent> = {
   'compress-image': {
     slug: 'compress-image',
     title: 'كيف تضغط الصور دون فقدان الجودة',
@@ -437,7 +458,7 @@ const GUIDES_AR: Record<GuideSlug, GuideContent> = {
       { q: 'لماذا ملف PNG ما زال ضخمًا؟', a: 'لأن PNG غير مضغوطة الفقد. للصور الفوتوغرافية بدّل الإخراج إلى JPG أو WebP.' },
     ],
     relatedTools: ['image-compressor', 'image-to-exact-kb', 'jpg-to-webp', 'heic-to-jpg'],
-    relatedGuides: ['reduce-image-size', 'convert-heic-to-jpg', 'convert-jpg-to-png'],
+    relatedGuides: ['reduce-image-size', 'convert-heic-to-jpg', 'convert-jpg-to-png', 'reduce-pdf-size'],
   },
   'reduce-image-size': {
     slug: 'reduce-image-size',
@@ -493,7 +514,7 @@ const GUIDES_AR: Record<GuideSlug, GuideContent> = {
       { q: 'ما زال النموذج يرفض ملفي. لماذا؟', a: 'تحقق من ثلاثة: حجم الملف، والأبعاد (بعض النماذج تحد البكسلات أيضًا)، والصيغة — فكثير من البوابات لا يقبل إلا JPG.' },
     ],
     relatedTools: ['image-to-exact-kb', 'image-compressor', 'image-resizer', 'passport-photo-maker'],
-    relatedGuides: ['compress-image', 'resize-image', 'compress-iphone-photos'],
+    relatedGuides: ['compress-image', 'resize-image', 'compress-iphone-photos', 'reduce-pdf-size'],
   },
   'convert-heic-to-jpg': {
     slug: 'convert-heic-to-jpg',
@@ -547,7 +568,7 @@ const GUIDES_AR: Record<GuideSlug, GuideContent> = {
       { q: 'هل يمكن التحويل على ويندوز؟', a: 'نعم — تعمل الأداة في أي متصفح حديث على ويندوز وماك وأندرويد والايفون نفسه.' },
     ],
     relatedTools: ['heic-to-jpg', 'heic-to-png', 'image-compressor', 'image-to-exact-kb'],
-    relatedGuides: ['compress-iphone-photos', 'compress-image', 'convert-jpg-to-png'],
+    relatedGuides: ['compress-iphone-photos', 'compress-image', 'convert-jpg-to-png', 'convert-images-to-pdf'],
   },
   'compress-iphone-photos': {
     slug: 'compress-iphone-photos',
@@ -603,7 +624,7 @@ const GUIDES_AR: Record<GuideSlug, GuideContent> = {
       { q: 'هل تُرفَع صوري الشخصية؟', a: 'أبدًا. التحويل والضغط يعملان داخل متصفحك — آمن حتى للصور الحساسة.' },
     ],
     relatedTools: ['heic-to-jpg', 'image-compressor', 'image-to-exact-kb', 'image-resizer'],
-    relatedGuides: ['convert-heic-to-jpg', 'reduce-image-size', 'compress-image'],
+    relatedGuides: ['convert-heic-to-jpg', 'reduce-image-size', 'compress-image', 'convert-images-to-pdf'],
   },
   'resize-image': {
     slug: 'resize-image',
@@ -660,7 +681,7 @@ const GUIDES_AR: Record<GuideSlug, GuideContent> = {
       { q: 'هل يمكن تصغير PNG الشفاف؟', a: 'نعم. يحافظ التصغير على قناة الشفافية عندما يبقى الإخراج PNG أو WebP.' },
     ],
     relatedTools: ['image-resizer', 'image-cropper', 'passport-photo-maker', 'image-compressor'],
-    relatedGuides: ['compress-image', 'reduce-image-size', 'convert-jpg-to-png'],
+    relatedGuides: ['compress-image', 'reduce-image-size', 'convert-jpg-to-png', 'convert-images-to-pdf'],
   },
   'convert-jpg-to-png': {
     slug: 'convert-jpg-to-png',
@@ -715,12 +736,14 @@ const GUIDES_AR: Record<GuideSlug, GuideContent> = {
       { q: 'JPG أم PNG أم WebP لموقعي؟', a: 'للصور: WebP (الأصغر) أو JPG (الأشمل). وللرسومات حادة الحواف أو الشفافة: PNG أو WebP.' },
     ],
     relatedTools: ['jpg-to-png', 'png-to-jpg', 'png-to-webp', 'background-remover'],
-    relatedGuides: ['compress-image', 'convert-heic-to-jpg', 'resize-image'],
+    relatedGuides: ['compress-image', 'convert-heic-to-jpg', 'resize-image', 'convert-images-to-pdf'],
   },
 };
 
 export function getGuide(slug: string, locale: string): GuideContent | undefined {
-  const table = locale === 'ar' ? GUIDES_AR : GUIDES_EN;
+  const table = locale === 'ar'
+    ? { ...GUIDES_AR, ...PDF_GUIDES_AR }
+    : { ...GUIDES_EN, ...PDF_GUIDES_EN };
   return (table as Record<string, GuideContent>)[slug];
 }
 

@@ -1,0 +1,254 @@
+{
+  "image-blur": {
+    "title": "Blur what should stay private before you share",
+    "paragraphs": [
+      "Most photos people share carry something they never meant to publish: a face in the background, a house number, a delivery label, a bank balance in a screenshot. The Image Blur tool lets you deal with exactly those spots — drag a rectangle over each one, set how strong the blur should be, and everything outside your selection stays at full original quality.",
+      "There is also a whole-image mode, which is what you want for a soft background, a privacy-safe thumbnail, or a placeholder shown while a larger picture loads. The blur is a real pixel operation applied to the exported file, not a CSS effect layered on top, so the hidden detail is genuinely gone from the image you download rather than merely covered up in the browser.",
+      "That distinction matters. A black box drawn in a slide deck or a blur applied as a filter in a web page can often be removed by whoever receives the file. Here the pixels are resampled before the image is encoded, so the version that leaves your device no longer contains the information you hid. Because the whole operation runs on a canvas in this tab, the original photo is never uploaded anywhere."
+    ],
+    "useCases": [
+      "Hiding faces and children before posting a photo publicly",
+      "Covering names, addresses and account numbers in a screenshot",
+      "Blurring license plates and house numbers in property or car listings",
+      "Creating a softly blurred background or placeholder image"
+    ]
+  },
+  "image-pixelate": {
+    "title": "Pixelation: censor detail while keeping the shape",
+    "paragraphs": [
+      "Pixelation rebuilds an area out of large uniform squares. Each block takes the average colour of the pixels underneath it, so the outline of what was there stays recognisable while the detail inside it is destroyed. That is why it reads instantly as \"this was deliberately censored\" — the classic look for redacted documents and broadcast footage.",
+      "Choose between the whole image and selected areas. For a screenshot you usually want selections: drag over the email address, the phone number or the face, leave the rest sharp so the picture still makes sense. The block size controls how much survives — larger blocks mean fewer, coarser squares and less recoverable detail.",
+      "Pick pixelation over blur when you want the censorship to be obvious, and use a generous block size when the content is sensitive. Very small blocks on text can still leave enough structure for a reader to guess the characters. As with every image tool here, the file is processed on a canvas inside your browser and the result is encoded locally, so nothing is uploaded."
+    ],
+    "useCases": [
+      "Censoring names, emails and account numbers in screenshots",
+      "Redacting faces in photos shared publicly or in documentation",
+      "Creating the familiar mosaic effect for reports and presentations",
+      "Obscuring sensitive regions of a scan before sending it on"
+    ]
+  },
+  "brightness-contrast": {
+    "title": "Rescue dark, washed-out and flat photos",
+    "paragraphs": [
+      "Two sliders fix the majority of everyday photo problems. Brightness shifts every pixel up or down, which is the cure for a shot taken indoors or against a bright window. Contrast pushes light and dark values apart, which is what a flat, hazy or greyish image is missing — the difference between a scan that looks washed out and one that looks crisp.",
+      "The order is worth knowing: lift the brightness until the shadows are readable, then add contrast to restore the punch that brightening always flattens. Watch the preview as you go. If highlights start turning into featureless white patches, you have gone too far — that detail cannot be recovered, because it is simply no longer in the file.",
+      "The preview is rendered at display size for speed, but the download is processed at the image's full original resolution, so a photo from a phone camera comes back at its real pixel dimensions rather than the size of the preview box. Everything happens in your browser, so the photo never leaves your device."
+    ],
+    "useCases": [
+      "Brightening photos shot indoors or in poor light",
+      "Adding contrast to flat scans and document photos",
+      "Fixing backlit shots where the subject came out dark",
+      "Making product images look consistent before publishing"
+    ]
+  },
+  "image-filters": {
+    "title": "Four classic filters with adjustable strength",
+    "paragraphs": [
+      "Grayscale, sepia, invert and sharpen cover the adjustments people actually reach for. Grayscale removes colour using the standard luminance weighting, so the result keeps realistic brightness relationships instead of the muddy grey you get from naively averaging the channels. Sepia adds the warm brown cast of an old print. Invert produces a photographic negative, which is also a quick way to read a dark-mode screenshot.",
+      "Sharpen is the one that repays care. It works by increasing contrast along edges, which makes a slightly soft photo look crisper — but pushed too far it produces halos around outlines and amplifies noise in flat areas like skies. The strength slider exists precisely so you can stop at the point where the image looks defined but not brittle.",
+      "Because the strength is adjustable, these are not one-click presets: a 30% grayscale desaturates rather than drains, and a light sepia warms a photo without making it look like a costume. Each filter is applied to the full-resolution image when you export, and the whole pipeline runs locally in your browser."
+    ],
+    "useCases": [
+      "Converting photos to clean black and white for print or documents",
+      "Giving images a warm vintage look for a blog or social post",
+      "Inverting screenshots to read light text on a dark background",
+      "Sharpening slightly soft photos before publishing them"
+    ]
+  },
+  "rounded-corners": {
+    "title": "Rounded corners that stay proportional at any size",
+    "paragraphs": [
+      "The radius is set as a percentage of the image's shorter side rather than in fixed pixels. That is the detail that makes the result reusable: a 20% radius looks the same on a 400-pixel avatar and a 4,000-pixel product shot, whereas a fixed 40-pixel radius would be a gentle curve on one and barely visible on the other. Push the slider to 50% and a square image becomes a perfect circle.",
+      "The output format decides what happens in the corners themselves. PNG and WebP support transparency, so the rounded-off area is genuinely empty and the image sits cleanly on any background colour. JPG has no alpha channel, so those corners are filled with white — fine on a white page, obvious on a dark one. If you are placing the image on a coloured background, export PNG or WebP.",
+      "This matters because rounding in CSS only affects how a picture is displayed in one place. Baking the corners into the file means the same asset looks right in a slide deck, a PDF, an email signature or an app store listing, none of which will apply your stylesheet. The image is redrawn on a canvas in your browser and never uploaded."
+    ],
+    "useCases": [
+      "Preparing avatars and profile pictures with soft or circular corners",
+      "Making product and card images for a website or app mockup",
+      "Creating consistently rounded thumbnails for a presentation",
+      "Producing logo assets that sit cleanly on any background"
+    ]
+  },
+  "image-metadata": {
+    "title": "See what your photos reveal before you share them",
+    "paragraphs": [
+      "Photos carry far more than pixels. The EXIF block written by phones and cameras can record the device make and model, lens, shutter speed, aperture, ISO, orientation, the exact date and time the shot was taken and — frequently — the GPS coordinates of where you were standing. None of that is visible in the picture, and all of it travels with the file when you send it.",
+      "This tool reads that block and lays it out plainly: the file facts first (type, byte size, pixel dimensions, megapixels), then the camera and exposure table, then any location data it finds. It is a read-only inspector, which is the point — you are checking what is there before deciding whether to share the file.",
+      "Worth knowing: many platforms strip EXIF on upload, but plenty of paths do not. Files sent as email attachments, shared in cloud folders, posted to a forum or transferred over a messenger \"as a document\" usually arrive with the metadata intact. If you find GPS coordinates you would rather not publish, re-exporting the photo through one of the editing tools here produces a clean copy, because the canvas export writes only the image data. The file is parsed inside your browser and never uploaded."
+    ],
+    "useCases": [
+      "Checking whether a photo contains GPS coordinates before posting it",
+      "Reading camera and exposure settings to learn from a shot",
+      "Confirming the real capture date of an image",
+      "Verifying dimensions and file size before uploading somewhere"
+    ]
+  },
+  "pdf-page-numbers": {
+    "title": "Page numbers that match how the document will be used",
+    "paragraphs": [
+      "A PDF without page numbers is difficult to discuss. Reviewers cannot point to a passage, printed copies fall out of order with no way to reassemble them, and legal or academic submissions are often rejected outright for missing pagination. This tool draws real numbers onto each page of the document itself, so they survive printing, flattening and re-export.",
+      "The controls exist because documents differ. Position matters for bound material: a footer centred on the page is fine for a report, while anything destined for a ring binder needs the numbers away from the gutter. The starting number handles the common case where a cover page should not count as page one, or where this file is a continuation of another. Format, font size and margin let the numbering match the document's own typography instead of fighting it.",
+      "The rest of each page is left exactly as it was — no watermark, no re-compression of the images, no change to the existing text. The PDF is parsed and rewritten inside your browser, which means contracts, invoices, dissertations and client reports are numbered without ever being uploaded to a server."
+    ],
+    "useCases": [
+      "Paginating reports and dissertations before submission",
+      "Numbering scanned contracts so clauses can be referenced",
+      "Preparing printed handouts that must stay in order",
+      "Continuing the numbering of a document split across files"
+    ]
+  },
+  "pdf-watermark": {
+    "title": "Mark drafts and confidential documents clearly",
+    "paragraphs": [
+      "A watermark answers a question the reader would otherwise have to ask: is this the final version, and who is it for? Stamping DRAFT across a proposal stops an early version being quoted as final. CONFIDENTIAL sets an expectation before the first paragraph is read. A client or matter name makes it obvious where a leaked copy came from.",
+      "Opacity is the setting that decides whether the watermark works. Too faint and it disappears when the document is printed in greyscale; too strong and it competes with the text underneath. A light-to-moderate value, with the text running diagonally across the page, stays legible at a glance without making the document hard to read. Layout, size and opacity are all adjustable so you can strike that balance for your specific page design.",
+      "The text is drawn onto every page of the document, so it cannot be lost by extracting a single page. The file is rewritten locally in your browser — the sensitive documents that most need a CONFIDENTIAL stamp are exactly the ones you should not be uploading to a stranger's server to get it."
+    ],
+    "useCases": [
+      "Marking proposals and reports as DRAFT before review",
+      "Stamping CONFIDENTIAL on documents shared outside the team",
+      "Labelling copies with a client or matter name",
+      "Identifying sample documents so they are not mistaken for originals"
+    ]
+  },
+  "pdf-grayscale": {
+    "title": "Convert PDF pages to grayscale or pure black and white",
+    "paragraphs": [
+      "Colour is expensive to print and often pointless. A document full of coloured headings, logos and chart fills costs several times as much per page on an office printer as the same pages in black. Converting to grayscale before printing removes that cost, and it also gives archives and scanned collections a consistent look instead of a mix of colour casts from different scanners.",
+      "Two modes serve different material. Smooth grayscale keeps the full range of tones, which is what photographs and charts with subtle shading need. Pure black and white forces every pixel to one extreme, which suits text-only scans: it removes the grey haze from a badly lit page, sharpens the letterforms and usually produces a noticeably smaller file.",
+      "The DPI setting is the trade-off to pay attention to. This conversion renders each page as an image, so resolution determines both quality and size — 100 DPI is fine for reading on screen, while 200 DPI keeps small text crisp in print. Because pages become images, any selectable text in the original will no longer be selectable in the output; keep the original if you still need to search or copy from it. Everything is rendered and re-assembled inside your browser."
+    ],
+    "useCases": [
+      "Cutting colour ink costs before printing a long document",
+      "Giving a scanned archive a uniform black-and-white appearance",
+      "Cleaning up grey, unevenly lit scans of text pages",
+      "Shrinking colourful documents for storage or email"
+    ]
+  },
+  "pdf-metadata-editor": {
+    "title": "Fix the document properties people actually see",
+    "paragraphs": [
+      "PDF metadata decides what shows up in places you do not control. A browser tab shows the Title field, not the filename. Document management systems, email clients and file explorers index the Author, Subject and Keywords. Most PDFs inherit whatever the producing application put there — which is why so many documents in circulation are titled \"Microsoft Word - final_v3_REVISED.docx\".",
+      "That default is worth fixing for anything you send out. Set a real title and the document identifies itself correctly in a tab and in search results within an intranet. Set the author and subject and it can be filed automatically. Add keywords and it becomes findable by people who do not know its filename.",
+      "Editing these fields changes only the document information dictionary — the pages, fonts and images are untouched, so the file renders exactly as before. The tool shows you the existing values first, so you can see what the file is currently advertising about itself. The original is left alone and a new copy is generated, all inside your browser."
+    ],
+    "useCases": [
+      "Replacing an auto-generated title like \"Microsoft Word - doc1\"",
+      "Setting author and subject before sharing a document externally",
+      "Adding keywords so a PDF can be found in a document system",
+      "Checking what metadata a PDF already exposes"
+    ]
+  },
+  "pdf-extract-images": {
+    "title": "Pull the embedded images back out of a PDF",
+    "paragraphs": [
+      "Images inside a PDF are stored as complete embedded files, not as part of a flattened page picture. That means they can be recovered at the resolution they were placed at — which is almost always better than the alternatives. A screenshot captures only what fits on screen at screen resolution; exporting the page as an image gives you the photo plus all the text around it.",
+      "This tool walks the document's object structure, finds those embedded image streams and offers each one as a separate JPEG or PNG. You see previews of everything it found, so you can take the single diagram you need or grab the lot as a ZIP when you are rebuilding a deck from a supplied PDF.",
+      "A realistic expectation: what comes out is what was put in. If a brochure was produced from low-resolution web images, extraction returns those same low-resolution files — no tool can add detail that was never embedded. Vector artwork and text are not raster images and so are not extracted. The PDF is parsed inside your browser, so the document never leaves your device."
+    ],
+    "useCases": [
+      "Recovering photos from a brochure or report at full quality",
+      "Reusing diagrams from a PDF in a presentation",
+      "Extracting product images from a supplier catalogue",
+      "Saving scanned photographs embedded in a document"
+    ]
+  },
+  "line-sorter": {
+    "title": "Put any list in order, then clean it up",
+    "paragraphs": [
+      "Sorting a list sounds trivial until numbers are involved. Alphabetical order puts \"10\" before \"9\", because it compares character by character — which is why a spreadsheet column of IDs or prices comes back wrong so often. The numeric modes here compare the values as numbers, so 2, 9, 10, 100 sort the way you expect. Length sorting is the quick way to spot outliers, and shuffle is genuinely useful for randomising a draw or a test order.",
+      "The cleanup options matter as much as the order. Trimming removes the invisible leading and trailing spaces that arrive with anything copied out of a web page or a PDF — and those spaces break both sorting and deduplication, because \" apple\" and \"apple\" are different strings. Removing empty lines and duplicates turns a messy paste into a clean list in the same pass.",
+      "The practical sequence is to trim first, then deduplicate, then sort: cleaning before comparing is what makes the duplicate removal actually catch everything. Everything runs as plain JavaScript in the page, so a customer list or an export of internal data stays in your browser."
+    ],
+    "useCases": [
+      "Alphabetising names, glossaries and reference lists",
+      "Sorting numeric IDs or prices correctly rather than as text",
+      "Deduplicating an email or keyword list before importing it",
+      "Cleaning up a column copied out of a spreadsheet or PDF"
+    ]
+  },
+  "text-extractor": {
+    "title": "Collect links, emails, phones and numbers from any text",
+    "paragraphs": [
+      "Some information is easier to describe by its shape than to find by eye. Every URL starts with a scheme or a www, every email has a local part and a domain, phone numbers follow recognisable digit groupings. This tool scans the text you paste for those shapes and returns each type as its own list, with counts and duplicates removed.",
+      "That turns a tedious manual job into a paste. Pull every link out of a long email thread to check them, collect the addresses from a signature block or a copied directory page, or gather all the figures from a report to drop into a spreadsheet. You choose which types to extract, so you are not wading through numbers when you only wanted links.",
+      "Pattern matching has honest limits: text written in unusual formats may be missed, and a string that merely looks like a phone number will be picked up. Review the lists rather than trusting them blindly. The scan runs entirely in your browser, which matters here — the text people paste into an extractor is usually correspondence or contact data that should not be sent anywhere."
+    ],
+    "useCases": [
+      "Pulling every URL out of a long document or email thread",
+      "Collecting email addresses from copied text",
+      "Gathering phone numbers from a directory or contact page",
+      "Extracting figures from a report into a spreadsheet"
+    ]
+  },
+  "text-frequency-counter": {
+    "title": "See which words carry the weight of a text",
+    "paragraphs": [
+      "Counting occurrences tells you what a piece of writing is actually about — and what it repeats without meaning to. Ranking words by frequency exposes the term you have leaned on four times in one paragraph, confirms whether the topic you intended is genuinely prominent, and gives you the keyword density figure before you publish rather than after.",
+      "Raw counts on their own are misleading, because \"the\", \"and\" and \"of\" always win. That is what the stop-word filter is for: switch it on and the function words drop out, leaving the terms that carry the meaning. Filters for short tokens and pure numbers clean up the tail further. Each row shows both the count and the share of the total, so a word's weight is comparable between a 200-word note and a 5,000-word article.",
+      "Character mode answers a different question, and is the one to use for language study, cipher work, or checking which glyphs appear in a text before choosing a font subset. Results export as CSV or JSON for further analysis, and the whole count runs in your browser — unpublished drafts stay unpublished."
+    ],
+    "useCases": [
+      "Checking keyword density before publishing an article",
+      "Spotting overused words in a draft",
+      "Analysing letter frequency for language study or puzzles",
+      "Exporting a word-count table for further analysis"
+    ]
+  },
+  "json-csv-converter": {
+    "title": "Move data between spreadsheets and code",
+    "paragraphs": [
+      "JSON and CSV solve the same problem for different audiences. APIs, configuration files and databases speak JSON; finance teams, analysts and every spreadsheet in the building speak CSV. Converting between them is a routine task that usually ends in a hand-written script or a paste into a site that keeps the data.",
+      "The awkward part is nesting. CSV is flat — one row, one value per column — while JSON objects contain other objects. Nested keys are therefore flattened into dotted column headers, so an object with a nested address becomes columns like address.city and address.postcode. Nothing is silently dropped, and the structure remains legible when the file is opened in a spreadsheet.",
+      "Delimiters are the other practical detail. Comma is the default, but a locale that uses the comma as its decimal separator will typically expect semicolons, and tab-separated output pastes straight into a spreadsheet without an import dialog. Type detection converts numbers and booleans on the way back into JSON rather than leaving everything as strings. The conversion is pure JavaScript in your browser, so production exports and customer data never leave your machine."
+    ],
+    "useCases": [
+      "Turning an API response into a spreadsheet for a colleague",
+      "Importing a CSV export into code as a JSON array",
+      "Flattening nested JSON into columns for analysis",
+      "Producing semicolon or tab separated files for a specific locale"
+    ]
+  },
+  "url-parser": {
+    "title": "Break a URL into its parts and read the query string",
+    "paragraphs": [
+      "Long URLs hide their structure. A link with a dozen tracking parameters, an encoded redirect target and a fragment is genuinely hard to read in a single line, and that is exactly when you need to know what it contains. This tool splits it into protocol, hostname, port, path, query and hash, and lays the query parameters out as a table.",
+      "The parameter table is usually the reason you came. It shows each key with its decoded value, including repeated keys — the case that trips up naive parsing, because a URL is allowed to carry the same parameter more than once and only a real parser preserves both. Percent-encoded values are decoded, so an encoded redirect URL becomes readable rather than a wall of %2F and %3A.",
+      "In practice that answers concrete questions: which campaign parameters is this marketing link carrying, where does this redirect actually lead, is my API call sending the filter I think it is. Each component can be copied on its own, and parsing happens entirely in your browser — URLs frequently contain session tokens and API keys, so they should not be pasted into a remote service."
+    ],
+    "useCases": [
+      "Inspecting the tracking parameters on a marketing link",
+      "Debugging a redirect chain to see where it really goes",
+      "Checking the query string an API call is sending",
+      "Decoding a percent-encoded URL into readable form"
+    ]
+  },
+  "timestamp-converter": {
+    "title": "Translate between Unix time and human dates",
+    "paragraphs": [
+      "Unix time counts the seconds elapsed since midnight UTC on 1 January 1970. It is ideal for machines — a single integer, no timezone ambiguity, trivial to compare and sort — and unreadable for people. Log files, database columns, JWT expiry claims and API payloads are full of numbers like 1735689600, and working out what that means by hand is nobody's idea of a good time.",
+      "The first thing to get right is the unit. JavaScript and many APIs use milliseconds; most Unix tooling, databases and JWTs use seconds. Feed a millisecond value into a seconds-based parser and you land tens of thousands of years in the future, which is the single most common mistake when debugging a timestamp. The unit is selectable here for exactly that reason.",
+      "Results are shown as ISO 8601, UTC, your local time and a relative description, because each answers a different question: ISO for pasting back into code, UTC for comparing against a server log, local for knowing when it happened for you, relative for a quick sense of how old it is. Conversion runs in your browser using its own date engine — nothing is sent anywhere."
+    ],
+    "useCases": [
+      "Reading Unix timestamps found in logs and database rows",
+      "Checking the expiry time of a token or API key",
+      "Converting a date to a timestamp for an API request",
+      "Comparing a server timestamp against your local time"
+    ]
+  },
+  "cron-generator": {
+    "title": "Build a cron expression without guessing the syntax",
+    "paragraphs": [
+      "Cron packs a schedule into five terse fields: minute, hour, day of month, month and day of week. It is compact and powerful, and it is very easy to get wrong in ways that are not obvious until the job either never fires or fires far more often than intended. Writing */5 in the wrong column, or confusing the day-of-month and day-of-week fields, produces a valid expression with entirely the wrong behaviour.",
+      "Choosing the schedule instead of typing the syntax removes that class of mistake. Pick an interval and set the minute, hour or weekday, and the expression is assembled correctly — including the detail that a job running hourly still needs a fixed minute, or every run of that hour will trigger it.",
+      "The plain-language summary is the safety check. Reading \"at 03:30 every Monday\" next to 30 3 * * 1 confirms the expression means what you intended before it goes into a crontab, a CI pipeline or a Kubernetes CronJob. Everything is generated in your browser; copy the line straight into your scheduler."
+    ],
+    "useCases": [
+      "Scheduling nightly backups and maintenance jobs",
+      "Setting up periodic CI pipeline or deployment runs",
+      "Building the schedule for a Kubernetes CronJob",
+      "Checking that an existing cron line means what you think"
+    ]
+  }
+}

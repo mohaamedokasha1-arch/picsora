@@ -18,6 +18,10 @@ import calcEn from './articles/calc.en.json';
 import calcAr from './articles/calc.ar.json';
 import devEn from './articles/dev.en.json';
 import devAr from './articles/dev.ar.json';
+// Later additions (image effects, PDF helpers, text/developer utilities) that
+// shipped after the original article sets and had no deep-dive section.
+import extraEn from './articles/extra.en.json';
+import extraAr from './articles/extra.ar.json';
 
 type ArticleFile = Record<string, ToolDeepDive>;
 
@@ -33,6 +37,7 @@ const ARTICLES: Record<string, ArticleFile> = {
     textEn as ArticleFile,
     calcEn as ArticleFile,
     devEn as ArticleFile,
+    extraEn as ArticleFile,
   ),
   ar: merge(
     image1Ar as ArticleFile,
@@ -41,6 +46,7 @@ const ARTICLES: Record<string, ArticleFile> = {
     textAr as ArticleFile,
     calcAr as ArticleFile,
     devAr as ArticleFile,
+    extraAr as ArticleFile,
   ),
 };
 

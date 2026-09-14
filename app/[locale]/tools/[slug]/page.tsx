@@ -33,9 +33,12 @@ export async function generateMetadata({
   const t = await getTranslations();
   const name = t(tool.nameKey as never);
   const description = t(tool.descriptionKey as never);
+  // The suffix is translated: an Arabic page must not carry an English
+  // "Free Online Tool" tail, which previously made every /ar/tools/* title a
+  // mixed-language string in the Arabic SERP.
   return buildMetadata(
     {
-      title: `${name} — Free Online Tool | ${siteConfig.name}`,
+      title: `${name} — ${t('seo.toolTitleSuffix')} | ${siteConfig.name}`,
       description,
       path: `/tools/${tool.slug}`,
       keywords: tool.keywords,
@@ -90,9 +93,13 @@ export default async function ToolPage({ params }: { params: { locale: string; s
     <>
       <StructuredData data={schema} />
       <div className="container py-8">
+        {/* Home → Tools → <Category> → <Tool>. The category hop was missing,
+            so a tool page had no crawlable link back up to the section it
+            belongs to, and its BreadcrumbList never expressed the grouping. */}
         <Breadcrumb
           items={[
             { label: t('common.tools'), href: '/tools' },
+            { label: t(`categoryMeta.${tool.category}.name` as never), href: `/categories/${tool.category}` },
             { label: name, href: `/tools/${tool.slug}` },
           ]}
         />

@@ -183,19 +183,19 @@
     },
     "resize": {
       "name": "Image Resizers",
-      "description": "Change image dimensions precisely with presets or custom sizes."
+      "description": "Resize images to exact pixel dimensions — presets for profile pictures, banners and print, or your own width and height. Free in your browser."
     },
     "convert": {
       "name": "Image Converters",
-      "description": "Convert images between JPG, PNG and WebP formats instantly."
+      "description": "Convert images between JPG, PNG, WebP and iPhone HEIC without quality loss. Free, instant and processed entirely in your browser."
     },
     "edit": {
       "name": "Image Editors",
-      "description": "Crop, rotate, flip, merge, split and transform your images."
+      "description": "Crop, rotate, flip, merge, split, watermark, blur and retouch images — plus passport photos and signatures. All free in your browser."
     },
     "color": {
       "name": "Color Tools",
-      "description": "Pick and extract colors from any image."
+      "description": "Pick HEX, RGB and HSL values from any pixel and extract a full colour palette from an image. Free, instant and private in your browser."
     },
     "pdf-tools": {
       "name": "PDF Tools",
@@ -3310,7 +3310,7 @@
     "text-frequency-counter": {
       "name": "Text Frequency Counter",
       "short": "Rank every word and character by how often it appears.",
-      "description": "Free online frequency counter. Rank words or characters by how often they appear, filter stop words and short terms, and export the table as CSV or JSON — all locally in your browser.",
+      "description": "Free online frequency counter. Rank words or characters by how often they appear, filter stop words, and export the table as CSV or JSON — all in your browser.",
       "intro": "See which words and letters carry the weight of a text. Every term is listed with its count and its share of the whole text, so you can spot repeated words, check keyword density before publishing, or study letter frequency in any language.",
       "howTo": [
         "Paste or type your text.",
@@ -3431,7 +3431,29 @@
     "q1": "Is it free to use?",
     "a1": "Yes — all {category} tools on Piclizer are completely free, with no limits, no watermarks and no account required.",
     "q2": "Are my images uploaded anywhere?",
-    "a2": "No. Every tool in this category processes your images entirely in your browser. Nothing is sent to a server."
+    "a2": "No. Every tool in this category processes your images entirely in your browser. Nothing is sent to a server.",
+    "privacyQ": {
+      "compress": "Are my images uploaded anywhere?",
+      "resize": "Are my images uploaded anywhere?",
+      "convert": "Are my images uploaded anywhere?",
+      "edit": "Are my images uploaded anywhere?",
+      "color": "Are my images uploaded anywhere?",
+      "pdf-tools": "Are my PDF files uploaded anywhere?",
+      "text-tools": "Is the text I paste sent anywhere?",
+      "calculator-tools": "Do these calculators send my data anywhere?",
+      "developer-tools": "Is the data I paste sent to a server?"
+    },
+    "privacyA": {
+      "compress": "No. Compression runs on your device using your browser's own image encoder, so the photos you drop in never leave your computer.",
+      "resize": "No. Resizing is drawn onto a canvas inside your browser, so the original photo and the resized copy both stay on your device.",
+      "convert": "No. Your browser decodes and re-encodes the image itself — including iPhone HEIC files, which are converted locally — so nothing is uploaded.",
+      "edit": "No. Every edit is applied to a canvas inside the page, so both the original and the edited result stay on your device.",
+      "color": "No. The image is read pixel by pixel inside your browser to sample its colours; the file itself is never transmitted.",
+      "pdf-tools": "No. PDFs are parsed and rewritten inside your browser, so contracts, invoices and ID documents never leave your device. The OCR tools additionally download their recognition engine once from a public CDN — your pages are still read locally.",
+      "text-tools": "No. All text processing is plain JavaScript running in the page, so whatever you paste stays in the tab and is lost when you close it.",
+      "calculator-tools": "Your inputs stay in your browser — every calculation runs locally. The one exception is the Currency Converter, which downloads a public exchange-rate table (the amount you type is never sent) and caches it for an hour.",
+      "developer-tools": "No. Formatting, encoding, hashing and decoding all run in your browser, so tokens, keys and payloads you paste are never transmitted."
+    }
   },
   "categoryPage": {
     "relatedCategories": "Related categories"
@@ -3443,10 +3465,10 @@
     "viewCategory": "View category"
   },
   "seo": {
-    "homeTitle": "Free Online Tools — Image, PDF, Text & Developer Utilities | Piclizer",
-    "homeDescription": "Free online tools that run 100% in your browser: compress, resize and convert images, merge and edit PDFs, sort and analyse text, convert JSON/CSV and run everyday calculations — no upload, no sign-up, private by design.",
-    "toolsTitle": "All Free Online Tools — Image, PDF, Text & Developer Utilities | Piclizer",
-    "toolsDescription": "Explore every free Piclizer tool: compress images to exact sizes, convert iPhone HEIC photos, edit PDFs, extract text with OCR, format code and more. 100% in your browser.",
+    "homeTitle": "Free Online Tools — Image, PDF, Text & Developer | Piclizer",
+    "homeDescription": "Free online tools that run 100% in your browser: compress, resize and convert images, merge and edit PDFs, clean text and calculate. No upload, no sign-up.",
+    "toolsTitle": "All Free Online Tools — Image, PDF, Text & Code | Piclizer",
+    "toolsDescription": "Every free Piclizer tool: compress images to an exact size, convert iPhone HEIC photos, edit PDFs, OCR text and format code — all in your browser.",
     "categoriesTitle": "Tool Categories — Image, PDF, Text & More | Piclizer",
     "categoriesDescription": "Browse Piclizer's free tools by category: compress, resize, convert, edit, colour, PDF, text, calculator and developer tools.",
     "aboutTitle": "About Piclizer — Free, Private Browser Tools",
@@ -3461,7 +3483,9 @@
     "cookiePolicyDescription": "How Piclizer uses cookies, which categories exist, and how to manage your preferences.",
     "disclaimerTitle": "Disclaimer | Piclizer",
     "disclaimerDescription": "Disclaimer for Piclizer's free online tools.",
-    "notFoundTitle": "Page Not Found | Piclizer"
+    "notFoundTitle": "Page Not Found | Piclizer",
+    "toolTitleSuffix": "Free Online Tool",
+    "categoryTitleSuffix": "Free Online Tools"
   },
   "notFound": {
     "title": "Page not found",
@@ -4486,7 +4510,9 @@
   "toolDeepDive": {
     "heading": "About this tool",
     "useCases": "Common use cases",
-    "localNote": "Like every Piclizer tool, this one runs entirely in your browser — your files stay on your device."
+    "localNote": "Like every Piclizer tool, this one runs entirely in your browser — your files stay on your device.",
+    "localNoteCdn": "Your files stay on your device: recognition happens in your browser. Only the OCR engine and its language data are downloaded once from a public CDN, then cached for later runs.",
+    "localNoteNetwork": "The amounts you enter stay in your browser. Only the public exchange-rate table is fetched over the network, and it is cached locally for an hour."
   },
   "imageMeta": {
     "fileInfo": "File information",

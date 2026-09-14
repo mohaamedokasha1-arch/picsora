@@ -126,9 +126,9 @@ const T = (
 });
 
 const IMAGE_TOOLS: ToolDef[] = [
-  T('image-compressor', 'compress', 'gauge', ['compress', 'reduce size', 'optimize', 'shrink', 'jpg compress', 'png compress', 'webp compress', 'ضغط الصور'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['image-resizer', 'jpg-to-webp', 'png-to-jpg', 'image-to-grayscale'], true, 20),
-  T('image-resizer', 'resize', 'scaling', ['resize', 'dimensions', 'pixels', 'scale', 'width', 'height', 'تغيير الحجم'], ['jpg', 'png', 'webp', 'gif'], ['jpg', 'png', 'webp', 'gif'], ['image-compressor', 'image-cropper', 'image-rotator'], true, 1),
-  T('image-cropper', 'edit', 'crop', ['crop', 'cut', 'aspect ratio', 'trim', 'قص'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['image-resizer', 'image-rotator', 'split-image'], true, 1),
+  T('image-compressor', 'compress', 'gauge', ['image compressor', 'compress image', 'compress jpg', 'compress png', 'reduce image size', 'reduce photo size', 'online image compressor', 'optimize', 'shrink', 'ضغط الصور', 'تقليل حجم الصورة', 'ضغط jpg', 'ضغط png'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['image-resizer', 'jpg-to-webp', 'png-to-jpg', 'image-to-grayscale'], true, 20),
+  T('image-resizer', 'resize', 'scaling', ['image resizer', 'resize image', 'resize photo', 'change image size', 'dimensions', 'pixels', 'scale', 'width', 'height', 'تغيير حجم الصورة', 'تصغير الصورة'], ['jpg', 'png', 'webp', 'gif'], ['jpg', 'png', 'webp', 'gif'], ['image-compressor', 'image-cropper', 'image-rotator'], true, 1),
+  T('image-cropper', 'edit', 'crop', ['crop image', 'image cropper', 'crop photo', 'cut image', 'aspect ratio', 'trim', 'قص الصور', 'قص الصورة', 'اقتصاص الصور'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['image-resizer', 'image-rotator', 'split-image'], true, 1),
   T('image-rotator', 'edit', 'rotate', ['rotate', 'turn', '90 degrees', '180', 'angle', 'تدوير'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-horizontal', 'flip-image-vertical', 'image-cropper'], false, 1),
   T('flip-image-horizontal', 'edit', 'flip-horizontal', ['flip', 'mirror', 'horizontal', 'reflect', 'انعكاس'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-vertical', 'image-rotator', 'image-cropper'], false, 1),
   T('flip-image-vertical', 'edit', 'flip-vertical', ['flip', 'mirror', 'vertical', 'upside down', 'انعكاس'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['flip-image-horizontal', 'image-rotator', 'image-cropper'], false, 1),
@@ -140,7 +140,7 @@ const IMAGE_TOOLS: ToolDef[] = [
   T('png-to-webp', 'convert', 'repeat', ['png to webp', 'convert png webp', 'transparent webp', 'تحويل'], [...ALL_IMAGE_INPUTS], ['webp'], ['jpg-to-webp', 'webp-to-png', 'png-to-jpg'], false, 10),
   T('webp-to-jpg', 'convert', 'repeat', ['webp to jpg', 'convert webp', 'webp2jpg', 'تحويل'], [...ALL_IMAGE_INPUTS], ['jpg'], ['jpg-to-webp', 'png-to-jpg', 'webp-to-png'], false, 10),
   T('webp-to-png', 'convert', 'repeat', ['webp to png', 'convert webp png', 'webp2png', 'تحويل'], [...ALL_IMAGE_INPUTS], ['png'], ['png-to-webp', 'jpg-to-png', 'webp-to-jpg'], false, 10),
-  T('image-to-pdf', 'pdf-tools', 'file-text', ['image to pdf', 'photo to pdf', 'jpg to pdf', 'png to pdf', 'pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['images-to-pdf', 'image-resizer', 'merge-images'], true, 1),
+  T('image-to-pdf', 'pdf-tools', 'file-text', ['image to pdf', 'photo to pdf', 'jpg to pdf', 'png to pdf', 'convert image to pdf', 'صورة الى pdf', 'تحويل صورة الى pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['images-to-pdf', 'image-resizer', 'merge-images'], true, 1),
   T('images-to-pdf', 'pdf-tools', 'file-text', ['images to pdf', 'multiple photos pdf', 'combine pdf', 'jpg to pdf', 'صور الى pdf'], ['jpg', 'png', 'webp'], ['pdf'], ['image-to-pdf', 'pdf-merger', 'pdf-compressor'], true, 30),
   T('merge-images', 'edit', 'merge', ['merge', 'combine', 'side by side', 'collage', 'stack', 'دمج'], ['jpg', 'png', 'webp'], ['png', 'jpg'], ['split-image', 'images-to-pdf', 'image-resizer'], false, 10),
   T('split-image', 'edit', 'grid', ['split', 'grid', 'tiles', 'slice', 'carousel', 'تقسيم'], ['jpg', 'png', 'webp'], ['jpg', 'png', 'webp'], ['merge-images', 'image-cropper', 'image-resizer'], false, 1),
@@ -199,7 +199,7 @@ const N = (
 });
 
 const PDF_TOOLS: ToolDef[] = [
-  N('pdf-merger', 'pdf-tools', 'pdf', 'file-plus', ['merge pdf', 'combine pdf', 'join pdf', 'pdf merger', 'دمج pdf', 'دمج ملفات pdf'], ['pdf-splitter', 'pdf-extract-pages', 'images-to-pdf', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 50, maxFiles: 20, popular: true }),
+  N('pdf-merger', 'pdf-tools', 'pdf', 'file-plus', ['merge pdf', 'combine pdf', 'join pdf', 'pdf merger', 'merge pdf files', 'دمج pdf', 'دمج ملفات pdf'], ['pdf-splitter', 'pdf-extract-pages', 'images-to-pdf', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 50, maxFiles: 20, popular: true }),
   N('pdf-splitter', 'pdf-tools', 'pdf', 'scissors', ['split pdf', 'separate pdf pages', 'pdf splitter', 'divide pdf', 'تقسيم pdf'], ['pdf-merger', 'pdf-extract-pages', 'pdf-delete-pages', 'pdf-page-counter'], { inputFormats: ['pdf'], outputFormats: ['pdf', 'zip'], popular: true }),
   N('pdf-delete-pages', 'pdf-tools', 'pdf', 'file-minus', ['delete pdf pages', 'remove pages', 'pdf page remover', 'حذف صفحات pdf'], ['pdf-extract-pages', 'pdf-reorder-pages', 'pdf-splitter', 'pdf-rotate-pages'], { inputFormats: ['pdf'], outputFormats: ['pdf'] }),
   N('pdf-reorder-pages', 'pdf-tools', 'pdf', 'list-ordered', ['reorder pdf pages', 'rearrange pdf', 'sort pdf pages', 'ترتيب صفحات pdf'], ['pdf-delete-pages', 'pdf-rotate-pages', 'pdf-merger', 'pdf-extract-pages'], { inputFormats: ['pdf'], outputFormats: ['pdf'] }),
@@ -207,8 +207,8 @@ const PDF_TOOLS: ToolDef[] = [
   N('pdf-extract-pages', 'pdf-tools', 'pdf', 'file-output', ['extract pdf pages', 'get pages from pdf', 'pdf page extractor', 'استخراج صفحات pdf'], ['pdf-splitter', 'pdf-delete-pages', 'pdf-merger', 'pdf-to-images'], { inputFormats: ['pdf'], outputFormats: ['pdf'] }),
   N('pdf-protect', 'pdf-tools', 'pdf', 'lock', ['protect pdf', 'password pdf', 'encrypt pdf', 'secure pdf', 'حماية pdf بكلمة مرور'], ['pdf-unlock', 'pdf-compressor', 'pdf-merger', 'pdf-page-counter'], { inputFormats: ['pdf'], outputFormats: ['pdf'] }),
   N('pdf-unlock', 'pdf-tools', 'pdf', 'unlock', ['unlock pdf', 'remove pdf password', 'decrypt pdf', 'فك حماية pdf'], ['pdf-protect', 'pdf-merger', 'pdf-splitter', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['pdf'] }),
-  N('pdf-to-images', 'pdf-tools', 'pdf', 'image-down', ['pdf to jpg', 'pdf to png', 'convert pdf to image', 'pdf إلى صور'], ['images-to-pdf', 'pdf-extract-pages', 'pdf-compressor', 'image-compressor'], { inputFormats: ['pdf'], outputFormats: ['jpg', 'png', 'zip'], maxFileSizeMB: 50, popular: true }),
-  N('pdf-compressor', 'pdf-tools', 'pdf', 'gauge', ['compress pdf', 'reduce pdf size', 'shrink pdf', 'ضغط pdf'], ['pdf-merger', 'pdf-to-images', 'pdf-splitter', 'image-compressor'], { inputFormats: ['pdf'], outputFormats: ['pdf'], popular: true }),
+  N('pdf-to-images', 'pdf-tools', 'pdf', 'image-down', ['pdf to jpg', 'pdf to png', 'pdf to image', 'convert pdf to image', 'pdf to jpg converter', 'pdf إلى صور', 'تحويل pdf إلى صور', 'pdf الى jpg'], ['images-to-pdf', 'pdf-extract-pages', 'pdf-compressor', 'image-compressor'], { inputFormats: ['pdf'], outputFormats: ['jpg', 'png', 'zip'], maxFileSizeMB: 50, popular: true }),
+  N('pdf-compressor', 'pdf-tools', 'pdf', 'gauge', ['pdf compressor', 'compress pdf', 'reduce pdf size', 'shrink pdf', 'ضغط pdf', 'ضغط ملفات pdf', 'تصغير حجم pdf'], ['pdf-merger', 'pdf-to-images', 'pdf-splitter', 'image-compressor'], { inputFormats: ['pdf'], outputFormats: ['pdf'], popular: true }),
   N('pdf-page-counter', 'pdf-tools', 'pdf', 'hash', ['count pdf pages', 'pdf page count', 'how many pages', 'عدد صفحات pdf'], ['pdf-splitter', 'pdf-merger', 'pdf-extract-pages', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: [], maxFileSizeMB: 50, maxFiles: 20 }),
 ];
 
@@ -563,6 +563,45 @@ export const TOOLS: ToolDef[] = [
 for (const tool of TOOLS) {
   const extra = RELATED_PATCH_2[tool.slug];
   if (extra) tool.relatedTools = [...new Set([...extra, ...tool.relatedTools])].slice(0, 6);
+}
+
+/**
+ * Workflow-first ordering for the highest-intent tools.
+ *
+ * Each patch above *prepends* its suggestions, so for the tools that appear in
+ * several patches the genuine "what do I do with this file next" neighbours
+ * were pushed past the four slots the UI renders. A visitor who had just
+ * converted an iPhone photo was offered "HEIC to PNG" (the same conversion
+ * again) instead of the compressor or the resizer they actually needed next.
+ *
+ * These lists are the real next steps in each workflow and are pinned to the
+ * front; anything else the tool already suggested is kept behind them, so no
+ * existing link is dropped — only reordered.
+ */
+const WORKFLOW_PRIORITY: Record<string, string[]> = {
+  'heic-to-jpg': ['image-compressor', 'image-resizer', 'image-to-pdf'],
+  'heic-to-png': ['image-compressor', 'image-resizer', 'png-to-jpg'],
+  'image-compressor': ['image-resizer', 'jpg-to-png', 'image-to-pdf', 'image-to-exact-kb'],
+  'image-resizer': ['image-compressor', 'image-cropper', 'image-to-pdf'],
+  'image-cropper': ['image-resizer', 'image-compressor', 'passport-photo-maker'],
+  'jpg-to-png': ['png-to-jpg', 'image-compressor', 'image-resizer'],
+  'png-to-jpg': ['jpg-to-png', 'image-compressor', 'image-resizer'],
+  'image-to-pdf': ['images-to-pdf', 'pdf-merger', 'pdf-compressor'],
+  'images-to-pdf': ['pdf-merger', 'pdf-compressor', 'image-compressor'],
+  'pdf-to-word': ['pdf-ocr', 'pdf-compressor', 'pdf-merger', 'pdf-to-text'],
+  'pdf-compressor': ['pdf-to-images', 'pdf-to-word', 'pdf-merger'],
+  'pdf-merger': ['pdf-splitter', 'pdf-compressor', 'pdf-to-word'],
+  'pdf-to-images': ['pdf-compressor', 'images-to-pdf', 'pdf-to-word'],
+  'pdf-ocr': ['pdf-to-word', 'pdf-to-text', 'image-ocr'],
+  'pdf-to-text': ['pdf-to-word', 'pdf-ocr', 'word-counter'],
+  'image-ocr': ['pdf-ocr', 'pdf-to-text', 'image-compressor'],
+};
+
+for (const tool of TOOLS) {
+  const pinned = WORKFLOW_PRIORITY[tool.slug];
+  if (!pinned) continue;
+  const valid = pinned.filter((slug) => slug !== tool.slug && TOOLS.some((t) => t.slug === slug));
+  tool.relatedTools = [...new Set([...valid, ...tool.relatedTools])].slice(0, 6);
 }
 
 

@@ -27,10 +27,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     ...base,
     keywords: [
       'image guides',
+      'pdf guides',
       'how to compress images',
       'convert heic to jpg',
       'reduce image size',
       'resize image guide',
+      'reduce pdf size',
+      'convert pdf to word',
+      'extract text from pdf',
       ...siteConfig.keywords,
     ],
   };

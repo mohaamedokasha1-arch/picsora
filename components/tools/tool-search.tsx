@@ -40,6 +40,7 @@ export function ToolSearch({
   className,
   autoFocus,
   size = 'default',
+  readUrlQuery = false,
 }: {
   placeholder?: string;
   onNavigate?: () => void;
@@ -47,6 +48,13 @@ export function ToolSearch({
   autoFocus?: boolean;
   /** `lg` gives the hero search a taller, more prominent field. */
   size?: 'default' | 'lg';
+  /**
+   * Seed the field from `?q=` in the address bar. Used on /tools, which is the
+   * target of the WebSite SearchAction (`/tools?q={search_term_string}`) — the
+   * parameter previously did nothing, so the structured data promised a search
+   * entry point the page did not honour, and shared search links were dead.
+   */
+  readUrlQuery?: boolean;
 }) {
   const t = useTranslations('common');
   const router = useRouter();
@@ -58,6 +66,17 @@ export function ToolSearch({
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const results = React.useMemo(() => searchTools(index, query), [query, index]);
+
+  // Read `?q=` once on mount (client-side only, so the statically rendered
+  // HTML — and therefore the canonical, indexable page — is unchanged).
+  React.useEffect(() => {
+    if (!readUrlQuery) return;
+    const initial = new URLSearchParams(window.location.search).get('q');
+    if (initial && initial.trim()) {
+      setQuery(initial.trim().slice(0, 100));
+      setOpen(true);
+    }
+  }, [readUrlQuery]);
 
   React.useEffect(() => {
     const onClick = (e: MouseEvent) => {

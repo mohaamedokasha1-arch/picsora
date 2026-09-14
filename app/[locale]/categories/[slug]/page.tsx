@@ -30,8 +30,18 @@ export async function generateMetadata({
   const t = await getTranslations();
   const name = t(cat.nameKey as never);
   const description = t(cat.descriptionKey as never);
+  // "PDF Tools — Piclizer" said nothing a searcher types. Adding the
+  // (translated) "Free Online Tools" qualifier matches how these categories
+  // are actually searched for, without stuffing tool names into the title.
   return buildMetadata(
-    { title: `${name} — ${t('common.siteName')}`, description, path: `/categories/${cat.slug}` },
+    {
+      title: `${name} — ${t('seo.categoryTitleSuffix')} | ${t('common.siteName')}`,
+      description,
+      path: `/categories/${cat.slug}`,
+      keywords: toolsInCategory(cat.slug)
+        .slice(0, 12)
+        .map((tool) => t(tool.nameKey as never)),
+    },
     params.locale,
   );
 }
@@ -47,9 +57,20 @@ export default async function CategoryPage({ params }: { params: { locale: strin
   const tools = toolsInCategory(cat.slug);
   const others = CATEGORIES.filter((c) => c.slug !== cat.slug);
 
+  /*
+   * The privacy Q&A is per-category on purpose. The shared answer used to say
+   * "processes your images entirely in your browser" on every category page,
+   * which was simply untrue on PDF Tools, Text Tools, Calculators and
+   * Developer Tools — and, for the OCR and currency tools, it overstated the
+   * "nothing ever touches the network" claim. Each category now states what
+   * really happens to that kind of input.
+   */
   const faqs = [
     { q: `${name} — ${t('categoryFaqs.q1')}`, a: t('categoryFaqs.a1', { category: name }) },
-    { q: t('categoryFaqs.q2'), a: t('categoryFaqs.a2', { category: name }) },
+    {
+      q: t(`categoryFaqs.privacyQ.${cat.slug}` as never),
+      a: t(`categoryFaqs.privacyA.${cat.slug}` as never),
+    },
   ];
 
   const base = siteConfig.url.replace(/\/$/, '');

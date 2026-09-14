@@ -37,7 +37,12 @@ export async function generateMetadata({
       type: 'article',
       publishedTime: siteConfig.contentUpdatedAt,
       modifiedTime: siteConfig.contentUpdatedAt,
-      keywords: [...guide.slug.split('-'), ...guide.relatedTools, 'image guide', 'how to'],
+      keywords: [
+        ...guide.slug.split('-'),
+        ...guide.relatedTools,
+        guide.slug.includes('pdf') ? 'pdf guide' : 'image guide',
+        'how to',
+      ],
     },
     params.locale,
   );
