@@ -111,9 +111,12 @@ Scripts load **only after** the user consents to analytics cookies (see the cons
 
 ## Enabling advertising
 
-Set `NEXT_PUBLIC_ADS_ENABLED=true` and `NEXT_PUBLIC_ADS_CLIENT_ID`.
-`AdPlacement` components reserve space on the homepage and tool pages and render AdSense units only
-after advertising consent is given.
+Set `NEXT_PUBLIC_ADS_ENABLED=true`. `NEXT_PUBLIC_ADS_CLIENT_ID` is optional and defaults to
+this site's verified publisher id (`ca-pub-5770911159315916`). Replace it when deploying a different
+AdSense account. `AdsenseScript` appends Google's `adsbygoogle.js` to `<head>` exactly once, only
+after advertising consent; `AdPlacement` renders the supplied responsive `<ins>` unit in the
+homepage and tool-page placements without causing a hydration mismatch. The homepage uses slot
+`3492160006` from the AdSense unit configuration.
 
 ### Monetag Vignette Banner
 

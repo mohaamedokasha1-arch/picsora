@@ -5,10 +5,16 @@ import { useConsent } from '@/components/consent/consent-provider';
 import { cn } from '@/lib/utils';
 
 export interface AdPlacementProps {
+  /** Google AdSense ad-unit slot id. */
   slot: string;
   className?: string;
   minHeight?: string;
 }
+
+// The ad unit supplied for this site. A numeric slot is required by AdSense;
+// legacy placement names fall back to this value so they cannot produce a
+// misleading, non-working <ins> element.
+const DEFAULT_AD_SLOT = '3492160006';
 
 /**
  * Reserved ad container. Renders real ad code only when
@@ -17,24 +23,45 @@ export interface AdPlacementProps {
  */
 export function AdPlacement({ slot, className, minHeight = '90px' }: AdPlacementProps) {
   const { consent } = useConsent();
+  const adRef = React.useRef<HTMLModElement>(null);
+  const requestedRef = React.useRef(false);
   const adsEnabled = process.env.NEXT_PUBLIC_ADS_ENABLED === 'true';
-  const rawClientId = process.env.NEXT_PUBLIC_ADS_CLIENT_ID;
+  const rawClientId = process.env.NEXT_PUBLIC_ADS_CLIENT_ID || 'ca-pub-5770911159315916';
   // AdSense publisher ids look like `ca-pub-1234567890123456`. Validating the
   // configured value keeps a tampered environment variable out of the DOM.
-  const clientId = rawClientId && /^ca-pub-\d{10,20}$/.test(rawClientId) ? rawClientId : undefined;
+  const clientId = /^ca-pub-\d{10,20}$/.test(rawClientId) ? rawClientId : undefined;
   // Slot ids are numeric; the value is only ever rendered as an attribute, but
   // constraining it removes any attribute-injection surface entirely.
-  const safeSlot = /^[A-Za-z0-9_-]{1,32}$/.test(slot) ? slot : '';
+  const safeSlot = /^\d{1,32}$/.test(slot) ? slot : DEFAULT_AD_SLOT;
 
   React.useEffect(() => {
-    if (!adsEnabled || !consent?.advertising || !clientId) return;
-    try {
-      const w = window as unknown as { adsbygoogle?: unknown[] };
-      w.adsbygoogle = w.adsbygoogle || [];
-      w.adsbygoogle!.push({});
-    } catch {
-      /* no-op */
-    }
+    if (!adsEnabled || !consent?.advertising || !clientId || !adRef.current) return;
+
+    // AdSense measures the <ins> when push() runs. During the first client
+    // render a responsive container can briefly have zero width (especially
+    // while a mobile layout or a hidden route is settling), which causes the
+    // "No slot size" TagError. Wait until it has measurable width and retry
+    // through ResizeObserver instead of pushing a zero-sized slot.
+    const pushWhenSized = () => {
+      const ad = adRef.current;
+      if (!ad || requestedRef.current || ad.getBoundingClientRect().width <= 0) return;
+      requestedRef.current = true;
+      try {
+        const w = window as unknown as { adsbygoogle?: unknown[] };
+        w.adsbygoogle = w.adsbygoogle || [];
+        w.adsbygoogle.push({});
+      } catch {
+        requestedRef.current = false;
+      }
+    };
+
+    const observer = new ResizeObserver(pushWhenSized);
+    observer.observe(adRef.current);
+    const frame = window.requestAnimationFrame(pushWhenSized);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [adsEnabled, consent?.advertising, clientId]);
 
   const showAd = adsEnabled && consent?.advertising && clientId;
@@ -48,8 +75,9 @@ export function AdPlacement({ slot, className, minHeight = '90px' }: AdPlacement
     >
       {showAd ? (
         <ins
-          className="adsbygoogle block"
-          style={{ display: 'block', minHeight }}
+          ref={adRef}
+          className="adsbygoogle block w-full"
+          style={{ display: 'block', width: '100%', minHeight }}
           data-ad-client={clientId}
           data-ad-slot={safeSlot}
           data-ad-format="auto"

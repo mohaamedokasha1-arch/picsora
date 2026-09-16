@@ -8,6 +8,7 @@ import { ConsentProvider } from '@/components/consent/consent-provider';
 import { CookieConsentGate } from '@/components/consent/cookie-consent-gate';
 import { ConsentModal } from '@/components/consent/consent-modal';
 import { AnalyticsProvider } from '@/components/analytics/analytics-provider';
+import { AdsenseScript } from '@/components/ads/adsense-script';
 import { MonetagVignette } from '@/components/ads/monetag-vignette';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -97,15 +98,8 @@ export default async function LocaleLayout({
           <meta name="google-site-verification" content="6nwKbe3UwHbbzzDg0S8a6TRE_rEEIAdyGgIJD6q6ua4" />
           <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
           <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
-          {/* Google AdSense */}
-          <script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(
-              siteConfig.adsensePublisherId,
-            )}`}
-            crossOrigin="anonymous"
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
+          {/* The consent-gated AdsenseScript appends the library to this head
+              once the visitor grants advertising consent. */}
         </head>
       <body className="min-h-screen">
         <a href="#main-content" className="skip-link">
@@ -114,6 +108,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <ConsentProvider>
+              <AdsenseScript />
               <AnalyticsProvider>
                 <div id="app-root" className="flex min-h-screen flex-col">
                   <Header />
