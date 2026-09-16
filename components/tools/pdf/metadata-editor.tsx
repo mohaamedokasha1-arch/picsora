@@ -147,7 +147,7 @@ export default function PdfMetadataEditorTool() {
             )}
 
             <div className="mt-5 flex flex-wrap items-center gap-3">
-              <ActionButton onClick={save} processing={busy} disabled={busy || loading || !dirty}>
+              <ActionButton onClick={save} processing={busy} success={result !== null && !busy && !error} disabled={busy || loading || !dirty}>
                 {t('pdfTools.saveMetadata')}
               </ActionButton>
               <span className="text-xs text-muted-foreground">{t('pdfTools.metadataSaveNote')}</span>

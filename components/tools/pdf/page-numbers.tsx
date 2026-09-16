@@ -157,7 +157,7 @@ export default function PdfPageNumberTool() {
                 />
               </Field>
               <div className="flex items-end">
-                <ActionButton onClick={apply} processing={busy} disabled={busy} className="w-full">
+                <ActionButton onClick={apply} processing={busy} success={result !== null && !busy && !error} disabled={busy} className="w-full">
                   {t('pdfTools.applyNumbers')}
                 </ActionButton>
               </div>

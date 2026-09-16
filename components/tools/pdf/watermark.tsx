@@ -145,6 +145,7 @@ export default function PdfWatermarkTool() {
               <div className="flex items-end sm:col-span-2">
                 <ActionButton onClick={apply}
                   processing={busy}
+                  success={result !== null && !busy && !error}
                   disabled={busy || !text.trim()}
                   className="w-full sm:w-auto"
                 >

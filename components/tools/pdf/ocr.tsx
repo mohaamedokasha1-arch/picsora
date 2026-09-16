@@ -187,7 +187,7 @@ export default function PdfOcrTool() {
             options={OCR_LANGS.map((l) => ({ value: l.value, label: t(l.labelKey as never) }))}
           />
           <div className="mt-4">
-            <ActionButton onClick={run} disabled={busy || !files.length} processing={busy}>
+            <ActionButton onClick={run} disabled={busy || !files.length} processing={busy} success={results.length > 0 && !busy && !error}>
               {t('ocr.start')}
             </ActionButton>
           </div>

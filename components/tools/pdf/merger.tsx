@@ -189,7 +189,7 @@ export default function PdfMergerTool() {
             </ul>
 
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              <ActionButton onClick={merge} disabled={entries.length < 2 || busy} processing={busy}>
+              <ActionButton onClick={merge} disabled={entries.length < 2 || busy} processing={busy} success={result !== null && !busy && !error}>
                 {t('pdfTools.mergeAction')}
               </ActionButton>
               {entries.length < 2 && <span className="text-xs text-muted-foreground">{t('errors.pdfNeedTwo')}</span>}

@@ -112,7 +112,7 @@ export default function PdfExtractImagesTool() {
               <Notice variant="warning">{t('errors.pdfTooManyPages', { max: MAX_PAGES })}</Notice>
             )}
             <div className="flex flex-wrap items-center gap-3">
-              <ActionButton onClick={extract} processing={busy} disabled={busy || tooManyPages}>
+              <ActionButton onClick={extract} processing={busy} success={done && images.length > 0 && !busy} disabled={busy || tooManyPages}>
                 {t('pdfTools.extractImagesAction')}
               </ActionButton>
               {done && images.length > 0 && (
