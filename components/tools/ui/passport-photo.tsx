@@ -7,7 +7,8 @@ import { useToolRunner } from './use-tool';
 import { ControlsCard, useObjectUrl, PreviewBox, Field } from './common';
 import { Select } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -108,9 +109,9 @@ export default function PassportPhotoTool({ ctx }: { ctx: WorkspaceContext }) {
           <p className="text-xs text-muted-foreground">
             {t('passport.outputSize', { w: outW, h: outH })}
           </p>
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('passport.make')}
-          </Button>
+          </ActionButton>
         </ControlsCard>
 
         <PreviewBox src={preview} label={ctx.files[0]?.name} className="max-h-[420px]" />

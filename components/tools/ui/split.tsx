@@ -8,6 +8,7 @@ import { useToolRunner } from './use-tool';
 import { ControlsCard, Field, useObjectUrl } from './common';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { splitImage } from '@/lib/tools/processors/split';
@@ -58,9 +59,9 @@ export default function SplitTool({ ctx }: { ctx: WorkspaceContext }) {
               {t('controls.grid')}: {cols} × {rows} = {cols * rows} · ~{Math.floor(decoded.width / cols)} × {Math.floor(decoded.height / rows)} px
             </p>
           )}
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('controls.split')}
-          </Button>
+          </ActionButton>
         </ControlsCard>
 
         <div className="relative overflow-hidden rounded-xl border border-border bg-secondary/40">

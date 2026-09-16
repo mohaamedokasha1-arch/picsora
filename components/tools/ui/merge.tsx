@@ -8,7 +8,8 @@ import { ControlsCard, Field, useObjectUrl } from './common';
 import { Slider } from '@/components/ui/slider';
 import { Select } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -99,9 +100,9 @@ export default function MergeTool({ ctx }: { ctx: WorkspaceContext }) {
             <Input value={background} onChange={(e) => setBackground(e.target.value)} disabled={processing} aria-label={t('controls.background')} />
           </div>
         </Field>
-        <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+        <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
           {t('controls.merge')}
-        </Button>
+        </ActionButton>
       </ControlsCard>
 
       <p className="text-xs text-muted-foreground">{t('controls.dropReorder')}</p>

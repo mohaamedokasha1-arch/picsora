@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
@@ -142,14 +143,13 @@ export default function PdfWatermarkTool() {
                 />
               </Field>
               <div className="flex items-end sm:col-span-2">
-                <Button
-                  onClick={apply}
-                  loading={busy}
+                <ActionButton onClick={apply}
+                  processing={busy}
                   disabled={busy || !text.trim()}
                   className="w-full sm:w-auto"
                 >
                   {t('pdfTools.applyWatermark')}
-                </Button>
+                </ActionButton>
               </div>
             </div>
             <p className="mt-3 text-xs text-muted-foreground">{t('pdfTools.watermarkLatinNote')}</p>

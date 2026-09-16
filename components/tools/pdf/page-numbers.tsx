@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { DownloadButton } from '@/components/tools/download-button';
@@ -156,9 +157,9 @@ export default function PdfPageNumberTool() {
                 />
               </Field>
               <div className="flex items-end">
-                <Button onClick={apply} loading={busy} disabled={busy} className="w-full">
+                <ActionButton onClick={apply} processing={busy} disabled={busy} className="w-full">
                   {t('pdfTools.applyNumbers')}
-                </Button>
+                </ActionButton>
               </div>
             </div>
             <p className="mt-3 text-xs text-muted-foreground">

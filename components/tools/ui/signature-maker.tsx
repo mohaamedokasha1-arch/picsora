@@ -7,7 +7,8 @@ import { useToolRunner } from './use-tool';
 import { ControlsCard, useObjectUrl, PreviewBox, Field } from './common';
 import { Slider } from '@/components/ui/slider';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -78,9 +79,9 @@ export default function SignatureMakerTool({ ctx }: { ctx: WorkspaceContext }) {
             </div>
           </Field>
           <CheckboxRow checked={invert} onChange={setInvert} label={t('controls.invertColors')} />
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('signature.make')}
-          </Button>
+          </ActionButton>
         </ControlsCard>
 
         <div className="space-y-3">

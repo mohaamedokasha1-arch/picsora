@@ -3,7 +3,8 @@
 import * as React from 'react';
 import { Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { Input } from '@/components/ui/input';
 import { DownloadButton } from '@/components/tools/download-button';
 import { cn, sanitizeFilename } from '@/lib/utils';
@@ -197,10 +198,10 @@ export default function PdfProtectTool() {
             </div>
 
             <div className="mt-4">
-              <Button onClick={protect} disabled={!canSubmit} loading={busy}>
+              <ActionButton onClick={protect} disabled={!canSubmit} processing={busy}>
                 <ShieldCheck className="h-4 w-4" />
                 {t('pdfTools.protectAction')}
-              </Button>
+              </ActionButton>
             </div>
           </ToolPanel>
 

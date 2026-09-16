@@ -4,6 +4,7 @@ import * as React from 'react';
 import { RotateCcw, RotateCw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { DownloadButton } from '@/components/tools/download-button';
 import { sanitizeFilename } from '@/lib/utils';
 import { rotatePdf } from '@/lib/pdf-processing';
@@ -140,9 +141,9 @@ export default function PdfRotatePagesTool() {
             />
 
             <div className="mt-4">
-              <Button onClick={apply} disabled={busy || !changed} loading={busy}>
+              <ActionButton onClick={apply} disabled={busy || !changed} processing={busy}>
                 {t('pdfTools.applyRotations')}
-              </Button>
+              </ActionButton>
             </div>
           </ToolPanel>
         </>

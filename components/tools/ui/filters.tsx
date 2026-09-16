@@ -8,7 +8,8 @@ import { ControlsCard, Field } from './common';
 import { EffectPreview } from './effect-preview';
 import { Slider } from '@/components/ui/slider';
 import { Select } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -74,9 +75,9 @@ export default function ImageFiltersTool({ ctx }: { ctx: WorkspaceContext }) {
               ]}
             />
           </Field>
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('controls.applyFilter')}
-          </Button>
+          </ActionButton>
           <p className="text-xs text-muted-foreground">{t('controls.livePreviewNote')}</p>
         </ControlsCard>
 

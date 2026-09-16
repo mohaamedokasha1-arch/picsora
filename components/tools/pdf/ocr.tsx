@@ -4,6 +4,7 @@ import * as React from 'react';
 import { FileText } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
 import { inspect, readBytes } from '@/lib/pdf-processing';
@@ -186,9 +187,9 @@ export default function PdfOcrTool() {
             options={OCR_LANGS.map((l) => ({ value: l.value, label: t(l.labelKey as never) }))}
           />
           <div className="mt-4">
-            <Button onClick={run} disabled={busy || !files.length} loading={busy}>
+            <ActionButton onClick={run} disabled={busy || !files.length} processing={busy}>
               {t('ocr.start')}
-            </Button>
+            </ActionButton>
           </div>
           {busy && (
             <div className="mt-3">

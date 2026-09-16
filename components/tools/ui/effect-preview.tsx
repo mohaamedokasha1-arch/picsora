@@ -19,6 +19,7 @@ import { sourceOf } from '@/lib/image/process';
 import type { NormRect } from '@/lib/image/effects';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 
 export interface EffectPreviewProps {
   decoded: DecodedImage;
