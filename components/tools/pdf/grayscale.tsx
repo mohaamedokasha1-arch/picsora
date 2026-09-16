@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { Select } from '@/components/ui/select';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
@@ -154,14 +155,13 @@ export default function PdfGrayscaleTool() {
             )}
 
             <div className="mt-4 space-y-3">
-              <Button
-                onClick={convert}
-                loading={busy}
+              <ActionButton onClick={convert}
+                processing={busy}
                 disabled={busy || tooManyPages}
                 className="w-full sm:w-auto"
               >
                 {t('pdfTools.convertGrayscale')}
-              </Button>
+              </ActionButton>
               {busy && progress.total > 0 && (
                 <ProgressBar
                   value={progress.done}

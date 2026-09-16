@@ -4,6 +4,7 @@ import * as React from 'react';
 import { GripVertical, X, FileText } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes } from '@/lib/utils';
 import { inspect, mergePdfs, type PdfFileInfo } from '@/lib/pdf-processing';
@@ -188,9 +189,9 @@ export default function PdfMergerTool() {
             </ul>
 
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              <Button onClick={merge} disabled={entries.length < 2 || busy} loading={busy}>
+              <ActionButton onClick={merge} disabled={entries.length < 2 || busy} processing={busy}>
                 {t('pdfTools.mergeAction')}
-              </Button>
+              </ActionButton>
               {entries.length < 2 && <span className="text-xs text-muted-foreground">{t('errors.pdfNeedTwo')}</span>}
             </div>
 

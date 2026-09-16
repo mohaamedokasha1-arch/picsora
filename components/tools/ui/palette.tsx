@@ -8,6 +8,7 @@ import { useToolRunner } from './use-tool';
 import { ControlsCard, Field, useObjectUrl } from './common';
 import { Select } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { extractPalette, type PaletteOutput } from '@/lib/tools/processors/palette';
@@ -77,9 +78,9 @@ export default function PaletteTool({ ctx }: { ctx: WorkspaceContext }) {
               ]}
             />
           </Field>
-          <Button onClick={extract} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={extract} disabled={processing} processing={processing} success={!!palette && !processing} className="w-full">
             {t('controls.apply')}
-          </Button>
+          </ActionButton>
           {palette && (
             <div className="flex gap-2">
               <Button variant="outline" size="sm" className="flex-1" onClick={exportPng}>

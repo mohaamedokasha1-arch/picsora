@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { Input } from '@/components/ui/input';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
@@ -172,9 +173,9 @@ export default function PdfToImagesTool() {
             )}
 
             <div className="mt-4">
-              <Button onClick={convert} disabled={busy || overLimit || !targets.list.length} loading={busy}>
+              <ActionButton onClick={convert} disabled={busy || overLimit || !targets.list.length} processing={busy}>
                 {t('pdfTools.convertToImages')}
-              </Button>
+              </ActionButton>
             </div>
 
             {busy && (

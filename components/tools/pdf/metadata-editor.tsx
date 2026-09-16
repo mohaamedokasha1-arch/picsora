@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { Input } from '@/components/ui/input';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
@@ -146,9 +147,9 @@ export default function PdfMetadataEditorTool() {
             )}
 
             <div className="mt-5 flex flex-wrap items-center gap-3">
-              <Button onClick={save} loading={busy} disabled={busy || loading || !dirty}>
+              <ActionButton onClick={save} processing={busy} disabled={busy || loading || !dirty}>
                 {t('pdfTools.saveMetadata')}
-              </Button>
+              </ActionButton>
               <span className="text-xs text-muted-foreground">{t('pdfTools.metadataSaveNote')}</span>
             </div>
           </ToolPanel>

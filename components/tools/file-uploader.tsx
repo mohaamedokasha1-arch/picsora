@@ -176,7 +176,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-border p-3 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-border p-3 text-sm text-muted-foreground transition-all duration-200 ease-out hover:-translate-y-[1px] hover:scale-[1.01] hover:border-primary/50 hover:text-foreground hover:shadow-sm active:translate-y-0 active:scale-[0.98] active:duration-100"
           >
             <Plus className="h-4 w-4" aria-hidden="true" />
             {t('toolShell.uploadTitle')}
@@ -225,10 +225,10 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
       }}
       onDrop={onDrop}
       className={cn(
-        'flex w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-secondary/30 px-6 text-center transition-all duration-200',
+        'flex w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-secondary/30 px-6 text-center transition-all duration-200 ease-out will-change-transform',
         compact ? 'py-10' : 'py-16',
-        dragging && 'border-primary bg-accent/50 scale-[1.01]',
-        !disabled && 'hover:border-primary/50 hover:bg-accent/30',
+        dragging && 'border-primary bg-accent/50 scale-[1.015] -translate-y-[1px] shadow-lg shadow-primary/10',
+        !disabled && 'hover:border-primary/50 hover:bg-accent/30 hover:-translate-y-[1px] hover:scale-[1.005] hover:shadow-md hover:shadow-primary/5 active:translate-y-0 active:scale-[0.99] active:duration-100',
         disabled && 'cursor-not-allowed opacity-60',
       )}
     >

@@ -6,7 +6,8 @@ import { useTranslations } from 'next-intl';
 import type { WorkspaceContext } from '@/components/tools/tool-workspace';
 import { useToolRunner } from './use-tool';
 import { ControlsCard, useObjectUrl, PreviewBox } from './common';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -27,10 +28,10 @@ function FlipTool({ ctx, direction }: { ctx: WorkspaceContext; direction: 'horiz
     <div className="space-y-5">
       <div className="grid gap-5 lg:grid-cols-[340px_1fr]">
         <ControlsCard>
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {direction === 'horizontal' ? <FlipHorizontal2 className="h-4 w-4" /> : <FlipVertical2 className="h-4 w-4" />}
             {direction === 'horizontal' ? t('controls.flipHorizontal') : t('controls.flipVertical')}
-          </Button>
+          </ActionButton>
         </ControlsCard>
         <PreviewBox
           src={preview}

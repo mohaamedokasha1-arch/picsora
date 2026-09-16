@@ -4,7 +4,8 @@ import * as React from 'react';
 import { useTranslations } from 'next-intl';
 import type { WorkspaceContext } from '@/components/tools/tool-workspace';
 import { ControlsCard, useObjectUrl, PreviewBox } from './common';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import {
@@ -83,9 +84,9 @@ export default function ImageOcrTool({ ctx }: { ctx: WorkspaceContext }) {
             onChange={setLang}
             options={OCR_LANGS.map((l) => ({ value: l.value, label: t(l.labelKey as never) }))}
           />
-          <Button onClick={extract} disabled={busy} loading={busy} className="w-full">
+          <ActionButton onClick={extract} disabled={busy} processing={busy} success={texts.length > 0 && !busy && !error} className="w-full">
             {t('ocr.start')}
-          </Button>
+          </ActionButton>
           {busy && (
             <ProgressBar
               value={progress.done + progress.ratio}

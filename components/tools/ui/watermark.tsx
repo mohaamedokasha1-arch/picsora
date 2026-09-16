@@ -10,6 +10,7 @@ import { Select } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -218,9 +219,9 @@ export default function WatermarkTool({ ctx }: { ctx: WorkspaceContext }) {
             </div>
           )}
 
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('controls.apply')}
-          </Button>
+          </ActionButton>
         </ControlsCard>
 
         <div className="flex min-h-[300px] items-center justify-center rounded-xl border border-border bg-secondary/40 p-4">

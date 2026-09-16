@@ -7,7 +7,8 @@ import { useToolRunner } from './use-tool';
 import { ControlsCard, useObjectUrl, PreviewBox, Field } from './common';
 import { Slider } from '@/components/ui/slider';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -75,9 +76,9 @@ function HeicConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: Hei
               </div>
             </Field>
           )}
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('controls.convert')} → {config.to.toUpperCase()}
-          </Button>
+          </ActionButton>
         </ControlsCard>
 
         <PreviewBox src={preview} label={ctx.files[0]?.name} className="max-h-[420px]" />

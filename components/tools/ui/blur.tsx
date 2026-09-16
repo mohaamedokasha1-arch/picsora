@@ -8,7 +8,8 @@ import { ControlsCard, Field } from './common';
 import { EffectPreview, RegionList } from './effect-preview';
 import { Slider } from '@/components/ui/slider';
 import { Select } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -79,14 +80,15 @@ export default function ImageBlurTool({ ctx }: { ctx: WorkspaceContext }) {
               ]}
             />
           </Field>
-          <Button
+          <ActionButton
             onClick={process}
             disabled={processing || (mode === 'areas' && !regions.length)}
-            loading={processing}
+            processing={processing}
+            success={results.length > 0 && !processing && !error}
             className="w-full"
           >
             {t('controls.applyBlur')}
-          </Button>
+          </ActionButton>
           <p className="text-xs text-muted-foreground">
             {t('toolShell.originalSize')}: {decoded.width} × {decoded.height}
           </p>

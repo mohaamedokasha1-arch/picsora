@@ -88,10 +88,11 @@ export function CopyButton({
       variant={variant}
       onClick={copy}
       disabled={!value}
+      success={copied}
       className={className}
       aria-label={label ?? t('copy')}
     >
-      {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+      {!copied && <Copy className="h-3.5 w-3.5" />}
       {size !== 'icon-sm' && <span>{copied ? t('copied') : (label ?? t('copy'))}</span>}
     </Button>
   );
@@ -275,11 +276,13 @@ export function ToggleGroup<T extends string>({
             title={option.hint}
             className={cn(
               // Same idea as the Button sizes: comfortable on touch, compact
-              // from the `sm` breakpoint up.
-              'min-h-10 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors sm:min-h-0',
+              // from the `sm` breakpoint up. Enhanced with micro-interactions.
+              'min-h-10 rounded-lg border px-3 py-1.5 text-sm font-medium transition-all duration-200 ease-out sm:min-h-0',
+              'hover:-translate-y-[1px] hover:scale-[1.02] active:translate-y-0 active:scale-[0.97] active:duration-100',
+              'will-change-transform',
               value === option.value
-                ? 'border-primary bg-primary text-primary-foreground'
-                : 'border-input bg-background text-foreground hover:bg-accent',
+                ? 'border-primary bg-primary text-primary-foreground shadow-sm hover:shadow-md hover:shadow-primary/20'
+                : 'border-input bg-background text-foreground hover:bg-accent hover:shadow-sm',
             )}
           >
             {option.label}

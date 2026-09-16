@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Check, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { cn, formatBytes } from '@/lib/utils';
@@ -22,11 +22,16 @@ export function DownloadButton({ blob, filename, label, size = 'default', classN
   const onClick = () => {
     triggerDownload(blob, filename);
     setDownloaded(true);
-    setTimeout(() => setDownloaded(false), 2500);
+    setTimeout(() => setDownloaded(false), 2600);
   };
 
   return (
-    <Button onClick={onClick} size={size} className={cn('max-w-full', className)}>
+    <Button
+      onClick={onClick}
+      size={size}
+      success={downloaded}
+      className={cn('max-w-full', className)}
+    >
       <Download className="h-4 w-4" aria-hidden="true" />
       <span className="flex min-w-0 max-w-full flex-col items-start leading-tight">
         <span>{label ?? t('download')}</span>
@@ -36,7 +41,6 @@ export function DownloadButton({ blob, filename, label, size = 'default', classN
           {filename} · {formatBytes(blob.size)}
         </span>
       </span>
-      {downloaded && <Check className="h-4 w-4" aria-hidden="true" />}
     </Button>
   );
 }

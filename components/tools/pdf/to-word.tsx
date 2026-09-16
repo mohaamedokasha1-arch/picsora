@@ -4,6 +4,7 @@ import * as React from 'react';
 import { FileText, Lock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { DownloadButton } from '@/components/tools/download-button';
 import { escapeHtml, formatBytes, sanitizeFilename } from '@/lib/utils';
 import { inspect, readBytes } from '@/lib/pdf-processing';
@@ -196,9 +197,9 @@ export default function PdfToWordTool() {
             <p className="mt-2 text-xs text-muted-foreground">{t('pdfTools.lockedHint')}</p>
           )}
           <div className="mt-4">
-            <Button onClick={convert} disabled={busy || !files.length} loading={busy}>
+            <ActionButton onClick={convert} disabled={busy || !files.length} processing={busy}>
               {t('pdfTools.toWordAction')}
-            </Button>
+            </ActionButton>
           </div>
           {busy && <div className="mt-3"><ProgressBar value={progress.done} max={progress.total} label={t('pdfTools.extractingText')} /></div>}
         </ToolPanel>

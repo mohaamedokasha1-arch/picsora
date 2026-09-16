@@ -7,7 +7,8 @@ import { useToolRunner } from './use-tool';
 import { ControlsCard, useObjectUrl, PreviewBox } from './common';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -88,9 +89,9 @@ export default function ExactKbTool({ ctx }: { ctx: WorkspaceContext }) {
               ]}
             />
           </div>
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('controls.compress')} → {targetKB} KB
-          </Button>
+          </ActionButton>
         </ControlsCard>
 
         <PreviewBox src={preview} label={ctx.files[0]?.name} className="max-h-[420px]" />

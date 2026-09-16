@@ -6,7 +6,8 @@ import type { WorkspaceContext } from '@/components/tools/tool-workspace';
 import { useToolRunner } from './use-tool';
 import { ControlsCard, Field, useObjectUrl } from './common';
 import { Select } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -164,9 +165,9 @@ export default function CropperTool({ ctx }: { ctx: WorkspaceContext }) {
           <p className="text-xs text-muted-foreground">
             {t('controls.cropDimensions')}: {Math.round(box.w)} × {Math.round(box.h)} px
           </p>
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('controls.crop')}
-          </Button>
+          </ActionButton>
         </ControlsCard>
 
         <div

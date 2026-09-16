@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
 import { pdfFromJpegPages, readBytes, recompressPdf } from '@/lib/pdf-processing';
@@ -101,9 +102,9 @@ export default function PdfCompressorTool() {
             <p className="mt-3 text-sm text-muted-foreground">{t(`pdfTools.levelDesc_${level}` as never)}</p>
 
             <div className="mt-4">
-              <Button onClick={compress} disabled={busy} loading={busy}>
+              <ActionButton onClick={compress} disabled={busy} processing={busy} success={!!result && !busy}>
                 {t('pdfTools.compressAction')}
-              </Button>
+              </ActionButton>
             </div>
 
             {busy && progress.total > 0 && (

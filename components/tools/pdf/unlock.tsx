@@ -3,7 +3,8 @@
 import * as React from 'react';
 import { Eye, EyeOff, Unlock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { Input } from '@/components/ui/input';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
@@ -100,10 +101,10 @@ export default function PdfUnlockTool() {
             </div>
 
             <div className="mt-4">
-              <Button onClick={unlock} disabled={busy || !password} loading={busy}>
+              <ActionButton onClick={unlock} disabled={busy || !password} processing={busy}>
                 <Unlock className="h-4 w-4" />
                 {t('pdfTools.unlockAction')}
-              </Button>
+              </ActionButton>
             </div>
           </ToolPanel>
 

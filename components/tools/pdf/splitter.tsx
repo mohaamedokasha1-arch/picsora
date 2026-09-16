@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { Input } from '@/components/ui/input';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
@@ -160,9 +161,9 @@ export default function PdfSplitterTool() {
             )}
 
             <div className="mt-4">
-              <Button onClick={run} disabled={busy || !plan.parts.length || tooManyPages} loading={busy}>
+              <ActionButton onClick={run} disabled={busy || !plan.parts.length || tooManyPages} processing={busy}>
                 {t('pdfTools.splitAction')}
-              </Button>
+              </ActionButton>
             </div>
 
             {busy && (

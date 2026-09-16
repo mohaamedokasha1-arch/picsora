@@ -4,6 +4,7 @@ import * as React from 'react';
 import { ImageIcon, Package } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
 import { readBytes } from '@/lib/pdf-processing';
@@ -111,9 +112,9 @@ export default function PdfExtractImagesTool() {
               <Notice variant="warning">{t('errors.pdfTooManyPages', { max: MAX_PAGES })}</Notice>
             )}
             <div className="flex flex-wrap items-center gap-3">
-              <Button onClick={extract} loading={busy} disabled={busy || tooManyPages}>
+              <ActionButton onClick={extract} processing={busy} disabled={busy || tooManyPages}>
                 {t('pdfTools.extractImagesAction')}
-              </Button>
+              </ActionButton>
               {done && images.length > 0 && (
                 <Button variant="outline" onClick={downloadAll} loading={zipping} disabled={zipping}>
                   <Package className="h-4 w-4" />

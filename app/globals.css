@@ -138,6 +138,98 @@
   @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground;
 }
 
+/* ─── Piclizer Action Button Micro-interactions ─── */
+@keyframes piclizer-check-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes piclizer-content-in {
+  0% {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes piclizer-shine-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+.btn-success-check {
+  animation: piclizer-check-pop 380ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.btn-success-content {
+  animation: piclizer-content-in 240ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+/* Enhanced hover for touch devices - press feedback */
+@media (pointer: coarse) {
+  .group\/btn:active:enabled {
+    transform: scale(0.97) !important;
+  }
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .btn-success-check,
+  .btn-success-content {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  /* Disable lift/scale but keep color transitions */
+  button[class*='hover:enabled'] {
+    transition: background-color 150ms ease-out, border-color 150ms ease-out, opacity 150ms ease-out !important;
+  }
+  
+  button[class*='hover:enabled']:hover:enabled,
+  button[class*='hover:enabled']:active:enabled {
+    transform: none !important;
+  }
+  
+  button[class*='hover:enabled'] span[class*='via-white'] {
+    display: none !important;
+  }
+}
+
+/* Premium focus ring for action buttons */
+button[data-variant='default']:focus-visible {
+  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary) / 0.3);
+}
+
+/* Success state subtle glow */
+button[data-success='true'][data-variant='default'] {
+  box-shadow: 0 0 0 1px hsl(var(--primary) / 0.2), 0 4px 12px -2px hsl(var(--primary) / 0.25);
+}
+
+/* Loading state keeps button stable */
+button[data-loading='true'] {
+  transform: none !important;
+}
+
 /* ---------------------------------------------------------------------------
    Prism.js token colors for the developer tools. Uses the design-system
    palette so highlighting follows the light/dark theme automatically.

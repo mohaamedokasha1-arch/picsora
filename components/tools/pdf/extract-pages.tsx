@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ActionButton } from '@/components/ui/action-button';
 import { Input } from '@/components/ui/input';
 import { DownloadButton } from '@/components/tools/download-button';
 import { sanitizeFilename } from '@/lib/utils';
@@ -139,9 +140,9 @@ export default function PdfExtractPagesTool() {
             </div>
 
             <div className="mt-4">
-              <Button onClick={extract} disabled={!selected.size || busy} loading={busy}>
+              <ActionButton onClick={extract} disabled={!selected.size || busy} processing={busy}>
                 {t('pdfTools.extractAction', { count: selected.size })}
-              </Button>
+              </ActionButton>
             </div>
           </ToolPanel>
         </>

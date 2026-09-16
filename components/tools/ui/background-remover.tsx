@@ -6,7 +6,8 @@ import type { WorkspaceContext } from '@/components/tools/tool-workspace';
 import { useToolRunner } from './use-tool';
 import { ControlsCard, useObjectUrl, PreviewBox } from './common';
 import { Slider } from '@/components/ui/slider';
-import { Button } from '@/components/ui/button';
+
+import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
@@ -62,9 +63,9 @@ export default function BackgroundRemoverTool({ ctx }: { ctx: WorkspaceContext }
             valueSuffix="%"
             disabled={processing}
           />
-          <Button onClick={process} disabled={processing} loading={processing} className="w-full">
+          <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('controls.removeBg')}
-          </Button>
+          </ActionButton>
         </ControlsCard>
 
         <div className="space-y-3">
