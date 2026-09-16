@@ -70,13 +70,13 @@ export default async function HomePage({ params }: { params: { locale: string } 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/tools"
-              className="inline-flex h-12 items-center rounded-lg bg-primary px-6 text-base font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+              className="action-button inline-flex h-12 items-center rounded-lg bg-primary px-6 text-base font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
             >
               {t('home.heroPrimary')}
             </Link>
             <Link
               href="/tools/image-compressor"
-              className="inline-flex h-12 items-center rounded-lg border border-input bg-background px-6 text-base font-medium text-foreground shadow-sm transition-colors hover:bg-accent"
+              className="action-button inline-flex h-12 items-center rounded-lg border border-input bg-background px-6 text-base font-medium text-foreground shadow-sm transition-colors hover:bg-accent"
             >
               {t('home.heroSecondary')}
             </Link>
@@ -322,13 +322,13 @@ export default async function HomePage({ params }: { params: { locale: string } 
             <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP4')}</p>
           </div>
           <div className="mt-6 flex flex-wrap gap-2 text-sm">
-            <Link href="/about" className="inline-flex h-10 items-center rounded-lg border border-input bg-background px-4 font-medium text-foreground transition-colors hover:bg-accent">
+            <Link href="/about" className="action-button inline-flex h-10 items-center rounded-lg border border-input bg-background px-4 font-medium text-foreground transition-colors hover:bg-accent">
               {t('common.about')}
             </Link>
-            <Link href="/guides" className="inline-flex h-10 items-center rounded-lg border border-input bg-background px-4 font-medium text-foreground transition-colors hover:bg-accent">
+            <Link href="/guides" className="action-button inline-flex h-10 items-center rounded-lg border border-input bg-background px-4 font-medium text-foreground transition-colors hover:bg-accent">
               {t('home.guidesTitle')}
             </Link>
-            <Link href="/contact" className="inline-flex h-10 items-center rounded-lg border border-input bg-background px-4 font-medium text-foreground transition-colors hover:bg-accent">
+            <Link href="/contact" className="action-button inline-flex h-10 items-center rounded-lg border border-input bg-background px-4 font-medium text-foreground transition-colors hover:bg-accent">
               {t('common.contact')}
             </Link>
           </div>

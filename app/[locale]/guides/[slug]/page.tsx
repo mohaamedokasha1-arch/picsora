@@ -149,7 +149,7 @@ export default async function GuidePage({ params }: { params: { locale: string; 
                 {tool && (
                   <Link
                     href={`/tools/${tool.slug}`}
-                    className="mt-4 inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+                    className="action-button mt-4 inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                   >
                     <ToolIcon name={tool.icon} className="h-4 w-4" />
                     {t('guides.tryTool')}: {t(tool.nameKey as never)}

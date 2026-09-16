@@ -165,7 +165,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
                 /* Always visible on touch screens (there is no hover on a
                    phone); on pointer devices it keeps the original
                    hover-to-reveal behaviour. */
-                className="absolute end-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-md bg-black/60 text-white transition-opacity focus-visible:opacity-100 sm:h-6 sm:w-6 sm:opacity-0 sm:group-hover:opacity-100"
+                className="action-button absolute end-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-md bg-black/60 text-white transition-opacity focus-visible:opacity-100 sm:h-6 sm:w-6 sm:opacity-0 sm:group-hover:opacity-100"
               >
                 <X className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
               </button>
@@ -176,7 +176,7 @@ export function FileUploader({ rule, files, onFilesChange, onError, disabled, co
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-border p-3 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+            className="action-button inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-border p-3 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
           >
             <Plus className="h-4 w-4" aria-hidden="true" />
             {t('toolShell.uploadTitle')}

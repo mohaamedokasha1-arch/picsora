@@ -140,7 +140,7 @@ export default function ColorPickerTool({ ctx }: { ctx: WorkspaceContext }) {
                     key={row.kind}
                     type="button"
                     onClick={() => copy(row.value, row.kind)}
-                    className="flex w-full items-center justify-between rounded-md bg-secondary/60 px-3 py-1.5 text-sm transition-colors hover:bg-accent"
+                    className="action-button flex w-full items-center justify-between rounded-md bg-secondary/60 px-3 py-1.5 text-sm transition-colors hover:bg-accent"
                     title={t('common.copy')}
                   >
                     <span className="text-xs font-semibold text-muted-foreground">{row.kind}</span>

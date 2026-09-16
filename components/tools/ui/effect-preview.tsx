@@ -252,7 +252,7 @@ export function RegionList({
               type="button"
               disabled={disabled}
               onClick={() => onRegionsChange(regions.filter((_, idx) => idx !== i))}
-              className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-destructive/40 hover:text-foreground disabled:opacity-60"
+              className="action-button inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-destructive/40 hover:text-foreground disabled:opacity-60"
             >
               <span className="font-semibold text-foreground">#{i + 1}</span>
               {t('removeArea')}

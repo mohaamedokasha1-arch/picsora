@@ -47,7 +47,7 @@ export function ReorderList({ items, onReorder, onRemove }: ReorderListProps) {
                 aria-label={`${t('reorder')} — up`}
                 disabled={i === 0}
                 onClick={() => onReorder(i, i - 1)}
-                className="rounded p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground disabled:opacity-30"
+                className="action-button rounded p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground disabled:opacity-30"
               >
                 <ArrowUp className="h-3.5 w-3.5" />
               </button>
@@ -56,7 +56,7 @@ export function ReorderList({ items, onReorder, onRemove }: ReorderListProps) {
                 aria-label={`${t('reorder')} — down`}
                 disabled={i === items.length - 1}
                 onClick={() => onReorder(i, i + 1)}
-                className="rounded p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground disabled:opacity-30"
+                className="action-button rounded p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground disabled:opacity-30"
               >
                 <ArrowDown className="h-3.5 w-3.5" />
               </button>
@@ -65,7 +65,7 @@ export function ReorderList({ items, onReorder, onRemove }: ReorderListProps) {
                   type="button"
                   aria-label="remove"
                   onClick={() => onRemove(i)}
-                  className="rounded p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground"
+                  className="action-button rounded p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>

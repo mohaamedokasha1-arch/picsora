@@ -139,6 +139,107 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Action-button micro-interactions — reusable `.action-button` layer.
+
+   One consistent interaction system for every primary/action button across
+   all tools (Compress, Resize, Crop, Convert, Download, …):
+     · hover  → 1px lift + ~1.5% scale + soft shadow/brightness bump
+     · active → quick press to 97% scale, snaps back on release
+     · shine  → a subtle left-to-right sweep on hover (pseudo-element,
+                so no DOM changes are needed)
+
+   Purely visual: transforms + shadows only (no layout impact), no behavior
+   or timing changes. Hover effects are gated behind `(hover: hover)` so
+   touch devices only get the press feedback, and everything is disabled
+   under `prefers-reduced-motion`.
+   --------------------------------------------------------------------------- */
+.action-button {
+  position: relative;
+  overflow: hidden; /* clip the shine sweep to the button's rounded shape */
+  transform: translateY(0) scale(1);
+  transition:
+    transform 200ms cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow 200ms cubic-bezier(0.33, 1, 0.68, 1),
+    filter 200ms cubic-bezier(0.33, 1, 0.68, 1),
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    opacity 150ms ease;
+}
+
+/* Press feedback — snappy in, smooth release. Works for mouse, keyboard
+   activation and touch alike. */
+.action-button:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 90ms;
+}
+
+/* Hover lift — only on devices with a real hover capability, so taps on
+   phones/tablets are never affected. */
+@media (hover: hover) and (pointer: fine) {
+  .action-button:hover:not(:disabled):not(:focus-visible) {
+    transform: translateY(-1px) scale(1.015);
+    filter: brightness(1.04);
+    box-shadow:
+      0 2px 4px -1px rgb(15 23 42 / 0.12),
+      0 8px 16px -6px rgb(15 23 42 / 0.18);
+  }
+  .dark .action-button:hover:not(:disabled):not(:focus-visible) {
+    box-shadow:
+      0 2px 6px -1px rgb(0 0 0 / 0.35),
+      0 10px 20px -6px rgb(0 0 0 / 0.45);
+  }
+}
+
+/* Subtle shine sweep (left → right), rendered on a pseudo-element so the
+   button's DOM stays untouched. Invisible outside hover. */
+.action-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgb(255 255 255 / 0.22) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  pointer-events: none;
+}
+
+@keyframes action-button-shine {
+  from {
+    transform: translateX(-130%);
+  }
+  to {
+    transform: translateX(130%);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .action-button:hover:not(:disabled)::after {
+    animation: action-button-shine 600ms ease-out;
+  }
+}
+
+/* Respect users who prefer reduced motion: no lift, no press scale, no
+   shine, no transitions. Instant shadow/brightness feedback remains. */
+@media (prefers-reduced-motion: reduce) {
+  .action-button {
+    transition: none;
+  }
+  .action-button::after {
+    display: none;
+  }
+  .action-button:hover:not(:disabled),
+  .action-button:hover:not(:disabled):not(:focus-visible),
+  .action-button:active:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
    Prism.js token colors for the developer tools. Uses the design-system
    palette so highlighting follows the light/dark theme automatically.
    --------------------------------------------------------------------------- */

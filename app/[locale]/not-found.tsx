@@ -24,13 +24,13 @@ export default async function NotFound() {
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
         <Link
           href="/"
-          className="inline-flex h-11 items-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+          className="action-button inline-flex h-11 items-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
         >
           {t('notFound.homeLink')}
         </Link>
         <Link
           href="/tools"
-          className="inline-flex h-11 items-center rounded-lg border border-input bg-background px-6 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-accent"
+          className="action-button inline-flex h-11 items-center rounded-lg border border-input bg-background px-6 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-accent"
         >
           {t('notFound.toolsLink')}
         </Link>
