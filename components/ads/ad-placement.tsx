@@ -5,10 +5,16 @@ import { useConsent } from '@/components/consent/consent-provider';
 import { cn } from '@/lib/utils';
 
 export interface AdPlacementProps {
+  /** Google AdSense ad-unit slot id. */
   slot: string;
   className?: string;
   minHeight?: string;
 }
+
+// The ad unit supplied for this site. A numeric slot is required by AdSense;
+// legacy placement names fall back to this value so they cannot produce a
+// misleading, non-working <ins> element.
+const DEFAULT_AD_SLOT = '3492160006';
 
 /**
  * Reserved ad container. Renders real ad code only when
@@ -18,13 +24,13 @@ export interface AdPlacementProps {
 export function AdPlacement({ slot, className, minHeight = '90px' }: AdPlacementProps) {
   const { consent } = useConsent();
   const adsEnabled = process.env.NEXT_PUBLIC_ADS_ENABLED === 'true';
-  const rawClientId = process.env.NEXT_PUBLIC_ADS_CLIENT_ID;
+  const rawClientId = process.env.NEXT_PUBLIC_ADS_CLIENT_ID || 'ca-pub-5770911159315916';
   // AdSense publisher ids look like `ca-pub-1234567890123456`. Validating the
   // configured value keeps a tampered environment variable out of the DOM.
-  const clientId = rawClientId && /^ca-pub-\d{10,20}$/.test(rawClientId) ? rawClientId : undefined;
+  const clientId = /^ca-pub-\d{10,20}$/.test(rawClientId) ? rawClientId : undefined;
   // Slot ids are numeric; the value is only ever rendered as an attribute, but
   // constraining it removes any attribute-injection surface entirely.
-  const safeSlot = /^[A-Za-z0-9_-]{1,32}$/.test(slot) ? slot : '';
+  const safeSlot = /^\d{1,32}$/.test(slot) ? slot : DEFAULT_AD_SLOT;
 
   React.useEffect(() => {
     if (!adsEnabled || !consent?.advertising || !clientId) return;

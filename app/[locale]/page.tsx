@@ -12,6 +12,7 @@ import { ToolsGrid } from '@/components/tools/tools-grid';
 import { ToolSearch } from '@/components/tools/tool-search';
 import { Accordion } from '@/components/ui/accordion';
 import { ToolIcon } from '@/components/icons';
+import { AdPlacement } from '@/components/ads/ad-placement';
 
 export function generateStaticParams() {
   return siteConfig.locales.map((locale) => ({ locale }));
@@ -96,6 +97,10 @@ export default async function HomePage({ params }: { params: { locale: string } 
           </ul>
         </div>
       </section>
+
+      {/* Homepage ad: kept between the hero and editorial content, never
+          inside a tool control or interactive result. */}
+      <AdPlacement slot="3492160006" className="container py-6" minHeight="100px" />
 
       {/* Categories */}
       <section className="container py-12">
