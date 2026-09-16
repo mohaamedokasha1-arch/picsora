@@ -140,7 +140,7 @@ export default function PdfExtractPagesTool() {
             </div>
 
             <div className="mt-4">
-              <ActionButton onClick={extract} disabled={!selected.size || busy} processing={busy}>
+              <ActionButton onClick={extract} disabled={!selected.size || busy} processing={busy} success={result !== null && !busy && !error}>
                 {t('pdfTools.extractAction', { count: selected.size })}
               </ActionButton>
             </div>

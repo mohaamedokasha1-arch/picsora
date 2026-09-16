@@ -141,7 +141,7 @@ export default function PdfRotatePagesTool() {
             />
 
             <div className="mt-4">
-              <ActionButton onClick={apply} disabled={busy || !changed} processing={busy}>
+              <ActionButton onClick={apply} disabled={busy || !changed} processing={busy} success={result !== null && !busy && !error}>
                 {t('pdfTools.applyRotations')}
               </ActionButton>
             </div>

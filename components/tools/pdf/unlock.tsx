@@ -101,7 +101,7 @@ export default function PdfUnlockTool() {
             </div>
 
             <div className="mt-4">
-              <ActionButton onClick={unlock} disabled={busy || !password} processing={busy}>
+              <ActionButton onClick={unlock} disabled={busy || !password} processing={busy} success={result !== null && !busy && !error}>
                 <Unlock className="h-4 w-4" />
                 {t('pdfTools.unlockAction')}
               </ActionButton>

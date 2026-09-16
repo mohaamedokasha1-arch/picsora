@@ -197,7 +197,7 @@ export default function PdfToWordTool() {
             <p className="mt-2 text-xs text-muted-foreground">{t('pdfTools.lockedHint')}</p>
           )}
           <div className="mt-4">
-            <ActionButton onClick={convert} disabled={busy || !files.length} processing={busy}>
+            <ActionButton onClick={convert} disabled={busy || !files.length} processing={busy} success={results.length > 0 && !busy && !error}>
               {t('pdfTools.toWordAction')}
             </ActionButton>
           </div>

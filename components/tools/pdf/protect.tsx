@@ -198,7 +198,7 @@ export default function PdfProtectTool() {
             </div>
 
             <div className="mt-4">
-              <ActionButton onClick={protect} disabled={!canSubmit} processing={busy}>
+              <ActionButton onClick={protect} disabled={!canSubmit} processing={busy} success={result !== null && !busy && !error}>
                 <ShieldCheck className="h-4 w-4" />
                 {t('pdfTools.protectAction')}
               </ActionButton>

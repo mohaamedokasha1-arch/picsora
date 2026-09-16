@@ -157,6 +157,7 @@ export default function PdfGrayscaleTool() {
             <div className="mt-4 space-y-3">
               <ActionButton onClick={convert}
                 processing={busy}
+                success={result !== null && !busy && !error}
                 disabled={busy || tooManyPages}
                 className="w-full sm:w-auto"
               >

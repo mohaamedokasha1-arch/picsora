@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { Button, type ButtonProps } from './button';
+import { PiclizerRunner } from './piclizer-runner';
 import { cn } from '@/lib/utils';
 
 export interface ActionButtonProps extends Omit<ButtonProps, 'success'> {
@@ -25,9 +26,14 @@ export interface ActionButtonProps extends Omit<ButtonProps, 'success'> {
  * - Press: scale 0.97 with quick return
  * - Loading: spinner from existing Button logic
  * - Success: check icon with pop animation (0.8→1) + fade-in, cute but premium
+ * - Piclizer Runner: while `processing`, the Piclizer logo (as a tiny
+ *   character with eyes + legs) sprints across the track above the button
+ *   and stops with a "✓ Done" badge on success. Pure visual layer — it is
+ *   driven only by the existing processing/success props and never touches
+ *   tool logic, layout, colors or the button itself.
  * - Respects prefers-reduced-motion
  * - Works great on touch devices
- * 
+ *
  * Usage:
  * <ActionButton processing={processing} success={results.length>0 && !processing} onClick={process}>
  *   {t('controls.compress')}
@@ -106,19 +112,28 @@ export function ActionButton({
   }, [displaySuccess, successMode, successText, children]);
 
   return (
-    <Button
-      {...props}
-      loading={isLoading}
-      success={displaySuccess}
-      className={cn(
-        // Ensure full width by default for tool actions is controlled by parent className
-        // Add subtle extra polish for action buttons
-        'font-medium tracking-[-0.01em]',
-        className,
-      )}
-    >
-      {content}
-    </Button>
+    // The relative wrapper (sized exactly like the button was) hosts the
+    // decorative runner track above the button. The button itself keeps its
+    // exact previous classes + w-full so layout is unchanged.
+    <span className={cn('relative inline-flex', className)}>
+      {/* The runner is driven by the raw success prop (not the timed
+          displaySuccess): it lands in the same commit as processing=false
+          and manages its own "Done" hold + fade internally. */}
+      <PiclizerRunner processing={!!isLoading} success={!!success} />
+      <Button
+        {...props}
+        loading={isLoading}
+        success={displaySuccess}
+        className={cn(
+          // Ensure full width by default for tool actions is controlled by parent className
+          // Add subtle extra polish for action buttons
+          'w-full font-medium tracking-[-0.01em]',
+          className,
+        )}
+      >
+        {content}
+      </Button>
+    </span>
   );
 }
 

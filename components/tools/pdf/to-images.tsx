@@ -173,7 +173,7 @@ export default function PdfToImagesTool() {
             )}
 
             <div className="mt-4">
-              <ActionButton onClick={convert} disabled={busy || overLimit || !targets.list.length} processing={busy}>
+              <ActionButton onClick={convert} disabled={busy || overLimit || !targets.list.length} processing={busy} success={pages.length > 0 && !busy && !error}>
                 {t('pdfTools.convertToImages')}
               </ActionButton>
             </div>

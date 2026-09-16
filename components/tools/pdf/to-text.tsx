@@ -171,7 +171,7 @@ export default function PdfToTextTool() {
             <p className="mt-2 text-xs text-muted-foreground">{t('pdfTools.lockedHint')}</p>
           )}
           <div className="mt-4">
-            <ActionButton onClick={extract} disabled={busy || !files.length} processing={busy}>
+            <ActionButton onClick={extract} disabled={busy || !files.length} processing={busy} success={results.length > 0 && !busy && !error}>
               {t('pdfTools.extractTextAction')}
             </ActionButton>
           </div>

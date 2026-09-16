@@ -161,7 +161,7 @@ export default function PdfSplitterTool() {
             )}
 
             <div className="mt-4">
-              <ActionButton onClick={run} disabled={busy || !plan.parts.length || tooManyPages} processing={busy}>
+              <ActionButton onClick={run} disabled={busy || !plan.parts.length || tooManyPages} processing={busy} success={results.length > 0 && !busy && !error}>
                 {t('pdfTools.splitAction')}
               </ActionButton>
             </div>
