@@ -6,14 +6,34 @@ export interface PassportPreset {
   id: string;
   wMm: number;
   hMm: number;
+  /**
+   * ISO-ish country/region tag this size is commonly used for (displayed in
+   * the preset label). Dimensions only — never a claim of official
+   * compliance, which also depends on background, face size and recency.
+   */
+  region: string;
 }
 
+/**
+ * Data-driven ID/passport sizes: generic millimetre sizes plus the
+ * country-specific variants users actually search for. Adding a country is
+ * one line here plus two label strings (en/ar).
+ */
 export const PASSPORT_PRESETS: PassportPreset[] = [
-  { id: '35x45', wMm: 35, hMm: 45 },
-  { id: '30x40', wMm: 30, hMm: 40 },
-  { id: '33x48', wMm: 33, hMm: 48 },
-  { id: '50x50', wMm: 50.8, hMm: 50.8 },
-  { id: '40x60', wMm: 40, hMm: 60 },
+  { id: '35x45', wMm: 35, hMm: 45, region: 'EU' },
+  { id: '30x40', wMm: 30, hMm: 40, region: '' },
+  { id: '33x48', wMm: 33, hMm: 48, region: '' },
+  { id: '50x50', wMm: 50.8, hMm: 50.8, region: 'US' },
+  { id: '40x60', wMm: 40, hMm: 60, region: '' },
+  { id: 'us-2x2', wMm: 50.8, hMm: 50.8, region: 'US' },
+  { id: 'uk-35x45', wMm: 35, hMm: 45, region: 'UK' },
+  { id: 'schengen-35x45', wMm: 35, hMm: 45, region: 'EU' },
+  { id: 'canada-50x70', wMm: 50, hMm: 70, region: 'CA' },
+  { id: 'australia-35x45', wMm: 35, hMm: 45, region: 'AU' },
+  { id: 'india-51x51', wMm: 51, hMm: 51, region: 'IN' },
+  { id: 'egypt-40x60', wMm: 40, hMm: 60, region: 'EG' },
+  { id: 'china-33x48', wMm: 33, hMm: 48, region: 'CN' },
+  { id: 'uae-43x55', wMm: 43, hMm: 55, region: 'AE' },
 ];
 
 export interface PassportOptions {

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { WorkspaceContext } from '@/components/tools/tool-workspace';
 import { useToolRunner } from './use-tool';
 import { ControlsCard, useObjectUrl, PreviewBox, Field } from './common';
+import { Select } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Input } from '@/components/ui/input';
 
@@ -12,33 +13,29 @@ import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
-import { Notice } from '@/components/tools/kit';
-import { convertMany } from '@/lib/tools/processors/convert';
-import { maySupportAvifEncode } from '@/lib/image/format';
+import { Notice, ToggleGroup } from '@/components/tools/kit';
+import { upscaleImage } from '@/lib/tools/processors/upscale';
 import type { ImageFormat } from '@/lib/types';
 
-interface ConverterConfig {
-  to: ImageFormat;
-  needsBackground?: boolean;
-  /** Optional i18n hint shown above the action (e.g. animation/ICO notes). */
-  hintKey?: string;
-}
-
-export function ConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: ConverterConfig }) {
+/** Enlarge an image 2×/4× with high-quality stepped resampling. */
+export default function UpscaleTool({ ctx }: { ctx: WorkspaceContext }) {
   const t = useTranslations();
   const { processing, results, error, run } = useToolRunner();
-  const [quality, setQuality] = React.useState(90);
+  const decoded = ctx.decoded[0];
+  const [scale, setScale] = React.useState<'2' | '4'>('2');
+  const [format, setFormat] = React.useState<ImageFormat>('png');
+  const [quality, setQuality] = React.useState(92);
   const [background, setBackground] = React.useState('#ffffff');
   const preview = useObjectUrl(ctx.files[0]);
 
-  const isLossy = config.to === 'jpg' || config.to === 'jpeg' || config.to === 'webp' || config.to === 'avif';
-  const originalSize = ctx.files.reduce((s, f) => s + f.size, 0);
-  const avifBlocked = config.to === 'avif' && !maySupportAvifEncode();
+  const originalSize = ctx.files.reduce((sum, f) => sum + f.size, 0);
+  const isLossy = format === 'jpg' || format === 'jpeg' || format === 'webp';
 
   const process = () => {
     run(() =>
-      convertMany(ctx.decoded, {
-        format: config.to,
+      upscaleImage(ctx.decoded, {
+        scale: scale === '4' ? 4 : 2,
+        format,
         quality,
         background,
       }),
@@ -50,6 +47,35 @@ export function ConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: 
       <div className="grid gap-5 lg:grid-cols-[340px_1fr]">
         <ControlsCard>
           <h3 className="text-sm font-semibold text-foreground">{t('toolShell.settingsTitle')}</h3>
+          <ToggleGroup<'2' | '4'>
+            label={t('upscale.scale')}
+            value={scale}
+            onChange={setScale}
+            options={[
+              { value: '2', label: '2×' },
+              { value: '4', label: '4×' },
+            ]}
+          />
+          {decoded && (
+            <p className="text-xs text-muted-foreground">
+              {t('upscale.outputDims', {
+                w: decoded.width * Number(scale),
+                h: decoded.height * Number(scale),
+              })}
+            </p>
+          )}
+          <Field label={t('toolShell.outputFormat')}>
+            <Select
+              value={format}
+              onChange={(e) => setFormat(e.target.value as ImageFormat)}
+              disabled={processing}
+              options={[
+                { value: 'png', label: 'PNG' },
+                { value: 'jpg', label: 'JPG' },
+                { value: 'webp', label: 'WebP' },
+              ]}
+            />
+          </Field>
           {isLossy && (
             <Slider
               label={t('controls.quality')}
@@ -61,7 +87,7 @@ export function ConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: 
               disabled={processing}
             />
           )}
-          {config.needsBackground && (
+          {format === 'jpg' && (
             <Field label={t('controls.background')}>
               <div className="flex items-center gap-3">
                 <input
@@ -82,10 +108,9 @@ export function ConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: 
               </div>
             </Field>
           )}
-          {config.hintKey && <Notice variant="info">{t(config.hintKey as never)}</Notice>}
-          {avifBlocked && <Notice variant="warning">{t('convert.avifBlocked')}</Notice>}
+          <Notice variant="info">{t('upscale.honestNote')}</Notice>
           <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
-            {t('controls.convert')} → {config.to.toUpperCase()}
+            {t('upscale.enlarge', { scale })}
           </ActionButton>
         </ControlsCard>
 
@@ -97,23 +122,4 @@ export function ConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: 
       <ResultPanel results={results} originalSize={originalSize} onReset={ctx.reset} />
     </div>
   );
-}
-
-export function JpgToPngTool({ ctx }: { ctx: WorkspaceContext }) {
-  return <ConverterTool ctx={ctx} config={{ to: 'png' }} />;
-}
-export function PngToJpgTool({ ctx }: { ctx: WorkspaceContext }) {
-  return <ConverterTool ctx={ctx} config={{ to: 'jpg', needsBackground: true }} />;
-}
-export function JpgToWebpTool({ ctx }: { ctx: WorkspaceContext }) {
-  return <ConverterTool ctx={ctx} config={{ to: 'webp' }} />;
-}
-export function PngToWebpTool({ ctx }: { ctx: WorkspaceContext }) {
-  return <ConverterTool ctx={ctx} config={{ to: 'webp' }} />;
-}
-export function WebpToJpgTool({ ctx }: { ctx: WorkspaceContext }) {
-  return <ConverterTool ctx={ctx} config={{ to: 'jpg', needsBackground: true }} />;
-}
-export function WebpToPngTool({ ctx }: { ctx: WorkspaceContext }) {
-  return <ConverterTool ctx={ctx} config={{ to: 'png' }} />;
 }

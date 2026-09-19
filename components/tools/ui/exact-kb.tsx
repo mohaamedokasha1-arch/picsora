@@ -19,19 +19,34 @@ import { formatBytes } from '@/lib/utils';
 
 const PRESETS = [50, 100, 200, 500, 1024];
 
-/** Compress images to an exact file-size target (e.g. exactly 100 KB). */
-export default function ExactKbTool({ ctx }: { ctx: WorkspaceContext }) {
+/**
+ * Compress images to an exact file-size target (e.g. exactly 100 KB).
+ *
+ * The `presetKB`/`lockTarget` props power the dedicated SEO landing pages
+ * (100KB / 200KB / 500KB / 1MB Image Compressor): same engine, fixed target,
+ * no duplicated implementation.
+ */
+export default function ExactKbTool({
+  ctx,
+  presetKB,
+  lockTarget = false,
+}: {
+  ctx: WorkspaceContext;
+  presetKB?: number;
+  lockTarget?: boolean;
+}) {
   const t = useTranslations();
   const { processing, results, error, run } = useToolRunner();
-  const [targetKB, setTargetKB] = React.useState(100);
+  const [targetKB, setTargetKB] = React.useState(presetKB ?? 100);
   const [format, setFormat] = React.useState<ImageFormat>('jpg');
   const preview = useObjectUrl(ctx.files[0]);
 
   const originalSize = ctx.files.reduce((sum, f) => sum + f.size, 0);
 
   const process = () => {
-    const kb = Math.max(5, Math.min(51200, Math.round(Number(targetKB) || 100)));
-    setTargetKB(kb);
+    const fallback = presetKB ?? 100;
+    const kb = lockTarget ? fallback : Math.max(5, Math.min(51200, Math.round(Number(targetKB) || fallback)));
+    if (!lockTarget) setTargetKB(kb);
     run(() => compressToExactSize(ctx.decoded, { targetKB: kb, format }));
   };
 
@@ -45,34 +60,40 @@ export default function ExactKbTool({ ctx }: { ctx: WorkspaceContext }) {
       <div className="grid gap-5 lg:grid-cols-[340px_1fr]">
         <ControlsCard>
           <h3 className="text-sm font-semibold text-foreground">{t('toolShell.settingsTitle')}</h3>
-          <div className="space-y-1.5">
-            <label htmlFor="exact-kb" className="text-sm font-medium text-foreground">
-              {t('controls.targetSize')} (KB)
-            </label>
-            <Input
-              id="exact-kb"
-              type="number"
-              min={5}
-              max={51200}
-              value={targetKB}
-              onChange={(e) => setTargetKB(Number(e.target.value))}
-              disabled={processing}
-              inputMode="numeric"
-            />
-            <div className="flex flex-wrap gap-2 pt-1">
-              {PRESETS.map((p) => (
-                <button
-                  key={p}
-                  type="button"
-                  disabled={processing}
-                  onClick={() => setTargetKB(p)}
-                  className="rounded-full border border-input bg-background px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
-                >
-                  {p} KB
-                </button>
-              ))}
+          {lockTarget && presetKB ? (
+            <Notice variant="info">
+              {t('exactKb.fixedTarget', { size: presetKB >= 1024 ? `${presetKB / 1024} MB` : `${presetKB} KB` })}
+            </Notice>
+          ) : (
+            <div className="space-y-1.5">
+              <label htmlFor="exact-kb" className="text-sm font-medium text-foreground">
+                {t('controls.targetSize')} (KB)
+              </label>
+              <Input
+                id="exact-kb"
+                type="number"
+                min={5}
+                max={51200}
+                value={targetKB}
+                onChange={(e) => setTargetKB(Number(e.target.value))}
+                disabled={processing}
+                inputMode="numeric"
+              />
+              <div className="flex flex-wrap gap-2 pt-1">
+                {PRESETS.map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    disabled={processing}
+                    onClick={() => setTargetKB(p)}
+                    className="rounded-full border border-input bg-background px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+                  >
+                    {p} KB
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           <div className="space-y-1.5">
             <label htmlFor="exact-fmt" className="text-sm font-medium text-foreground">
               {t('toolShell.outputFormat')}

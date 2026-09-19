@@ -15,6 +15,8 @@ import { removeBackground } from './background';
 import { makePassportPhoto } from './passport';
 import { makeSignature } from './signature';
 import { adjustImage, applyFilterEffect, blurImage, pixelateImage, roundCorners } from './effects';
+import { makeFavicon } from './favicon';
+import { upscaleImage } from './upscale';
 
 /**
  * Maps a tool slug to its processing function.
@@ -52,6 +54,24 @@ export const processors: Record<string, ToolProcessor<any>> = {
   'background-remover': removeBackground,
   'passport-photo-maker': makePassportPhoto,
   'signature-maker': makeSignature,
+  'avif-to-jpg': convertImage,
+  'avif-to-png': convertImage,
+  'avif-to-webp': convertImage,
+  'jpg-to-avif': convertImage,
+  'png-to-avif': convertImage,
+  'webp-to-avif': convertImage,
+  'svg-to-png': convertImage,
+  'svg-to-jpg': convertImage,
+  'svg-to-webp': convertImage,
+  'gif-to-webp': convertImage,
+  'image-to-ico': convertImage,
+  'ico-to-png': convertImage,
+  'compress-image-to-100kb': compressToExactSize,
+  'compress-image-to-200kb': compressToExactSize,
+  'compress-image-to-500kb': compressToExactSize,
+  'compress-image-to-1mb': compressToExactSize,
+  'favicon-generator': makeFavicon,
+  'image-upscaler': upscaleImage,
 };
 
 export * from './types';
