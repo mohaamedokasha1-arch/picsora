@@ -34,6 +34,16 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'pdf-grayscale': dynamic(() => import('../pdf/grayscale')),
   'pdf-metadata-editor': dynamic(() => import('../pdf/metadata-editor')),
   'pdf-extract-images': dynamic(() => import('../pdf/extract-images')),
+  'pdf-metadata-viewer': dynamic(() => import('../pdf/metadata-viewer')),
+  'pdf-metadata-cleaner': dynamic(() => import('../pdf/metadata-cleaner')),
+  'pdf-flatten': dynamic(() => import('../pdf/flatten')),
+  'pdf-crop': dynamic(() => import('../pdf/crop')),
+  'pdf-header-footer': dynamic(() => import('../pdf/header-footer')),
+  'pdf-to-markdown': dynamic(() => import('../pdf/to-markdown')),
+  'pdf-to-html': dynamic(() => import('../pdf/to-html')),
+  'pdf-to-csv': dynamic(() => import('../pdf/to-csv')),
+  'pdf-compare': dynamic(() => import('../pdf/compare')),
+  'pdf-search': dynamic(() => import('../pdf/search')),
 
   /* ----------------------------------------------------------- text */
   'word-counter': dynamic(() => import('../text/word-counter')),
