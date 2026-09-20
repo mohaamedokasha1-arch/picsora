@@ -476,3 +476,221 @@ export function calculateTip(bill: number, tipPercent: number, people: number, r
 export function toArabicDigits(value: string): string {
   return value.replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]);
 }
+
+/* ------------------------------------------------------------------- loan */
+
+export interface LoanResult extends Steps {
+  monthlyPayment: number;
+  totalPayment: number;
+  totalInterest: number;
+  payments: number;
+}
+
+/** Standard amortising-loan maths (fixed rate, monthly payments). */
+export function calculateLoan(principal: number, annualRatePercent: number, years: number): LoanResult | null {
+  const months = Math.round(years * 12);
+  if (!(principal > 0) || !(months > 0) || annualRatePercent < 0) return null;
+  const r = annualRatePercent / 100 / 12;
+  let monthly: number;
+  if (r === 0) {
+    monthly = principal / months;
+  } else {
+    const factor = (r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
+    monthly = principal * factor;
+  }
+  const total = monthly * months;
+  return {
+    monthlyPayment: monthly,
+    totalPayment: total,
+    totalInterest: total - principal,
+    payments: months,
+    steps: [
+      `Monthly rate = ${annualRatePercent}% ÷ 12 = ${(r * 100).toFixed(4)}%`,
+      `Payment = ${round(monthly, 2)} × ${months} months`,
+      `Total interest = ${round(total - principal, 2)}`,
+    ],
+  };
+}
+
+/* --------------------------------------------------------------- mortgage */
+
+export interface MortgageResult extends Steps {
+  loanAmount: number;
+  principalInterest: number;
+  taxMonthly: number;
+  insuranceMonthly: number;
+  totalMonthly: number;
+  totalInterest: number;
+}
+
+/**
+ * Mortgage estimate: loan amortisation plus monthly property-tax and
+ * homeowner-insurance slices. An estimate — real offers add fees and PMI.
+ */
+export function calculateMortgage(
+  homePrice: number,
+  downPayment: number,
+  annualRatePercent: number,
+  years: number,
+  annualTaxPercent: number,
+  annualInsurance: number,
+): MortgageResult | null {
+  const loanAmount = homePrice - downPayment;
+  const loan = calculateLoan(loanAmount, annualRatePercent, years);
+  if (!loan) return null;
+  const taxMonthly = ((homePrice * annualTaxPercent) / 100) / 12;
+  const insuranceMonthly = annualInsurance / 12;
+  return {
+    loanAmount,
+    principalInterest: loan.monthlyPayment,
+    taxMonthly,
+    insuranceMonthly,
+    totalMonthly: loan.monthlyPayment + taxMonthly + insuranceMonthly,
+    totalInterest: loan.totalInterest,
+    steps: [
+      `Loan = ${homePrice} − ${downPayment} = ${round(loanAmount, 2)}`,
+      `Principal + interest = ${round(loan.monthlyPayment, 2)}/mo`,
+      `Tax + insurance = ${round(taxMonthly + insuranceMonthly, 2)}/mo`,
+    ],
+  };
+}
+
+/* ----------------------------------------------------------------- salary */
+
+export interface SalaryResult extends Steps {
+  grossMonthly: number;
+  taxMonthly: number;
+  deductionsMonthly: number;
+  netMonthly: number;
+  netYearly: number;
+  effectiveRate: number;
+}
+
+/** Gross → net pay with a flat tax rate plus fixed deductions. */
+export function calculateSalary(grossMonthly: number, taxPercent: number, deductions: number): SalaryResult | null {
+  if (!(grossMonthly > 0) || taxPercent < 0 || taxPercent > 100 || deductions < 0) return null;
+  const taxMonthly = (grossMonthly * taxPercent) / 100;
+  const netMonthly = Math.max(0, grossMonthly - taxMonthly - deductions);
+  return {
+    grossMonthly,
+    taxMonthly,
+    deductionsMonthly: deductions,
+    netMonthly,
+    netYearly: netMonthly * 12,
+    effectiveRate: grossMonthly ? ((grossMonthly - netMonthly) / grossMonthly) * 100 : 0,
+    steps: [
+      `Tax = ${grossMonthly} × ${taxPercent}% = ${round(taxMonthly, 2)}`,
+      `Net = ${grossMonthly} − ${round(taxMonthly, 2)} − ${deductions} = ${round(netMonthly, 2)}`,
+    ],
+  };
+}
+
+/* -------------------------------------------------------------------- VAT */
+
+export interface VatResult extends Steps {
+  net: number;
+  vatAmount: number;
+  gross: number;
+  rate: number;
+}
+
+/** Add or remove VAT at a configurable rate. */
+export function calculateVat(amount: number, ratePercent: number, mode: 'add' | 'remove'): VatResult | null {
+  if (!(amount >= 0) || !(ratePercent >= 0)) return null;
+  const rate = ratePercent / 100;
+  if (mode === 'add') {
+    const vatAmount = amount * rate;
+    return {
+      net: amount,
+      vatAmount,
+      gross: amount + vatAmount,
+      rate: ratePercent,
+      steps: [`VAT = ${amount} × ${ratePercent}% = ${round(vatAmount, 2)}`, `Gross = ${round(amount + vatAmount, 2)}`],
+    };
+  }
+  const net = rate === 0 ? amount : amount / (1 + rate);
+  return {
+    net,
+    vatAmount: amount - net,
+    gross: amount,
+    rate: ratePercent,
+    steps: [`Net = ${amount} ÷ ${round(1 + rate, 4)} = ${round(net, 2)}`, `VAT = ${round(amount - net, 2)}`],
+  };
+}
+
+/* ------------------------------------------------------------------ margin */
+
+export interface MarginResult extends Steps {
+  revenue: number;
+  cost: number;
+  profit: number;
+  marginPercent: number;
+  markupPercent: number;
+}
+
+/** Profit margin (on revenue) and markup (on cost) from cost + price. */
+export function calculateMargin(cost: number, price: number): MarginResult | null {
+  if (!(cost >= 0) || !(price > 0)) return null;
+  const profit = price - cost;
+  return {
+    revenue: price,
+    cost,
+    profit,
+    marginPercent: (profit / price) * 100,
+    markupPercent: cost > 0 ? (profit / cost) * 100 : 0,
+    steps: [
+      `Profit = ${price} − ${cost} = ${round(profit, 2)}`,
+      `Margin = ${round(profit, 2)} ÷ ${price} = ${round((profit / price) * 100, 2)}%`,
+      cost > 0 ? `Markup = ${round(profit, 2)} ÷ ${cost} = ${round((profit / cost) * 100, 2)}%` : 'Markup = — (zero cost)',
+    ],
+  };
+}
+
+/* ----------------------------------------------------------------- average */
+
+export interface AverageResult extends Steps {
+  count: number;
+  mean: number;
+  median: number;
+  mode: number[];
+  min: number;
+  max: number;
+  range: number;
+  sum: number;
+}
+
+/** Descriptive stats (mean, median, mode, range) for a number list. */
+export function calculateAverage(values: number[]): AverageResult | null {
+  const nums = values.filter((v) => Number.isFinite(v));
+  if (!nums.length) return null;
+  const sorted = [...nums].sort((a, b) => a - b);
+  const sum = nums.reduce((n, v) => n + v, 0);
+  const mean = sum / nums.length;
+  const mid = Math.floor(sorted.length / 2);
+  const median = sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  const counts = new Map<number, number>();
+  for (const v of nums) counts.set(v, (counts.get(v) ?? 0) + 1);
+  const best = Math.max(...counts.values());
+  const mode = best > 1 ? [...counts.entries()].filter(([, c]) => c === best).map(([v]) => v) : [];
+  return {
+    count: nums.length,
+    mean,
+    median,
+    mode,
+    min: sorted[0],
+    max: sorted[sorted.length - 1],
+    range: sorted[sorted.length - 1] - sorted[0],
+    sum,
+    steps: [`Mean = ${round(sum, 4)} ÷ ${nums.length} = ${round(mean, 4)}`, `Median of ${nums.length} values = ${round(median, 4)}`],
+  };
+}
+
+/** Parse a free-form number list (commas, spaces, newlines) into numbers. */
+export function parseNumberList(input: string): number[] {
+  return input
+    .split(/[,\s;|]+/)
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .map(Number)
+    .filter((n) => Number.isFinite(n));
+}

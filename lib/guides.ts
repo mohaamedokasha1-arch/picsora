@@ -34,6 +34,8 @@ const IMAGE_GUIDE_SLUGS = [
   'compress-iphone-photos',
   'resize-image',
   'convert-jpg-to-png',
+  'convert-avif-to-jpg',
+  'create-favicon-package',
 ] as const;
 
 /** PDF guides live in ./content/guides-extra.*.json (same shape, kept out of
@@ -396,6 +398,112 @@ const GUIDES_EN: Record<ImageGuideSlug, GuideContent> = {
     relatedTools: ['jpg-to-png', 'png-to-jpg', 'png-to-webp', 'background-remover'],
     relatedGuides: ['compress-image', 'convert-heic-to-jpg', 'resize-image', 'convert-images-to-pdf'],
   },
+  'convert-avif-to-jpg': {
+    slug: 'convert-avif-to-jpg',
+    title: 'How to Convert AVIF to JPG (and When to Keep AVIF)',
+    description: 'AVIF files will not open somewhere? Convert AVIF to JPG free in your browser — plus when AVIF is actually the better choice.',
+    intro: [
+      'AVIF is the most efficient image format in wide use: the same photo at the same quality is 30–50% smaller than JPG. But efficiency means nothing when your editor, office suite or client cannot open the file.',
+      'This guide shows when to convert AVIF to JPG, which quality setting preserves the look, and how to batch-convert free in your browser — files never leave your device.',
+    ],
+    minutes: 4,
+    sections: [
+      {
+        heading: 'When JPG wins over AVIF',
+        paragraphs: [
+          'Compatibility is JPG’s superpower: everything made since the 1990s opens it. Convert to JPG when the file must survive email attachments, office documents, older phones, printers, or clients you cannot control.',
+          'Keep AVIF when you control the pipeline — your own website, your own archive — and every consumer is a modern browser, Android 12+ or iOS 16+.',
+        ],
+        bullets: [
+          'Convert → sending to others, office docs, print shops, old software',
+          'Keep AVIF → web publishing, personal archives, bandwidth bills',
+        ],
+        toolSlug: 'avif-to-jpg',
+      },
+      {
+        heading: 'Pick a quality that preserves the look',
+        paragraphs: [
+          'AVIF to JPG is a lossy-to-lossy hop, but at quality 85–92 the difference is invisible in practice. Going higher mostly inflates the file without visible gain.',
+          'Watch smooth gradients (skies, studio backdrops): if you see banding after conversion, nudge quality up 5 points rather than maxing it out.',
+        ],
+        bullets: [
+          'Everyday sharing: JPG 85%',
+          'Client delivery: JPG 90–92%',
+          'Maximum compatibility, minimum fuss: JPG 85% and move on',
+        ],
+      },
+      {
+        heading: 'Batch-convert in your browser',
+        paragraphs: [
+          'Open the AVIF to JPG converter, drop up to 10 files, set quality once, and download individually or as a ZIP. Rendering happens locally via canvas — no queue, no watermark, no account.',
+          'Need transparency? JPG cannot do it — convert to PNG or WebP instead, both one click away on the same converter family.',
+        ],
+        toolSlug: 'avif-to-png',
+      },
+    ],
+    faqs: [
+      { q: 'Does converting AVIF to JPG lose quality?', a: 'Technically a little — both are lossy. At quality 85+ the change is invisible to the eye in normal viewing.' },
+      { q: 'Why is my JPG bigger than the AVIF?', a: 'Expected: AVIF compresses far better. JPG buys universal compatibility with larger files — that is the trade.' },
+      { q: 'What about animated AVIF?', a: 'Only the first frame converts. JPG has no animation; keep the AVIF if motion matters.' },
+      { q: 'Can I convert JPG back to AVIF?', a: 'Yes — the JPG to AVIF tool reverses the trip whenever you want the savings back.' },
+    ],
+    relatedTools: ['avif-to-jpg', 'jpg-to-avif', 'avif-to-png', 'image-compressor'],
+    relatedGuides: ['convert-heic-to-jpg', 'convert-jpg-to-png', 'compress-image', 'resize-image'],
+  },
+  'create-favicon-package': {
+    slug: 'create-favicon-package',
+    title: 'How to Create a Favicon Package for Your Website',
+    description: 'One logo in, every icon out: build favicon.ico, PNG sizes, Apple touch icon, manifest and HTML snippet free in your browser.',
+    intro: [
+      'A modern favicon is not one file — it is a package: a multi-size .ico for tabs, PNGs for Android, an Apple touch icon for iOS, a web manifest, and the HTML that ties them together.',
+      'This guide explains what each piece does, what makes a logo survive at 16 pixels, and how to generate the whole set from one upload — free, locally, in seconds.',
+    ],
+    minutes: 5,
+    sections: [
+      {
+        heading: 'What belongs in the package',
+        paragraphs: [
+          'Browsers and operating systems each ask for their own size. Ship the full set once and every platform picks what it needs — missing pieces silently fall back to a generic globe icon.',
+          'The HTML snippet matters as much as the images: without link tags, browsers guess paths and mobile install prompts never find your icons.',
+        ],
+        bullets: [
+          'favicon.ico (16/32/48 px) → browser tabs and bookmarks',
+          'PNG 180 px → iOS home screen (apple-touch-icon)',
+          'PNG 192 + 512 px + manifest → Android install prompts',
+          'HTML snippet → paste into your page <head>',
+        ],
+        toolSlug: 'favicon-generator',
+      },
+      {
+        heading: 'Design a logo that survives 16 px',
+        paragraphs: [
+          'At tab size, fine detail evaporates. The best favicons are one bold glyph or lettermark on a high-contrast background — think a single letter, not a full wordmark.',
+          'Always preview at 16 and 32 px before shipping. If it reads as mush, simplify: thicker strokes, fewer colors, no taglines.',
+        ],
+        bullets: [
+          'Square source, simple shapes, 2–3 colors max',
+          'Transparent PNG background for tabs; solid for app icons',
+          'Test on light AND dark browser themes',
+        ],
+      },
+      {
+        heading: 'Generate and install in minutes',
+        paragraphs: [
+          'Upload a square logo to the Favicon Generator, check every rendered size in the preview, and download the ZIP. Extract it to your site root next to index.html, paste the snippet into your head, and hard-refresh to see it.',
+          'Still seeing the old icon? Browsers cache favicons aggressively — test in a private window or bump the file names.',
+        ],
+        toolSlug: 'image-to-ico',
+      },
+    ],
+    faqs: [
+      { q: 'Where do favicon files go?', a: 'Your website root (same folder as index.html), with the snippet pasted into every page head — or your shared layout.' },
+      { q: 'Do I really need all those sizes?', a: 'Yes for a professional result: tabs, iOS, Android and shortcuts each want different files. One ZIP covers everything.' },
+      { q: 'SVG favicon instead?', a: 'SVG favicons work in modern browsers and scale perfectly, but Safari and older clients still need PNG/ICO fallbacks.' },
+      { q: 'Why is my new favicon not showing?', a: 'Favicon caching is notoriously sticky. Hard-refresh (Ctrl+Shift+R), clear site data, or check in a private window.' },
+    ],
+    relatedTools: ['favicon-generator', 'image-to-ico', 'svg-to-png', 'rounded-corners'],
+    relatedGuides: ['resize-image', 'convert-jpg-to-png', 'compress-image', 'convert-avif-to-jpg'],
+  },
 };
 
 const GUIDES_AR: Record<ImageGuideSlug, GuideContent> = {
@@ -737,6 +845,112 @@ const GUIDES_AR: Record<ImageGuideSlug, GuideContent> = {
     ],
     relatedTools: ['jpg-to-png', 'png-to-jpg', 'png-to-webp', 'background-remover'],
     relatedGuides: ['compress-image', 'convert-heic-to-jpg', 'resize-image', 'convert-images-to-pdf'],
+  },
+  'convert-avif-to-jpg': {
+    slug: 'convert-avif-to-jpg',
+    title: 'كيف تحوّل AVIF إلى JPG (ومتى تُبقي AVIF)',
+    description: 'ملفات AVIF لا تُفتَح في مكان ما؟ حوّل AVIF إلى JPG مجانًا في متصفحك — مع متى يكون AVIF الخيار الأفضل فعلًا.',
+    intro: [
+      'صيغة AVIF هي أكفأ صيغة صور مستخدمة على نطاق واسع: نفس الصورة بنفس الجودة أصغر 30–50% من JPG. لكن الكفاءة لا تعني شيئًا عندما يعجز محررك أو حزمة مكتبك أو عميلك عن فتح الملف.',
+      'يوضح هذا الدليل متى تحوّل AVIF إلى JPG، وأي إعداد جودة يحفظ المظهر، وكيف تحوّل دفعات مجانًا في متصفحك — دون أن تغادر الملفات جهازك.',
+    ],
+    minutes: 4,
+    sections: [
+      {
+        heading: 'متى يتفوق JPG على AVIF',
+        paragraphs: [
+          'التوافق هو قوة JPG الخارقة: كل ما صُنع منذ التسعينيات يفتحه. حوّل إلى JPG عندما يجب أن ينجو الملف من مرفقات البريد والمستندات المكتبية والهواتف القديمة والمطابع أو عملاء لا تتحكم بهم.',
+          'أبقِ AVIF عندما تتحكم بالخط — موقعك أو أرشيفك — وكل مستهلك متصفح حديث أو أندرويد 12+ أو iOS 16+.',
+        ],
+        bullets: [
+          'حوّل ← الإرسال للآخرين والمستندات والمطابع والبرامج القديمة',
+          'أبقِ AVIF ← النشر الويب والأرشفة الشخصية وفواتير النطاق',
+        ],
+        toolSlug: 'avif-to-jpg',
+      },
+      {
+        heading: 'اختر جودة تحفظ المظهر',
+        paragraphs: [
+          'الانتقال من AVIF إلى JPG قفزة من فقدي إلى فقدي، لكن بجودة 85–92 يكون الفرق غير مرئي عمليًا. الزيادة عن ذلك تضخّم الملف غالبًا دون مكسب ظاهر.',
+          'راقب التدرجات الناعمة (السماء والخلفيات الاستوديو): إذا رأيت تطبقات بعد التحويل ارفع الجودة 5 درجات بدل تعظيمها.',
+        ],
+        bullets: [
+          'المشاركة اليومية: JPG بجودة 85%',
+          'التسليم للعملاء: JPG بجودة 90–92%',
+          'أقصى توافق بأقل عناء: JPG بجودة 85% وامضِ',
+        ],
+      },
+      {
+        heading: 'حوّل الدفعات في متصفحك',
+        paragraphs: [
+          'افتح محوّل AVIF إلى JPG، وأفلت حتى 10 ملفات، واضبط الجودة مرة واحدة، وحمّل فرادى أو كملف ZIP. الرسم يحدث محليًا — بلا قائمة انتظار ولا علامة مائية ولا حساب.',
+          'تحتاج الشفافية؟ JPG يعجز عنها — حوّل إلى PNG أو WebP بدلًا منها، وكلاهما على بُعد نقرة.',
+        ],
+        toolSlug: 'avif-to-png',
+      },
+    ],
+    faqs: [
+      { q: 'هل تحويل AVIF إلى JPG يفقد الجودة؟', a: 'نظريًا قليلًا — كلاهما فقدي. لكن بجودة +85 يكون التغيّر غير مرئي للعين في المشاهدة العادية.' },
+      { q: 'لماذا ملف JPG أكبر من AVIF؟', a: 'متوقع: AVIF يضغط أفضل بكثير. JPG يشتري التوافق الشامل بملفات أكبر — هذه هي الصفقة.' },
+      { q: 'ماذا عن AVIF المتحرك؟', a: 'الإطار الأول فقط يتحول. JPG بلا حركة؛ أبقِ AVIF إذا كانت الحركة مهمة.' },
+      { q: 'هل يمكن التحويل عكسيًا من JPG إلى AVIF؟', a: 'نعم — أداة JPG إلى AVIF تعكس الرحلة متى أردت التوفير مجددًا.' },
+    ],
+    relatedTools: ['avif-to-jpg', 'jpg-to-avif', 'avif-to-png', 'image-compressor'],
+    relatedGuides: ['convert-heic-to-jpg', 'convert-jpg-to-png', 'compress-image', 'resize-image'],
+  },
+  'create-favicon-package': {
+    slug: 'create-favicon-package',
+    title: 'كيف تنشئ حزمة فافيكون لموقعك',
+    description: 'شعار واحد يدخل وكل أيقونة تخرج: ابنِ favicon.ico وأحجام PNG وأيقونة آبل وmanifest ومقتطف HTML مجانًا في متصفحك.',
+    intro: [
+      'الفافيكون الحديث ليس ملفًا واحدًا — إنه حزمة: ملف ico. متعدد الأحجام للتبويبات وPNG لأندرويد وأيقونة لمس لآيفون وmanifest ويب وكود HTML الذي يربطها.',
+      'يشرح هذا الدليل وظيفة كل قطعة، وما الذي يجعل الشعار ينجو عند 16 بكسل، وكيف تولّد المجموعة كاملة من رفعة واحدة — مجانًا ومحليًا في ثوانٍ.',
+    ],
+    minutes: 5,
+    sections: [
+      {
+        heading: 'ماذا تتضمن الحزمة',
+        paragraphs: [
+          'المتصفحات وأنظمة التشغيل تطلب مقاسها الخاص. اشحن المجموعة الكاملة مرة واحدة وكل منصة تختار ما تحتاجه — القطع الناقصة تسقط بصمت لأيقونة كرة أرضية عامة.',
+          'مقتطف HTML مهم كالصور نفسها: دون وسوم الربط تخمّن المتصفحات المسارات ولا تجد تنبيهات التثبيت أيقوناتك أبدًا.',
+        ],
+        bullets: [
+          'favicon.ico (16/32/48 بكسل) ← تبويبات المتصفح والإشارات',
+          'PNG بمقاس 180 ← شاشة آيفون الرئيسية (apple-touch-icon)',
+          'PNG بمقاس 192 و512 + manifest ← تنبيهات تثبيت أندرويد',
+          'مقتطف HTML ← الصقه في رأس الصفحة <head>',
+        ],
+        toolSlug: 'favicon-generator',
+      },
+      {
+        heading: 'صمّم شعارًا ينجو عند 16 بكسل',
+        paragraphs: [
+          'بحجم التبويب، تتبخر التفاصيل الدقيقة. أفضل الفافيكونات حرف واحد عريض أو علامة حرفية على خلفية عالية التباين — حرف واحد لا اسمًا كاملًا.',
+          'عاين دائمًا عند 16 و32 بكسل قبل الشحن. إذا بدا مهروسًا فبسّط: حدود أسمك وألوان أقل وبلا شعارات فرعية.',
+        ],
+        bullets: [
+          'مصدر مربع وأشكال بسيطة و2–3 ألوان كحد أقصى',
+          'خلفية PNG شفافة للتبويبات؛ ومصمتة لأيقونات التطبيقات',
+          'اختبر على ثيمات المتصفح الفاتحة والداكنة معًا',
+        ],
+      },
+      {
+        heading: 'ولّد وثبّت في دقائق',
+        paragraphs: [
+          'ارفع شعارًا مربعًا لمولّد الفافيكون، وتفقد كل مقاس مرسوم في المعاينة، وحمّل ZIP. فكّه في جذر موقعك بجانب index.html، والصق المقتطف في الرأس، وحدّث بقوة لتراه.',
+          'ما زلت ترى الأيقونة القديمة؟ المتصفحات تخزّن الفافيكون بشراسة — جرّب نافذة خاصة أو غيّر أسماء الملفات.',
+        ],
+        toolSlug: 'image-to-ico',
+      },
+    ],
+    faqs: [
+      { q: 'أين توضع ملفات الفافيكون؟', a: 'في جذر موقعك (نفس مجلد index.html)، مع لصق المقتطف في رأس كل صفحة — أو قالبك المشترك.' },
+      { q: 'هل أحتاج كل هذه المقاسات حقًا؟', a: 'نعم لنتيجة احترافية: التبويبات وiOS وأندرويد والاختصارات تريد ملفات مختلفة. ملف ZIP واحد يغطي كل شيء.' },
+      { q: 'فافيكون SVG بدلًا من ذلك؟', a: 'يعمل في المتصفحات الحديثة ويتدرج بكمال، لكن سفاري والعملاء القدامى ما زالوا يحتاجون PNG/ICO احتياطية.' },
+      { q: 'لماذا لا يظهر الفافيكون الجديد؟', a: 'تخزين الفافيكون عنيد شهير. حدّث بقوة (Ctrl+Shift+R) أو امسح بيانات الموقع أو تحقق في نافذة خاصة.' },
+    ],
+    relatedTools: ['favicon-generator', 'image-to-ico', 'svg-to-png', 'rounded-corners'],
+    relatedGuides: ['resize-image', 'convert-jpg-to-png', 'compress-image', 'convert-avif-to-jpg'],
   },
 };
 

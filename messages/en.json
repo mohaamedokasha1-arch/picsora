@@ -65,7 +65,9 @@
     "replyNote": "We read every message and usually reply within 1–2 business days.",
     "allProcessingText": "All processing happens locally in your browser. Your text never leaves your device.",
     "allProcessingFiles": "All processing happens locally in your browser. Your files never leave your device.",
-    "useToolLabel": "Use tool"
+    "useToolLabel": "Use tool",
+    "addFavorite": "Add to favorites",
+    "removeFavorite": "Remove from favorites"
   },
   "validation": {
     "invalidType": "This file type is not supported here. Please choose {types}.",
@@ -140,7 +142,12 @@
     "guidesTitle": "Guides & tutorials",
     "guidesSubtitle": "Step-by-step articles that help you master everyday file tasks.",
     "guidesCta": "Read guide",
-    "readTime": "min read"
+    "readTime": "min read",
+    "recentTitle": "Recently used",
+    "recentSubtitle": "Pick up where you left off — stored only in this browser.",
+    "favoritesTitle": "Your favorites",
+    "favoritesSubtitle": "Star any tool to pin it here.",
+    "clearRecent": "Clear history"
   },
   "homeFaqs": [
     {
@@ -3336,6 +3343,1340 @@
           "a": "Yes. Rank words with common words removed to see what a page talks about most, or check that a target keyword is not repeated past the point of looking stuffed."
         }
       ]
+    },
+    "avif-to-jpg": {
+      "name": "AVIF to JPG",
+      "short": "Convert AVIF images to JPG.",
+      "description": "Convert AVIF to JPG online for free. Your files are converted in the browser — no upload, no quality presets to guess.",
+      "intro": "AVIF is efficient but still unsupported in many editors and older devices. This converter turns any AVIF — including animated ones — into a universally compatible JPG with a quality slider, in seconds.",
+      "howTo": [
+        "Drop your AVIF files (up to 10 at once).",
+        "Pick a JPG quality that fits your needs.",
+        "Download the JPGs one by one or as a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "Why convert AVIF to JPG?",
+          "a": "AVIF saves space but many tools — from office suites to older phones — still cannot open it. JPG works literally everywhere."
+        },
+        {
+          "q": "Will the JPG look worse?",
+          "a": "Both are lossy formats, so a tiny quality change is possible. Keep quality at 85–92 and the difference is invisible in practice."
+        },
+        {
+          "q": "Are animated AVIF files supported?",
+          "a": "The first frame is converted to a still JPG. Animation cannot survive in JPG."
+        },
+        {
+          "q": "Are my images uploaded?",
+          "a": "No. Conversion happens locally with canvas rendering — your files never leave the device."
+        }
+      ]
+    },
+    "avif-to-png": {
+      "name": "AVIF to PNG",
+      "short": "Convert AVIF images to PNG.",
+      "description": "Convert AVIF to PNG online for free. Lossless output with transparency preserved, processed in your browser.",
+      "intro": "Need a lossless copy of an AVIF with its alpha channel intact? This converter renders each frame locally and exports a crisp PNG — ideal for editing, archiving or software that refuses AVIF.",
+      "howTo": [
+        "Add up to 10 AVIF files.",
+        "Wait a moment while each image renders locally.",
+        "Download the PNGs individually or as a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "Is transparency preserved?",
+          "a": "Yes — the alpha channel is carried over into the PNG."
+        },
+        {
+          "q": "Why is the PNG bigger than the AVIF?",
+          "a": "PNG is lossless while AVIF is heavily compressed. Bigger files are the price of pixel-perfect fidelity."
+        },
+        {
+          "q": "Can I convert animated AVIF?",
+          "a": "The first frame becomes a still PNG. Use the original AVIF if you need motion."
+        },
+        {
+          "q": "Is there a file-size limit?",
+          "a": "Reasonable browser limits apply (tens of MB per file); processing is local so speed depends on your device."
+        }
+      ]
+    },
+    "avif-to-webp": {
+      "name": "AVIF to WebP",
+      "short": "Convert AVIF images to WebP.",
+      "description": "Convert AVIF to WebP online for free. Modern format in, web-ready format out — locally in your browser.",
+      "intro": "WebP is supported in every modern browser and most editors, while AVIF still trips up older software. Convert once and get small, compatible WebP files with transparency intact.",
+      "howTo": [
+        "Drop up to 10 AVIF files.",
+        "Choose a WebP quality level.",
+        "Download your WebP files or grab them as a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "AVIF or WebP — which is smaller?",
+          "a": "AVIF usually wins by ~20%, but WebP is far more compatible. Convert to WebP when files must open everywhere."
+        },
+        {
+          "q": "Does transparency survive?",
+          "a": "Yes, the alpha channel is preserved."
+        },
+        {
+          "q": "What quality should I pick?",
+          "a": "Quality 80–90 is the sweet spot for photos; use 100 only when every pixel matters."
+        },
+        {
+          "q": "Do you keep my images?",
+          "a": "No uploads happen at all — everything runs in your browser tab."
+        }
+      ]
+    },
+    "jpg-to-avif": {
+      "name": "JPG to AVIF",
+      "short": "Convert JPG images to AVIF.",
+      "description": "Convert JPG to AVIF online for free. Shrink photos by up to 50% with next-gen compression, in your browser.",
+      "intro": "AVIF compresses far better than JPG at the same visual quality. Convert your JPG library and cut bandwidth and storage roughly in half — with transparency-free, wide-gamut output.",
+      "howTo": [
+        "Add up to 10 JPG files.",
+        "Set an AVIF quality (encoding takes a few seconds per photo).",
+        "Download the .avif files or a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "How much smaller is AVIF than JPG?",
+          "a": "Typically 30–50% smaller at equal visual quality. Very detailed photos save less; smooth graphics save more."
+        },
+        {
+          "q": "Will AVIF open on my iPhone?",
+          "a": "iOS 16+ and Android 12+ open AVIF natively, as do all current desktop browsers."
+        },
+        {
+          "q": "Why is encoding slow?",
+          "a": "AVIF squeezes harder than older codecs, which costs CPU time. It still runs fully on your device."
+        },
+        {
+          "q": "Can I convert back later?",
+          "a": "Yes — use the AVIF to JPG tool on this site any time."
+        }
+      ]
+    },
+    "png-to-avif": {
+      "name": "PNG to AVIF",
+      "short": "Convert PNG images to AVIF.",
+      "description": "Convert PNG to AVIF online for free. Huge savings on screenshots and graphics, converted locally.",
+      "intro": "PNGs are lossless and heavy. AVIF keeps them visually identical at a fraction of the size — perfect for fast websites and smaller archives.",
+      "howTo": [
+        "Drop up to 10 PNG files.",
+        "Pick a quality level (95+ is near-lossless).",
+        "Download the AVIF files or a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "Is transparency kept?",
+          "a": "Yes — alpha is preserved in the AVIF output."
+        },
+        {
+          "q": "How big are the savings?",
+          "a": "Screenshots and UI graphics often shrink 60–80% versus PNG with no visible change."
+        },
+        {
+          "q": "Is AVIF lossless here?",
+          "a": "This encoder is lossy, but quality 95+ is visually lossless for virtually all content."
+        },
+        {
+          "q": "Where can AVIF be used?",
+          "a": "All modern browsers, Android 12+ and iOS 16+. Older software may need a converter — like this site."
+        }
+      ]
+    },
+    "webp-to-avif": {
+      "name": "WebP to AVIF",
+      "short": "Convert WebP images to AVIF.",
+      "description": "Convert WebP to AVIF online for free. Squeeze the last bytes out of modern images, in your browser.",
+      "intro": "Already on WebP? AVIF goes one step further — typically another 20–30% smaller at the same quality. One click migrates a whole batch.",
+      "howTo": [
+        "Add up to 10 WebP files.",
+        "Choose an AVIF quality.",
+        "Download the converted files or a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "Is the jump from WebP worth it?",
+          "a": "For large galleries and bandwidth bills, yes — expect ~20–30% extra savings. For a handful of images, WebP is fine."
+        },
+        {
+          "q": "Does animation carry over?",
+          "a": "No — the first frame becomes a still AVIF."
+        },
+        {
+          "q": "Is transparency preserved?",
+          "a": "Yes, alpha channels survive the conversion."
+        },
+        {
+          "q": "Are files uploaded?",
+          "a": "Never. Encoding runs locally in your browser."
+        }
+      ]
+    },
+    "svg-to-png": {
+      "name": "SVG to PNG",
+      "short": "Convert SVG vectors to PNG.",
+      "description": "Convert SVG to PNG online for free. Render vectors at any resolution with transparency, in your browser.",
+      "intro": "SVGs are perfect for the web but useless in documents, slide decks and many editors. Render them to crisp PNGs at up to 4× scale — transparency included.",
+      "howTo": [
+        "Drop up to 10 SVG files.",
+        "Pick an output scale (1×–4×).",
+        "Download the PNGs or a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "What resolution do I get?",
+          "a": "The SVG renders at its own size times your chosen scale — 2× and 4× stay razor sharp because vectors scale perfectly."
+        },
+        {
+          "q": "Is transparency preserved?",
+          "a": "Yes, transparent backgrounds stay transparent. SVGs with an embedded background keep it."
+        },
+        {
+          "q": "Do external fonts in the SVG work?",
+          "a": "Only fonts installed on your device render correctly — text using web fonts may fall back. Convert text to paths first for safety."
+        },
+        {
+          "q": "Can I set an exact pixel size?",
+          "a": "Scale is relative to the SVG viewBox; use the Image Resizer afterwards for exact dimensions."
+        }
+      ]
+    },
+    "svg-to-jpg": {
+      "name": "SVG to JPG",
+      "short": "Convert SVG vectors to JPG.",
+      "description": "Convert SVG to JPG online for free. Vector-sharp rendering flattened onto white, in your browser.",
+      "intro": "Need an SVG inside a Word doc, an email signature or an old CMS? Flatten it to a JPG at up to 4× scale with adjustable quality.",
+      "howTo": [
+        "Add up to 10 SVG files.",
+        "Choose scale and JPG quality.",
+        "Download the JPGs or a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "Why is the background white?",
+          "a": "JPG has no transparency, so vectors flatten onto white. Use SVG to PNG if you need transparency."
+        },
+        {
+          "q": "How sharp is the output?",
+          "a": "Vectors rasterize perfectly at any scale — 2× or 4× gives print-worthy JPGs."
+        },
+        {
+          "q": "Do fonts render correctly?",
+          "a": "Only with fonts installed locally. Convert text to outlines in your editor for guaranteed fidelity."
+        },
+        {
+          "q": "JPG or PNG for SVG?",
+          "a": "PNG for graphics with flat colors or transparency; JPG for photographic-style vectors where size matters."
+        }
+      ]
+    },
+    "svg-to-webp": {
+      "name": "SVG to WebP",
+      "short": "Convert SVG vectors to WebP.",
+      "description": "Convert SVG to WebP online for free. Small, modern raster output rendered locally.",
+      "intro": "Get the best of both worlds: vector-sharp rendering with WebP compression. Ideal for CMS uploads with SVG disabled.",
+      "howTo": [
+        "Drop up to 10 SVG files.",
+        "Pick a scale and quality.",
+        "Download the WebP files or a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "Why WebP instead of PNG?",
+          "a": "WebP files are much smaller than PNG at the same visual quality — better for uploads and page speed."
+        },
+        {
+          "q": "Is transparency kept?",
+          "a": "Yes, the alpha channel is preserved."
+        },
+        {
+          "q": "What scale should I use?",
+          "a": "1× matches the SVG size; 2× suits retina displays and print."
+        },
+        {
+          "q": "Are my SVGs uploaded?",
+          "a": "No — rendering happens in your browser via canvas."
+        }
+      ]
+    },
+    "gif-to-webp": {
+      "name": "GIF to WebP",
+      "short": "Convert GIF images to WebP.",
+      "description": "Convert GIF to WebP online for free. Dramatically smaller files with transparency kept, in your browser.",
+      "intro": "GIF is a 1987 format with a 256-color limit and terrible compression. WebP renders the same pixels at a fraction of the size.",
+      "howTo": [
+        "Add up to 10 GIF files.",
+        "Choose a WebP quality.",
+        "Download the WebP files or a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "Does animation survive?",
+          "a": "No — the first frame becomes a still WebP. This tool is for static GIFs."
+        },
+        {
+          "q": "How much smaller is WebP?",
+          "a": "Static GIFs typically shrink 60–90% as WebP with better color fidelity."
+        },
+        {
+          "q": "Is transparency preserved?",
+          "a": "Yes."
+        },
+        {
+          "q": "Why not AVIF?",
+          "a": "AVIF saves a bit more but encodes slower; WebP is the pragmatic default. Both converters are on this site."
+        }
+      ]
+    },
+    "image-to-ico": {
+      "name": "Image to ICO",
+      "short": "Convert images to ICO icons.",
+      "description": "Convert any image to ICO online for free. Multi-resolution Windows icon files, generated in your browser.",
+      "intro": "Windows icons (.ico) bundle several resolutions in one file. Upload any image and get a proper multi-size ICO — 16, 32 and 48 px — ready for apps and shortcuts.",
+      "howTo": [
+        "Drop an image (square works best).",
+        "Preview how it looks at icon sizes.",
+        "Download the .ico file."
+      ],
+      "faqs": [
+        {
+          "q": "What sizes are inside the ICO?",
+          "a": "16×16, 32×32 and 48×48 — the classic desktop set."
+        },
+        {
+          "q": "Should the image be square?",
+          "a": "Icons are square, so a square source avoids stretching. Non-square images are center-cropped with a warning."
+        },
+        {
+          "q": "Is transparency kept?",
+          "a": "Yes, PNG transparency carries into the ICO."
+        },
+        {
+          "q": "ICO vs favicon package?",
+          "a": "ICO is one file for classic use. For websites, the Favicon Generator builds the full modern set (PNG sizes, Apple touch icon, manifest)."
+        }
+      ]
+    },
+    "ico-to-png": {
+      "name": "ICO to PNG",
+      "short": "Convert ICO icons to PNG.",
+      "description": "Convert ICO to PNG online for free. Extract the largest icon layer as a crisp PNG, in your browser.",
+      "intro": "Have an old .ico and need a usable image? This tool reads the icon container, picks the highest-resolution layer and exports it as a transparent PNG.",
+      "howTo": [
+        "Drop one or more ICO files.",
+        "Preview each extracted layer.",
+        "Download the PNGs or a ZIP."
+      ],
+      "faqs": [
+        {
+          "q": "Which layer is extracted?",
+          "a": "The largest embedded image — usually 256 or 48 px. Multi-layer export is not supported."
+        },
+        {
+          "q": "Is transparency preserved?",
+          "a": "Yes, icon alpha channels are kept."
+        },
+        {
+          "q": "Can I extract every size?",
+          "a": "Currently only the largest layer is exported — it downscales cleanly to anything smaller."
+        },
+        {
+          "q": "Why is my PNG small?",
+          "a": "Old icons only contain 16–48 px art. Pixel icons cannot gain detail by conversion — try the Image Upscaler for a smoother enlarge."
+        }
+      ]
+    },
+    "compress-image-to-100kb": {
+      "name": "100KB Image Compressor",
+      "short": "Compress images to exactly 100KB.",
+      "description": "Compress any image to exactly 100KB online for free. Automatic quality tuning in your browser — perfect for upload limits.",
+      "intro": "Job portals, government forms and forums often cap uploads at 100KB. Drop your photo and get back a file that fits — automatically tuned to land just under the limit at the best possible quality.",
+      "howTo": [
+        "Drop your image (up to 10).",
+        "The compressor tunes quality automatically toward 100KB.",
+        "Download the result."
+      ],
+      "faqs": [
+        {
+          "q": "How does it hit exactly 100KB?",
+          "a": "It binary-searches the quality setting — rendering repeatedly — until the file lands just under 100KB."
+        },
+        {
+          "q": "What if my image is already under 100KB?",
+          "a": "It is re-encoded lightly and returned untouched in size — you lose nothing."
+        },
+        {
+          "q": "Which formats work?",
+          "a": "JPG, PNG, WebP and HEIC inputs; output is JPG, PNG or WebP."
+        },
+        {
+          "q": "Can huge photos reach 100KB?",
+          "a": "Yes, but extreme shrink (e.g. 20MP → 100KB) visibly softens detail. Slight downscaling is applied when quality alone cannot fit."
+        }
+      ]
+    },
+    "compress-image-to-200kb": {
+      "name": "200KB Image Compressor",
+      "short": "Compress images to exactly 200KB.",
+      "description": "Compress any image to exactly 200KB online for free. Automatic quality tuning in your browser.",
+      "intro": "A 200KB cap is common for profile photos, visa applications and classified ads. This tool tunes compression automatically so your image lands just under the limit looking its best.",
+      "howTo": [
+        "Drop your image (up to 10).",
+        "Wait while quality is tuned toward 200KB.",
+        "Download the result."
+      ],
+      "faqs": [
+        {
+          "q": "How exact is “exactly 200KB”?",
+          "a": "Output lands just under 204,800 bytes — safely inside any 200KB limit."
+        },
+        {
+          "q": "Will my photo still look good?",
+          "a": "At 200KB, most phone photos keep excellent quality. Only extreme downscales show softness."
+        },
+        {
+          "q": "Which formats are accepted?",
+          "a": "JPG, PNG, WebP and HEIC in; JPG, PNG or WebP out."
+        },
+        {
+          "q": "Is anything uploaded?",
+          "a": "No — the whole search loop runs locally in your browser."
+        }
+      ]
+    },
+    "compress-image-to-500kb": {
+      "name": "500KB Image Compressor",
+      "short": "Compress images to exactly 500KB.",
+      "description": "Compress any image to exactly 500KB online for free. Near-original quality under a strict cap, in your browser.",
+      "intro": "500KB fits most email attachments and CMS limits while keeping photos nearly indistinguishable from the original. Automatic quality search does the work for you.",
+      "howTo": [
+        "Drop your image (up to 10).",
+        "Let the tuner converge on 500KB.",
+        "Download the result."
+      ],
+      "faqs": [
+        {
+          "q": "Will I notice quality loss?",
+          "a": "Rarely — 500KB comfortably holds a high-quality phone photo. Pixel-peeping may reveal mild smoothing in fine texture."
+        },
+        {
+          "q": "What about PNG screenshots?",
+          "a": "Screenshots compress brilliantly; the tool switches formats internally when it helps hit the target."
+        },
+        {
+          "q": "Can I compress many at once?",
+          "a": "Yes, up to 10 files per batch, downloadable as a ZIP."
+        },
+        {
+          "q": "Why not just use quality 80?",
+          "a": "Fixed quality gives unpredictable sizes. Target-size search guarantees the file fits the limit."
+        }
+      ]
+    },
+    "compress-image-to-1mb": {
+      "name": "1MB Image Compressor",
+      "short": "Compress images to exactly 1MB.",
+      "description": "Compress any image to exactly 1MB online for free. High quality under a 1MB cap, in your browser.",
+      "intro": "Under 1MB with maximum fidelity: ideal for portfolios, marketplaces and printing services with strict upload caps. The tuner finds the highest quality that fits.",
+      "howTo": [
+        "Drop your image (up to 10).",
+        "The tuner maximizes quality under 1MB.",
+        "Download the result."
+      ],
+      "faqs": [
+        {
+          "q": "Is 1MB enough for print?",
+          "a": "For 4×6″ and screen use, absolutely. Large-format printing wants the original — only compress for upload."
+        },
+        {
+          "q": "How long does it take?",
+          "a": "A few seconds per photo — the tuner renders several candidates to find the best fit."
+        },
+        {
+          "q": "Which output format?",
+          "a": "JPG for photos, PNG/WebP when transparency or graphics demand it. You choose."
+        },
+        {
+          "q": "Are my photos private?",
+          "a": "Completely — processing never leaves your device."
+        }
+      ]
+    },
+    "favicon-generator": {
+      "name": "Favicon Generator",
+      "short": "Build a complete favicon package.",
+      "description": "Generate favicons online for free: multi-size PNGs, ICO, Apple touch icon, manifest and HTML — in your browser.",
+      "intro": "One upload, every icon your site needs. This generator renders your logo at all standard sizes, packs a multi-resolution ICO, writes the web manifest and hands you the HTML snippet to paste in.",
+      "howTo": [
+        "Upload a square logo (PNG with transparency is ideal).",
+        "Preview every size from 16px to 512px.",
+        "Download the ZIP, extract to your site root, paste the snippet."
+      ],
+      "faqs": [
+        {
+          "q": "What is inside the ZIP?",
+          "a": "favicon.ico, PNG icons (16–512px), apple-touch-icon, site.webmanifest and a ready-to-paste HTML snippet."
+        },
+        {
+          "q": "What makes a good source logo?",
+          "a": "Square, simple, high-contrast. Fine detail vanishes at 16px — test the preview."
+        },
+        {
+          "q": "Where do the files go?",
+          "a": "Your website root next to index.html, then paste the snippet into your page head."
+        },
+        {
+          "q": "Do I need all these sizes?",
+          "a": "Modern browsers pick what they need: ICO for tabs, 180px for iOS, 192/512px for Android install prompts."
+        }
+      ]
+    },
+    "image-upscaler": {
+      "name": "Image Upscaler",
+      "short": "Enlarge images 2× or 4×.",
+      "description": "Upscale images 2× or 4× online for free. Sharp browser-based enlargement with honest limits, no upload.",
+      "intro": "Need a small image bigger? This upscaler enlarges 2× or 4× with high-quality resampling and gentle sharpening. It will not invent detail like AI tools — but it is instant, free and private.",
+      "howTo": [
+        "Drop a small image.",
+        "Pick 2× or 4× and preview the result.",
+        "Download as JPG, PNG or WebP."
+      ],
+      "faqs": [
+        {
+          "q": "Will upscaling add detail?",
+          "a": "Honestly: no tool can recover detail that was never captured. Edges get smoother and cleaner, but not sharper than the source."
+        },
+        {
+          "q": "2× or 4×?",
+          "a": "2× is safe for most uses; 4× suits tiny icons and thumbnails but shows softness on photos."
+        },
+        {
+          "q": "What is the max output size?",
+          "a": "Outputs are capped (around 16MP) to protect your browser memory — huge sources are scaled accordingly."
+        },
+        {
+          "q": "Why not AI upscaling?",
+          "a": "AI models need servers or huge downloads. This tool stays instant and private instead."
+        }
+      ]
+    },
+    "image-dpi-converter": {
+      "name": "Image DPI Converter",
+      "short": "Change image DPI metadata.",
+      "description": "Change image DPI to 72, 150 or 300 online for free. Print-resolution metadata editing in your browser.",
+      "intro": "Screens ignore DPI, but printers and some official forms demand 300 DPI metadata. This tool rewrites the resolution tag in JPG and PNG files without touching a single pixel.",
+      "howTo": [
+        "Drop a JPG or PNG.",
+        "Choose 72, 150 or 300 DPI (or a custom value).",
+        "Download the retagged file."
+      ],
+      "faqs": [
+        {
+          "q": "Does changing DPI resize the image?",
+          "a": "No — pixels are untouched. Only the “pixels per inch” instruction for printers changes."
+        },
+        {
+          "q": "Why does a form demand 300 DPI?",
+          "a": "Print pipelines use it to compute physical size. A 1800px image at 300 DPI prints exactly 6 inches wide."
+        },
+        {
+          "q": "Which formats work?",
+          "a": "JPG and PNG. WebP has no standard DPI field, so it is not supported."
+        },
+        {
+          "q": "Will this improve quality?",
+          "a": "No — DPI metadata cannot add detail. For bigger images, use the Image Upscaler."
+        }
+      ]
+    },
+    "pdf-metadata-viewer": {
+      "name": "PDF Metadata Viewer",
+      "short": "Inspect PDF document properties.",
+      "description": "View PDF metadata online for free: title, author, creator, dates and more — read locally in your browser.",
+      "intro": "Curious what a PDF says about itself? This viewer lists every document-info field — title, author, subject, keywords, creator, producer and timestamps — without modifying the file.",
+      "howTo": [
+        "Drop a PDF.",
+        "Browse the extracted fields and page count.",
+        "Copy the metadata as JSON if needed."
+      ],
+      "faqs": [
+        {
+          "q": "What metadata can a PDF hold?",
+          "a": "Title, author, subject, keywords, creator app, producer, creation and modification dates. Many files carry only a few."
+        },
+        {
+          "q": "Can I edit values here?",
+          "a": "Viewing only — use the PDF Metadata Editor to change values or the Cleaner to strip them."
+        },
+        {
+          "q": "Why do some fields show “empty”?",
+          "a": "The producer simply never wrote them. Scanned PDFs often carry almost nothing."
+        },
+        {
+          "q": "Is my file uploaded?",
+          "a": "No — the file is parsed locally and never leaves your device."
+        }
+      ]
+    },
+    "pdf-metadata-cleaner": {
+      "name": "PDF Metadata Cleaner",
+      "short": "Strip metadata from PDFs.",
+      "description": "Remove PDF metadata online for free. Strip author, dates and tool traces for privacy, in your browser.",
+      "intro": "PDFs quietly carry author names, software versions and timestamps. The cleaner wipes every document-info field so you can share files without leaking personal traces.",
+      "howTo": [
+        "Drop a PDF.",
+        "Review the fields found.",
+        "Download the cleaned copy."
+      ],
+      "faqs": [
+        {
+          "q": "What exactly is removed?",
+          "a": "All document-info fields: title, author, subject, keywords, creator, producer and both dates."
+        },
+        {
+          "q": "Does it touch the content?",
+          "a": "Never — pages, text and images are byte-identical; only the info dictionary is cleared."
+        },
+        {
+          "q": "Is this enough for anonymity?",
+          "a": "It removes standard metadata. Forensic traces (font subsets, object IDs) remain — true sanitization needs deeper tools."
+        },
+        {
+          "q": "Why share a cleaned PDF?",
+          "a": "To avoid leaking your name, employer or software when publishing or sending documents."
+        }
+      ]
+    },
+    "pdf-flatten": {
+      "name": "PDF Flatten",
+      "short": "Bake form fields into pages.",
+      "description": "Flatten PDF forms online for free. Lock fields, checkboxes and signatures into static content, in your browser.",
+      "intro": "Filled a form and want it locked? Flattening bakes every widget into plain page content so recipients see exactly what you see — and cannot change a thing.",
+      "howTo": [
+        "Drop a PDF with form fields.",
+        "Flatten with one click.",
+        "Download the locked copy."
+      ],
+      "faqs": [
+        {
+          "q": "What does flattening do?",
+          "a": "It converts interactive fields into static text and graphics painted on the page. The result looks identical but is no longer editable."
+        },
+        {
+          "q": "Will signatures survive?",
+          "a": "Visible signature appearances are preserved as graphics; cryptographic signature validity may not survive — flatten unsigned copies for archiving."
+        },
+        {
+          "q": "Can I undo it?",
+          "a": "No — flattening is one-way. Keep the original if you may need to edit later."
+        },
+        {
+          "q": "My PDF has no fields?",
+          "a": "Then flattening changes nothing — the tool tells you so and returns the file unchanged."
+        }
+      ]
+    },
+    "pdf-crop": {
+      "name": "PDF Crop",
+      "short": "Trim PDF page margins.",
+      "description": "Crop PDF margins online for free. Trim white edges or cut all pages uniformly, in your browser.",
+      "intro": "Slice off scanner borders, white margins or unwanted edges. Cropping applies uniformly to every page by percentage — perfect for slide decks and scanned books.",
+      "howTo": [
+        "Drop a PDF.",
+        "Set top, bottom, left and right margins in percent.",
+        "Preview, then download the cropped file."
+      ],
+      "faqs": [
+        {
+          "q": "Does cropping delete content?",
+          "a": "No — it sets the CropBox, hiding content outside the box. The data stays in the file."
+        },
+        {
+          "q": "Can I crop pages differently?",
+          "a": "This tool crops all pages uniformly. For mixed layouts, split the file first."
+        },
+        {
+          "q": "What is the 45% limit?",
+          "a": "Margins beyond 45% would invert the box. If you need more, crop twice."
+        },
+        {
+          "q": "Will viewers respect the crop?",
+          "a": "All standard readers (Adobe, browsers, Preview) honor the CropBox."
+        }
+      ]
+    },
+    "pdf-header-footer": {
+      "name": "PDF Header and Footer",
+      "short": "Stamp headers & footers on PDFs.",
+      "description": "Add headers and footers to PDF online for free. Page numbers, titles and dates on every page, in your browser.",
+      "intro": "Brand every page: add running titles, “Page X of Y” numbers, dates or confidentiality notices — with alignment, size and first-page skip controls.",
+      "howTo": [
+        "Drop a PDF.",
+        "Type header/footer text using {page} and {pages}.",
+        "Style, align, preview and download."
+      ],
+      "faqs": [
+        {
+          "q": "How do page numbers work?",
+          "a": "Write “Page {page} of {pages}” and each page is stamped with its own numbers automatically."
+        },
+        {
+          "q": "Can I skip the cover page?",
+          "a": "Yes — “Skip the first page” leaves page 1 clean, but numbering still counts it. Number your own way with the start offset."
+        },
+        {
+          "q": "Which fonts are used?",
+          "a": "Standard Helvetica — guaranteed to render identically everywhere. Custom fonts are not embedded."
+        },
+        {
+          "q": "Does it work on scanned PDFs?",
+          "a": "Yes — the stamp is painted over the page image regardless of content type."
+        }
+      ]
+    },
+    "pdf-to-markdown": {
+      "name": "PDF to Markdown",
+      "short": "Convert PDF text to Markdown.",
+      "description": "Convert PDF to Markdown online for free. Clean headings and paragraphs extracted in your browser.",
+      "intro": "Turn reports and ebooks into editable Markdown: each page becomes a section with its text preserved line by line. Paste straight into Notion, Obsidian or any docs workflow.",
+      "howTo": [
+        "Drop a PDF.",
+        "Extract with one click.",
+        "Copy or download the .md file."
+      ],
+      "faqs": [
+        {
+          "q": "Are tables and images kept?",
+          "a": "Text only — tables flatten to lines and images are skipped. Markdown has no native home for them here."
+        },
+        {
+          "q": "What about scanned PDFs?",
+          "a": "Scans are pictures of text; run PDF OCR first, then convert."
+        },
+        {
+          "q": "How is formatting handled?",
+          "a": "Pages become ## headings; bold/italic styling is not preserved — structure over style."
+        },
+        {
+          "q": "Can I convert specific pages?",
+          "a": "Extract the pages first with PDF Extract Pages, then convert the smaller file."
+        }
+      ]
+    },
+    "pdf-to-html": {
+      "name": "PDF to HTML",
+      "short": "Convert PDF text to HTML.",
+      "description": "Convert PDF to HTML online for free. A clean standalone web page from any PDF, in your browser.",
+      "intro": "Publish a PDF as a web page: get a single self-contained HTML file with readable typography, dark-mode support and zero dependencies. Preview before you download.",
+      "howTo": [
+        "Drop a PDF.",
+        "Extract and preview the page.",
+        "Download the .html file."
+      ],
+      "faqs": [
+        {
+          "q": "Does it keep the layout?",
+          "a": "Text flow is preserved; complex multi-column layouts may linearize. It is a reading view, not a pixel clone."
+        },
+        {
+          "q": "Are images included?",
+          "a": "No — text only. Embedded-image extraction is a separate tool."
+        },
+        {
+          "q": "Can I host the file as-is?",
+          "a": "Yes — it is one file with inline styles. Just upload it."
+        },
+        {
+          "q": "Why is my scanned PDF empty?",
+          "a": "Scans contain no text layer. OCR it first."
+        }
+      ]
+    },
+    "pdf-to-csv": {
+      "name": "PDF to CSV",
+      "short": "Convert PDF lines to CSV.",
+      "description": "Convert PDF to CSV online for free. Every line becomes a spreadsheet row, in your browser.",
+      "intro": "Get PDF text into Excel or Sheets: each line becomes a CSV row tagged with its page number. Ideal for lists, logs and simple reports.",
+      "howTo": [
+        "Drop a PDF.",
+        "Convert with one click.",
+        "Download the .csv and open in any spreadsheet."
+      ],
+      "faqs": [
+        {
+          "q": "Will tables convert perfectly?",
+          "a": "Simple tables often do; complex merged-cell layouts may need cleanup in your spreadsheet."
+        },
+        {
+          "q": "What are the columns?",
+          "a": "page, line, text — so you can always trace a row back to its source."
+        },
+        {
+          "q": "How are commas in text handled?",
+          "a": "Proper RFC-4180 quoting: fields with commas or quotes are wrapped and escaped."
+        },
+        {
+          "q": "Can I choose the delimiter?",
+          "a": "Comma only for now — Excel and Sheets both import it natively."
+        }
+      ]
+    },
+    "pdf-compare": {
+      "name": "PDF Compare",
+      "short": "Diff two PDFs by content.",
+      "description": "Compare two PDFs online for free. Similarity scoring and stats that reveal unexpected edits, in your browser.",
+      "intro": "Two revisions, one question: what changed? Compare extracts both texts and scores their similarity, with page and character counts side by side.",
+      "howTo": [
+        "Drop the original and the revised PDF.",
+        "Run the comparison.",
+        "Read the similarity score and stats."
+      ],
+      "faqs": [
+        {
+          "q": "Is this a word-by-word diff?",
+          "a": "No — it is a similarity score plus counts. Use it to confirm “identical” or flag “changed”, then inspect manually."
+        },
+        {
+          "q": "What does 100% mean?",
+          "a": "Byte-identical extracted text. Layout-only changes (fonts, margins) do not affect the score."
+        },
+        {
+          "q": "What does 0% mean?",
+          "a": "Nothing in common — different documents or one side has no extractable text (e.g. a scan)."
+        },
+        {
+          "q": "Can I compare scanned PDFs?",
+          "a": "Only after OCR — scans have no text to compare."
+        }
+      ]
+    },
+    "pdf-search": {
+      "name": "PDF Search",
+      "short": "Full-text search inside PDFs.",
+      "description": "Search inside PDFs online for free. Find every match across all pages with context, in your browser.",
+      "intro": "Ctrl+F for PDFs that live outside your reader: index the whole document, then jump through every match with surrounding context and page numbers.",
+      "howTo": [
+        "Drop a PDF and wait for indexing.",
+        "Type your query.",
+        "Click matches to see page and context."
+      ],
+      "faqs": [
+        {
+          "q": "How fast is indexing?",
+          "a": "Seconds for typical documents; hundred-page files take a little longer — progress is shown live."
+        },
+        {
+          "q": "Is search case-sensitive?",
+          "a": "Not by default — toggle it on when case matters (code, identifiers)."
+        },
+        {
+          "q": "Can I search scanned PDFs?",
+          "a": "Only text-based PDFs. Scans need OCR first."
+        },
+        {
+          "q": "Is there a match limit?",
+          "a": "Display caps at 200 matches to stay fast; the count shows the true total."
+        }
+      ]
+    },
+    "text-to-json": {
+      "name": "Text to JSON",
+      "short": "Convert lines to a JSON array.",
+      "description": "Convert text lines to a JSON array online for free. Smart typing and trimming, in your browser.",
+      "intro": "Paste a list — one item per line — and get a valid JSON array. Numbers and booleans are auto-detected, whitespace trimmed, empties skipped.",
+      "howTo": [
+        "Paste or type your lines.",
+        "Toggle trimming, typing and empty-line handling.",
+        "Copy or download the JSON."
+      ],
+      "faqs": [
+        {
+          "q": "What does “smart types” do?",
+          "a": "Lines like 42, 3.14, true or null become real JSON values instead of strings."
+        },
+        {
+          "q": "How are special characters handled?",
+          "a": "Quotes, backslashes and control characters are escaped automatically — output is always valid JSON."
+        },
+        {
+          "q": "Can I convert CSV to JSON?",
+          "a": "For delimited data use Text to CSV in reverse or JSON tools; this tool treats each line as one value."
+        },
+        {
+          "q": "Is there a size limit?",
+          "a": "Generous browser-side limits (around 1MB of text) — plenty for config lists and datasets."
+        }
+      ]
+    },
+    "text-to-csv": {
+      "name": "Text to CSV",
+      "short": "Convert delimited text to CSV.",
+      "description": "Convert delimited text to CSV online for free. Tabs, pipes and custom delimiters normalized, in your browser.",
+      "intro": "Got tab-separated chat logs or pipe-delimited exports? Normalize any delimiter into clean, quoted, spreadsheet-ready CSV with optional header detection.",
+      "howTo": [
+        "Paste your delimited text.",
+        "Pick the input delimiter and header option.",
+        "Copy or download the CSV."
+      ],
+      "faqs": [
+        {
+          "q": "Which delimiters are supported?",
+          "a": "Comma, semicolon, tab, pipe, whitespace and any custom string."
+        },
+        {
+          "q": "What does “header row” do?",
+          "a": "Treats the first line as column names — shown in the preview and kept as row one."
+        },
+        {
+          "q": "How is quoting handled?",
+          "a": "Fields containing commas, quotes or newlines are RFC-4180 quoted automatically."
+        },
+        {
+          "q": "Can I go CSV → something else?",
+          "a": "Yes — pair with JSON tools or spreadsheets; CSV opens everywhere."
+        }
+      ]
+    },
+    "password-generator": {
+      "name": "Password Generator",
+      "short": "Create strong random passwords.",
+      "description": "Generate secure passwords online for free. Cryptographically random, customizable, never leaves your browser.",
+      "intro": "Strong, unique passwords in one click: tune length and character sets, check live entropy, and generate PINs too. Randomness comes from your device crypto — nothing is sent anywhere.",
+      "howTo": [
+        "Choose password or PIN mode.",
+        "Set length and character sets.",
+        "Copy the result or regenerate."
+      ],
+      "faqs": [
+        {
+          "q": "Are these passwords truly random?",
+          "a": "Yes — crypto.getRandomValues, the same source browsers use for TLS keys. Not Math.random."
+        },
+        {
+          "q": "What is the bits readout?",
+          "a": "Entropy: how many guesses brute force needs on average. 80+ bits is excellent."
+        },
+        {
+          "q": "Should I exclude ambiguous characters?",
+          "a": "For passwords you must read or type, yes — 0/O and 1/l cause endless confusion."
+        },
+        {
+          "q": "Do you store generated passwords?",
+          "a": "No. They exist only in your tab; the history wipes on reload. Use a password manager."
+        }
+      ]
+    },
+    "json-to-typescript": {
+      "name": "JSON to TypeScript",
+      "short": "Generate TS interfaces from JSON.",
+      "description": "Convert JSON to TypeScript interfaces online for free. Nested types inferred live, in your browser.",
+      "intro": "Paste API responses and get clean TypeScript interfaces: nested objects become named types, arrays are typed, nulls become optional. Live as you type.",
+      "howTo": [
+        "Paste a JSON document.",
+        "Name the root interface and toggle options.",
+        "Copy the interfaces or download types.ts."
+      ],
+      "faqs": [
+        {
+          "q": "How are nested objects handled?",
+          "a": "Each unique shape becomes its own interface (Address, Item…); identical shapes are deduplicated."
+        },
+        {
+          "q": "What about null values?",
+          "a": "Null fields become optional (field?: type) by default — the pragmatic reading of “sometimes null”."
+        },
+        {
+          "q": "Empty arrays?",
+          "a": "Typed as unknown[] since element type cannot be inferred — adjust to your domain type."
+        },
+        {
+          "q": "Is my data uploaded?",
+          "a": "Never — inference runs locally, so you can paste production payloads safely."
+        }
+      ]
+    },
+    "html-to-markdown": {
+      "name": "HTML to Markdown",
+      "short": "Convert HTML to Markdown.",
+      "description": "Convert HTML to Markdown online for free. Tables, lists and code preserved; scripts stripped, in your browser.",
+      "intro": "Turn pasted web content into clean Markdown: headings, links, images, lists, tables and code blocks convert faithfully while scripts and trackers are dropped.",
+      "howTo": [
+        "Paste HTML source.",
+        "Watch the Markdown update live.",
+        "Copy or download the .md."
+      ],
+      "faqs": [
+        {
+          "q": "Are tables supported?",
+          "a": "Yes — converted to pipe tables with header detection."
+        },
+        {
+          "q": "Is pasting HTML safe here?",
+          "a": "Yes. It is parsed as inert DOM — scripts never execute, and script/style content is discarded."
+        },
+        {
+          "q": "What happens to images?",
+          "a": "They become ![alt](src) references. Images themselves are not downloaded."
+        },
+        {
+          "q": "Can I convert whole pages?",
+          "a": "Fragments work best; full pages convert too but navigation and footer markup comes along."
+        }
+      ]
+    },
+    "http-status-codes": {
+      "name": "HTTP Status Codes",
+      "short": "Look up any HTTP status code.",
+      "description": "HTTP status code lookup online for free. Every code from 100 to 599 explained, offline in your browser.",
+      "intro": "What does 418 mean — really? Search all 60 standard HTTP status codes by number or keyword, with plain-English (and Arabic) explanations and class filtering.",
+      "howTo": [
+        "Type a code or keyword.",
+        "Filter by class (2xx, 4xx…).",
+        "Click to copy “code + phrase”."
+      ],
+      "faqs": [
+        {
+          "q": "What are the five classes?",
+          "a": "1xx informational, 2xx success, 3xx redirection, 4xx client error, 5xx server error."
+        },
+        {
+          "q": "Is 404 the only “not found”?",
+          "a": "For missing resources, yes. Gone (410) means permanently removed — use it when the resource will never return."
+        },
+        {
+          "q": "429 vs 503?",
+          "a": "429: you are rate-limited, slow down. 503: the server is down or overloaded — retry later."
+        },
+        {
+          "q": "Does this work offline?",
+          "a": "Yes — the whole reference is bundled with the page."
+        }
+      ]
+    },
+    "user-agent-parser": {
+      "name": "User Agent Parser",
+      "short": "Decode any User-Agent string.",
+      "description": "Parse User-Agent strings online for free. Browser, engine, OS and device detected locally.",
+      "intro": "Paste any User-Agent — or inspect your own — to reveal browser, version, rendering engine, OS and device class. Handy for debugging analytics and support tickets.",
+      "howTo": [
+        "Paste a UA string (yours loads automatically).",
+        "Read the detected browser, engine, OS and device.",
+        "Copy the breakdown."
+      ],
+      "faqs": [
+        {
+          "q": "How accurate is detection?",
+          "a": "Heuristic but good for mainstream browsers. Spoofed, reduced or brand-new UAs may misreport — treat results as a best guess."
+        },
+        {
+          "q": "Why does Chrome say “Safari” too?",
+          "a": "Historical baggage: Chrome includes “Safari” in its UA for compatibility. The parser knows the real order."
+        },
+        {
+          "q": "What is User-Agent reduction?",
+          "a": "Chrome now freezes minor versions and some details for privacy; full data needs Client Hints."
+        },
+        {
+          "q": "Can websites see my UA?",
+          "a": "Yes — browsers send it with every request. That is exactly why this tool can show you yours."
+        }
+      ]
+    },
+    "mock-json-generator": {
+      "name": "Mock JSON Generator",
+      "short": "Generate fake JSON test data.",
+      "description": "Generate mock JSON online for free. Users, products, posts and orders with stable seeds, in your browser.",
+      "intro": "Need realistic test data now? Pick a template, set the record count, and get deterministic JSON — same seed, same data, every time. Perfect for prototypes and unit tests.",
+      "howTo": [
+        "Pick a template (users, products…).",
+        "Set count and seed.",
+        "Copy or download the JSON."
+      ],
+      "faqs": [
+        {
+          "q": "What is the seed for?",
+          "a": "Reproducibility: seed 42 always yields the same dataset, so tests and demos stay stable. Shuffle for fresh data."
+        },
+        {
+          "q": "Can I use this commercially?",
+          "a": "Yes — generated data is random gibberish with no rights attached."
+        },
+        {
+          "q": "How many records?",
+          "a": "1 to 100 per generation — enough for pagination and list UIs."
+        },
+        {
+          "q": "Where does it run?",
+          "a": "Locally — no API calls, no rate limits, works offline."
+        }
+      ]
+    },
+    "jwt-encoder": {
+      "name": "JWT Encoder",
+      "short": "Sign and verify JWTs (HS256/384/512).",
+      "description": "Create and verify JWTs online for free. HMAC signing with WebCrypto — keys never leave your browser.",
+      "intro": "Mint test tokens in seconds: paste a payload, set a secret, pick HS256/384/512. Then verify any token against the secret. Built for developers debugging auth flows.",
+      "howTo": [
+        "Paste or edit the JSON payload.",
+        "Set the secret and algorithm.",
+        "Sign, copy the token — or paste one to verify."
+      ],
+      "faqs": [
+        {
+          "q": "Which algorithms are supported?",
+          "a": "HS256, HS384 and HS512 (HMAC with SHA-2). RSA/ECDSA need key pairs and are not included."
+        },
+        {
+          "q": "Is my secret safe here?",
+          "a": "Yes — signing uses WebCrypto locally. The secret never leaves your tab. Still, use test secrets, not production ones."
+        },
+        {
+          "q": "Why “invalid signature”?",
+          "a": "The token was signed with a different secret, the payload was edited, or the token is truncated."
+        },
+        {
+          "q": "Can I decode without verifying?",
+          "a": "Yes — the JWT Decoder tool shows header and payload without a secret."
+        }
+      ]
+    },
+    "bulk-file-renamer": {
+      "name": "Bulk File Renamer",
+      "short": "Rename hundreds of files at once.",
+      "description": "Rename multiple files online for free. Prefixes, numbering, find-replace — ZIP download, in your browser.",
+      "intro": "Rename a whole folder without the tedium: add prefixes, sequence numbers, dates, find-and-replace and case changes — with a live preview and collision-safe download as ZIP.",
+      "howTo": [
+        "Drop up to 200 files.",
+        "Stack rename rules and watch the preview.",
+        "Download the ZIP with new names."
+      ],
+      "faqs": [
+        {
+          "q": "Why a ZIP instead of renaming in place?",
+          "a": "Browsers cannot touch your filesystem — downloading a ZIP is the safe, universal workaround. Extract to apply names."
+        },
+        {
+          "q": "What if two files get the same name?",
+          "a": "A -2, -3 suffix is appended automatically. Collisions are impossible."
+        },
+        {
+          "q": "Are extensions changed?",
+          "a": "Never — extensions are preserved exactly (case included); only the base name is edited."
+        },
+        {
+          "q": "Are my files uploaded?",
+          "a": "No. Files stay in memory locally; only your browser ever sees them."
+        }
+      ]
+    },
+    "duplicate-file-finder": {
+      "name": "Duplicate File Finder",
+      "short": "Find byte-identical duplicate files.",
+      "description": "Find duplicate files online for free. SHA-256 content hashing in your browser — no upload.",
+      "intro": "Same photo saved five times? Drop a batch of files and get SHA-256-verified duplicate groups with wasted-space totals. Content-based — names and dates are ignored.",
+      "howTo": [
+        "Drop up to 200 files.",
+        "Run the scan.",
+        "Review duplicate groups and reclaim space."
+      ],
+      "faqs": [
+        {
+          "q": "How are duplicates detected?",
+          "a": "Files are grouped by size, then hashed with SHA-256. Matching hashes mean byte-identical content — guaranteed."
+        },
+        {
+          "q": "Do file names matter?",
+          "a": "No — only content counts. Renamed copies still match; same-named different files do not."
+        },
+        {
+          "q": "Is it safe for private files?",
+          "a": "Completely — hashing runs locally and only hashes are compared in memory."
+        },
+        {
+          "q": "Can it delete duplicates?",
+          "a": "No — deletion is irreversible, so the tool reports and you decide. Nothing is modified."
+        }
+      ]
+    },
+    "loan-calculator": {
+      "name": "Loan Calculator",
+      "short": "Monthly payments & total interest.",
+      "description": "Calculate loan payments online for free. Monthly cost, total interest and payoff stats, in your browser.",
+      "intro": "Borrowing for a car, a renovation or anything else? Enter amount, rate and term to see your monthly payment, total interest and number of payments — instantly.",
+      "howTo": [
+        "Enter the loan amount.",
+        "Set annual rate and term.",
+        "Read payment and interest breakdown."
+      ],
+      "faqs": [
+        {
+          "q": "How is the payment computed?",
+          "a": "Standard amortization: fixed monthly payments where the interest share shrinks over time. Formula shown in results."
+        },
+        {
+          "q": "Does it include fees?",
+          "a": "No — origination fees, insurance and taxes are excluded. Add them to the amount for a closer estimate."
+        },
+        {
+          "q": "What if the rate is 0%?",
+          "a": "Handled: payment is simply amount ÷ months."
+        },
+        {
+          "q": "Fixed or variable rate?",
+          "a": "This models fixed-rate loans. Variable rates need a schedule tool."
+        }
+      ]
+    },
+    "mortgage-calculator": {
+      "name": "Mortgage Calculator",
+      "short": "Monthly mortgage with tax & insurance.",
+      "description": "Estimate mortgage payments online for free. Principal, tax and insurance breakdown, in your browser.",
+      "intro": "House-hunting with real numbers: combine price, down payment, rate, term, property tax and insurance into one honest monthly figure.",
+      "howTo": [
+        "Enter price, down payment and rate.",
+        "Add tax rate and yearly insurance.",
+        "Read the full monthly breakdown."
+      ],
+      "faqs": [
+        {
+          "q": "What is included?",
+          "a": "Principal + interest, plus monthly slices of property tax and homeowner insurance."
+        },
+        {
+          "q": "What is missing?",
+          "a": "PMI, HOA dues, maintenance and closing costs — budget those separately."
+        },
+        {
+          "q": "How does down payment affect it?",
+          "a": "Bigger down payment = smaller loan = less interest. 20%+ often avoids PMI entirely."
+        },
+        {
+          "q": "Is this a loan offer?",
+          "a": "No — an educational estimate. Lenders quote exact figures after underwriting."
+        }
+      ]
+    },
+    "salary-calculator": {
+      "name": "Salary Calculator",
+      "short": "Gross pay → take-home estimate.",
+      "description": "Calculate take-home pay online for free. Tax and deduction estimates in your browser.",
+      "intro": "Offer letter math: enter gross monthly pay, a flat tax rate and fixed deductions to estimate what actually lands in your account.",
+      "howTo": [
+        "Enter gross monthly salary.",
+        "Set tax rate and deductions.",
+        "Read net monthly and yearly figures."
+      ],
+      "faqs": [
+        {
+          "q": "Why “flat tax”?",
+          "a": "Real payroll uses progressive brackets that vary by country. A flat rate gives a quick ballpark — adjust to your marginal rate."
+        },
+        {
+          "q": "What counts as deductions?",
+          "a": "Pension, health insurance, union dues — anything fixed taken before you see the money."
+        },
+        {
+          "q": "Gross or net in the contract?",
+          "a": "This tool assumes you enter gross. To reverse-engineer gross from a net target, iterate the input."
+        },
+        {
+          "q": "Is this financial advice?",
+          "a": "No — a rough estimator. Payroll departments and accountants give binding numbers."
+        }
+      ]
+    },
+    "vat-calculator": {
+      "name": "VAT Calculator",
+      "short": "Add or remove VAT at any rate.",
+      "description": "Calculate VAT online for free. Add or strip tax at 5–25% rates, in your browser.",
+      "intro": "Freelancer or shop owner? Add VAT to net prices or strip it from gross totals at any standard rate — with a copyable breakdown for invoices.",
+      "howTo": [
+        "Enter the amount.",
+        "Pick the VAT rate and direction.",
+        "Copy the net/tax/gross breakdown."
+      ],
+      "faqs": [
+        {
+          "q": "Add vs remove?",
+          "a": "Add: net → gross (quoting). Remove: gross → net (accounting, margin math)."
+        },
+        {
+          "q": "Which rates are included?",
+          "a": "5, 10, 14, 15, 16, 19, 20, 21, 22 and 25% — covering EU, UK, GCC and Egypt."
+        },
+        {
+          "q": "Is VAT the same as sales tax?",
+          "a": "Similar idea, different mechanics — but the arithmetic (add/remove %) is identical, so the tool works for both."
+        },
+        {
+          "q": "Can I use this for invoices?",
+          "a": "Yes — the breakdown copies cleanly into invoice line items."
+        }
+      ]
+    },
+    "profit-margin-calculator": {
+      "name": "Profit Margin Calculator",
+      "short": "Margin, markup & profit.",
+      "description": "Calculate profit margin online for free. Margin vs markup explained with live numbers, in your browser.",
+      "intro": "Price with confidence: enter cost and selling price to get margin, markup, profit and revenue — plus the one-line difference between margin and markup.",
+      "howTo": [
+        "Enter unit cost.",
+        "Enter selling price.",
+        "Read margin, markup and profit."
+      ],
+      "faqs": [
+        {
+          "q": "Margin vs markup?",
+          "a": "Margin = profit ÷ revenue (what you keep per sale). Markup = profit ÷ cost (how much you marked up). A 50% markup equals a 33% margin."
+        },
+        {
+          "q": "Can margin exceed 100%?",
+          "a": "No — margin caps at 100% (zero cost). Markup is unbounded."
+        },
+        {
+          "q": "What if price is below cost?",
+          "a": "You get a negative margin — the tool shows it honestly. That is a loss."
+        },
+        {
+          "q": "Does it handle tax?",
+          "a": "No — enter tax-exclusive figures or strip VAT first with the VAT Calculator."
+        }
+      ]
+    },
+    "average-calculator": {
+      "name": "Average Calculator",
+      "short": "Mean, median, mode & range.",
+      "description": "Calculate averages online for free. Mean, median, mode, min/max and range, in your browser.",
+      "intro": "Paste any number list — grades, expenses, measurements — and get the full descriptive snapshot: mean, median, mode(s), sum, min, max, range and count.",
+      "howTo": [
+        "Paste numbers separated by commas or spaces.",
+        "Watch all stats update live.",
+        "Use results in reports or homework."
+      ],
+      "faqs": [
+        {
+          "q": "Mean vs median?",
+          "a": "Mean = sum ÷ count (sensitive to outliers). Median = middle value (robust). Report both when data is skewed."
+        },
+        {
+          "q": "What if there are two modes?",
+          "a": "All modes are listed — data can be bimodal or multimodal. No repeats means no mode."
+        },
+        {
+          "q": "Which separators work?",
+          "a": "Commas, spaces, semicolons, pipes and newlines — mixed freely."
+        },
+        {
+          "q": "How many numbers?",
+          "a": "Up to 10,000 — far beyond homework scale."
+        }
+      ]
     }
   },
   "errors": {
@@ -3388,7 +4729,9 @@
     "markdownSyntax": "Markdown error: {message}",
     "yamlParse": "YAML error: {message}",
     "yamlTooLarge": "This YAML file is too large to format in the browser.",
-    "sqlTooLarge": "This query exceeds the {max} in-browser limit."
+    "sqlTooLarge": "This query exceeds the {max} in-browser limit.",
+    "jsonTooLarge": "That JSON is too large to process safely — try a smaller document.",
+    "passwordNoCharset": "Enable at least one character set."
   },
   "consent": {
     "title": "We value your privacy",
@@ -3718,7 +5061,68 @@
     "imagesSize": "Combined size",
     "imagesSkipped": "Not decodable",
     "noImagesFound": "No embedded images were found in this PDF. It may contain only vector graphics or text.",
-    "imagesSkippedNote": "{count} image(s) use a format browsers cannot decode (JPEG 2000, CCITT fax or JBIG2). Everything else was extracted."
+    "imagesSkippedNote": "{count} image(s) use a format browsers cannot decode (JPEG 2000, CCITT fax or JBIG2). Everything else was extracted.",
+    "metadataViewerEmpty": "This PDF carries no document metadata.",
+    "metadataCleanerNone": "No metadata fields found — this file is already clean.",
+    "metadataCleanerFound": "Found {count, plural, one {# metadata field} other {# metadata fields}} to remove.",
+    "metadataCleanerAction": "Remove metadata",
+    "flattenTitle": "Flatten form",
+    "flattenHint": "Bakes every form field, checkbox and signature into plain page content so nothing can be edited afterwards.",
+    "flattenAction": "Flatten PDF",
+    "flattenDone": "Form flattened successfully.",
+    "flattenNoFields": "No form fields found — the pages are unchanged.",
+    "cropTitle": "Crop margins",
+    "cropHonesty": "Cropping sets the CropBox only — content outside the box is hidden, not deleted. Use Redact for true removal.",
+    "cropAction": "Crop PDF",
+    "marginTop": "Top margin",
+    "marginBottom": "Bottom margin",
+    "marginLeft": "Left margin",
+    "marginRight": "Right margin",
+    "hfTitle": "Header & footer",
+    "hfHeader": "Header text",
+    "hfHeaderPh": "e.g. Quarterly Report — {page} of {pages}",
+    "hfFooter": "Footer text",
+    "hfFooterPh": "e.g. Confidential — page {page}",
+    "hfSize": "Font size",
+    "hfOptions": "Placement",
+    "hfSkipFirst": "Skip the first page",
+    "hfPlaceholders": "Use {page} for the page number and {pages} for the total.",
+    "hfEmpty": "Enter a header or a footer to continue.",
+    "hfAction": "Apply header & footer",
+    "alignLeft": "Left",
+    "alignCenter": "Center",
+    "alignRight": "Right",
+    "toMdTitle": "Markdown export",
+    "toMdAction": "Convert to Markdown",
+    "toHtmlTitle": "HTML export",
+    "toHtmlAction": "Convert to HTML",
+    "toHtmlPreview": "Preview",
+    "toHtmlCode": "Code",
+    "toCsvTitle": "CSV export",
+    "toCsvAction": "Convert to CSV",
+    "toCsvRows": "{count, plural, one {# line} other {# lines}} → CSV",
+    "toCsvTextCol": "Text",
+    "toCsvMore": "…and {count} more lines in the download.",
+    "compareFirst": "First PDF",
+    "compareSecond": "Second PDF",
+    "compareTitle": "Compare documents",
+    "compareHint": "Extracts the text of both PDFs and scores how similar they are. Best for spotting unexpected edits between revisions.",
+    "compareAction": "Compare PDFs",
+    "compareSimilarity": "Similarity",
+    "comparePagesA": "Pages (A)",
+    "comparePagesB": "Pages (B)",
+    "compareCharsA": "Characters (A)",
+    "compareCharsB": "Characters (B)",
+    "compareIdentical": "The two PDFs contain identical text.",
+    "compareHeuristic": "Heuristic score from page count and character agreement — not a legal diff.",
+    "pdfSearchTitle": "Full-text search",
+    "pdfSearchIndex": "Indexing… page {done} of {total}",
+    "pdfSearchQuery": "Search text",
+    "pdfSearchPh": "Type to search every page…",
+    "pdfSearchCase": "Match case",
+    "pdfSearchMatches": "{count, plural, one {# match} other {# matches}}",
+    "pdfSearchPages": "{count, plural, one {# page} other {# pages}} with matches",
+    "pdfSearchNone": "No matches found in this PDF."
   },
   "textTools": {
     "input": "Input",
@@ -3911,7 +5315,22 @@
     "freqCopyTable": "Copy table",
     "freqCopyJson": "Copy JSON",
     "freqDownloadCsv": "Download CSV",
-    "freqEmptyState": "Paste some text above — every word or character is then ranked here by how often it appears."
+    "freqEmptyState": "Paste some text above — every word or character is then ranked here by how often it appears.",
+    "delimComma": "Comma (,)",
+    "delimSemicolon": "Semicolon (;)",
+    "delimTab": "Tab",
+    "delimPipe": "Pipe (|)",
+    "delimSpace": "Whitespace",
+    "delimPlaceholder": "Custom delimiter…",
+    "inputDelimiter": "Input delimiter",
+    "hasHeader": "First line is a header row",
+    "headerRow": "Header",
+    "skipEmpty": "Skip empty lines",
+    "smartTypes": "Detect numbers & booleans",
+    "linesCount": "{count, plural, one {# line} other {# lines}}",
+    "rowsCount": "{count, plural, one {# row} other {# rows}}",
+    "colsCount": "{count, plural, one {# column} other {# columns}}",
+    "outputSize": "Output size"
   },
   "calc": {
     "unitCat_length": "Length",
@@ -4160,7 +5579,61 @@
     "ymd": "{years} years, {months} months, {days} days",
     "youSave": "You save",
     "yourBmi": "Your BMI",
-    "zodiac": "Star sign"
+    "zodiac": "Star sign",
+    "loanDetails": "Loan details",
+    "loanAmount": "Loan amount",
+    "loanTerm": "Term (years)",
+    "monthlyPayment": "Monthly payment",
+    "totalInterest": "Total interest",
+    "totalPayment": "Total payment",
+    "paymentsCount": "Payments",
+    "mortgageDetails": "Mortgage details",
+    "homePrice": "Home price",
+    "downPayment": "Down payment",
+    "annualInsurance": "Yearly insurance",
+    "propertyTax": "Property tax",
+    "mortgageEstimate": "Estimate only — excludes PMI, HOA fees and closing costs.",
+    "totalMonthly": "Total monthly",
+    "principalInterest": "Principal + interest",
+    "taxInsurance": "Tax + insurance",
+    "loanAmountLabel": "Loan amount",
+    "salaryDetails": "Salary details",
+    "grossMonthly": "Gross monthly pay",
+    "taxRate": "Tax rate",
+    "deductions": "Fixed deductions",
+    "salaryFlatNote": "Uses a flat tax rate — real payroll uses progressive brackets, so treat this as a rough net.",
+    "netMonthly": "Net monthly",
+    "netYearly": "Net yearly",
+    "taxMonthly": "Tax (monthly)",
+    "effectiveRate": "Effective rate",
+    "vatDetails": "VAT details",
+    "vatAmount": "Amount",
+    "vatRate": "VAT rate",
+    "vatMode": "Direction",
+    "vatAdd": "Add VAT",
+    "vatRemove": "Remove VAT",
+    "vatNet": "Net",
+    "vatGross": "Gross",
+    "vatTax": "VAT ({rate}%)",
+    "marginDetails": "Cost & price",
+    "cost": "Cost",
+    "sellingPrice": "Selling price",
+    "marginExplainer": "Margin is profit ÷ revenue; markup is profit ÷ cost. Same profit, different denominators.",
+    "margin": "Margin",
+    "markup": "Markup",
+    "profit": "Profit",
+    "revenue": "Revenue",
+    "averageInput": "Numbers",
+    "averagePlaceholder": "e.g. 12, 18, 25, 31, 40",
+    "averageHint": "Separate numbers with commas, spaces, semicolons or new lines.",
+    "mean": "Mean",
+    "median": "Median",
+    "mode": "Mode",
+    "count": "Count",
+    "sum": "Sum",
+    "min": "Min",
+    "max": "Max",
+    "range": "Range"
   },
   "dev": {
     "mode": "Mode",
@@ -4410,7 +5883,117 @@
     "month_9": "September",
     "month_10": "October",
     "month_11": "November",
-    "month_12": "December"
+    "month_12": "December",
+    "passwordOptions": "Password options",
+    "passwordMode": "Mode",
+    "passwordModePassword": "Password",
+    "passwordModePin": "PIN",
+    "passwordLength": "Length",
+    "pinLength": "PIN digits",
+    "noAmbiguous": "Avoid ambiguous characters (0/O, 1/l)",
+    "charset_lower": "Lowercase (a–z)",
+    "charset_upper": "Uppercase (A–Z)",
+    "charset_digits": "Digits (0–9)",
+    "charset_symbols": "Symbols (!@#…)",
+    "charset_excludeAmbiguous": "Exclude ambiguous characters",
+    "bits": "bits",
+    "strength_weak": "Weak",
+    "strength_fair": "Fair",
+    "strength_strong": "Strong",
+    "strength_excellent": "Excellent",
+    "regenerate": "Regenerate",
+    "passwordPrivacy": "Generated with a cryptographically secure random source, in your browser. Never reused, never uploaded.",
+    "passwordManagerNote": "Store it in a password manager — this history clears when you reload the page.",
+    "tsRootName": "Root interface name",
+    "tsExported": "Export interfaces",
+    "tsOptionalNulls": "Null fields become optional",
+    "jsonInput": "JSON input",
+    "tsOutput": "TypeScript output",
+    "tsEmpty": "Paste a JSON object to generate interfaces.",
+    "html2mdSafety": "Scripts, styles and event handlers are stripped during parsing — pasted HTML can never execute here.",
+    "htmlInput": "HTML input",
+    "mdOutput": "Markdown output",
+    "html2mdEmpty": "Paste some HTML to convert it to Markdown.",
+    "httpSearch": "Look up a status code",
+    "httpQuery": "Code or keyword",
+    "httpPlaceholder": "e.g. 404, timeout, تهيئة…",
+    "httpGroup": "Class",
+    "httpAll": "All",
+    "httpResults": "{count, plural, one {# code} other {# codes}}",
+    "uaInput": "User-Agent string",
+    "uaPlaceholder": "Paste a User-Agent string…",
+    "uaUseMine": "Use mine",
+    "uaCaveat": "Detection is heuristic and User-Agent reduction (Chrome) or spoofing can hide the real browser. Results are a best guess.",
+    "uaBrowser": "Browser",
+    "uaEngine": "Engine",
+    "uaOs": "Operating system",
+    "uaDevice": "Device type",
+    "uaDevice_desktop": "Desktop",
+    "uaDevice_mobile": "Mobile",
+    "uaDevice_tablet": "Tablet",
+    "uaDevice_bot": "Bot / crawler",
+    "uaDevice_unknown": "Unknown",
+    "uaBot": "This looks like a bot or crawler, not a human browser.",
+    "mockOptions": "Dataset options",
+    "mockTemplate": "Template",
+    "mock_users": "Users",
+    "mock_products": "Products",
+    "mock_posts": "Blog posts",
+    "mock_todos": "To-do items",
+    "mock_orders": "Orders",
+    "mockCount": "Records",
+    "mockSeed": "Seed",
+    "mockShuffle": "Shuffle seed",
+    "mockOutput": "Generated JSON",
+    "jwtSignTitle": "Sign a token",
+    "jwtAlgorithm": "Algorithm",
+    "jwtSecret": "Secret key",
+    "jwtPayload": "Payload (JSON)",
+    "jwtSignAction": "Sign JWT",
+    "jwtToken": "Token",
+    "jwtShareWarning": "Anyone with this token and your secret can impersonate the payload — share carefully.",
+    "jwtVerifyTitle": "Verify a token",
+    "jwtVerifyAction": "Verify signature",
+    "jwtValid": "Signature is valid for this secret.",
+    "jwtInvalidSig": "Signature does NOT match this secret.",
+    "jwtPrivacy": "Signing and verification use WebCrypto in your browser. Your secret key never leaves this page.",
+    "renamerDrop": "Drop files here, or click to browse",
+    "renamerAnyFile": "Any file type · up to 200 files · nothing is uploaded",
+    "renamerFiles": "Files",
+    "renamerChanged": "Renamed",
+    "renamerSize": "Total size",
+    "renamerRules": "Rename rules",
+    "renamerPrefix": "Prefix",
+    "renamerSuffix": "Suffix",
+    "renamerFind": "Find text",
+    "renamerReplace": "Replace with",
+    "renamerRemove": "Remove text",
+    "renamerSpaces": "Spaces become",
+    "renamerSpacesKeep": "Keep spaces",
+    "renamerCase": "Letter case",
+    "renamerCaseKeep": "Keep",
+    "renamerCaseLower": "lowercase",
+    "renamerCaseUpper": "UPPERCASE",
+    "renamerNumbering": "Add numbering (01, 02, …)",
+    "renamerDate": "Prefix upload date (YYYY-MM-DD)",
+    "renamerStart": "Start number",
+    "renamerPadding": "Zero padding",
+    "renamerPosition": "Number position",
+    "renamerPosSuffix": "Suffix (name-01)",
+    "renamerPosPrefix": "Prefix (01-name)",
+    "renamerPreview": "Preview & download",
+    "renamerMore": "…and {count} more files in the ZIP.",
+    "renamerZip": "Download ZIP",
+    "renamerNote": "Browsers cannot rename files in place — download the ZIP and extract it to apply the new names.",
+    "dupeDrop": "Drop files here, or click to browse",
+    "dupeFiles": "{count, plural, one {# file} other {# files}} selected",
+    "dupeHint": "Files are hashed with SHA-256 in your browser and grouped by content — only byte-identical files are flagged.",
+    "dupeAction": "Find duplicates",
+    "dupeGroups": "Duplicate groups",
+    "dupeFilesCount": "Duplicate files",
+    "dupeWasted": "Wasted space",
+    "dupeNone": "No duplicates found — every file is unique.",
+    "dupeCopies": "{count, plural, one {# copy} other {# copies}}"
   },
   "compressor": {
     "noGainAll": "No size reduction was possible with these settings — the image is already optimised for this format (PNG re-encoding ignores quality), so the original file was delivered unchanged. Tip: choose WebP or JPG output for a real reduction.",
@@ -4435,7 +6018,22 @@
     "preset_50x50": "2 × 2 in (51 × 51 mm) — US visa",
     "preset_40x60": "40 × 60 mm — ID photo",
     "outputSize": "Output: {w} × {h} px",
-    "make": "Make photo"
+    "make": "Make photo",
+    "preset_us-2x2": "2 × 2 in — USA passport & visa",
+    "preset_uk-35x45": "35 × 45 mm — UK passport",
+    "preset_schengen-35x45": "35 × 45 mm — Schengen visa",
+    "preset_canada-50x70": "50 × 70 mm — Canada passport",
+    "preset_australia-35x45": "35 × 45 mm — Australia passport",
+    "preset_india-51x51": "51 × 51 mm — India passport",
+    "preset_egypt-40x60": "40 × 60 mm — Egypt ID",
+    "preset_china-33x48": "33 × 48 mm — China passport",
+    "preset_uae-43x55": "43 × 55 mm — UAE visa",
+    "preset_japan-35x45": "35 × 45 mm — Japan passport",
+    "preset_korea-35x45": "35 × 45 mm — Korea passport",
+    "preset_singapore-35x45": "35 × 45 mm — Singapore passport",
+    "preset_malaysia-35x50": "35 × 50 mm — Malaysia passport",
+    "preset_saudi-40x60": "40 × 60 mm — Saudi ID",
+    "preset_turkey-50x60": "50 × 60 mm — Turkey ID"
   },
   "signature": {
     "make": "Make signature",

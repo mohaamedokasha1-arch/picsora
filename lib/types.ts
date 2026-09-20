@@ -1,6 +1,6 @@
-export type ImageFormat = 'jpg' | 'jpeg' | 'png' | 'webp' | 'gif' | 'heic' | 'heif';
+export type ImageFormat = 'jpg' | 'jpeg' | 'png' | 'webp' | 'gif' | 'heic' | 'heif' | 'avif' | 'ico';
 /** Output formats a tool may produce (images, PDF, documents or JSON exports). */
-export type OutputFormat = ImageFormat | 'pdf' | 'json' | 'zip' | 'txt' | 'doc' | 'xml' | 'css' | 'js' | 'csv';
+export type OutputFormat = ImageFormat | 'pdf' | 'json' | 'zip' | 'txt' | 'doc' | 'xml' | 'css' | 'js' | 'csv' | 'md' | 'html';
 
 export interface Dimension {
   width: number;

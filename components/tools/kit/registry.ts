@@ -34,6 +34,16 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'pdf-grayscale': dynamic(() => import('../pdf/grayscale')),
   'pdf-metadata-editor': dynamic(() => import('../pdf/metadata-editor')),
   'pdf-extract-images': dynamic(() => import('../pdf/extract-images')),
+  'pdf-metadata-viewer': dynamic(() => import('../pdf/metadata-viewer')),
+  'pdf-metadata-cleaner': dynamic(() => import('../pdf/metadata-cleaner')),
+  'pdf-flatten': dynamic(() => import('../pdf/flatten')),
+  'pdf-crop': dynamic(() => import('../pdf/crop')),
+  'pdf-header-footer': dynamic(() => import('../pdf/header-footer')),
+  'pdf-to-markdown': dynamic(() => import('../pdf/to-markdown')),
+  'pdf-to-html': dynamic(() => import('../pdf/to-html')),
+  'pdf-to-csv': dynamic(() => import('../pdf/to-csv')),
+  'pdf-compare': dynamic(() => import('../pdf/compare')),
+  'pdf-search': dynamic(() => import('../pdf/search')),
 
   /* ----------------------------------------------------------- text */
   'word-counter': dynamic(() => import('../text/word-counter')),
@@ -49,6 +59,8 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'line-sorter': dynamic(() => import('../text/line-sorter')),
   'text-extractor': dynamic(() => import('../text/extractor')),
   'text-frequency-counter': dynamic(() => import('../text/frequency')),
+  'text-to-json': dynamic(() => import('../text/to-json')),
+  'text-to-csv': dynamic(() => import('../text/to-csv')),
 
   /* ----------------------------------------------------- calculators */
   'age-calculator': dynamic(() => import('../calculators/age')),
@@ -61,6 +73,12 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'gpa-calculator': dynamic(() => import('../calculators/gpa')),
   'tip-calculator': dynamic(() => import('../calculators/tip')),
   'currency-converter': dynamic(() => import('../calculators/currency')),
+  'loan-calculator': dynamic(() => import('../calculators/loan')),
+  'mortgage-calculator': dynamic(() => import('../calculators/mortgage')),
+  'salary-calculator': dynamic(() => import('../calculators/salary')),
+  'vat-calculator': dynamic(() => import('../calculators/vat')),
+  'profit-margin-calculator': dynamic(() => import('../calculators/margin')),
+  'average-calculator': dynamic(() => import('../calculators/average')),
 
   /* ------------------------------------------------------- developer */
   'uuid-generator': dynamic(() => import('../developer/uuid')),
@@ -83,4 +101,13 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'url-parser': dynamic(() => import('../developer/url-parser')),
   'timestamp-converter': dynamic(() => import('../developer/timestamp')),
   'cron-generator': dynamic(() => import('../developer/cron')),
+  'password-generator': dynamic(() => import('../developer/password')),
+  'json-to-typescript': dynamic(() => import('../developer/json2ts')),
+  'html-to-markdown': dynamic(() => import('../developer/html2md')),
+  'http-status-codes': dynamic(() => import('../developer/http-status')),
+  'user-agent-parser': dynamic(() => import('../developer/ua-parser')),
+  'mock-json-generator': dynamic(() => import('../developer/mock-json')),
+  'jwt-encoder': dynamic(() => import('../developer/jwt-encoder')),
+  'bulk-file-renamer': dynamic(() => import('../developer/renamer')),
+  'duplicate-file-finder': dynamic(() => import('../developer/duplicates')),
 };

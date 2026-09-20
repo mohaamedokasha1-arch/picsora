@@ -100,6 +100,52 @@ export async function verifyHmac(decoded: JwtDecoded, secret: string): Promise<b
   }
 }
 
+function bytesToBase64Url(bytes: Uint8Array): string {
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += 1) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+export type JwtSignAlgorithm = 'HS256' | 'HS384' | 'HS512';
+
+/**
+ * Sign a compact JWT with HMAC locally (Web Crypto). `header`/`payload` are
+ * JSON strings; unknown `alg` values in the header are overwritten with the
+ * chosen algorithm so the token is always self-consistent.
+ */
+export async function signJwt(
+  headerJson: string,
+  payloadJson: string,
+  secret: string,
+  algorithm: JwtSignAlgorithm = 'HS256',
+): Promise<string> {
+  if (!secret) throw new JwtError('jwtNeedSecret');
+  let header: Record<string, unknown>;
+  let payload: Record<string, unknown>;
+  try {
+    header = JSON.parse(headerJson) as Record<string, unknown>;
+    payload = JSON.parse(payloadJson) as Record<string, unknown>;
+  } catch {
+    throw new JwtError('jwtInvalidJson');
+  }
+  if (!header || typeof header !== 'object' || Array.isArray(header)) throw new JwtError('jwtInvalidJson');
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new JwtError('jwtInvalidJson');
+  header = { ...header, alg: algorithm, typ: 'JWT' };
+  const encoder = new TextEncoder();
+  const headerB64 = bytesToBase64Url(encoder.encode(JSON.stringify(header)));
+  const payloadB64 = bytesToBase64Url(encoder.encode(JSON.stringify(payload)));
+  const hashName = algorithm === 'HS384' ? 'SHA-384' : algorithm === 'HS512' ? 'SHA-512' : 'SHA-256';
+  const key = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(secret),
+    { name: 'HMAC', hash: hashName },
+    false,
+    ['sign'],
+  );
+  const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(`${headerB64}.${payloadB64}`));
+  return `${headerB64}.${payloadB64}.${bytesToBase64Url(new Uint8Array(signature))}`;
+}
+
 export interface JwtTimeInfo {
   issuedAt: number | null;
   expiresAt: number | null;

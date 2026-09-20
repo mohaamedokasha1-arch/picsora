@@ -12,7 +12,7 @@ import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
-import { ToggleGroup } from '@/components/tools/kit';
+import { Notice, ToggleGroup } from '@/components/tools/kit';
 import { PASSPORT_PRESETS, makePassportPhoto } from '@/lib/tools/processors/passport';
 
 /** Build a print-ready ID / passport photo at exact mm dimensions. */
@@ -109,6 +109,7 @@ export default function PassportPhotoTool({ ctx }: { ctx: WorkspaceContext }) {
           <p className="text-xs text-muted-foreground">
             {t('passport.outputSize', { w: outW, h: outH })}
           </p>
+          <Notice variant="info">{t('passport.complianceNote')}</Notice>
           <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('passport.make')}
           </ActionButton>

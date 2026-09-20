@@ -62,6 +62,8 @@ export function extFromMime(mime: string): string {
     'image/heif': 'heif',
     'image/heic-sequence': 'heic',
     'image/heif-sequence': 'heif',
+    'image/x-icon': 'ico',
+    'image/vnd.microsoft.icon': 'ico',
     'application/pdf': 'pdf',
   };
   return map[(mime || '').toLowerCase()] || '';
@@ -81,6 +83,7 @@ export function mimeFromExt(ext: string): string {
     svg: 'image/svg+xml',
     heic: 'image/heic',
     heif: 'image/heif',
+    ico: 'image/vnd.microsoft.icon',
     pdf: 'application/pdf',
   };
   return map[ext.toLowerCase()] || 'application/octet-stream';
@@ -95,9 +98,18 @@ export function stripExtension(name: string): string {
 export function encodableFormat(format: ImageFormat): ImageFormat {
   if (format === 'heic' || format === 'heif') return 'jpg';
   if (format === 'gif') return 'png';
+  // ICO is assembled byte-by-byte (never canvas-encoded); PNG is the safe
+  // stand-in for any pass-through pipeline that receives one.
+  if (format === 'ico') return 'png';
+  // SVG arrives here as a runtime value (it is decodable input, never an
+  // output target): raster pipelines fall back to PNG instead of failing.
+  if ((format as string) === 'svg') return 'png';
   // Without a WebP encoder, canvas.toBlob silently falls back to PNG bytes —
   // mapping the label too keeps file name, MIME and content consistent.
   if ((format === 'webp') && !supportsWebPEncode()) return 'png';
+  // AVIF encoding is async-capability-gated (see supportsAvifEncode); the
+  // converter checks it explicitly and fails with a clear message instead of
+  // silently producing PNG bytes under an .avif name.
   return format;
 }
 
@@ -118,6 +130,10 @@ export function sniffFormatFromBytes(bytes: Uint8Array): string | null {
     return 'webp';
   // GIF: "GIF8"
   if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x38) return 'gif';
+  // ICO/CUR: reserved(0) + type(1=icon, 2=cursor)
+  if (bytes[0] === 0x00 && bytes[1] === 0x00 && (bytes[2] === 0x01 || bytes[2] === 0x02) && bytes[3] === 0x00) {
+    return 'ico';
+  }
   // BMP: "BM"
   if (bytes[0] === 0x42 && bytes[1] === 0x4d) return 'bmp';
   // TIFF: "II" (little-endian) or "MM" (big-endian) followed by 42/43
@@ -209,6 +225,54 @@ export async function detectFileFormat(file: File): Promise<string | null> {
 let webpEncodeSupport: boolean | null = null;
 
 /** Memoised: probing creates a canvas, and this runs inside encode loops. */
+let avifEncodeSupport: boolean | null = null;
+
+/**
+ * Detect AVIF *encoding* support (canvas.toBlob('image/avif')). Decoding and
+ * encoding support differ per browser — Chrome/Edge/Firefox encode, Safari
+ * historically decodes but does not encode — so this is probed explicitly
+ * with a 1px canvas and the answer is cached. Never throws.
+ */
+export async function supportsAvifEncode(): Promise<boolean> {
+  if (avifEncodeSupport !== null) return avifEncodeSupport;
+  try {
+    if (typeof document === 'undefined') {
+      avifEncodeSupport = false;
+      return false;
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    const blob = await new Promise<Blob | null>((resolve) => {
+      try {
+        canvas.toBlob(resolve, 'image/avif', 0.5);
+      } catch {
+        resolve(null);
+      }
+    });
+    avifEncodeSupport = Boolean(blob && blob.size > 0 && (blob.type === 'image/avif' || blob.size < 500));
+    // Double-check the MIME: some browsers return PNG bytes for unknown types.
+    if (avifEncodeSupport && blob && blob.type && blob.type !== 'image/avif') avifEncodeSupport = false;
+  } catch {
+    avifEncodeSupport = false;
+  }
+  return avifEncodeSupport;
+}
+
+/** Synchronous best-guess used only for UI hints (async probe decides). */
+export function maySupportAvifEncode(): boolean {
+  if (avifEncodeSupport !== null) return avifEncodeSupport;
+  if (typeof document === 'undefined') return false;
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL('image/avif').startsWith('data:image/avif');
+  } catch {
+    return false;
+  }
+}
+
 export function supportsWebPEncode(): boolean {
   if (webpEncodeSupport !== null) return webpEncodeSupport;
   try {
@@ -258,6 +322,34 @@ export async function decodeImage(file: File): Promise<DecodedImage> {
       heicConverted = true;
     } catch {
       throw new Error('heic-convert-failed');
+    }
+  }
+
+  // Step 1b — ICO: extract the largest entry as PNG bytes (browsers cannot
+  // reliably decode .ico through <img> across platforms).
+  const treatAsIco =
+    detected === 'ico' ||
+    (detected === null && (/\.ico$/i.test(file.name || '') || (file.type || '').toLowerCase().includes('icon')));
+  if (treatAsIco) {
+    try {
+      const { icoToPngBlob } = await import('@/lib/image/ico');
+      const { blob } = await icoToPngBlob(new Uint8Array(await file.arrayBuffer()));
+      workFile = new File([blob], file.name || 'icon.ico', { type: 'image/png' });
+    } catch {
+      throw new Error('ico-decode-failed');
+    }
+  }
+
+  // Step 1c — SVG: guarantee explicit raster dimensions (dimension-less SVGs
+  // decode at 0×0 or unpredictably across browsers) and upscale tiny icons.
+  // Content was already scanned by validateSvgContent before reaching here.
+  if (detected === 'svg') {
+    try {
+      const { normalizeSvgFile } = await import('@/lib/image/svg');
+      const normalised = await normalizeSvgFile(file);
+      workFile = normalised.file;
+    } catch {
+      throw new Error('decode-failed');
     }
   }
 
@@ -341,7 +433,7 @@ export function canvasToBlob(
   // Safety net: never attempt to encode HEIC/GIF via canvas (toBlob yields null).
   const format = encodableFormat(opts.format);
   const mime = mimeFromExt(format);
-  const isLossy = format === 'jpg' || format === 'jpeg' || format === 'webp';
+  const isLossy = format === 'jpg' || format === 'jpeg' || format === 'webp' || format === 'avif';
 
   // Use OffscreenCanvas.convertToBlob when available (fast, worker-friendly).
   if (typeof OffscreenCanvas !== 'undefined' && source instanceof OffscreenCanvas) {
@@ -358,11 +450,19 @@ export function canvasToBlob(
   if (source instanceof HTMLCanvasElement) {
     if (isLossy) {
       return new Promise((resolve, reject) => {
-        source.toBlob(
-          (b) => (b ? resolve(b) : reject(new Error('encode-failed'))),
-          mime,
-          quality,
-        );
+        source.toBlob((b) => {
+          if (!b) {
+            reject(new Error(format === 'avif' ? 'avif-unsupported' : 'encode-failed'));
+            return;
+          }
+          // Some browsers answer unknown types with PNG bytes — never ship
+          // those under an .avif name.
+          if (format === 'avif' && b.type && b.type !== 'image/avif') {
+            reject(new Error('avif-unsupported'));
+            return;
+          }
+          resolve(b);
+        }, mime, quality);
       });
     }
     return new Promise((resolve, reject) => {

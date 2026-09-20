@@ -87,6 +87,7 @@ export function ToolsGrid({ tools }: { tools: GridTool[] }) {
             isNew={tool.isNew}
             newLabel={t('new')}
             ctaLabel={t('useTool')}
+            favoriteSlug={tool.slug}
           />
         ))}
       </div>

@@ -31,7 +31,7 @@ function isHeicName(file: File): boolean {
  * gallery/photo-picker selections on some Android devices report no type
  * at all even though the name (or normalisation) says it is an image.
  */
-const IMAGE_EXT = /\.(jpe?g|png|webp|gif|bmp|tiff?|avif|svg|hei[cf])$/i;
+const IMAGE_EXT = /\.(jpe?g|png|webp|gif|bmp|tiff?|avif|svg|hei[cf]|ico)$/i;
 
 /** Thumbnail that converts HEIC previews locally so iPhone photos show up. */
 function Thumb({ file }: { file: File }) {

@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from '@/lib/i18n/navigation';
 import { ToolIcon } from '@/components/icons';
 import { Badge } from '@/components/ui/badge';
+import { FavoriteButton } from './favorite-button';
 import { cn } from '@/lib/utils';
 
 export interface ToolCardProps {
@@ -15,6 +16,8 @@ export interface ToolCardProps {
   isNew?: boolean;
   newLabel?: string;
   className?: string;
+  /** When set, a star toggle is rendered in the badge cluster. */
+  favoriteSlug?: string;
 }
 
 export function ToolCard({
@@ -28,6 +31,7 @@ export function ToolCard({
   isNew,
   newLabel,
   className,
+  favoriteSlug,
 }: ToolCardProps) {
   const target = href ?? `/tools/${slug}`;
   return (
@@ -46,6 +50,7 @@ export function ToolCard({
         <span className="ms-auto flex min-w-0 flex-wrap items-center justify-end gap-1.5">
           {isNew && <Badge className="bg-primary text-primary-foreground">{newLabel ?? 'New'}</Badge>}
           {categoryLabel && <Badge variant="secondary">{categoryLabel}</Badge>}
+          {favoriteSlug && <FavoriteButton slug={favoriteSlug} className="-me-1.5" />}
         </span>
       </div>
       <h3 className="text-base font-semibold text-foreground">{name}</h3>

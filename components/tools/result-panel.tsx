@@ -15,7 +15,9 @@ interface ResultPanelProps {
 }
 
 function isImage(r: ProcessResult) {
-  return ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(r.format);
+  // AVIF/ICO previews render in all modern browsers; anything else (PDF, ICO
+  // on very old engines) falls back to the generic file card below.
+  return ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif', 'ico'].includes(r.format);
 }
 
 function ResultCard({ result, originalSize, index }: { result: ProcessResult; originalSize?: number; index: number }) {

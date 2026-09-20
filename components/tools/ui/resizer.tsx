@@ -13,14 +13,14 @@ import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
-import { resizeImage } from '@/lib/tools/processors/resizer';
+import { SOCIAL_PRESETS, resizeImage } from '@/lib/tools/processors/resizer';
 
 const PRESETS = [
-  { label: '1920 × 1080', w: 1920, h: 1080 },
-  { label: '1280 × 720', w: 1280, h: 720 },
-  { label: '800 × 600', w: 800, h: 600 },
-  { label: '512 × 512', w: 512, h: 512 },
-  { label: '256 × 256', w: 256, h: 256 },
+  { id: 'hd', label: '1920 × 1080', w: 1920, h: 1080 },
+  { id: 'hd720', label: '1280 × 720', w: 1280, h: 720 },
+  { id: 'svga', label: '800 × 600', w: 800, h: 600 },
+  { id: 'sq512', label: '512 × 512', w: 512, h: 512 },
+  { id: 'sq256', label: '256 × 256', w: 256, h: 256 },
 ];
 
 export default function ResizerTool({ ctx }: { ctx: WorkspaceContext }) {
@@ -49,10 +49,19 @@ export default function ResizerTool({ ctx }: { ctx: WorkspaceContext }) {
 
   const applyPreset = (value: string) => {
     setPreset(value);
-    const p = PRESETS.find((x) => String(x.w) === value.split(' ')[0]);
-    if (p) {
-      setWidth(p.w);
-      setHeight(p.h);
+    const generic = PRESETS.find((x) => x.id === value);
+    if (generic) {
+      setWidth(generic.w);
+      setHeight(generic.h);
+      return;
+    }
+    const social = SOCIAL_PRESETS.find((x) => x.id === value);
+    if (social) {
+      // Social sizes have a fixed aspect ratio — unlock so the exact
+      // platform dimensions are applied instead of the old ratio.
+      setLocked(false);
+      setWidth(social.width);
+      setHeight(social.height);
     }
   };
 
@@ -96,7 +105,11 @@ export default function ResizerTool({ ctx }: { ctx: WorkspaceContext }) {
               disabled={processing}
               options={[
                 { value: 'custom', label: t('controls.custom') },
-                ...PRESETS.map((p) => ({ value: `${p.w} × ${p.h}`, label: p.label })),
+                ...PRESETS.map((p) => ({ value: p.id, label: p.label })),
+                ...SOCIAL_PRESETS.map((p) => ({
+                  value: p.id,
+                  label: `${t(p.labelKey as never)} · ${p.width} × ${p.height}`,
+                })),
               ]}
             />
           </Field>

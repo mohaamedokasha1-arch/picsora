@@ -10,7 +10,8 @@ export type UploadExtension =
   | 'avif'
   | 'svg'
   | 'heic'
-  | 'heif';
+  | 'heif'
+  | 'ico';
 import {
   detectFileFormat,
   extFromMime,

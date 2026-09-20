@@ -12,23 +12,28 @@ import { ActionButton } from '@/components/ui/action-button';
 import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { ResultPanel } from '@/components/tools/result-panel';
+import { Notice } from '@/components/tools/kit';
 import { convertMany } from '@/lib/tools/processors/convert';
+import { maySupportAvifEncode } from '@/lib/image/format';
 import type { ImageFormat } from '@/lib/types';
 
 interface ConverterConfig {
   to: ImageFormat;
   needsBackground?: boolean;
+  /** Optional i18n hint shown above the action (e.g. animation/ICO notes). */
+  hintKey?: string;
 }
 
-function ConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: ConverterConfig }) {
+export function ConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: ConverterConfig }) {
   const t = useTranslations();
   const { processing, results, error, run } = useToolRunner();
   const [quality, setQuality] = React.useState(90);
   const [background, setBackground] = React.useState('#ffffff');
   const preview = useObjectUrl(ctx.files[0]);
 
-  const isLossy = config.to === 'jpg' || config.to === 'webp';
+  const isLossy = config.to === 'jpg' || config.to === 'jpeg' || config.to === 'webp' || config.to === 'avif';
   const originalSize = ctx.files.reduce((s, f) => s + f.size, 0);
+  const avifBlocked = config.to === 'avif' && !maySupportAvifEncode();
 
   const process = () => {
     run(() =>
@@ -77,6 +82,8 @@ function ConverterTool({ ctx, config }: { ctx: WorkspaceContext; config: Convert
               </div>
             </Field>
           )}
+          {config.hintKey && <Notice variant="info">{t(config.hintKey as never)}</Notice>}
+          {avifBlocked && <Notice variant="warning">{t('convert.avifBlocked')}</Notice>}
           <ActionButton onClick={process} disabled={processing} processing={processing} success={results.length > 0 && !processing && !error} className="w-full">
             {t('controls.convert')} → {config.to.toUpperCase()}
           </ActionButton>

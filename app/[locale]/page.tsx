@@ -10,6 +10,7 @@ import { Link } from '@/lib/i18n/navigation';
 import { ToolCard } from '@/components/tools/tool-card';
 import { ToolsGrid } from '@/components/tools/tools-grid';
 import { ToolSearch } from '@/components/tools/tool-search';
+import { PersonalSections } from '@/components/tools/personal-sections';
 import { Accordion } from '@/components/ui/accordion';
 import { ToolIcon } from '@/components/icons';
 import { AdPlacement } from '@/components/ads/ad-placement';
@@ -130,6 +131,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
         </div>
       </section>
 
+      {/* Recent + favorites: renders only for returnees with history. */}
+      <PersonalSections />
+
       {/* Popular tools */}
       <section className="container py-12">
         <h2 className="text-2xl font-bold text-foreground sm:text-3xl">{t('home.popularTitle')}</h2>
@@ -146,6 +150,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
               isNew={tool.isNew}
               newLabel={t('common.new')}
               ctaLabel={t('common.useTool')}
+              favoriteSlug={tool.slug}
             />
           ))}
         </div>
@@ -176,6 +181,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
               isNew
               newLabel={t('common.new')}
               ctaLabel={t('common.useTool')}
+              favoriteSlug={tool.slug}
             />
           ))}
         </div>
