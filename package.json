@@ -11,7 +11,7 @@
     "copy-pdf-worker": "node scripts/copy-pdf-worker.mjs",
     "predev": "npm run copy-pdf-worker",
     "prebuild": "npm run copy-pdf-worker",
-    "test:tools": "tsx scripts/tool-tests/run-tests.ts && tsx scripts/tool-tests/run-new-tools.ts && tsx scripts/tool-tests/run-search.ts && tsx scripts/tests/logic.test.ts && tsx scripts/tests/pdf.test.ts"
+    "test:tools": "tsx scripts/tool-tests/run-tests.ts && tsx scripts/tool-tests/run-new-tools.ts && tsx scripts/tool-tests/run-search.ts && tsx scripts/tests/logic.test.ts && tsx scripts/tests/pdf.test.ts && tsx scripts/tests/ocr.test.ts"
   },
   "dependencies": {
     "@cantoo/pdf-lib": "^2.9.1",
