@@ -109,6 +109,7 @@ export default async function CategoryPage({ params }: { params: { locale: strin
               isNew={tool.isNew}
               newLabel={t('common.new')}
               ctaLabel={t('common.useTool')}
+              favoriteSlug={tool.slug}
             />
           ))}
         </div>

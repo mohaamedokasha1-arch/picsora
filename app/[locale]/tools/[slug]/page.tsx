@@ -13,6 +13,8 @@ import { RelatedTools } from '@/components/tools/related-tools';
 import { webAppSchema, faqSchema, howToSchema, StructuredData } from '@/lib/seo/schema';
 import { ToolIcon } from '@/components/icons';
 import { AdPlacement } from '@/components/ads/ad-placement';
+import { FavoriteButton } from '@/components/tools/favorite-button';
+import { TrackVisit } from '@/components/tools/track-visit';
 
 export function generateStaticParams() {
   const params: { locale: string; slug: string }[] = [];
@@ -92,6 +94,7 @@ export default async function ToolPage({ params }: { params: { locale: string; s
   return (
     <>
       <StructuredData data={schema} />
+      <TrackVisit slug={tool.slug} />
       <div className="container py-8">
         {/* Home → Tools → <Category> → <Tool>. The category hop was missing,
             so a tool page had no crawlable link back up to the section it
@@ -108,7 +111,8 @@ export default async function ToolPage({ params }: { params: { locale: string; s
           <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">
             <ToolIcon name={tool.icon} className="h-6 w-6" />
           </span>
-          <h1 className="min-w-0 break-words text-3xl font-bold text-foreground sm:text-4xl">{name}</h1>
+          <h1 className="min-w-0 flex-1 break-words text-3xl font-bold text-foreground sm:text-4xl">{name}</h1>
+          <FavoriteButton slug={tool.slug} className="shrink-0 [&_svg]:h-5 [&_svg]:w-5" />
         </div>
         <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">{intro}</p>
 

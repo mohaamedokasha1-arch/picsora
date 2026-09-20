@@ -65,7 +65,9 @@
     "replyNote": "We read every message and usually reply within 1–2 business days.",
     "allProcessingText": "All processing happens locally in your browser. Your text never leaves your device.",
     "allProcessingFiles": "All processing happens locally in your browser. Your files never leave your device.",
-    "useToolLabel": "Use tool"
+    "useToolLabel": "Use tool",
+    "addFavorite": "Add to favorites",
+    "removeFavorite": "Remove from favorites"
   },
   "validation": {
     "invalidType": "This file type is not supported here. Please choose {types}.",
@@ -140,7 +142,12 @@
     "guidesTitle": "Guides & tutorials",
     "guidesSubtitle": "Step-by-step articles that help you master everyday file tasks.",
     "guidesCta": "Read guide",
-    "readTime": "min read"
+    "readTime": "min read",
+    "recentTitle": "Recently used",
+    "recentSubtitle": "Pick up where you left off — stored only in this browser.",
+    "favoritesTitle": "Your favorites",
+    "favoritesSubtitle": "Star any tool to pin it here.",
+    "clearRecent": "Clear history"
   },
   "homeFaqs": [
     {
@@ -6011,7 +6018,22 @@
     "preset_50x50": "2 × 2 in (51 × 51 mm) — US visa",
     "preset_40x60": "40 × 60 mm — ID photo",
     "outputSize": "Output: {w} × {h} px",
-    "make": "Make photo"
+    "make": "Make photo",
+    "preset_us-2x2": "2 × 2 in — USA passport & visa",
+    "preset_uk-35x45": "35 × 45 mm — UK passport",
+    "preset_schengen-35x45": "35 × 45 mm — Schengen visa",
+    "preset_canada-50x70": "50 × 70 mm — Canada passport",
+    "preset_australia-35x45": "35 × 45 mm — Australia passport",
+    "preset_india-51x51": "51 × 51 mm — India passport",
+    "preset_egypt-40x60": "40 × 60 mm — Egypt ID",
+    "preset_china-33x48": "33 × 48 mm — China passport",
+    "preset_uae-43x55": "43 × 55 mm — UAE visa",
+    "preset_japan-35x45": "35 × 45 mm — Japan passport",
+    "preset_korea-35x45": "35 × 45 mm — Korea passport",
+    "preset_singapore-35x45": "35 × 45 mm — Singapore passport",
+    "preset_malaysia-35x50": "35 × 50 mm — Malaysia passport",
+    "preset_saudi-40x60": "40 × 60 mm — Saudi ID",
+    "preset_turkey-50x60": "50 × 60 mm — Turkey ID"
   },
   "signature": {
     "make": "Make signature",

@@ -34,6 +34,12 @@ export const PASSPORT_PRESETS: PassportPreset[] = [
   { id: 'egypt-40x60', wMm: 40, hMm: 60, region: 'EG' },
   { id: 'china-33x48', wMm: 33, hMm: 48, region: 'CN' },
   { id: 'uae-43x55', wMm: 43, hMm: 55, region: 'AE' },
+  { id: 'japan-35x45', wMm: 35, hMm: 45, region: 'JP' },
+  { id: 'korea-35x45', wMm: 35, hMm: 45, region: 'KR' },
+  { id: 'singapore-35x45', wMm: 35, hMm: 45, region: 'SG' },
+  { id: 'malaysia-35x50', wMm: 35, hMm: 50, region: 'MY' },
+  { id: 'saudi-40x60', wMm: 40, hMm: 60, region: 'SA' },
+  { id: 'turkey-50x60', wMm: 50, hMm: 60, region: 'TR' },
 ];
 
 export interface PassportOptions {
