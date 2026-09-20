@@ -1,7 +1,8 @@
 import { analyzeText, convertCase, removeExtraSpaces, defaultSpaceOptions, slugify, reverseText, removeDuplicateLines, generateLorem } from '../../lib/text-processing';
+import { countFrequency, defaultFrequencyOptions } from '../../lib/text-processing/frequency';
 import { diffWords } from '../../lib/text-processing/diff';
 import { numberToWords } from '../../lib/text-processing/numberToWords';
-import { calculateAge, calculateBmi, percentageOf, isWhatPercentOf, percentChange, simpleInterest, compoundInterest, dateDifference, stackedDiscount, calculateGpa, calculateTip } from '../../lib/calculators';
+import { calculateAge, calculateBmi, percentageOf, isWhatPercentOf, percentChange, simpleInterest, compoundInterest, dateDifference, stackedDiscount, calculateGpa, calculateTip, calculateAverage, parseNumberList } from '../../lib/calculators';
 import { convertUnit } from '../../lib/calculators/units';
 import { parseJson, formatJson, minifyJson, encodeHtml, decodeHtml, convertBase, utf8ToBase64, base64ToUtf8 } from '../../lib/developer-tools';
 import { parseColor, allFormats, contrastRatio, shades } from '../../lib/developer-tools/color';
@@ -109,4 +110,32 @@ eq('ranges oob', parsePageRanges('1-30', 10).error, 'rangeBounds');
 eq('ranges bad', parsePageRanges('abc', 10).error, 'rangeFormat');
 eq('chunks', chunkPages(5,2).map(c=>c.label), ['1-2','3-4','5']);
 eq('summary', summarizeSelection([1,4,7,8,9,10,11]), '2, 5, 8–12');
+
+// large inputs — these two run inside a useMemo with no error boundary above
+// them, so a throw here takes the whole page down. `Math.max(...iterable)`
+// passed every element as a call argument and blew V8's stack past ~130k.
+const bigAvg = calculateAverage(Array.from({ length: 300000 }, (_, i) => i))!;
+eq('avg 300k count', bigAvg.count, 300000);
+eq('avg 300k min/max', [bigAvg.min, bigAvg.max], [0, 299999]);
+eq('avg 300k mean', bigAvg.mean, 149999.5);
+eq('avg 300k no mode', bigAvg.mode, []);
+const avgNormal = calculateAverage(parseNumberList('12, 18, 25, 25, 31, 40'))!;
+eq('avg sum', avgNormal.sum, 151);
+eq('avg median', avgNormal.median, 25);
+eq('avg mode', avgNormal.mode, [25]);
+eq('avg empty', calculateAverage([]), null);
+const bigFreq = countFrequency(
+  Array.from({ length: 200000 }, (_, i) => `word${i}`).join(' '),
+  defaultFrequencyOptions,
+);
+eq('freq 200k total', bigFreq.total, 200000);
+eq('freq 200k unique', bigFreq.unique, 200000);
+eq('freq 200k maxCount', bigFreq.maxCount, 1);
+eq('freq 200k once', bigFreq.once, 200000);
+const freqNormal = countFrequency('the cat sat on the mat the', defaultFrequencyOptions);
+eq('freq maxCount', freqNormal.maxCount, 3);
+eq('freq top term', freqNormal.entries[0].term, 'the');
+eq('freq empty', countFrequency('', defaultFrequencyOptions).maxCount, 0);
+
 console.log(fails? `\n${fails} FAILURES` : '\nALL PASS');
+process.exitCode = fails ? 1 : 0;
