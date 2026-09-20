@@ -545,20 +545,391 @@ const RELATED_PATCH_2: Record<string, string[]> = {
   'base64-encoder-decoder': ['jwt-decoder'],
 };
 
+/**
+ * Expansion wave: genuinely new capabilities (AVIF/SVG/ICO conversion,
+ * fixed-size compression pages, favicon packages, upscaling, DPI editing).
+ * Keyword discipline (see lib/tools/search.ts scoring): converter keywords
+ * stay format-centric — no image/photo/compress/size words — so existing
+ * #1 rankings ("compress photo", "convert pictures to jpg") never move.
+ */
+const EXPANSION_IMAGE_INPUTS: UploadExtension[] = [...ALL_IMAGE_INPUTS, 'ico'];
+
+const EXPANSION_IMAGE_TOOLS: ToolDef[] = [
+  {
+    ...T(
+      'avif-to-jpg',
+      'convert',
+      'repeat',
+      ['avif to jpg', 'convert avif to jpg', 'avif2jpg', 'avif jpg converter', 'تحويل avif الى jpg', 'محول avif'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['jpg'],
+      ['avif-to-png', 'jpg-to-avif', 'image-compressor', 'heic-to-jpg'],
+      true,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'avif-to-png',
+      'convert',
+      'repeat',
+      ['avif to png', 'convert avif to png', 'avif2png', 'تحويل avif الى png'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['png'],
+      ['avif-to-jpg', 'png-to-avif', 'image-compressor', 'heic-to-png'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'avif-to-webp',
+      'convert',
+      'repeat',
+      ['avif to webp', 'convert avif to webp', 'avif2webp', 'تحويل avif الى webp'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['webp'],
+      ['avif-to-jpg', 'webp-to-avif', 'jpg-to-webp', 'image-compressor'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'jpg-to-avif',
+      'convert',
+      'repeat',
+      ['jpg to avif', 'convert jpg to avif', 'jpeg avif encoder', 'jpg2avif', 'تحويل jpg الى avif'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['avif'],
+      ['avif-to-jpg', 'png-to-avif', 'jpg-to-webp', 'image-compressor'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'png-to-avif',
+      'convert',
+      'repeat',
+      ['png to avif', 'convert png to avif', 'png2avif', 'تحويل png الى avif'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['avif'],
+      ['avif-to-png', 'jpg-to-avif', 'png-to-webp', 'image-compressor'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'webp-to-avif',
+      'convert',
+      'repeat',
+      ['webp to avif', 'convert webp to avif', 'webp2avif', 'تحويل webp الى avif'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['avif'],
+      ['avif-to-webp', 'jpg-to-avif', 'webp-to-jpg', 'image-compressor'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'svg-to-png',
+      'convert',
+      'repeat',
+      ['svg to png', 'convert svg to png', 'vector to png', 'svg2png', 'تحويل svg الى png', 'تحويل فيكتور'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['png'],
+      ['svg-to-jpg', 'favicon-generator', 'image-to-ico', 'png-to-jpg'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'svg-to-jpg',
+      'convert',
+      'repeat',
+      ['svg to jpg', 'convert svg to jpg', 'vector to jpg', 'svg2jpg', 'تحويل svg الى jpg'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['jpg'],
+      ['svg-to-png', 'svg-to-webp', 'jpg-to-png', 'image-compressor', 'favicon-generator'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'svg-to-webp',
+      'convert',
+      'repeat',
+      ['svg to webp', 'convert svg to webp', 'svg2webp', 'تحويل svg الى webp'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['webp'],
+      ['svg-to-png', 'jpg-to-webp', 'webp-to-jpg', 'image-compressor'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'gif-to-webp',
+      'convert',
+      'repeat',
+      ['gif to webp', 'convert gif to webp', 'gif2webp', 'تحويل gif الى webp'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['webp'],
+      ['webp-to-jpg', 'webp-to-png', 'jpg-to-webp', 'image-compressor'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'image-to-ico',
+      'convert',
+      'repeat',
+      ['image to ico', 'convert to ico', 'png to ico', 'jpg to ico', 'make ico file', 'تحويل الصورة الى ico'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['ico'],
+      ['favicon-generator', 'ico-to-png', 'png-to-webp', 'image-resizer'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'ico-to-png',
+      'convert',
+      'repeat',
+      ['ico to png', 'convert ico to png', 'icon to png', 'favicon to png', 'ico2png', 'تحويل ico الى png'],
+      [...EXPANSION_IMAGE_INPUTS],
+      ['png'],
+      ['image-to-ico', 'png-to-jpg', 'jpg-to-png', 'favicon-generator'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'compress-image-to-100kb',
+      'compress',
+      'gauge',
+      ['100kb image compressor', 'compress image to 100kb', 'shrink photo to 100kb', 'exact 100kb', '100 kb limit', 'ضغط الصور الى 100 كيلوبايت'],
+      ['jpg', 'png', 'webp', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['compress-image-to-200kb', 'image-to-exact-kb', 'image-compressor', 'image-resizer'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'compress-image-to-200kb',
+      'compress',
+      'gauge',
+      ['200kb image compressor', 'compress image to 200kb', 'shrink photo to 200kb', 'exact 200kb', '200 kb limit', 'ضغط الصور الى 200 كيلوبايت'],
+      ['jpg', 'png', 'webp', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['compress-image-to-100kb', 'compress-image-to-500kb', 'image-to-exact-kb', 'image-compressor'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'compress-image-to-500kb',
+      'compress',
+      'gauge',
+      ['500kb image compressor', 'compress image to 500kb', 'shrink photo to 500kb', 'exact 500kb', '500 kb limit', 'ضغط الصور الى 500 كيلوبايت'],
+      ['jpg', 'png', 'webp', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['compress-image-to-200kb', 'compress-image-to-1mb', 'image-to-exact-kb', 'image-compressor'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'compress-image-to-1mb',
+      'compress',
+      'gauge',
+      ['1mb image compressor', 'compress image to 1mb', 'shrink photo to 1mb', 'exact 1mb', '1 mb limit', 'ضغط الصور الى 1 ميجا'],
+      ['jpg', 'png', 'webp', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['compress-image-to-500kb', 'image-to-exact-kb', 'image-compressor', 'jpg-to-webp'],
+      false,
+      10,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'favicon-generator',
+      'convert',
+      'app-window',
+      ['favicon generator', 'favicon maker', 'create favicon', 'ico generator', 'favicon package', 'apple touch icon', 'web manifest icons', 'صانع الايقونات', 'ايقونة الموقع'],
+      ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'avif', 'svg', 'heic', 'heif'],
+      ['png', 'ico', 'json', 'zip'],
+      ['image-to-ico', 'rounded-corners', 'image-resizer', 'png-to-webp'],
+      true,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'image-upscaler',
+      'resize',
+      'zoom-in',
+      ['upscale image', 'image upscaler', 'enlarge image', 'increase resolution', '2x upscale', '4x upscale', 'make image bigger', 'تكبير الصورة', 'زيادة الدقة'],
+      ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'avif', 'svg', 'heic', 'heif'],
+      ['jpg', 'png', 'webp'],
+      ['image-resizer', 'image-compressor', 'image-to-exact-kb', 'passport-photo-maker'],
+      false,
+      1,
+    ),
+    isNew: true,
+  },
+  {
+    ...T(
+      'image-dpi-converter',
+      'edit',
+      'printer',
+      ['dpi converter', 'image dpi', 'change dpi', 'set dpi', '300 dpi', 'print resolution', 'ppi metadata', 'dpi changer', 'تغيير dpi', 'دقة الطباعة'],
+      ['jpg', 'jpeg', 'png'],
+      ['jpg', 'png'],
+      ['passport-photo-maker', 'image-resizer', 'image-metadata', 'image-compressor'],
+      false,
+      1,
+    ),
+    isNew: true,
+  },
+];
+
+const EXPANSION_PDF_TOOLS: ToolDef[] = [
+  N('pdf-metadata-viewer', 'pdf-tools', 'pdf', 'file-search', ['view pdf metadata', 'pdf metadata viewer', 'read pdf properties', 'inspect pdf info', 'pdf document properties', 'عرض بيانات pdf'], ['pdf-metadata-editor', 'pdf-metadata-cleaner', 'pdf-page-counter', 'pdf-extract-images'], { inputFormats: ['pdf'], outputFormats: [], maxFileSizeMB: 100, isNew: true }),
+  N('pdf-metadata-cleaner', 'pdf-tools', 'pdf', 'eraser', ['clean pdf metadata', 'remove pdf metadata', 'strip pdf metadata', 'delete pdf properties', 'pdf privacy cleaner', 'مسح بيانات pdf', 'تنظيف pdf'], ['pdf-metadata-viewer', 'pdf-metadata-editor', 'pdf-protect', 'pdf-compressor'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 100, isNew: true }),
+  N('pdf-flatten', 'pdf-tools', 'pdf', 'layers', ['flatten pdf', 'pdf flatten', 'bake form fields', 'lock pdf form', 'flatten pdf form', 'تسطيح pdf', 'تثبيت النموذج'], ['pdf-protect', 'pdf-metadata-cleaner', 'pdf-compressor', 'pdf-watermark'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 100, isNew: true }),
+  N('pdf-crop', 'pdf-tools', 'pdf', 'crop', ['crop pdf', 'pdf crop', 'trim pdf margins', 'cut pdf edges', 'pdf cropper', 'قص pdf', 'اقتصاص pdf'], ['pdf-rotate-pages', 'pdf-delete-pages', 'pdf-reorder-pages', 'pdf-to-images'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 100, isNew: true }),
+  N('pdf-header-footer', 'pdf-tools', 'pdf', 'panel-top', ['pdf header footer', 'add header to pdf', 'add footer to pdf', 'header footer pdf', 'running header pdf', 'ترويسة pdf', 'تذييل pdf'], ['pdf-page-numbers', 'pdf-watermark', 'pdf-merger', 'pdf-protect'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 100, isNew: true }),
+  N('pdf-to-markdown', 'pdf-tools', 'pdf', 'book-open', ['pdf to markdown', 'convert pdf to markdown', 'pdf to md', 'markdown from pdf', 'تحويل pdf الى ماركداون'], ['pdf-to-text', 'pdf-to-word', 'pdf-ocr', 'pdf-search'], { inputFormats: ['pdf'], outputFormats: ['md'], maxFileSizeMB: 50, popular: true, isNew: true }),
+  N('pdf-to-html', 'pdf-tools', 'pdf', 'code-xml', ['pdf to html', 'convert pdf to html', 'pdf webpage', 'html from pdf', 'تحويل pdf الى html'], ['pdf-to-word', 'pdf-to-markdown', 'pdf-to-text', 'html-encoder-decoder'], { inputFormats: ['pdf'], outputFormats: ['html'], maxFileSizeMB: 50, isNew: true }),
+  N('pdf-to-csv', 'pdf-tools', 'pdf', 'file-spreadsheet', ['pdf to csv', 'convert pdf to csv', 'pdf table to csv', 'pdf spreadsheet', 'تحويل pdf الى csv'], ['pdf-to-text', 'json-csv-converter', 'pdf-to-markdown', 'pdf-extract-pages'], { inputFormats: ['pdf'], outputFormats: ['csv'], maxFileSizeMB: 50, isNew: true }),
+  N('pdf-compare', 'pdf-tools', 'pdf', 'git-compare', ['compare pdf', 'pdf compare', 'pdf diff', 'compare two pdfs', 'difference between pdfs', 'مقارنة pdf', 'الفرق بين ملفين'], ['pdf-search', 'pdf-merger', 'text-diff', 'pdf-page-counter'], { inputFormats: ['pdf'], outputFormats: [], maxFileSizeMB: 50, maxFiles: 2, isNew: true }),
+  N('pdf-search', 'pdf-tools', 'pdf', 'text-search', ['search pdf', 'pdf search', 'find text in pdf', 'search inside pdf', 'pdf finder', 'البحث في pdf'], ['pdf-to-text', 'pdf-compare', 'pdf-ocr', 'text-extractor'], { inputFormats: ['pdf'], outputFormats: [], maxFileSizeMB: 50, popular: true, isNew: true }),
+];
+
+const EXPANSION_TEXT_TOOLS: ToolDef[] = [
+  N('text-to-json', 'text-tools', 'text', 'file-json', ['text to json', 'convert text to json', 'lines to json', 'text to json array', 'تحويل النص الى json'], ['text-to-csv', 'json-formatter', 'json-csv-converter', 'line-sorter'], { popular: true, isNew: true }),
+  N('text-to-csv', 'text-tools', 'text', 'file-spreadsheet', ['text to csv', 'convert text to csv', 'lines to csv', 'delimiter to csv', 'تحويل النص الى csv'], ['text-to-json', 'json-csv-converter', 'pdf-to-csv', 'line-sorter'], { isNew: true }),
+];
+
+const EXPANSION_DEVELOPER_TOOLS: ToolDef[] = [
+  N('password-generator', 'developer-tools', 'developer', 'key-round', ['password generator', 'random password', 'strong password', 'secure password generator', 'passkey password', 'مولد كلمات المرور', 'باسورد قوي'], ['hash-generator', 'uuid-generator', 'jwt-encoder', 'base64-encoder-decoder'], { popular: true, isNew: true }),
+  N('json-to-typescript', 'developer-tools', 'developer', 'braces', ['json to typescript', 'json to ts', 'typescript interface generator', 'json to interface', 'generate types from json', 'تحويل json الى typescript'], ['json-formatter', 'json-csv-converter', 'mock-json-generator', 'javascript-formatter'], { popular: true, isNew: true }),
+  N('html-to-markdown', 'developer-tools', 'developer', 'book-open', ['html to markdown', 'convert html to markdown', 'html to md', 'markdown converter', 'تحويل html الى ماركداون'], ['markdown-formatter', 'html-encoder-decoder', 'pdf-to-html', 'text-to-slug'], { isNew: true }),
+  N('http-status-codes', 'developer-tools', 'developer', 'globe', ['http status codes', 'http status lookup', 'status code 404', 'http 500', 'response codes', 'اكواد http', 'رموز الحالة'], ['url-parser', 'url-encoder-decoder', 'json-formatter', 'timestamp-converter'], { isNew: true }),
+  N('user-agent-parser', 'developer-tools', 'developer', 'monitor', ['user agent parser', 'parse user agent', 'browser detector', 'detect browser os', 'what is my user agent', 'محلل المتصفح', 'نوع المتصفح'], ['url-parser', 'text-extractor', 'regex-tester', 'timestamp-converter'], { isNew: true }),
+  N('mock-json-generator', 'developer-tools', 'developer', 'database', ['mock json', 'mock data generator', 'fake json generator', 'json placeholder', 'generate test data', 'بيانات وهمية', 'json تجريبي'], ['json-formatter', 'json-to-typescript', 'json-csv-converter', 'lorem-ipsum-generator'], { isNew: true }),
+  N('jwt-encoder', 'developer-tools', 'developer', 'lock', ['jwt encoder', 'jwt signer', 'create jwt', 'sign jwt hs256', 'encode jwt token', 'انشاء jwt', 'توقيع jwt'], ['jwt-decoder', 'base64-encoder-decoder', 'hash-generator', 'password-generator'], { isNew: true }),
+  N('bulk-file-renamer', 'developer-tools', 'developer', 'file-pen', ['bulk rename files', 'batch file renamer', 'rename multiple files', 'file renamer', 'اعادة تسمية الملفات', 'تسمية جماعية'], ['duplicate-file-finder', 'hash-generator', 'pdf-extract-images', 'image-compressor'], { isNew: true }),
+  N('duplicate-file-finder', 'developer-tools', 'developer', 'copy', ['find duplicate files', 'duplicate file finder', 'duplicate finder', 'identical files', 'remove duplicates', 'الملفات المكررة', 'البحث عن التكرار'], ['bulk-file-renamer', 'hash-generator', 'remove-duplicate-lines', 'pdf-page-counter'], { isNew: true }),
+];
+
+const EXPANSION_CALCULATOR_TOOLS: ToolDef[] = [
+  N('loan-calculator', 'calculator-tools', 'calculator', 'landmark', ['loan calculator', 'loan payment', 'car loan', 'personal loan emi', 'loan interest', 'حاسبة القروض', 'حاسبة التمويل'], ['mortgage-calculator', 'interest-calculator', 'percentage-calculator', 'currency-converter'], { popular: true, isNew: true }),
+  N('mortgage-calculator', 'calculator-tools', 'calculator', 'house', ['mortgage calculator', 'home loan calculator', 'monthly mortgage payment', 'house payment', 'حاسبة التمويل العقاري', 'حاسبة الرهن'], ['loan-calculator', 'interest-calculator', 'percentage-calculator', 'unit-converter'], { isNew: true }),
+  N('salary-calculator', 'calculator-tools', 'calculator', 'wallet', ['salary calculator', 'paycheck calculator', 'net pay', 'gross to net', 'take home pay', 'حاسبة الراتب', 'صافي الراتب'], ['percentage-calculator', 'currency-converter', 'discount-calculator', 'interest-calculator'], { isNew: true }),
+  N('vat-calculator', 'calculator-tools', 'calculator', 'receipt', ['vat calculator', 'vat reverse', 'sales tax calculator', 'gst calculator', 'add vat', 'حاسبة الضريبة', 'حاسبة القيمة المضافة'], ['discount-calculator', 'percentage-calculator', 'tip-calculator', 'currency-converter'], { isNew: true }),
+  N('profit-margin-calculator', 'calculator-tools', 'calculator', 'trending-up', ['profit margin calculator', 'margin calculator', 'markup calculator', 'profit percentage', 'حاسبة هامش الربح', 'نسبة الربح'], ['percentage-calculator', 'discount-calculator', 'interest-calculator', 'tip-calculator'], { isNew: true }),
+  N('average-calculator', 'calculator-tools', 'calculator', 'sigma', ['average calculator', 'mean median mode', 'average of numbers', 'calculate average', 'حاسبة المتوسط', 'المتوسط الحسابي'], ['percentage-calculator', 'gpa-calculator', 'number-to-words', 'unit-converter'], { isNew: true }),
+];
+
+/**
+ * Discovery patch: point established tools at the expansion wave. Prepended
+ * WITHOUT slicing so no existing suggestion is ever dropped (dropping one
+ * could orphan a tool in the related-tools graph test).
+ */
+const RELATED_PATCH_3: Record<string, string[]> = {
+  'image-compressor': ['compress-image-to-100kb', 'image-upscaler'],
+  'image-resizer': ['image-upscaler', 'image-dpi-converter'],
+  'image-to-exact-kb': ['compress-image-to-100kb', 'compress-image-to-500kb'],
+  'jpg-to-webp': ['jpg-to-avif'],
+  'png-to-webp': ['png-to-avif'],
+  'webp-to-jpg': ['webp-to-avif', 'gif-to-webp'],
+  'heic-to-jpg': ['avif-to-jpg'],
+  'heic-to-png': ['avif-to-png'],
+  'passport-photo-maker': ['image-dpi-converter'],
+  'png-to-jpg': ['ico-to-png'],
+  'image-to-pdf': ['favicon-generator'],
+  'pdf-to-text': ['pdf-to-markdown', 'pdf-search'],
+  'pdf-to-word': ['pdf-to-html', 'pdf-to-markdown'],
+  'pdf-merger': ['pdf-compare'],
+  'pdf-metadata-editor': ['pdf-metadata-viewer', 'pdf-metadata-cleaner'],
+  'pdf-page-numbers': ['pdf-header-footer'],
+  'pdf-ocr': ['pdf-search'],
+  'pdf-protect': ['pdf-flatten'],
+  'pdf-rotate-pages': ['pdf-crop'],
+  'pdf-delete-pages': ['pdf-crop'],
+  'json-csv-converter': ['text-to-json', 'text-to-csv'],
+  'json-formatter': ['mock-json-generator', 'json-to-typescript'],
+  'hash-generator': ['password-generator', 'duplicate-file-finder'],
+  'uuid-generator': ['password-generator'],
+  'jwt-decoder': ['jwt-encoder'],
+  'base64-encoder-decoder': ['jwt-encoder'],
+  'remove-duplicate-lines': ['duplicate-file-finder'],
+  'url-parser': ['user-agent-parser', 'http-status-codes'],
+  'markdown-formatter': ['html-to-markdown'],
+  'text-diff': ['pdf-compare'],
+  'interest-calculator': ['loan-calculator', 'mortgage-calculator'],
+  'percentage-calculator': ['profit-margin-calculator', 'average-calculator'],
+  'discount-calculator': ['vat-calculator'],
+  'currency-converter': ['salary-calculator'],
+  'tip-calculator': ['vat-calculator'],
+  'gpa-calculator': ['average-calculator'],
+};
+
 export const TOOLS: ToolDef[] = [
   ...IMAGE_TOOLS,
   ...EFFECT_TOOLS,
   ...NEW_IMAGE_TOOLS,
+  ...EXPANSION_IMAGE_TOOLS,
   ...PDF_TOOLS,
   ...NEW_PDF_TOOLS,
   ...NEW_PDF_TOOLS_2,
+  ...EXPANSION_PDF_TOOLS,
   ...TEXT_TOOLS,
   ...NEW_TEXT_TOOLS_2,
+  ...EXPANSION_TEXT_TOOLS,
   ...CALCULATOR_TOOLS,
+  ...EXPANSION_CALCULATOR_TOOLS,
   ...DEVELOPER_TOOLS,
   ...NEW_DEVELOPER_TOOLS,
   ...NEW_DEVELOPER_TOOLS_2,
+  ...EXPANSION_DEVELOPER_TOOLS,
 ];
+
+for (const tool of TOOLS) {
+  const extra = RELATED_PATCH_3[tool.slug];
+  if (extra) tool.relatedTools = [...new Set([...extra, ...tool.relatedTools])];
+}
 
 for (const tool of TOOLS) {
   const extra = RELATED_PATCH_2[tool.slug];
