@@ -327,7 +327,11 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <div className="mx-auto max-w-3xl">
           <h2 className="text-2xl font-bold text-foreground sm:text-3xl">{t('home.aboutTitle')}</h2>
           <div className="mt-5 space-y-4">
-            <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP1')}</p>
+            {/* Same source of truth as the hero headline — the paragraph used
+                to hard-code 95 and drifted 46 tools behind the registry. */}
+            <p className="text-base leading-8 text-muted-foreground">
+              {t('home.aboutP1', { count: TOOLS.length })}
+            </p>
             <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP2')}</p>
             <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP3')}</p>
             <p className="text-base leading-8 text-muted-foreground">{t('home.aboutP4')}</p>

@@ -1079,6 +1079,59 @@ async function main() {
     assertEq(missing.length, 0, `untranslated keys: ${missing.slice(0, 8).join(' | ')}`);
   });
 
+  await test('tool counts shown to users come from the registry, not from copy', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { join } = await import('node:path');
+    const { TOOLS, CATEGORIES } = await import('@/lib/tools/registry');
+    const root = process.cwd();
+
+    /*
+     * The homepage headline has always interpolated `{ count: TOOLS.length }`,
+     * but the "What is Piclizer" paragraph underneath hard-coded a number and
+     * drifted to 95 while the catalogue reached 141 — a claim about the
+     * product that was wrong in both languages. Any literal "<n> tools" left
+     * in user-visible copy will go stale the moment a tool is added, so the
+     * only accepted shape is the `{count}` placeholder.
+     */
+    // A 2–4 digit count followed within a few words by tools/utilities/أداة.
+    //
+    // The trailing assertion must NOT be `\b`: JavaScript word boundaries are
+    // ASCII-only even with the `u` flag, so `\b` after `أداة` never fires and
+    // the Arabic copy would slip through unchecked.
+    //
+    // Verified against both the shapes that were wrong ("95 everyday file
+    // utilities", "95 أداة يومية", "141 free tools") and the shapes that are
+    // fine ("Merge up to 20 images", "quality 95+", "42 pages", "100 KB",
+    // the "1 tool" singular branch, and a `{count}` placeholder).
+    const hardcoded =
+      /(?<![\d.])\d{2,4}\s*\+?(?:\s+[\w\u0600-\u06FF-]{1,22}){0,3}\s+(?:tools?|utilities|أدوات|أداة)(?![\w\u0600-\u06FF])/iu;
+    const offenders: string[] = [];
+    for (const locale of ['en', 'ar'] as const) {
+      const messages = JSON.parse(readFileSync(join(root, 'messages', `${locale}.json`), 'utf8'));
+      const walk = (node: unknown, path: string) => {
+        if (Array.isArray(node)) return node.forEach((v, i) => walk(v, `${path}[${i}]`));
+        if (node && typeof node === 'object') {
+          return Object.entries(node).forEach(([k, v]) => walk(v, path ? `${path}.${k}` : k));
+        }
+        if (typeof node === 'string' && hardcoded.test(node)) offenders.push(`${locale}: ${path}`);
+      };
+      walk(messages, '');
+    }
+    assertEq(offenders.length, 0, `copy hard-codes a tool count: ${offenders.slice(0, 6).join(' | ')}`);
+
+    /*
+     * The About page renders lib/content/legal.*.json through LegalContent,
+     * which is a plain JSON document rather than a next-intl catalogue, so it
+     * cannot interpolate. The numbers there are correct today; this pins them
+     * to the registry so they cannot quietly drift the way aboutP1 did.
+     */
+    for (const locale of ['en', 'ar'] as const) {
+      const legal = readFileSync(join(root, 'lib/content', `legal.${locale}.json`), 'utf8');
+      assert(legal.includes(`${TOOLS.length} `), `legal.${locale}.json no longer states ${TOOLS.length} tools`);
+    }
+    assertEq(CATEGORIES.length, 9, 'about copy says "nine categories" — update it if this changes');
+  });
+
   process.exitCode = summary();
 }
 
