@@ -4683,6 +4683,8 @@
     "title": "Something went wrong",
     "generic": "We couldn't complete this operation. Please try again with a different file.",
     "webpUnsupported": "Your browser can't encode WebP images. Please try an up-to-date browser such as Chrome, Edge or Firefox.",
+    "avifUnsupported": "Your browser can't encode AVIF images. Please try an up-to-date browser such as Chrome, Edge or Firefox.",
+    "icoDecodeFailed": "This ICO file could not be decoded. It may be corrupted or use an unsupported colour depth.",
     "processingFailed": "The image could not be processed. It may be corrupted or too large.",
     "zipFailed": "We couldn't create the ZIP archive. Please try again.",
     "pdfFailed": "We couldn't generate the PDF. Please try again with a different image.",
@@ -4737,6 +4739,7 @@
     "title": "We value your privacy",
     "text": "We use cookies to improve your experience. Analytics and advertising cookies stay off by default until you accept them.",
     "accept": "Accept",
+    "close": "Close",
     "reject": "Reject",
     "acceptAll": "Accept all",
     "rejectAll": "Reject non-essential",
@@ -5111,6 +5114,7 @@
     "compareSimilarity": "Similarity",
     "comparePagesA": "Pages (A)",
     "comparePagesB": "Pages (B)",
+    "compareChars": "Characters (A / B)",
     "compareCharsA": "Characters (A)",
     "compareCharsB": "Characters (B)",
     "compareIdentical": "The two PDFs contain identical text.",
@@ -6006,6 +6010,7 @@
   },
   "exactKb": {
     "hitNote": "Target hit — output is {size}.",
+    "fixedTarget": "This tool always compresses to {size}. Use the Image to Exact KB tool to set your own target.",
     "missNote": "The target could not be met. Smallest possible output is {size}."
   },
   "bgRemover": {
@@ -6018,6 +6023,7 @@
     "preset_50x50": "2 × 2 in (51 × 51 mm) — US visa",
     "preset_40x60": "40 × 60 mm — ID photo",
     "outputSize": "Output: {w} × {h} px",
+    "complianceNote": "Matches the pixel and DPI requirements of the selected passport specification. Always confirm the current rules of the issuing authority before submitting.",
     "make": "Make photo",
     "preset_us-2x2": "2 × 2 in — USA passport & visa",
     "preset_uk-35x45": "35 × 45 mm — UK passport",
@@ -6200,5 +6206,31 @@
     "v_uncalibrated": "Uncalibrated",
     "v_auto": "Auto",
     "v_bracket": "Auto bracket"
+  },
+  "convert": {
+    "avifBlocked": "This browser can't encode AVIF, so this conversion cannot run here. Try an up-to-date Chrome, Edge or Firefox."
+  },
+  "dpi": {
+    "onlyJpgPng": "DPI metadata can only be rewritten in JPEG and PNG files. Upload a JPG or PNG to use this tool.",
+    "target": "Target DPI",
+    "current": "Current DPI",
+    "unknown": "Unknown",
+    "pixels": "Pixels",
+    "printAt": "Print size at {dpi} DPI",
+    "honestNote": "Changing DPI rewrites the resolution metadata only — the pixel count and the image quality stay exactly the same.",
+    "apply": "Apply {dpi} DPI"
+  },
+  "favicon": {
+    "appName": "App name",
+    "apple": "Apple touch icon (180×180)",
+    "manifest": "Web app manifest (192 / 512)",
+    "zip": "Bundle everything into a ZIP",
+    "generate": "Generate favicon package"
+  },
+  "upscale": {
+    "scale": "Enlargement",
+    "outputDims": "Output will be {w} × {h} px",
+    "honestNote": "This is a resampling enlargement, not AI upscaling: the image gets bigger and looks sharper, but no detail is invented that was never captured.",
+    "enlarge": "Enlarge {scale}×"
   }
 }

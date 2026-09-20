@@ -1013,6 +1013,72 @@ async function main() {
     assertEq(unreachable.length, 0, `tools in no category: ${unreachable.join(', ')}`);
   });
 
+  await test('every translation key the UI asks for exists in English and Arabic', async () => {
+    const { readFileSync, readdirSync } = await import('node:fs');
+    const { join, relative } = await import('node:path');
+
+    /*
+     * next-intl resolves a missing message to its own key path and only logs
+     * an error, so an unlisted key never breaks a build or a test run — it
+     * just prints `dpi.apply` on the button. The tool components are loaded
+     * with next/dynamic, so this text is not in the server HTML either and a
+     * page crawl cannot see it. Hence this static scan.
+     *
+     * Every `const t = useTranslations('ns')` declaration is tracked with its
+     * own namespace and its own scope (a file may declare `t` more than once),
+     * so `t('target')` is checked as `ns.target` exactly like at runtime.
+     */
+    const root = process.cwd();
+    const files: string[] = [];
+    const walk = (dir: string) => {
+      for (const entry of readdirSync(join(root, dir), { withFileTypes: true })) {
+        if (['node_modules', '.git', '.next'].includes(entry.name)) continue;
+        const rel = join(dir, entry.name);
+        if (entry.isDirectory()) walk(rel);
+        else if (/\.tsx?$/.test(entry.name)) files.push(rel);
+      }
+    };
+    walk('app');
+    walk('components');
+
+    const declRe =
+      /(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*(?:await\s+)?(?:useTranslations|getTranslations)\(\s*(?:'([^']*)'|"([^"]*)")?\s*\)/g;
+    const used = new Map<string, string[]>();
+    for (const rel of files) {
+      const source = readFileSync(join(root, rel), 'utf8');
+      const decls: { at: number; name: string; ns: string }[] = [];
+      let m: RegExpExecArray | null;
+      while ((m = declRe.exec(source))) decls.push({ at: m.index, name: m[1], ns: m[2] ?? m[3] ?? '' });
+      for (const d of decls) {
+        const nextSame = decls.find((x) => x.at > d.at && x.name === d.name);
+        const body = source.slice(d.at, nextSame ? nextSame.at : source.length);
+        const callRe = new RegExp(`\\b${d.name.replace(/\$/g, '\\$')}\\(\\s*(?:'([^']+)'|"([^"]+)")`, 'g');
+        let c: RegExpExecArray | null;
+        while ((c = callRe.exec(body))) {
+          const key = c[1] ?? c[2];
+          if (!key) continue;
+          const full = d.ns ? `${d.ns}.${key}` : key;
+          if (!used.has(full)) used.set(full, []);
+          used.get(full)!.push(relative(root, join(root, rel)));
+        }
+      }
+    }
+    assert(used.size > 500, `expected to scan the real key set, found ${used.size}`);
+
+    const has = (catalogue: unknown, key: string): boolean =>
+      key.split('.').reduce<unknown>((acc, part) => (acc == null ? undefined : (acc as Record<string, unknown>)[part]), catalogue) !==
+      undefined;
+
+    const missing: string[] = [];
+    for (const locale of ['en', 'ar'] as const) {
+      const messages = JSON.parse(readFileSync(join(root, 'messages', `${locale}.json`), 'utf8'));
+      for (const [key, sources] of used) {
+        if (!has(messages, key)) missing.push(`${locale}: ${key} (${sources[0]})`);
+      }
+    }
+    assertEq(missing.length, 0, `untranslated keys: ${missing.slice(0, 8).join(' | ')}`);
+  });
+
   process.exitCode = summary();
 }
 
