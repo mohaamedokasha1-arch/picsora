@@ -71,4 +71,5 @@ async function makePdf(pages: number) {
   eq('magic', head, '%PDF');
 
   console.log(fails ? `${fails} FAILURES` : 'PDF ALL PASS');
+  process.exitCode = fails ? 1 : 0;
 })();
