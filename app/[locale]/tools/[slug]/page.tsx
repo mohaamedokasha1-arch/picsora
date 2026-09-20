@@ -176,8 +176,6 @@ export default async function ToolPage({ params }: { params: { locale: string; s
 
         {/* Long-form editorial article about this tool */}
         <ToolDeepDive slug={tool.slug} toolName={name} />
-
-        <AdPlacement slot="tool-below-faq" className="mt-8" />
       </div>
     </>
   );

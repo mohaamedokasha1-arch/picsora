@@ -115,6 +115,29 @@ export default async function LocaleLayout({
                   <main id="main-content" className="flex-1">
                     {children}
                   </main>
+
+                  {/* Google AdSense: Autorelaxed ad unit at the end of content / below articles */}
+                  <div className="container mx-auto my-8 w-full overflow-hidden">
+                    <script
+                      async
+                      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5770911159315916"
+                      crossOrigin="anonymous"
+                    />
+                    <ins
+                      className="adsbygoogle"
+                      style={{ display: 'block' }}
+                      data-ad-format="autorelaxed"
+                      data-ad-client="ca-pub-5770911159315916"
+                      data-ad-slot="6469230023"
+                      suppressHydrationWarning
+                    />
+                    <script
+                      dangerouslySetInnerHTML={{
+                        __html: '(adsbygoogle = window.adsbygoogle || []).push({});',
+                      }}
+                    />
+                  </div>
+
                   <Footer />
                 </div>
                 <ConsentModal />

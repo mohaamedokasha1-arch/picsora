@@ -9,6 +9,7 @@ export interface AdPlacementProps {
   slot: string;
   className?: string;
   minHeight?: string;
+  format?: 'auto' | 'autorelaxed';
 }
 
 // The ad unit supplied for this site. A numeric slot is required by AdSense;
@@ -17,15 +18,14 @@ export interface AdPlacementProps {
 const DEFAULT_AD_SLOT = '3492160006';
 
 /**
- * Reserved ad container. Renders real ad code only when
- * NEXT_PUBLIC_ADS_ENABLED=true AND the user consented to advertising cookies.
- * Otherwise it reserves space (prevents layout shift) but shows nothing.
+ * Reserved ad container. Renders real ad code when enabled AND the user
+ * consented to advertising cookies. Enabled by default unless explicitly disabled.
  */
-export function AdPlacement({ slot, className, minHeight = '90px' }: AdPlacementProps) {
+export function AdPlacement({ slot, className, minHeight = '90px', format }: AdPlacementProps) {
   const { consent } = useConsent();
   const adRef = React.useRef<HTMLModElement>(null);
   const requestedRef = React.useRef(false);
-  const adsEnabled = process.env.NEXT_PUBLIC_ADS_ENABLED === 'true';
+  const adsEnabled = process.env.NEXT_PUBLIC_ADS_ENABLED !== 'false';
   const rawClientId = process.env.NEXT_PUBLIC_ADS_CLIENT_ID || 'ca-pub-5770911159315916';
   // AdSense publisher ids look like `ca-pub-1234567890123456`. Validating the
   // configured value keeps a tampered environment variable out of the DOM.
@@ -33,6 +33,7 @@ export function AdPlacement({ slot, className, minHeight = '90px' }: AdPlacement
   // Slot ids are numeric; the value is only ever rendered as an attribute, but
   // constraining it removes any attribute-injection surface entirely.
   const safeSlot = /^\d{1,32}$/.test(slot) ? slot : DEFAULT_AD_SLOT;
+  const adFormat = format || (safeSlot === '6469230023' ? 'autorelaxed' : 'auto');
 
   React.useEffect(() => {
     if (!adsEnabled || !consent?.advertising || !clientId || !adRef.current) return;
@@ -80,7 +81,7 @@ export function AdPlacement({ slot, className, minHeight = '90px' }: AdPlacement
           style={{ display: 'block', width: '100%', minHeight }}
           data-ad-client={clientId}
           data-ad-slot={safeSlot}
-          data-ad-format="auto"
+          data-ad-format={adFormat}
           data-full-width-responsive="true"
         />
       ) : null}

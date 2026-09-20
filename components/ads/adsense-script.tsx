@@ -14,7 +14,7 @@ const PUBLISHER_ID_PATTERN = /^ca-pub-\d{10,20}$/;
  */
 export function AdsenseScript() {
   const { consent } = useConsent();
-  const adsEnabled = process.env.NEXT_PUBLIC_ADS_ENABLED === 'true';
+  const adsEnabled = process.env.NEXT_PUBLIC_ADS_ENABLED !== 'false';
   const configuredClientId = process.env.NEXT_PUBLIC_ADS_CLIENT_ID || siteConfig.adsensePublisherId;
   const clientId = PUBLISHER_ID_PATTERN.test(configuredClientId) ? configuredClientId : undefined;
 
