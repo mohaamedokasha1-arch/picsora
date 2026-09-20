@@ -670,7 +670,13 @@ export function calculateAverage(values: number[]): AverageResult | null {
   const median = sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
   const counts = new Map<number, number>();
   for (const v of nums) counts.set(v, (counts.get(v) ?? 0) + 1);
-  const best = Math.max(...counts.values());
+  // Counted in a loop, never `Math.max(...counts.values())`: spreading an
+  // iterator into a call passes every element as an argument, and V8 throws
+  // `RangeError: Maximum call stack size exceeded` somewhere past ~130k of
+  // them. Pasting a long number list runs this inside a useMemo with no
+  // error boundary above it, so the throw took the whole page down.
+  let best = 0;
+  for (const c of counts.values()) if (c > best) best = c;
   const mode = best > 1 ? [...counts.entries()].filter(([, c]) => c === best).map(([v]) => v) : [];
   return {
     count: nums.length,

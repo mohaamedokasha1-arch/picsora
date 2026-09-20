@@ -94,9 +94,15 @@ export function countFrequency(input: string, options: FrequencyOptions): Freque
 
   const unique = counts.size;
   let once = 0;
+  // Tracked while building the table instead of `Math.max(...all.map(...))`:
+  // spreading that many values into a call overflows V8's argument limit past
+  // ~130k distinct terms and throws a RangeError out of the useMemo that
+  // renders this tool.
+  let maxCount = 0;
   const all: { term: string; count: number }[] = [];
   for (const [term, count] of counts) {
     if (count === 1) once += 1;
+    if (count > maxCount) maxCount = count;
     all.push({ term, count });
   }
 
@@ -120,7 +126,7 @@ export function countFrequency(input: string, options: FrequencyOptions): Freque
     total,
     unique,
     once,
-    maxCount: all.length ? Math.max(...all.map((entry) => entry.count)) : 0,
+    maxCount,
     topShare: total > 0 ? (shown / total) * 100 : 0,
     language,
   };

@@ -23,7 +23,23 @@ interface TesseractWorker {
 
 const workers = new Map<string, Promise<TesseractWorker>>();
 
-function getWorker(lang: OcrLang, onProgress?: (ratio: number) => void): Promise<TesseractWorker> {
+/**
+ * Tesseract.js binds `logger` once, inside the `createWorker` closure, and
+ * `recognize()` has no per-call logger — so a worker cached per language would
+ * keep calling the *first* caller's progress callback forever. The second OCR
+ * run on a page then wrote the previous run's `done`/`total` into its own
+ * progress bar (or into an unmounted component's state), and its bar never
+ * moved. The engine and its language data must stay cached — re-downloading
+ * them per image would make the tool unusably slow — so the callback is held
+ * here and read at emit time instead.
+ */
+let activeProgress: ((ratio: number) => void) | undefined;
+
+function reportProgress(ratio: number): void {
+  activeProgress?.(Math.max(0, Math.min(1, ratio)));
+}
+
+function getWorker(lang: OcrLang): Promise<TesseractWorker> {
   const key = lang;
   const cached = workers.get(key);
   if (cached) return cached;
@@ -39,10 +55,10 @@ function getWorker(lang: OcrLang, onProgress?: (ratio: number) => void): Promise
       const worker = (await mod.createWorker(lang, undefined, {
         logger: (m: { status?: string; progress?: number }) => {
           if (m?.status === 'recognizing text' && typeof m.progress === 'number') {
-            onProgress?.(Math.max(0, Math.min(1, m.progress)));
+            reportProgress(m.progress);
           }
           if (m?.status === 'loading language traineddata' && typeof m.progress === 'number') {
-            onProgress?.(Math.max(0, Math.min(1, m.progress)) * 0.1);
+            reportProgress(m.progress * 0.1);
           }
         },
       })) as unknown as TesseractWorker;
@@ -71,13 +87,20 @@ export async function recognizeImage(
 ): Promise<string> {
   if (image.size > MAX_OCR_BYTES) throw new Error('ocr-too-large');
   if (image.size === 0) throw new Error('ocr-failed');
-  const worker = await getWorker(lang, onProgress);
+  activeProgress = onProgress;
   try {
-    const result = await worker.recognize(image);
-    return (result?.data?.text ?? '').trim();
-  } catch (error) {
-    if (error instanceof Error && error.message.startsWith('ocr-')) throw error;
-    throw new Error('ocr-failed');
+    const worker = await getWorker(lang);
+    try {
+      const result = await worker.recognize(image);
+      return (result?.data?.text ?? '').trim();
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith('ocr-')) throw error;
+      throw new Error('ocr-failed');
+    }
+  } finally {
+    // Only clear our own callback, so a caller that queued up behind this one
+    // is not left without progress reporting.
+    if (activeProgress === onProgress) activeProgress = undefined;
   }
 }
 

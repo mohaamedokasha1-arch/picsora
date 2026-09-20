@@ -104,12 +104,15 @@
         "ps": [
           "We use advertising to keep the Service free. Where advertising is enabled and you have consented to advertising cookies:",
           "Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this or other websites. Google's use of advertising cookies (such as the DoubleClick DART cookie) enables it and its partners to serve ads to you based on your visit to our site and/or other sites on the Internet. You may opt out of personalised advertising by visiting Google Ads Settings, and you may opt out of third-party vendor cookies for personalised advertising at aboutads.info.",
-          "We do not control third-party ad networks and are not responsible for their practices; each operates under its own privacy policy. Advertising is always clearly separated from tool output and never interrupts an in-progress operation."
+          "We do not control third-party ad networks and are not responsible for their practices; each operates under its own privacy policy. Advertising is always clearly separated from tool output and never interrupts an in-progress operation.",
+          "Advertising is not the only third-party service the Service touches. Two tools download public reference data from third-party servers. Neither ever transmits your files, and neither runs unless you open that specific tool:"
         ],
         "bullets": [
           "Google AdSense may be served, which uses cookies and device identifiers to select and measure ads.",
           "Non-personalised ads may be shown to users who consent to advertising but not to personalisation, where supported.",
-          "No advertising script runs at all if you decline advertising cookies."
+          "No advertising script runs at all if you decline advertising cookies.",
+          "OCR tools (Image OCR and PDF OCR) download the open-source Tesseract.js recognition engine and its language data from the jsDelivr public CDN. The download happens once and your browser caches it for later runs. Your images and documents are processed entirely on your device and are never sent to the CDN or to us.",
+          "The Currency Converter downloads a public exchange-rate table from open.er-api.com and caches it in your browser for one hour. The request is a fixed URL with no parameters derived from you — it carries no personal data and no user input. Amounts you type are converted locally."
         ]
       },
       {
