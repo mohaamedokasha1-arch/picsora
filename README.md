@@ -1,16 +1,16 @@
 # Piclizer — Free, private, browser-based tools
 
-Piclizer is a production-ready SaaS-style platform of **95 tools** — image, PDF, text, calculator and
+Piclizer is a production-ready platform of **141 tools** — image, PDF, text, calculator and
 developer utilities — that run **100% in the browser**. No uploads, no accounts, no servers touching
 your files. Every tool works with real files using the Canvas, Blob, File and Web Worker APIs.
 
 | Category | Tools | Examples |
 | --- | --- | --- |
-| Image compress / resize / convert / edit / colour | 31 | Image Compressor, HEIC to JPG, Image Blur, Rounded Corners |
-| PDF tools | 21 | PDF Merger, PDF Watermark, PDF Page Numberer, PDF Images Extractor |
-| Text tools | 13 | Word Counter, Line Sorter, Text Extractor |
-| Calculators | 10 | Percentage, BMI, Unit Converter |
-| Developer tools | 20 | JSON Formatter, JSON ↔ CSV, URL Parser, Cron Generator |
+| Image compress / resize / convert / edit / colour | 50 | Image Compressor, HEIC to JPG, Image Blur, Rounded Corners |
+| PDF tools | 31 | PDF Merger, PDF Watermark, PDF Page Numberer, PDF Images Extractor |
+| Text tools | 15 | Word Counter, Line Sorter, Text Extractor |
+| Calculators | 16 | Percentage, BMI, Unit Converter |
+| Developer tools | 29 | JSON Formatter, JSON ↔ CSV, URL Parser, Cron Generator |
 
 ## Tech stack
 
@@ -90,7 +90,7 @@ components:
 When adding a new tool, add matching entries to both `articles/*.en.json` and `articles/*.ar.json`
 so every tool page keeps a full-length, original article.
 
-## Adding a new tool (Tool #21)
+## Adding a new tool
 
 1. Add an entry to `TOOLS` in `lib/tools/registry.ts` (slug, i18n keys, category, icon, formats, keywords, related tools).
 2. Add its translations under `tools.<slug>` in `messages/en.json` **and** `messages/ar.json` (name, short, description, intro, howTo, faqs).

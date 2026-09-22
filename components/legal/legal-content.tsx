@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '@/lib/i18n/navigation';
 import { getLegalDoc, LEGAL_KINDS, type LegalKind } from '@/lib/content/legal';
 import { siteConfig } from '@/lib/site';
+import { TOOLS } from '@/lib/tools/registry';
 
 /**
  * Renders a long-form legal document (About, Privacy, Terms, Cookies,
@@ -37,7 +38,9 @@ export async function LegalContent({ kind, locale }: { kind: LegalKind; locale: 
             <div className={section.h ? 'mt-3 space-y-3' : 'space-y-3'}>
               {section.ps.map((p, j) => (
                 <p key={j} className="text-sm leading-7 text-muted-foreground sm:text-base">
-                  {p}
+                  {/* {count} keeps the About page tool total in sync with the
+                      registry instead of drifting behind it (homepage pattern). */}
+                  {p.includes('{count}') ? p.replaceAll('{count}', String(TOOLS.length)) : p}
                 </p>
               ))}
             </div>
