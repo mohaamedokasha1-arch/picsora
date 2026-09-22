@@ -4,6 +4,8 @@ import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo/metadata';
 import { siteConfig } from '@/lib/site';
 import { getTool, SLUGS } from '@/lib/tools/registry';
+import { getGuidesForTool } from '@/lib/guides';
+import { Link } from '@/lib/i18n/navigation';
 import { Breadcrumb } from '@/components/layout/breadcrumb';
 import { ToolClient } from '@/components/tools/tool-client';
 import { HowToUse } from '@/components/tools/how-to-use';
@@ -132,6 +134,29 @@ export default async function ToolPage({ params }: { params: { locale: string; s
             <RelatedTools slug={tool.slug} />
           </div>
         </section>
+
+        {/* Related guides — only when a guide actually recommends this tool.
+            Guides already link to tools; this closes the loop so the internal
+            linking runs both ways (same card style as the guide pages). */}
+        {(() => {
+          const toolGuides = getGuidesForTool(tool.slug, params.locale);
+          return toolGuides.length > 0 ? (
+            <nav aria-label={t('guides.relatedGuides')} className="mt-12">
+              <h2 className="text-xl font-bold text-foreground">{t('guides.relatedGuides')}</h2>
+              <div className="mt-4 flex flex-col gap-2">
+                {toolGuides.map((g) => (
+                  <Link
+                    key={g.slug}
+                    href={`/guides/${g.slug}`}
+                    className="rounded-xl border border-border bg-card px-5 py-3.5 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                  >
+                    {g.title}
+                  </Link>
+                ))}
+              </div>
+            </nav>
+          ) : null;
+        })()}
 
         {/* How to use */}
         <section className="mt-12 grid gap-8 lg:grid-cols-2">

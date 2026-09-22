@@ -185,10 +185,17 @@ export default function Base64Tool() {
               e.target.value = '';
             }}
           />
-          <Button variant="outline" onClick={() => fileRef.current?.click()}>
-            <Upload className="h-4 w-4" />
-            {t('dev.chooseFile')}
-          </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button variant="outline" onClick={() => fileRef.current?.click()}>
+              <Upload className="h-4 w-4" />
+              {t('dev.chooseFile')}
+            </Button>
+            {/* The 25 MB cap is enforced in onFile and documented in the FAQ;
+                showing it here means nobody discovers it after picking a file. */}
+            <span className="rounded-full bg-secondary px-2.5 py-1 text-xs text-muted-foreground">
+              {t('toolShell.maxSize', { n: MAX_MB })}
+            </span>
+          </div>
           {fileName && <p className="mt-2 text-sm text-muted-foreground">{fileName}</p>}
 
           {previewUrl && mode === 'image' && (

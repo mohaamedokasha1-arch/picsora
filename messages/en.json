@@ -129,7 +129,7 @@
     "privacyText1": "Most online tools upload your file to their server, process it, and keep a copy. Piclizer is different: every tool uses the Canvas, Blob and File APIs built into your browser, so the image stays on your machine the whole time.",
     "privacyText2": "Close the tab and every trace is gone. It's the same technology photo editors use — without any upload step.",
     "privacyPoint1": "No file uploads, no storage, no copies",
-    "privacyPoint2": "Works even when you're offline",
+    "privacyPoint2": "Most tools work even when you're offline",
     "privacyPoint3": "Free and open to everyone",
     "faqTitle": "Frequently asked questions",
     "faqSubtitle": "Quick answers about Piclizer.",
@@ -1659,7 +1659,7 @@
         },
         {
           "q": "Is my date of birth stored?",
-          "a": "No. Everything is calculated locally and nothing is saved or transmitted."
+          "a": "No. Everything is calculated locally in your browser — your date of birth is never saved or uploaded to our servers."
         }
       ]
     },
@@ -1965,7 +1965,7 @@
         },
         {
           "q": "Why is this the only tool that uses the internet?",
-          "a": "Exchange rates change constantly and cannot be bundled into the page. Everything else on the site runs fully offline."
+          "a": "Exchange rates change constantly and cannot be bundled into the page. All other tools process your files and inputs locally in your browser once the page has loaded (the OCR tools download their recognition engine once from a public CDN)."
         }
       ]
     },
@@ -2689,7 +2689,7 @@
       "name": "JWT Decoder",
       "short": "Decode and verify JSON Web Tokens.",
       "description": "Decode JWT tokens online for free. Inspect header and payload, check expiry, and verify HS256 signatures — offline in your browser, tokens never leave your device.",
-      "intro": "Paste any JSON Web Token to read its header and payload instantly, see expiry in plain language, and verify HMAC signatures with your secret — all offline, nothing transmitted.",
+      "intro": "Paste any JSON Web Token to read its header and payload instantly, see expiry in plain language, and verify HMAC signatures with your secret — all in your browser, your tokens never leave your device.",
       "howTo": [
         "Paste the JWT into the token box.",
         "Read the decoded header and payload.",
@@ -6012,7 +6012,7 @@
     "jwtInvalidSig": "Signature does NOT match this secret.",
     "jwtPrivacy": "Signing and verification use WebCrypto in your browser. Your secret key never leaves this page.",
     "renamerDrop": "Drop files here, or click to browse",
-    "renamerAnyFile": "Any file type · up to 200 files · nothing is uploaded",
+    "renamerAnyFile": "Any file type · up to 200 files · max 512 MB per file · nothing is uploaded",
     "renamerFiles": "Files",
     "renamerChanged": "Renamed",
     "renamerSize": "Total size",
@@ -6110,7 +6110,7 @@
   "jwt": {
     "tokenLabel": "JWT token",
     "introHint": "Paste a token above — its header and payload will be decoded instantly, offline.",
-    "privacyNote": "Tokens are decoded and verified entirely on your device. Nothing is transmitted anywhere.",
+    "privacyNote": "Tokens are decoded and verified entirely on your device and are never uploaded to Piclizer's servers.",
     "header": "Header",
     "payload": "Payload",
     "algorithm": "Algorithm",

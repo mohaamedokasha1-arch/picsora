@@ -964,3 +964,14 @@ export function getGuide(slug: string, locale: string): GuideContent | undefined
 export function getAllGuides(locale: string): GuideContent[] {
   return GUIDE_SLUGS.map((slug) => getGuide(slug, locale)!).filter(Boolean);
 }
+
+/**
+ * Guides that recommend a given tool (inverse of `relatedTools`).
+ * Used for the small "related guides" block on tool pages so the
+ * guide ↔ tool internal linking runs both ways instead of guide → tool only.
+ */
+export function getGuidesForTool(toolSlug: string, locale: string, limit = 3): GuideContent[] {
+  return getAllGuides(locale)
+    .filter((guide) => guide.relatedTools.includes(toolSlug))
+    .slice(0, limit);
+}

@@ -1121,14 +1121,21 @@ async function main() {
 
     /*
      * The About page renders lib/content/legal.*.json through LegalContent,
-     * which is a plain JSON document rather than a next-intl catalogue, so it
-     * cannot interpolate. The numbers there are correct today; this pins them
-     * to the registry so they cannot quietly drift the way aboutP1 did.
+     * which resolves a `{count}` placeholder from TOOLS.length at render time
+     * (same pattern as the homepage headline). The JSON must carry the
+     * placeholder — never a literal number — and the component must resolve
+     * it, so the count cannot quietly drift the way aboutP1 did.
      */
     for (const locale of ['en', 'ar'] as const) {
       const legal = readFileSync(join(root, 'lib/content', `legal.${locale}.json`), 'utf8');
-      assert(legal.includes(`${TOOLS.length} `), `legal.${locale}.json no longer states ${TOOLS.length} tools`);
+      assert(legal.includes('{count}'), `legal.${locale}.json lost its {count} placeholder`);
+      assert(!hardcoded.test(legal), `legal.${locale}.json hard-codes a tool count`);
     }
+    const legalContent = readFileSync(join(root, 'components/legal/legal-content.tsx'), 'utf8');
+    assert(
+      legalContent.includes('{count}') && legalContent.includes('TOOLS.length'),
+      'LegalContent must resolve the {count} placeholder from the registry',
+    );
     assertEq(CATEGORIES.length, 9, 'about copy says "nine categories" — update it if this changes');
   });
 
