@@ -146,6 +146,7 @@ export async function makeFavicon(
         format: 'zip',
         name: 'favicon-package.zip',
         label: 'ZIP bundle + HTML snippet',
+        expectedFiles: [...results.map((item) => item.name), 'favicon-snippet.html'],
       });
     }
 

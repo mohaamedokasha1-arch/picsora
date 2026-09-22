@@ -5,6 +5,7 @@
  */
 
 import { loadDocument, readBytes } from './index';
+import { assertValidOutput } from '@/lib/output-validation';
 
 export interface FlattenReport {
   blob: Blob;
@@ -32,8 +33,10 @@ export async function flattenPdf(file: File, password?: string): Promise<Flatten
   const out = await doc.save();
   const copy = new Uint8Array(out.length);
   copy.set(out);
+  const blob = new Blob([copy.buffer as ArrayBuffer], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: pages });
   return {
-    blob: new Blob([copy.buffer as ArrayBuffer], { type: 'application/pdf' }),
+    blob,
     fields,
     pages,
   };

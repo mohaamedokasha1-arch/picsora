@@ -7,6 +7,7 @@
  */
 
 import { loadDocument, readBytes } from './index';
+import { assertValidOutput } from '@/lib/output-validation';
 
 export type HeaderFooterAlign = 'left' | 'center' | 'right';
 
@@ -95,5 +96,7 @@ export async function addHeaderFooter(
   const out = await doc.save();
   const copy = new Uint8Array(out.length);
   copy.set(out);
-  return { blob: new Blob([copy.buffer as ArrayBuffer], { type: 'application/pdf' }), pages: total };
+  const blob = new Blob([copy.buffer as ArrayBuffer], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: total });
+  return { blob, pages: total };
 }

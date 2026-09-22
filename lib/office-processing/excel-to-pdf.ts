@@ -15,6 +15,8 @@
  * - Large sheets paginated
  */
 
+import { assertValidOutput } from '@/lib/output-validation';
+
 export interface ExcelToPdfResult {
   blob: Blob;
   filename: string;
@@ -57,6 +59,7 @@ export async function convertExcelToPdf(file: File): Promise<ExcelToPdfResult> {
   const cellPadding = 2;
 
   let totalRows = 0;
+  let meaningfulCells = 0;
 
   for (const sheetName of workbook.SheetNames) {
     const sheet = workbook.Sheets[sheetName];
@@ -67,6 +70,10 @@ export async function convertExcelToPdf(file: File): Promise<ExcelToPdfResult> {
 
     if (!rows.length) continue;
     totalRows += rows.length;
+    meaningfulCells += rows.reduce(
+      (count, row) => count + row.filter((value) => value !== null && value !== undefined && String(value).trim().length > 0).length,
+      0,
+    );
 
     // Calculate column count (max row length)
     const colCount = Math.max(...rows.map(r => r.length), 1);
@@ -174,18 +181,13 @@ export async function convertExcelToPdf(file: File): Promise<ExcelToPdfResult> {
     y -= 20;
   }
 
-  if (pdfDoc.getPageCount() === 0) {
-    const p = pdfDoc.addPage([pageWidth, pageHeight]);
-    p.drawText('No data found in Excel file', {
-      x: margin,
-      y: pageHeight - margin,
-      size: 12,
-      font,
-    });
+  if (totalRows === 0 || meaningfulCells === 0) {
+    throw new Error('outputNoContent');
   }
 
   const pdfBytes = await pdfDoc.save();
   const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: pdfDoc.getPageCount() });
   const baseName = file.name.replace(/\.(xlsx?|xls)$/i, '') || 'spreadsheet';
 
   return {

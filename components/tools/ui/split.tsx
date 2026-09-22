@@ -13,10 +13,11 @@ import { ErrorDisplay } from '@/components/tools/error-display';
 import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { splitImage } from '@/lib/tools/processors/split';
 import { triggerDownload } from '@/lib/image/format';
+import { assertValidOutput } from '@/lib/output-validation';
 
 export default function SplitTool({ ctx }: { ctx: WorkspaceContext }) {
   const t = useTranslations();
-  const { processing, results, error, run } = useToolRunner();
+  const { processing, results, error, run, setError } = useToolRunner();
   const decoded = ctx.decoded[0];
   const [cols, setCols] = React.useState(2);
   const [rows, setRows] = React.useState(2);
@@ -33,9 +34,10 @@ export default function SplitTool({ ctx }: { ctx: WorkspaceContext }) {
       const zip = new JSZip();
       results.forEach((r) => zip.file(r.name, r.blob));
       const blob = await zip.generateAsync({ type: 'blob' });
+      await assertValidOutput(blob, { format: 'zip', minEntries: results.length, expectedFiles: results.map((item) => item.name) });
       triggerDownload(blob, `${decoded.file.name.replace(/\.[^.]+$/, '')}-tiles.zip`);
-    } catch {
-      /* shown as generic error below */
+    } catch (error) {
+      setError({ key: error instanceof Error ? error.message : 'zip-failed' });
     } finally {
       setZipping(false);
     }

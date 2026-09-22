@@ -9,6 +9,7 @@ import { cn, formatBytes } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { PdfError, inspect, readBytes, type PdfFileInfo } from '@/lib/pdf-processing';
 import { openWithPdfJs, type LoadedPdf } from '@/lib/pdf-processing/render';
+import { assertValidOutput } from '@/lib/output-validation';
 
 export function useErrorText() {
   const t = useTranslations();
@@ -319,6 +320,11 @@ export async function downloadZip(files: { name: string; blob: Blob }[], zipName
   const zip = new JSZip();
   for (const file of files) zip.file(file.name, file.blob);
   const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+  await assertValidOutput(blob, {
+    format: 'zip',
+    minEntries: files.length,
+    expectedFiles: files.map((file) => file.name),
+  });
   const { triggerDownload } = await import('@/lib/image/format');
-  triggerDownload(blob, zipName);
+  await triggerDownload(blob, zipName);
 }

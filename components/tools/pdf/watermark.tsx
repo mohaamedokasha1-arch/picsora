@@ -10,6 +10,7 @@ import { Slider } from '@/components/ui/slider';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
 import { loadPdfLib, readBytes } from '@/lib/pdf-processing';
+import { assertValidOutput } from '@/lib/output-validation';
 import { WATERMARK_LAYOUTS, watermarkPlacements, type WatermarkLayout } from '@/lib/pdf-processing/watermark';
 import { PdfDropzone, PdfInfoCard, useSinglePdf } from './shared';
 import { Field, InlineError, Notice, PrivacyNotice, ResetButton, ToolPanel } from '../kit';
@@ -71,7 +72,9 @@ export default function PdfWatermarkTool() {
 
       if (doc.getPageCount() === 0) throw new Error('pdfNoPages');
       const out = await doc.save();
-      setResult(new Blob([out.slice().buffer], { type: 'application/pdf' }));
+      const blob = new Blob([out.slice().buffer], { type: 'application/pdf' });
+      await assertValidOutput(blob, { format: 'pdf', expectedPageCount: doc.getPageCount() });
+      setResult(blob);
     } catch (e) {
       setError(errorText(e));
     } finally {

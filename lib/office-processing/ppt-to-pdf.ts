@@ -16,6 +16,8 @@
  * - Styling minimal
  */
 
+import { assertValidOutput } from '@/lib/output-validation';
+
 export interface PptToPdfResult {
   blob: Blob;
   filename: string;
@@ -129,8 +131,8 @@ export async function convertPptToPdf(file: File): Promise<PptToPdfResult> {
     slides = await extractPptLegacy(file);
   }
 
-  if (!slides.length) {
-    throw new Error('No slides could be extracted from presentation.');
+  if (!slides.length || !slides.some((slide) => slide.texts.some((text) => text.trim().length >= 3))) {
+    throw new Error('outputNoContent');
   }
 
   const { PDFDocument, StandardFonts, rgb } = await import('@cantoo/pdf-lib');
@@ -210,6 +212,7 @@ export async function convertPptToPdf(file: File): Promise<PptToPdfResult> {
 
   const pdfBytes = await pdfDoc.save();
   const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: pdfDoc.getPageCount() });
   const baseName = file.name.replace(/\.pptx?$/i, '') || 'presentation';
 
   return {

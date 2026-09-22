@@ -11,6 +11,7 @@ import { inspect, readBytes } from '@/lib/pdf-processing';
 import { openWithPdfJs } from '@/lib/pdf-processing/render';
 import { pagesToText } from '@/lib/pdf-processing/text';
 import { OCR_LANGS, recognizeImage, shrinkForOcr, type OcrLang } from '@/lib/ocr/tesseract';
+import { assertValidOutput } from '@/lib/output-validation';
 import { PdfDropzone, downloadZip, useErrorText } from './shared';
 import {
   InlineError,
@@ -101,11 +102,15 @@ export default function PdfOcrTool() {
             await new Promise((r) => window.setTimeout(r, 0));
           }
           const combined = pagesToText(pageTexts, file.name);
+          const recognisedChars = pageTexts.reduce((sum, text) => sum + text.trim().length, 0);
+          if (recognisedChars < 3) throw new Error('outputNoContent');
+          const textBlob = new Blob([combined], { type: 'text/plain;charset=utf-8' });
+          await assertValidOutput(textBlob, { format: 'txt', minTextLength: recognisedChars });
           const base = sanitizeFilename(file.name.replace(/\.pdf$/i, ''), 'document');
           out.push({
             name: file.name,
             txtName: `${base}-ocr.txt`,
-            blob: new Blob([combined], { type: 'text/plain;charset=utf-8' }),
+            blob: textBlob,
             pages: total,
             chars: combined.length,
           });

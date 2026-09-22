@@ -24,7 +24,6 @@ async function loadPrism(): Promise<Prism> {
       const prism = (await import('prismjs')).default ?? (await import('prismjs'));
       // Grammars: markup + css + clike + javascript ship in Prism core.
       // prismjs grammar side-effect modules ship without type declarations.
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error - no bundled types for Prism grammar side-effect imports
       await import('prismjs/components/prism-json');
       return prism as Prism;

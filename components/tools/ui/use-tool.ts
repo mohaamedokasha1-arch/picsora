@@ -4,6 +4,7 @@ import * as React from 'react';
 import type { ProcessResult } from '@/lib/types';
 import type { ProcessorOutput } from '@/lib/tools/processors';
 import type { UploadError } from '@/components/tools/file-uploader';
+import { assertValidOutput } from '@/lib/output-validation';
 
 export function useToolRunner() {
   const [processing, setProcessing] = React.useState(false);
@@ -24,7 +25,24 @@ export function useToolRunner() {
     setError(null);
     try {
       const out = await fn();
-      if (id === runId.current) setResults(Array.isArray(out) ? out : [out]);
+      const list = Array.isArray(out) ? out : [out];
+      // A processor is not considered successful merely because it returned a
+      // Blob. Validate every result before exposing the success state or the
+      // download card. This covers all image processors and image-to-PDF.
+      await Promise.all(
+        list.map((item) =>
+          assertValidOutput(item.blob, {
+            format: item.format,
+            // A text/document result must not be silently blank. The source
+            // processors already carry the decoded image/PDF structure; this
+            // is the final byte-level integrity gate.
+            minTextLength: ['txt', 'json', 'csv', 'md', 'html', 'xml', 'css', 'js'].includes(item.format) ? 1 : undefined,
+            minEntries: item.format === 'zip' ? 1 : undefined,
+            expectedFiles: item.expectedFiles,
+          }),
+        ),
+      );
+      if (id === runId.current) setResults(list);
     } catch (e) {
       if (id === runId.current) {
         const msg = e instanceof Error ? e.message : 'generic';

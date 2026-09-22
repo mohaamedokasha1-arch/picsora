@@ -8,6 +8,7 @@ import { sanitizeFilename } from '@/lib/utils';
 import { readBytes } from '@/lib/pdf-processing';
 import { extractPdfText } from '@/lib/pdf-processing/text';
 import { pagesToMarkdown } from '@/lib/pdf-processing/export';
+import { assertMeaningfulExtractableText, assertValidOutput } from '@/lib/output-validation';
 import { PdfDropzone, PdfInfoCard, RenderingIndicator, useSinglePdf } from './shared';
 import {
   CodeArea,
@@ -43,11 +44,14 @@ export default function PdfToMarkdownTool() {
     setMarkdown(null);
     try {
       const bytes = await readBytes(file);
-      const { pages: texts } = await extractPdfText(bytes, undefined, (done, total) =>
+      const { pages: texts, totalChars } = await extractPdfText(bytes, undefined, (done, total) =>
         setProgress({ done, total }),
       );
+      assertMeaningfulExtractableText(texts);
+      const output = pagesToMarkdown(texts, file.name);
+      await assertValidOutput(new Blob([output], { type: 'text/markdown;charset=utf-8' }), { format: 'md', minTextLength: Math.max(1, totalChars) });
       setPages(texts.length);
-      setMarkdown(pagesToMarkdown(texts, file.name));
+      setMarkdown(output);
     } catch (e) {
       setError(errorText(e));
     } finally {

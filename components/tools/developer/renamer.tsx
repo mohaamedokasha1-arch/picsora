@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { DownloadButton } from '@/components/tools/download-button';
 import { triggerDownload } from '@/lib/image/format';
+import { assertValidOutput } from '@/lib/output-validation';
 import { cn, formatBytes } from '@/lib/utils';
 import {
   DEFAULT_RENAME_OPTIONS,
@@ -89,8 +90,9 @@ export default function BulkRenamerTool() {
       const renamed = applyPlan(files, plan);
       renamed.forEach((f) => zip.file(f.name, f));
       const blob = await zip.generateAsync({ type: 'blob' });
+      await assertValidOutput(blob, { format: 'zip', minEntries: renamed.length, expectedFiles: renamed.map((file) => file.name) });
       setZipBlob(blob);
-      triggerDownload(blob, 'renamed-files.zip');
+      await triggerDownload(blob, 'renamed-files.zip');
     } catch {
       setError(t('errors.zipFailed'));
     } finally {

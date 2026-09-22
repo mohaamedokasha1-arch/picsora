@@ -11,7 +11,7 @@
     "copy-pdf-worker": "node scripts/copy-pdf-worker.mjs",
     "predev": "npm run copy-pdf-worker",
     "prebuild": "npm run copy-pdf-worker",
-    "test:tools": "tsx scripts/tool-tests/run-tests.ts && tsx scripts/tool-tests/run-new-tools.ts && tsx scripts/tool-tests/run-search.ts && tsx scripts/tests/logic.test.ts && tsx scripts/tests/pdf.test.ts && tsx scripts/tests/ocr.test.ts"
+    "test:tools": "tsx scripts/tool-tests/run-tests.ts && tsx scripts/tool-tests/run-new-tools.ts && tsx scripts/tool-tests/run-search.ts && tsx scripts/tests/logic.test.ts && tsx scripts/tests/pdf.test.ts && tsx scripts/tests/ocr.test.ts && tsx scripts/tests/output-validation.test.ts"
   },
   "dependencies": {
     "@cantoo/pdf-lib": "^2.9.1",
@@ -43,7 +43,11 @@
     "@types/node": "^20.17.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.35",
     "postcss": "^8.4.49",
     "sharp": "^0.35.4",
     "tailwindcss": "^3.4.17",

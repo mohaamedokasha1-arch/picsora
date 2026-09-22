@@ -12,6 +12,8 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { triggerDownload } from '@/lib/image/format';
+import { validateOutput, type OutputValidationCode } from '@/lib/output-validation';
+import { ErrorDisplay } from '@/components/tools/error-display';
 
 export { ControlsCard, Field } from '@/components/tools/ui/common';
 
@@ -114,17 +116,32 @@ export function TextDownloadButton({
   size?: 'default' | 'sm';
 }) {
   const t = useTranslations('common');
+  const [validationError, setValidationError] = React.useState<OutputValidationCode | null>(null);
+  const onDownload = async () => {
+    const blob = new Blob([value], { type: mime });
+    const format = filename.toLowerCase().match(/\.([a-z0-9]+)$/)?.[1] ?? undefined;
+    const checked = await validateOutput(blob, { format });
+    if (!checked.valid) {
+      setValidationError(checked.code ?? 'outputInvalid');
+      return;
+    }
+    setValidationError(null);
+    await triggerDownload(blob, filename);
+  };
   return (
-    <Button
-      type="button"
-      variant="outline"
-      size={size}
-      disabled={!value}
-      onClick={() => triggerDownload(new Blob([value], { type: mime }), filename)}
-    >
-      <Download className="h-3.5 w-3.5" />
-      {label ?? t('download')}
-    </Button>
+    <>
+      {validationError && <ErrorDisplay error={{ key: validationError }} />}
+      <Button
+        type="button"
+        variant="outline"
+        size={size}
+        disabled={!value}
+        onClick={() => void onDownload()}
+      >
+        <Download className="h-3.5 w-3.5" />
+        {label ?? t('download')}
+      </Button>
+    </>
   );
 }
 

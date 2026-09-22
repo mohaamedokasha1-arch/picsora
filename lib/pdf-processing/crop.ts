@@ -7,6 +7,7 @@
  */
 
 import { loadDocument, readBytes } from './index';
+import { assertValidOutput } from '@/lib/output-validation';
 
 export interface CropMargins {
   top: number; // 0..45 percent
@@ -69,5 +70,7 @@ export async function cropPdf(
   const out = await doc.save();
   const copy = new Uint8Array(out.length);
   copy.set(out);
-  return { blob: new Blob([copy.buffer as ArrayBuffer], { type: 'application/pdf' }), pages: pages.length };
+  const blob = new Blob([copy.buffer as ArrayBuffer], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: pages.length });
+  return { blob, pages: pages.length };
 }

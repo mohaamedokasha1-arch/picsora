@@ -24,6 +24,7 @@
  */
 
 import { readBytes, loadDocument } from './index';
+import { assertValidOutput } from '@/lib/output-validation';
 
 export interface RedactionRect {
   pageIndex: number;
@@ -128,7 +129,9 @@ export async function redactPdfPermanent(
 
   onProgress?.(pageCount, pageCount);
   const pdfBytes = await outDoc.save();
-  return new Blob([pdfBytes.slice().buffer], { type: 'application/pdf' });
+  const blob = new Blob([pdfBytes.slice().buffer], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: pageCount });
+  return blob;
 }
 
 /**
@@ -169,5 +172,7 @@ export async function redactPdfOverlay(
   }
 
   const pdfBytes = await doc.save();
-  return new Blob([pdfBytes.slice().buffer], { type: 'application/pdf' });
+  const blob = new Blob([pdfBytes.slice().buffer], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: doc.getPageCount() });
+  return blob;
 }

@@ -10,6 +10,7 @@
  */
 
 import { loadDocument, loadPdfLib, PdfError } from './index';
+import { assertValidOutput, validateOutput } from '@/lib/output-validation';
 
 export interface ExtractedPdfImage {
   id: string;
@@ -320,6 +321,11 @@ export async function extractPdfImages(
     // Already-compressed JPEG: lift the bytes out untouched.
     if (filters[filters.length - 1] === 'DCTDecode') {
       const blob = new Blob([obj.getContents().slice().buffer], { type: 'image/jpeg' });
+      const checked = await validateOutput(blob, { format: 'jpg' });
+      if (!checked.valid) {
+        skipped += 1;
+        continue;
+      }
       images.push({
         id,
         name: `image-${String(index).padStart(2, '0')}.jpg`,
@@ -381,6 +387,7 @@ export async function extractPdfImages(
         continue;
       }
       const blob = await rgbaToPngBlob(rgba, width, height);
+      await assertValidOutput(blob, { format: 'png' });
       images.push({
         id,
         name: `image-${String(index).padStart(2, '0')}.png`,

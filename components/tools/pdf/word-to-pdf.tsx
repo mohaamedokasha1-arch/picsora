@@ -118,7 +118,7 @@ export default function WordToPdfTool() {
       const res = await convertDocxToPdf(file);
       setResult(res);
     } catch (e) {
-      setError(e instanceof Error ? e.message : t('errors.generic'));
+      setError(e instanceof Error && (e.message === 'outputNoContent' || e.message === 'scannedPdf') ? t(`errors.${e.message}` as never) : (e instanceof Error ? e.message : t('errors.generic')));
     } finally {
       setBusy(false);
     }
