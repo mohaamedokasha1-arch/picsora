@@ -222,7 +222,7 @@ const GUIDES_EN: Record<ImageGuideSlug, GuideContent> = {
       },
     ],
     faqs: [
-      { q: 'Is converting HEIC to JPG free?', a: 'Yes — unlimited conversions run entirely in your browser, with no account and no watermark.' },
+      { q: 'Is converting HEIC to JPG free?', a: 'Yes — conversions are free and run entirely in your browser, with no account and no watermark.' },
       { q: 'Will my photos lose quality?', a: 'At 90%+ quality the difference is invisible. JPG is technically lossy, so keep your HEIC originals archived.' },
       { q: 'Why do my converted photos look rotated?', a: 'They should not: Piclizer applies the photo’s EXIF orientation during decoding. If a file arrives sideways, its orientation tag was already stripped before upload.' },
       { q: 'Can I convert HEIC on Windows?', a: 'Yes — the tool runs in any modern browser on Windows, Mac, Android or iPhone itself.' },
@@ -670,7 +670,7 @@ const GUIDES_AR: Record<ImageGuideSlug, GuideContent> = {
       },
     ],
     faqs: [
-      { q: 'هل تحويل HEIC إلى JPG مجاني؟', a: 'نعم — تحويلات غير محدودة تعمل بالكامل في متصفحك دون حساب أو علامة مائية.' },
+      { q: 'هل تحويل HEIC إلى JPG مجاني؟', a: 'نعم — التحويل مجاني ويعمل بالكامل في متصفحك دون حساب أو علامة مائية.' },
       { q: 'هل ستفقد صوري الجودة؟', a: 'بجودة 90% فأعلى لا فرق يُرَى. JPG مفقودة تقنيًا، فاحتفظ بأصول HEIC مؤرشفة.' },
       { q: 'لماذا تظهر صوري المحوَّلة مقلوبة؟', a: 'لا ينبغي ذلك: يطبق Piclizer اتجاه EXIF أثناء فك الترميز. وإذا وصل ملف جانبيًا فوسم اتجاهه كان محذوفًا قبل الرفع.' },
       { q: 'هل يمكن التحويل على ويندوز؟', a: 'نعم — تعمل الأداة في أي متصفح حديث على ويندوز وماك وأندرويد والايفون نفسه.' },
