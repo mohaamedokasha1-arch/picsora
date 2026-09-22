@@ -923,7 +923,7 @@ const RELATED_PATCH_3: Record<string, string[]> = {
   'sign-pdf': ['fill-pdf-forms', 'pdf-redaction'],
   'fill-pdf-forms': ['sign-pdf', 'pdf-flatten'],
   'pdf-redaction': ['pdf-metadata-cleaner', 'sign-pdf'],
-  'pdf-protect': ['pdf-flatten', 'sign-pdf', 'pdf-redaction', 'fill-pdf-forms'],
+  'pdf-protect': ['pdf-unlock', 'pdf-flatten', 'sign-pdf', 'pdf-redaction', 'fill-pdf-forms'],
   'pdf-flatten': ['sign-pdf', 'fill-pdf-forms'],
 };
 

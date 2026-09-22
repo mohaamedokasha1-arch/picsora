@@ -27,7 +27,8 @@ export function Slider({
   disabled,
   id,
 }: SliderProps) {
-  const inputId = id || React.useId();
+  const generatedId = React.useId();
+  const inputId = id || generatedId;
   const percent = max === min ? 0 : ((value - min) / (max - min)) * 100;
   return (
     <div className={cn('w-full', className)}>

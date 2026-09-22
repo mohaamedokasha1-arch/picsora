@@ -9,6 +9,7 @@ import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
 import { readBytes } from '@/lib/pdf-processing';
 import { openWithPdfJs, scaleForDpi } from '@/lib/pdf-processing/render';
+import { assertValidOutput } from '@/lib/output-validation';
 import { parsePageRanges } from '@/lib/pdf-processing/ranges';
 import { PdfDropzone, PdfInfoCard, downloadZip, useSinglePdf } from './shared';
 import { Field, InlineError, Notice, PrivacyNotice, ProgressBar, ResetButton, ToggleGroup, ToolPanel } from '../kit';
@@ -49,6 +50,17 @@ export default function PdfToImagesTool() {
 
   const overLimit = targets.list.length > limit;
 
+  const zipAll = async () => {
+    try {
+      await downloadZip(
+        pages.map((p) => ({ name: `${baseName}-page-${p.page}.${ext}`, blob: p.blob })),
+        `${baseName}-images.zip`,
+      );
+    } catch (e) {
+      setError(errorText(e));
+    }
+  };
+
   // Revoke preview URLs when the result set changes or the tool unmounts.
   React.useEffect(() => () => pages.forEach((p) => URL.revokeObjectURL(p.url)), [pages]);
 
@@ -73,6 +85,7 @@ export default function PdfToImagesTool() {
       for (let i = 0; i < targets.list.length; i += 1) {
         const pageNumber = targets.list[i] + 1;
         const { blob } = await doc.renderPage(pageNumber, scale, mime, 0.9);
+        await assertValidOutput(blob, { format });
         out.push({ page: pageNumber, blob, url: URL.createObjectURL(blob) });
         setProgress({ done: i + 1, total: targets.list.length });
         // Yield to the event loop so the UI stays responsive.
@@ -198,12 +211,7 @@ export default function PdfToImagesTool() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() =>
-                downloadZip(
-                  pages.map((p) => ({ name: `${baseName}-page-${p.page}.${ext}`, blob: p.blob })),
-                  `${baseName}-images.zip`,
-                )
-              }
+              onClick={() => void zipAll()}
             >
               {t('common.downloadAll')} (ZIP)
             </Button>

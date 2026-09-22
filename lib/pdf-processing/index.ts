@@ -9,6 +9,8 @@
  * No bytes ever leave the device.
  */
 
+import { assertValidOutput } from '@/lib/output-validation';
+
 export type PdfProgress = (done: number, total: number) => void;
 
 export class PdfError extends Error {
@@ -131,9 +133,10 @@ export async function mergePdfs(files: File[], onProgress?: PdfProgress): Promis
       onProgress?.(done, total);
     }
   }
-  const bytes = await out.save();
+  const blob = toBlob(await out.save());
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: total });
   docs.length = 0;
-  return toBlob(bytes);
+  return blob;
 }
 
 /** Build a new PDF from a subset (and ordering) of another document's pages. */
@@ -148,7 +151,9 @@ export async function pagesToPdf(file: File, pageIndices: number[], password?: s
   const out = await PDFDocument.create();
   const copied = await out.copyPages(src, pageIndices);
   copied.forEach((page) => out.addPage(page));
-  return toBlob(await out.save());
+  const blob = toBlob(await out.save());
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: pageIndices.length });
+  return blob;
 }
 
 export interface SplitPart {
@@ -170,7 +175,9 @@ export async function splitPdf(
     const out = await PDFDocument.create();
     const copied = await out.copyPages(src, part.pageIndices);
     copied.forEach((page) => out.addPage(page));
-    results.push({ label: part.label, blob: toBlob(await out.save()) });
+    const blob = toBlob(await out.save());
+    await assertValidOutput(blob, { format: 'pdf', expectedPageCount: part.pageIndices.length });
+    results.push({ label: part.label, blob });
     onProgress?.(i + 1, parts.length);
   }
   return results;
@@ -184,7 +191,9 @@ export async function rotatePdf(file: File, rotations: number[]): Promise<Blob> 
     const angle = ((rotations[i] ?? 0) % 360 + 360) % 360;
     page.setRotation(degrees(angle));
   });
-  return toBlob(await doc.save());
+  const blob = toBlob(await doc.save());
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: doc.getPageCount() });
+  return blob;
 }
 
 export interface ProtectOptions {
@@ -209,7 +218,9 @@ export async function protectPdf(file: File, options: ProtectOptions): Promise<B
       annotating: options.allowModifying === true,
     },
   });
-  return toBlob(await doc.save());
+  const blob = toBlob(await doc.save());
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: doc.getPageCount() });
+  return blob;
 }
 
 /** Remove encryption from a document the user can supply the password for. */
@@ -237,14 +248,17 @@ export async function unlockPdf(file: File, password: string): Promise<Blob> {
   const out = await PDFDocument.create();
   const copied = await out.copyPages(src, src.getPageIndices());
   copied.forEach((page) => out.addPage(page));
-  return toBlob(await out.save());
+  const blob = toBlob(await out.save());
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: src.getPageCount() });
+  return blob;
 }
 
 /** Light/medium compression: re-serialize with object streams. */
 export async function recompressPdf(file: File, useObjectStreams: boolean): Promise<Blob> {
   const doc = await openFile(file);
-  const bytes = await doc.save({ useObjectStreams, addDefaultPage: false });
-  return toBlob(bytes);
+  const blob = toBlob(await doc.save({ useObjectStreams, addDefaultPage: false }));
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: doc.getPageCount() });
+  return blob;
 }
 
 /** Rebuild a PDF from already-rendered JPEG page images (maximum compression). */
@@ -258,5 +272,7 @@ export async function pdfFromJpegPages(
     const p = out.addPage([page.width, page.height]);
     p.drawImage(image, { x: 0, y: 0, width: page.width, height: page.height });
   }
-  return toBlob(await out.save());
+  const blob = toBlob(await out.save());
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: pages.length });
+  return blob;
 }

@@ -24,6 +24,7 @@
  */
 
 import { extractPdfText } from './text';
+import { assertMeaningfulExtractableText, assertValidOutput } from '@/lib/output-validation';
 
 export interface PdfToExcelResult {
   blob: Blob;
@@ -38,11 +39,8 @@ export async function convertPdfToExcel(file: File): Promise<PdfToExcelResult> {
   const { readBytes } = await import('./index');
 
   const bytes = await readBytes(file);
-  const { pages, totalChars } = await extractPdfText(bytes, undefined, () => {});
-
-  if (!pages.length) {
-    throw new Error('No extractable text found. If this is a scanned PDF, try PDF OCR first.');
-  }
+  const { pages } = await extractPdfText(bytes, undefined, () => {});
+  assertMeaningfulExtractableText(pages);
 
   const workbook = XLSX.utils.book_new();
 
@@ -85,6 +83,7 @@ export async function convertPdfToExcel(file: File): Promise<PdfToExcelResult> {
   // Generate .xlsx binary
   const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
   const blob = new Blob([wbout as any], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  await assertValidOutput(blob, { format: 'xlsx', minTextLength: 1 });
   const baseName = file.name.replace(/\.pdf$/i, '') || 'document';
 
   return {

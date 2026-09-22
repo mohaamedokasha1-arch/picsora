@@ -9,6 +9,7 @@ import { Select } from '@/components/ui/select';
 import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
 import { loadPdfLib, readBytes } from '@/lib/pdf-processing';
+import { assertValidOutput } from '@/lib/output-validation';
 import {
   clampMargin,
   pageNumberLabel,
@@ -72,7 +73,9 @@ export default function PdfPageNumberTool() {
       });
 
       const out = await doc.save();
-      setResult(new Blob([out.slice().buffer], { type: 'application/pdf' }));
+      const blob = new Blob([out.slice().buffer], { type: 'application/pdf' });
+      await assertValidOutput(blob, { format: 'pdf', expectedPageCount: doc.getPageCount() });
+      setResult(blob);
     } catch (e) {
       setError(errorText(e));
     } finally {

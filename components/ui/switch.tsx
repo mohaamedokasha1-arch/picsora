@@ -11,7 +11,8 @@ export interface SwitchProps {
 }
 
 export function Switch({ checked, onCheckedChange, label, disabled, id, className }: SwitchProps) {
-  const inputId = id || React.useId();
+  const generatedId = React.useId();
+  const inputId = id || generatedId;
   return (
     <div className={cn('flex items-center gap-2', className)}>
       <button

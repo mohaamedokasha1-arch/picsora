@@ -98,6 +98,15 @@ export default function PdfMergerTool() {
     setProgress({ done: 0, total: 0 });
   };
 
+  const zipResult = async () => {
+    if (!result) return;
+    try {
+      await downloadZip([{ name: 'merged-document.pdf', blob: result }], 'merged-pdf.zip');
+    } catch (e) {
+      setError(errorText(e));
+    }
+  };
+
   return (
     <div className="space-y-5">
       <InlineError message={error} />
@@ -214,7 +223,7 @@ export default function PdfMergerTool() {
             <DownloadButton blob={result} filename="merged-document.pdf" />
             <Button
               variant="outline"
-              onClick={() => downloadZip([{ name: 'merged-document.pdf', blob: result }], 'merged-pdf.zip')}
+              onClick={() => void zipResult()}
             >
               ZIP
             </Button>

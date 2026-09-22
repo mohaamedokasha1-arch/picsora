@@ -39,6 +39,12 @@ function resolveMessage(error: UploadError | string, t: (key: string, params?: R
     'ocr-engine-failed': 'errors.ocrFailed',
     'ocr-model-failed': 'errors.ocrModelFailed',
     'ocr-too-large': 'errors.ocrTooLarge',
+    outputEmpty: 'errors.outputEmpty',
+    outputInvalid: 'errors.outputInvalid',
+    outputUnreadable: 'errors.outputUnreadable',
+    outputNoContent: 'errors.outputNoContent',
+    archiveInvalid: 'errors.archiveInvalid',
+    scannedPdf: 'errors.scannedPdf',
   };
   const key = known[error.key];
   if (!key) return t('errors.generic');

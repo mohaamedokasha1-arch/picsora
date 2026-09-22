@@ -72,6 +72,17 @@ export default function PdfSplitterTool() {
 
   const baseName = file ? sanitizeFilename(file.name.replace(/\.pdf$/i, ''), 'document') : 'document';
 
+  const zipAll = async () => {
+    try {
+      await downloadZip(
+        results.map((r) => ({ name: `${baseName}-${r.label}.pdf`, blob: r.blob })),
+        `${baseName}-split.zip`,
+      );
+    } catch (e) {
+      setError(errorText(e));
+    }
+  };
+
   return (
     <div className="space-y-5">
       <InlineError message={error} />
@@ -186,12 +197,7 @@ export default function PdfSplitterTool() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() =>
-                downloadZip(
-                  results.map((r) => ({ name: `${baseName}-${r.label}.pdf`, blob: r.blob })),
-                  `${baseName}-split.zip`,
-                )
-              }
+              onClick={() => void zipAll()}
             >
               {t('common.downloadAll')} (ZIP)
             </Button>

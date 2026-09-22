@@ -37,6 +37,8 @@ export interface ProcessResult {
    * on the result card so smart quality decisions stay transparent.
    */
   finalQuality?: number;
+  /** Expected members for archive results, checked before showing success. */
+  expectedFiles?: string[];
 }
 
 export interface PaletteColor {

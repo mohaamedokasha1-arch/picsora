@@ -8,6 +8,7 @@ import { sanitizeFilename } from '@/lib/utils';
 import { readBytes } from '@/lib/pdf-processing';
 import { extractPdfText } from '@/lib/pdf-processing/text';
 import { pagesToCsv } from '@/lib/pdf-processing/export';
+import { assertMeaningfulExtractableText, assertValidOutput } from '@/lib/output-validation';
 import { PdfDropzone, PdfInfoCard, RenderingIndicator, useSinglePdf } from './shared';
 import {
   CopyButton,
@@ -47,7 +48,9 @@ export default function PdfToCsvTool() {
       const { pages } = await extractPdfText(bytes, undefined, (done, total) =>
         setProgress({ done, total }),
       );
+      assertMeaningfulExtractableText(pages);
       const out = pagesToCsv(pages);
+      await assertValidOutput(new Blob([out], { type: 'text/csv;charset=utf-8' }), { format: 'csv', minTextLength: 1 });
       setCsv(out);
       setRows(out.split('\r\n').filter(Boolean).length - 1);
     } catch (e) {

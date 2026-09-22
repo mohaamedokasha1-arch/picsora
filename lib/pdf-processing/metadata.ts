@@ -6,6 +6,7 @@
 
 import type { PdfFileInfo } from './index';
 import { inspect, loadDocument, loadPdfLib, readBytes } from './index';
+import { assertValidOutput } from '@/lib/output-validation';
 
 export interface PdfMetadataFields {
   title: string;
@@ -86,5 +87,7 @@ export async function writePdfMetadata(
   set(fields.producer, (v) => doc.setProducer(v), () => doc.setProducer(''));
 
   const out = await doc.save();
-  return new Blob([out.slice().buffer], { type: 'application/pdf' });
+  const blob = new Blob([out.slice().buffer], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: doc.getPageCount() });
+  return blob;
 }

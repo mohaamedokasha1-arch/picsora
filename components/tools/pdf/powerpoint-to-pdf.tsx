@@ -56,7 +56,7 @@ export default function PowerpointToPdfTool() {
       const res = await convertPptToPdf(file);
       setResult(res);
     } catch (e) {
-      setError(e instanceof Error ? e.message : t('errors.generic'));
+      setError(e instanceof Error && e.message === 'outputNoContent' ? t('errors.outputNoContent') : (e instanceof Error ? e.message : t('errors.generic')));
     } finally { setBusy(false); }
   };
 

@@ -11,13 +11,13 @@ export default function UserAgentParserTool() {
   const t = useTranslations();
   const [input, setInput] = React.useState('');
 
-  const useMine = React.useCallback(() => {
+  const setMine = React.useCallback(() => {
     if (typeof navigator !== 'undefined') setInput(navigator.userAgent);
   }, []);
 
   React.useEffect(() => {
-    useMine();
-  }, [useMine]);
+    setMine();
+  }, [setMine]);
 
   const info = React.useMemo(() => (input.trim() ? parseUserAgent(input) : null), [input]);
 
@@ -39,7 +39,7 @@ export default function UserAgentParserTool() {
         title={t('dev.uaInput')}
         actions={
           <>
-            <Button variant="outline" size="sm" onClick={useMine}>
+            <Button variant="outline" size="sm" onClick={setMine}>
               {t('dev.uaUseMine')}
             </Button>
             <ResetButton onClick={() => setInput('')} label={t('textTools.clear')} />

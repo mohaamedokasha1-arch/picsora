@@ -14,6 +14,7 @@ import { ProcessingIndicator } from '@/components/tools/processing-indicator';
 import { extractPalette, type PaletteOutput } from '@/lib/tools/processors/palette';
 import { copyText, triggerDownload } from '@/lib/image/format';
 import { rgbToHex } from '@/lib/image/process';
+import { validateOutput } from '@/lib/output-validation';
 
 export default function PaletteTool({ ctx }: { ctx: WorkspaceContext }) {
   const t = useTranslations();
@@ -46,8 +47,17 @@ export default function PaletteTool({ ctx }: { ctx: WorkspaceContext }) {
       cctx.fillStyle = c.hex;
       cctx.fillRect(i * (size + 4), 0, size, size);
     });
-    canvas.toBlob((blob) => {
-      if (blob) triggerDownload(blob, 'piclizer-palette.png');
+    canvas.toBlob(async (blob) => {
+      if (!blob) {
+        setError({ key: 'outputEmpty' });
+        return;
+      }
+      const checked = await validateOutput(blob, { format: 'png' });
+      if (!checked.valid) {
+        setError({ key: checked.code ?? 'outputInvalid' });
+        return;
+      }
+      await triggerDownload(blob, 'piclizer-palette.png');
     }, 'image/png');
   };
 
@@ -58,7 +68,14 @@ export default function PaletteTool({ ctx }: { ctx: WorkspaceContext }) {
       null,
       2,
     );
-    triggerDownload(new Blob([data], { type: 'application/json' }), 'piclizer-palette.json');
+    const blob = new Blob([data], { type: 'application/json' });
+    void validateOutput(blob, { format: 'json', minTextLength: 1 }).then((checked) => {
+      if (!checked.valid) {
+        setError({ key: checked.code ?? 'outputInvalid' });
+        return;
+      }
+      void triggerDownload(blob, 'piclizer-palette.json');
+    });
   };
 
   return (

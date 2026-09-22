@@ -5000,7 +5000,13 @@
     "yamlTooLarge": "This YAML file is too large to format in the browser.",
     "sqlTooLarge": "This query exceeds the {max} in-browser limit.",
     "jsonTooLarge": "That JSON is too large to process safely — try a smaller document.",
-    "passwordNoCharset": "Enable at least one character set."
+    "passwordNoCharset": "Enable at least one character set.",
+    "outputEmpty": "The generated file was empty, so it was not marked as successful.",
+    "outputInvalid": "The generated file was not valid and was not offered for download.",
+    "outputUnreadable": "The generated file could not be read locally, so it was not offered for download.",
+    "outputNoContent": "The generated file did not contain the expected meaningful content.",
+    "archiveInvalid": "The generated archive could not be opened or did not contain usable files.",
+    "scannedPdf": "This PDF has little or no selectable text. Run the local PDF OCR tool first, then convert the OCR result."
   },
   "consent": {
     "title": "We value your privacy",

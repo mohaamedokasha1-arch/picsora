@@ -37,7 +37,7 @@ export default function PdfToPowerpointTool() {
       const res = await convertPdfToPpt(file);
       setResult(res);
     } catch (e) {
-      setLocalError(e instanceof Error ? e.message : errorText(e));
+      setLocalError(errorText(e));
     } finally {
       setBusy(false);
     }

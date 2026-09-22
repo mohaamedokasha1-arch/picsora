@@ -13,6 +13,8 @@
  * - Flatten option available to lock filled data
  */
 
+import { assertValidOutput } from '@/lib/output-validation';
+
 export interface PdfFormField {
   name: string;
   type: 'text' | 'checkbox' | 'radio' | 'dropdown' | 'unknown';
@@ -135,5 +137,7 @@ export async function fillPdfForm(
   }
 
   const pdfBytes = await doc.save();
-  return new Blob([pdfBytes.slice().buffer], { type: 'application/pdf' });
+  const blob = new Blob([pdfBytes.slice().buffer], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: doc.getPageCount() });
+  return blob;
 }

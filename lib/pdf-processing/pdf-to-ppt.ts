@@ -22,6 +22,7 @@
  */
 
 import { extractPdfText } from './text';
+import { assertMeaningfulExtractableText, assertValidOutput } from '@/lib/output-validation';
 
 export interface PdfToPptResult {
   blob: Blob;
@@ -36,10 +37,7 @@ export async function convertPdfToPpt(file: File): Promise<PdfToPptResult> {
 
   const bytes = await readBytes(file);
   const { pages } = await extractPdfText(bytes, undefined, () => {});
-
-  if (!pages.length) {
-    throw new Error('No extractable text found. If this is a scanned PDF, try PDF OCR first.');
-  }
+  assertMeaningfulExtractableText(pages);
 
   const pptx = new PptxGenJS();
   pptx.author = 'Piclizer';
@@ -104,6 +102,7 @@ export async function convertPdfToPpt(file: File): Promise<PdfToPptResult> {
 
   // Generate blob
   const blob = await pptx.write({ outputType: 'blob' }) as Blob;
+  await assertValidOutput(blob, { format: 'pptx', minTextLength: 1 });
   const baseName = file.name.replace(/\.pdf$/i, '') || 'document';
 
   return {

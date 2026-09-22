@@ -9,6 +9,7 @@ import { DownloadButton } from '@/components/tools/download-button';
 import { formatBytes, sanitizeFilename } from '@/lib/utils';
 import { inspect, readBytes } from '@/lib/pdf-processing';
 import { extractPdfText, pagesToText } from '@/lib/pdf-processing/text';
+import { assertMeaningfulExtractableText, assertValidOutput } from '@/lib/output-validation';
 import { PdfDropzone, downloadZip, useErrorText } from './shared';
 import {
   CopyButton,
@@ -89,12 +90,15 @@ export default function PdfToTextTool() {
         if (locked.includes(file.name)) continue;
         const bytes = await readBytes(file);
         const { pages, totalChars } = await extractPdfText(bytes, undefined, () => undefined);
+        assertMeaningfulExtractableText(pages);
         const text = pagesToText(pages, file.name);
+        const textBlob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        await assertValidOutput(textBlob, { format: 'txt', minTextLength: Math.max(1, totalChars) });
         const base = sanitizeFilename(file.name.replace(/\.pdf$/i, ''), 'document');
         out.push({
           name: file.name,
           txtName: `${base}.txt`,
-          blob: new Blob([text], { type: 'text/plain;charset=utf-8' }),
+          blob: textBlob,
           pages: pages.length,
           chars: totalChars,
           preview: text.slice(0, 900),

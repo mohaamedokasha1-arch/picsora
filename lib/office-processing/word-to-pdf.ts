@@ -15,6 +15,7 @@
  */
 
 import { formatBytes } from '@/lib/utils';
+import { assertValidOutput } from '@/lib/output-validation';
 
 export interface WordToPdfResult {
   blob: Blob;
@@ -185,6 +186,7 @@ export async function convertDocxToPdf(file: File): Promise<WordToPdfResult> {
 
   const pdfBytes = await pdfDoc.save();
   const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: pdfDoc.getPageCount() });
   const baseName = file.name.replace(/\.(docx?|txt)$/i, '') || 'document';
   return {
     blob,

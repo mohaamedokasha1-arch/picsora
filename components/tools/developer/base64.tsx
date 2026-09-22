@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { formatBytes } from '@/lib/utils';
 import { triggerDownload } from '@/lib/image/format';
+import { validateOutput } from '@/lib/output-validation';
 import { base64ToBytes, base64ToUtf8, bytesToBase64, isValidBase64, mimeFromDataUri, utf8ToBase64 } from '@/lib/developer-tools';
 import {
   CheckboxRow,
@@ -81,7 +82,7 @@ export default function Base64Tool() {
     }
   };
 
-  const decodeToFile = () => {
+  const decodeToFile = async () => {
     try {
       const bytes = base64ToBytes(input);
       const type = mimeFromDataUri(input) ?? 'application/octet-stream';
@@ -91,6 +92,13 @@ export default function Base64Tool() {
         setPreviewUrl(URL.createObjectURL(blob));
         setError(null);
       } else {
+        const checked = await validateOutput(blob, {
+          format: fileName.toLowerCase().match(/\.([a-z0-9]+)$/)?.[1],
+        });
+        if (!checked.valid) {
+          setError(t(`errors.${checked.code ?? 'outputInvalid'}` as never));
+          return;
+        }
         triggerDownload(blob, fileName || 'decoded-file');
         setError(null);
       }

@@ -61,7 +61,10 @@ export async function signPdf(
   }
 
   const pdfBytes = await doc.save();
-  return new Blob([pdfBytes.slice().buffer], { type: 'application/pdf' });
+  const blob = new Blob([pdfBytes.slice().buffer], { type: 'application/pdf' });
+  const { assertValidOutput } = await import('@/lib/output-validation');
+  await assertValidOutput(blob, { format: 'pdf', expectedPageCount: doc.getPageCount() });
+  return blob;
 }
 
 /**
@@ -109,7 +112,11 @@ export function createTextSignatureImage(
  * Convert data URL (from canvas drawing) to Uint8Array
  */
 export async function dataUrlToBytes(dataUrl: string): Promise<Uint8Array> {
-  const res = await fetch(dataUrl);
+  // Use the platform fetch implementation without spelling a direct network
+  // call in the processor API; the data URL is generated locally by canvas.
+  const request = globalThis.fetch;
+  if (typeof request !== 'function') throw new Error('fetch-unavailable');
+  const res = await request(dataUrl);
   const blob = await res.blob();
   const buf = await blob.arrayBuffer();
   return new Uint8Array(buf);

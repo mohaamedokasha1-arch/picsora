@@ -8,6 +8,7 @@ import { sanitizeFilename } from '@/lib/utils';
 import { readBytes } from '@/lib/pdf-processing';
 import { extractPdfText } from '@/lib/pdf-processing/text';
 import { pagesToHtml } from '@/lib/pdf-processing/export';
+import { assertMeaningfulExtractableText, assertValidOutput } from '@/lib/output-validation';
 import { PdfDropzone, PdfInfoCard, RenderingIndicator, useSinglePdf } from './shared';
 import {
   CopyButton,
@@ -42,10 +43,13 @@ export default function PdfToHtmlTool() {
     setHtml(null);
     try {
       const bytes = await readBytes(file);
-      const { pages } = await extractPdfText(bytes, undefined, (done, total) =>
+      const { pages, totalChars } = await extractPdfText(bytes, undefined, (done, total) =>
         setProgress({ done, total }),
       );
-      setHtml(pagesToHtml(pages, file.name));
+      assertMeaningfulExtractableText(pages);
+      const output = pagesToHtml(pages, file.name);
+      await assertValidOutput(new Blob([output], { type: 'text/html;charset=utf-8' }), { format: 'html', minTextLength: Math.max(1, totalChars) });
+      setHtml(output);
     } catch (e) {
       setError(errorText(e));
     } finally {

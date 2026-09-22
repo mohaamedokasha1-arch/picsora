@@ -9,6 +9,7 @@ import { DownloadButton } from '@/components/tools/download-button';
 import { escapeHtml, formatBytes, sanitizeFilename } from '@/lib/utils';
 import { inspect, readBytes } from '@/lib/pdf-processing';
 import { extractPdfText } from '@/lib/pdf-processing/text';
+import { assertMeaningfulExtractableText, assertValidOutput } from '@/lib/output-validation';
 import { PdfDropzone, downloadZip, useErrorText } from './shared';
 import {
   InlineError,
@@ -117,7 +118,9 @@ export default function PdfToWordTool() {
         if (locked.includes(file.name)) continue;
         const bytes = await readBytes(file);
         const { pages, totalChars } = await extractPdfText(bytes, undefined, () => undefined);
+        assertMeaningfulExtractableText(pages);
         const blob = buildWordDoc(file.name, pages);
+        await assertValidOutput(blob, { format: 'doc', minTextLength: Math.max(1, totalChars) });
         const base = sanitizeFilename(file.name.replace(/\.pdf$/i, ''), 'document');
         out.push({
           name: file.name,
