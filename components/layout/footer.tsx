@@ -21,6 +21,7 @@ export async function Footer() {
     { href: '/terms-of-service', label: t('common.terms') },
     { href: '/disclaimer', label: t('common.disclaimer') },
     { href: '/contact', label: t('common.contact') },
+    { href: '/business', label: t('common.business') },
   ];
 
   const tCat = (key: string) => {

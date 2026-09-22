@@ -1,0 +1,73 @@
+{
+  "title": "Piclizer for Business",
+  "intro": "Piclizer is a set of free online tools that run entirely in the web browser. Files are processed on the device that opens them — nothing is uploaded to a server and nothing is stored. No installs, no accounts, no licenses: that is what makes it a practical choice for teams that handle photos, documents and text every day.",
+  "sections": [
+    {
+      "h": "Why teams use Piclizer",
+      "ps": [
+        "Most everyday file work — compressing a photo, merging two PDFs, cleaning a text export — is small, one-off, and not worth installing dedicated software for. Piclizer covers that work with a catalogue of free tools that open in a browser tab and work on the first try.",
+        "Because everything runs locally, the same site works in an office, in a school lab, or on a phone at a client site: the files never leave the device, so there is no upload step, no queue, and no server to breach."
+      ],
+      "bullets": [
+        "No installs or updates — every tool works from a URL in any current desktop or mobile browser.",
+        "No accounts or logins — anyone on your team can use any tool immediately.",
+        "Local processing — images, PDFs, text and numbers are handled on the device and are never uploaded.",
+        "Free for everyone — no paywall, no license key, no per-seat cost."
+      ]
+    },
+    {
+      "h": "What you can do today",
+      "ps": [],
+      "bullets": [
+        "Batch image work — compress, resize, crop, convert and watermark images; iPhone HEIC photos are supported end to end.",
+        "Combine up to 30 images into a single PDF, or merge up to 20 PDF files into one.",
+        "Bulk file tasks — rename many files in one pass and find duplicate files by their content.",
+        "Document preparation — page numbers, headers and footers, watermarks, rotation, page extraction and compression.",
+        "Text at scale — clean, deduplicate, sort, diff and convert text, JSON, CSV, XML, YAML and Markdown.",
+        "OCR for scanned documents — extract English or Arabic text from images and PDFs, with recognition running in the browser."
+      ]
+    },
+    {
+      "h": "Typical use cases",
+      "ps": [],
+      "bullets": [
+        "Marketing and e-commerce — resize and compress product photos, meet upload size limits exactly, prepare favicons and social banners.",
+        "Support and back office — merge and number PDFs, and clean or edit document metadata before sharing.",
+        "Education and exams — assemble PDFs from answer sheets and extract text from scanned papers.",
+        "Development — format JSON, XML, SQL and YAML, test regular expressions and decode tokens from the same browser tab as the code."
+      ]
+    },
+    {
+      "h": "What Piclizer does not offer",
+      "ps": [
+        "Piclizer is a public website, not a platform. To keep expectations honest, here is what does not exist today:"
+      ],
+      "bullets": [
+        "No API or integrations — the tools are web pages, not a service you can call programmatically.",
+        "No accounts, dashboards or file storage — nothing is kept between visits, and no file is ever stored by us.",
+        "No self-hosting or enterprise licensing — the same free site is available to everyone."
+      ]
+    }
+  ],
+  "ctaHeading": "Business inquiries",
+  "ctaText": "If you are evaluating Piclizer for your organisation and have a specific question — a requirement the current tools do not cover, a large-volume workflow, or anything else — send it through the contact form. Every message is read and answered by email; you can also reach us directly at piclizer@gmail.com.",
+  "ctaLabel": "Send a business inquiry",
+  "faqs": [
+    {
+      "q": "Do our files go to your servers?",
+      "a": "No. Image, PDF, text, calculator and developer tools process everything locally in the browser. Two tools make narrow, disclosed network requests: the OCR tools download the open-source Tesseract engine and its language data from a public CDN on first use, and the currency converter fetches a public exchange-rate table. In neither case are your files or inputs sent anywhere."
+    },
+    {
+      "q": "Does using Piclizer for business cost anything?",
+      "a": "No. The same free tools are available to everyone — businesses included. There is no paid tier, no trial and no account requirement. (Where ads are displayed, they are only loaded after you accept advertising cookies.)"
+    },
+    {
+      "q": "Can we use Piclizer on work devices without installing anything?",
+      "a": "Yes. Every tool works from a URL in any current browser — desktop or mobile. There is nothing to install, update, patch or license, so it is easy to roll out across a team."
+    },
+    {
+      "q": "Is there an API we can integrate with?",
+      "a": "Not today. Piclizer tools are browser pages rather than a programmable API. If a programmatic interface would help your workflow, tell us about it through the contact form — that kind of feedback is the main input for what gets built next."
+    }
+  ]
+}
