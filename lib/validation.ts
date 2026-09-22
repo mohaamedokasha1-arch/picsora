@@ -11,7 +11,14 @@ export type UploadExtension =
   | 'svg'
   | 'heic'
   | 'heif'
-  | 'ico';
+  | 'ico'
+  | 'doc'
+  | 'docx'
+  | 'txt'
+  | 'xlsx'
+  | 'xls'
+  | 'pptx'
+  | 'ppt';
 import {
   detectFileFormat,
   extFromMime,

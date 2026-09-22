@@ -44,6 +44,14 @@ export const standaloneTools: Record<string, StandaloneTool> = {
   'pdf-to-csv': dynamic(() => import('../pdf/to-csv')),
   'pdf-compare': dynamic(() => import('../pdf/compare')),
   'pdf-search': dynamic(() => import('../pdf/search')),
+  'word-to-pdf': dynamic(() => import('../pdf/word-to-pdf')),
+  'pdf-to-excel': dynamic(() => import('../pdf/pdf-to-excel')),
+  'pdf-to-powerpoint': dynamic(() => import('../pdf/pdf-to-powerpoint')),
+  'excel-to-pdf': dynamic(() => import('../pdf/excel-to-pdf')),
+  'powerpoint-to-pdf': dynamic(() => import('../pdf/powerpoint-to-pdf')),
+  'sign-pdf': dynamic(() => import('../pdf/sign-pdf')),
+  'fill-pdf-forms': dynamic(() => import('../pdf/fill-forms')),
+  'pdf-redaction': dynamic(() => import('../pdf/redact-pdf')),
 
   /* ----------------------------------------------------------- text */
   'word-counter': dynamic(() => import('../text/word-counter')),

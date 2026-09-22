@@ -862,6 +862,17 @@ const EXPANSION_CALCULATOR_TOOLS: ToolDef[] = [
   N('average-calculator', 'calculator-tools', 'calculator', 'sigma', ['average calculator', 'mean median mode', 'average of numbers', 'calculate average', 'حاسبة المتوسط', 'المتوسط الحسابي'], ['percentage-calculator', 'gpa-calculator', 'number-to-words', 'unit-converter'], { isNew: true }),
 ];
 
+const EXPANSION_PDF_TOOLS_2: ToolDef[] = [
+  N('word-to-pdf', 'pdf-tools', 'pdf', 'file-type', ['word to pdf', 'docx to pdf', 'doc to pdf', 'convert word to pdf', 'word pdf converter', 'تحويل وورد الى pdf', 'وورد الى pdf'], ['pdf-to-word', 'excel-to-pdf', 'powerpoint-to-pdf', 'pdf-merger'], { inputFormats: ['doc', 'docx', 'txt'], outputFormats: ['pdf'], maxFileSizeMB: 25, popular: true, isNew: true }),
+  N('pdf-to-excel', 'pdf-tools', 'pdf', 'file-spreadsheet', ['pdf to excel', 'pdf to xlsx', 'convert pdf to excel', 'pdf excel converter', 'pdf table to excel', 'تحويل pdf الى اكسل', 'pdf الى excel'], ['pdf-to-word', 'pdf-to-csv', 'pdf-to-powerpoint', 'pdf-to-text'], { inputFormats: ['pdf'], outputFormats: ['xlsx'], maxFileSizeMB: 50, popular: true, isNew: true }),
+  N('pdf-to-powerpoint', 'pdf-tools', 'pdf', 'presentation', ['pdf to ppt', 'pdf to pptx', 'pdf to powerpoint', 'convert pdf to ppt', 'pdf presentation', 'تحويل pdf الى بوربوينت', 'pdf الى بوربوينت'], ['pdf-to-word', 'pdf-to-excel', 'pdf-to-images', 'powerpoint-to-pdf'], { inputFormats: ['pdf'], outputFormats: ['pptx'], maxFileSizeMB: 50, popular: true, isNew: true }),
+  N('excel-to-pdf', 'pdf-tools', 'pdf', 'file-spreadsheet', ['excel to pdf', 'xlsx to pdf', 'xls to pdf', 'convert excel to pdf', 'spreadsheet to pdf', 'تحويل اكسل الى pdf', 'اكسل الى pdf'], ['word-to-pdf', 'powerpoint-to-pdf', 'pdf-to-excel', 'pdf-merger'], { inputFormats: ['xlsx', 'xls'], outputFormats: ['pdf'], maxFileSizeMB: 25, popular: true, isNew: true }),
+  N('powerpoint-to-pdf', 'pdf-tools', 'pdf', 'presentation', ['powerpoint to pdf', 'ppt to pdf', 'pptx to pdf', 'convert ppt to pdf', 'presentation to pdf', 'تحويل بوربوينت الى pdf', 'بوربوينت الى pdf'], ['word-to-pdf', 'excel-to-pdf', 'pdf-to-powerpoint', 'pdf-merger'], { inputFormats: ['pptx', 'ppt'], outputFormats: ['pdf'], maxFileSizeMB: 25, popular: true, isNew: true }),
+  N('sign-pdf', 'pdf-tools', 'pdf', 'pen-tool', ['sign pdf', 'pdf signature', 'draw signature pdf', 'electronic signature pdf', 'sign pdf online', 'توقيع pdf', 'ختم pdf'], ['pdf-protect', 'pdf-watermark', 'fill-pdf-forms', 'pdf-flatten'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 50, popular: true, isNew: true }),
+  N('fill-pdf-forms', 'pdf-tools', 'pdf', 'file-pen', ['fill pdf form', 'pdf form filler', 'acroform', 'fill pdf online', 'pdf form', 'تعبئة نموذج pdf', 'ملء pdf'], ['sign-pdf', 'pdf-flatten', 'pdf-protect', 'pdf-metadata-editor'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 50, popular: true, isNew: true }),
+  N('pdf-redaction', 'pdf-tools', 'pdf', 'eye-off', ['redact pdf', 'pdf redaction', 'black out pdf', 'remove text pdf', 'permanent redact', 'تنقيح pdf', 'اخفاء نص pdf'], ['pdf-crop', 'pdf-protect', 'pdf-flatten', 'pdf-metadata-cleaner'], { inputFormats: ['pdf'], outputFormats: ['pdf'], maxFileSizeMB: 50, popular: true, isNew: true }),
+];
+
 /**
  * Discovery patch: point established tools at the expansion wave. Prepended
  * WITHOUT slicing so no existing suggestion is ever dropped (dropping one
@@ -879,13 +890,12 @@ const RELATED_PATCH_3: Record<string, string[]> = {
   'passport-photo-maker': ['image-dpi-converter'],
   'png-to-jpg': ['ico-to-png'],
   'image-to-pdf': ['favicon-generator'],
-  'pdf-to-text': ['pdf-to-markdown', 'pdf-search'],
-  'pdf-to-word': ['pdf-to-html', 'pdf-to-markdown'],
+  'pdf-to-text': ['pdf-to-markdown', 'pdf-search', 'pdf-to-excel', 'word-to-pdf'],
+  'pdf-to-word': ['pdf-to-html', 'pdf-to-markdown', 'word-to-pdf', 'pdf-to-excel', 'pdf-to-powerpoint'],
   'pdf-merger': ['pdf-compare'],
   'pdf-metadata-editor': ['pdf-metadata-viewer', 'pdf-metadata-cleaner'],
   'pdf-page-numbers': ['pdf-header-footer'],
   'pdf-ocr': ['pdf-search'],
-  'pdf-protect': ['pdf-flatten'],
   'pdf-rotate-pages': ['pdf-crop'],
   'pdf-delete-pages': ['pdf-crop'],
   'json-csv-converter': ['text-to-json', 'text-to-csv'],
@@ -904,6 +914,17 @@ const RELATED_PATCH_3: Record<string, string[]> = {
   'currency-converter': ['salary-calculator'],
   'tip-calculator': ['vat-calculator'],
   'gpa-calculator': ['average-calculator'],
+  'pdf-to-csv': ['pdf-to-excel'],
+  'excel-to-pdf': ['word-to-pdf', 'powerpoint-to-pdf'],
+  'powerpoint-to-pdf': ['word-to-pdf', 'excel-to-pdf'],
+  'word-to-pdf': ['excel-to-pdf', 'powerpoint-to-pdf', 'pdf-to-word'],
+  'pdf-to-excel': ['pdf-to-powerpoint', 'excel-to-pdf', 'pdf-to-word'],
+  'pdf-to-powerpoint': ['powerpoint-to-pdf', 'pdf-to-excel', 'pdf-to-word'],
+  'sign-pdf': ['fill-pdf-forms', 'pdf-redaction'],
+  'fill-pdf-forms': ['sign-pdf', 'pdf-flatten'],
+  'pdf-redaction': ['pdf-metadata-cleaner', 'sign-pdf'],
+  'pdf-protect': ['pdf-flatten', 'sign-pdf', 'pdf-redaction', 'fill-pdf-forms'],
+  'pdf-flatten': ['sign-pdf', 'fill-pdf-forms'],
 };
 
 export const TOOLS: ToolDef[] = [
@@ -915,6 +936,7 @@ export const TOOLS: ToolDef[] = [
   ...NEW_PDF_TOOLS,
   ...NEW_PDF_TOOLS_2,
   ...EXPANSION_PDF_TOOLS,
+  ...EXPANSION_PDF_TOOLS_2,
   ...TEXT_TOOLS,
   ...NEW_TEXT_TOOLS_2,
   ...EXPANSION_TEXT_TOOLS,

@@ -1,5 +1,14 @@
 import createNextIntlPlugin from 'next-intl/plugin';
+import { createRequire } from 'module';
 import { securityHeaders, staticAssetHeaders } from './lib/security/headers.mjs';
+
+const require = createRequire(import.meta.url);
+let webpack;
+try {
+  webpack = require('webpack');
+} catch {
+  webpack = require('next/dist/compiled/webpack/webpack.js');
+}
 
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
@@ -50,6 +59,37 @@ const nextConfig = {
         headers: [{ key: 'X-Content-Type-Options', value: 'nosniff' }],
       },
     ];
+  },
+  webpack: (config, { isServer }) => {
+    // PptxGenJS and some other libs dynamically import node:fs / node:https
+    // for Node environments. Those should never be bundled for the browser.
+    config.resolve = config.resolve || {};
+    config.resolve.fallback = {
+      ...(config.resolve.fallback || {}),
+      fs: false,
+      https: false,
+      http: false,
+      path: false,
+      stream: false,
+      zlib: false,
+      buffer: false,
+      crypto: false,
+    };
+    config.plugins = config.plugins || [];
+    config.plugins.push(
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^node:/,
+      }),
+    );
+    // Also ignore direct 'fs' / 'https' imports when bundling for client
+    if (!isServer) {
+      config.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^(fs|https|http|path|stream)$/,
+        }),
+      );
+    }
+    return config;
   },
 };
 

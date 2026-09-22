@@ -18,7 +18,7 @@
     "noUpload": "No upload required",
     "worksInBrowser": "Works in your browser",
     "noRegistration": "No registration",
-    "allProcessingLocal": "All processing is done locally in your browser. Your images never leave your device.",
+    "allProcessingLocal": "Most processing happens locally in your browser. Your images never leave your device.",
     "backHome": "Back to homepage",
     "exploreTools": "Explore all tools",
     "close": "Close",
@@ -56,7 +56,7 @@
     "disclaimer": "Disclaimer",
     "rightsReserved": "All rights reserved.",
     "madeWith": "Built for privacy-first work in the browser.",
-    "localSignal": "100% local processing — files stay on your device",
+    "localSignal": "Most processing happens locally in your browser.",
     "new": "New",
     "lastUpdated": "Last updated",
     "legalPages": "Explore our policies",
@@ -64,9 +64,9 @@
     "useCasesHeading": "Common use cases",
     "emailLabel": "Email us directly",
     "replyNote": "We read every message and usually reply within 1–2 business days.",
-    "allProcessingText": "All processing happens locally in your browser. Your text never leaves your device.",
-    "allProcessingFiles": "All processing happens locally in your browser. Your files never leave your device.",
-    "allProcessingInputs": "All processing happens locally in your browser. Your inputs are processed on your device and are not uploaded.",
+    "allProcessingText": "Most processing happens locally in your browser. Your text never leaves your device.",
+    "allProcessingFiles": "Most processing happens locally in your browser. Your files never leave your device.",
+    "allProcessingInputs": "Most processing happens locally in your browser. Your inputs are processed on your device and are not uploaded.",
     "useToolLabel": "Use tool",
     "addFavorite": "Add to favorites",
     "removeFavorite": "Remove from favorites"
@@ -87,17 +87,17 @@
     "nav": "Main navigation"
   },
   "footer": {
-    "description": "Free online tools that run entirely in your browser. Compress images, convert HEIC photos, edit PDFs and format code without uploading anything anywhere.",
+    "description": "Free online tools that mostly run in your browser. Compress images, convert HEIC photos, edit PDFs and format code without uploading anything anywhere.",
     "toolsColumn": "Popular tools",
     "categoriesColumn": "Categories",
     "legalColumn": "Legal",
     "aboutColumn": "Company",
-    "trust": "Your files never leave your device. Everything is processed locally using browser technology."
+    "trust": "Your files never leave your device. Most processing happens locally using browser technology. OCR tools fetch their engine from a public CDN, and Currency Converter fetches rates."
   },
   "home": {
     "heroTitle": "{count} free tools in one place — fast, private, no uploads",
     "heroHighlight": "right in your browser",
-    "heroSubtitle": "Compress, resize and edit images, merge and watermark PDFs, sort and analyse text, convert data and run everyday calculations — all inside your browser. Piclizer processes your files locally on your device, so they are never uploaded to Piclizer's servers.",
+    "heroSubtitle": "Compress, resize and edit images, merge and watermark PDFs, sort and analyse text, convert data and run everyday calculations — most processing happens locally in your browser. Most tools work offline after the page has loaded; OCR tools fetch their engine from a public CDN and Currency Converter fetches rates.",
     "heroPrimary": "Explore all tools",
     "heroSecondary": "Try the image compressor",
     "searchTitle": "What do you want to do today?",
@@ -107,17 +107,18 @@
     "popularTitle": "Most popular tools",
     "popularSubtitle": "The tools people use every day.",
     "allToolsTitle": "Every tool, free forever",
-    "allToolsSubtitle": "Free to use, with no account or watermark — and your files are never uploaded to our servers.",
+    "allToolsSubtitle": "Free to use, with no account or watermark — most processing happens locally on your device.",
+
     "benefitsTitle": "Why Piclizer?",
     "benefitsSubtitle": "Honest tools that respect your privacy.",
     "benefitFreeTitle": "Free forever",
     "benefitFreeText": "Every tool is completely free. No trials, no paywalls, no hidden costs.",
     "benefitPrivateTitle": "Private & secure",
-    "benefitPrivateText": "Images are processed with browser technology on your device. They never travel over the internet.",
+    "benefitPrivateText": "Most tools process files with browser technology on your device — your files never travel to our servers. OCR tools fetch their engine from a public CDN and Currency Converter fetches exchange rates; your files are still read locally.",
     "benefitFastTitle": "Instant & fast",
-    "benefitFastText": "No waiting for uploads or downloads. Modern browser APIs do the heavy lifting instantly.",
+    "benefitFastText": "No waiting for uploads. Most processing happens locally with modern browser APIs — instant results.",
     "benefitAnywhereTitle": "Works everywhere",
-    "benefitAnywhereText": "Any modern browser on desktop or mobile. No software to install, no account needed.",
+    "benefitAnywhereText": "Any modern browser on desktop or mobile. No software to install, no account needed. Most tools work offline after the page has loaded.",
     "howTitle": "How it works",
     "howSubtitle": "Three steps. Zero uploads.",
     "step1Title": "Add your image",
@@ -127,19 +128,19 @@
     "step3Title": "Download the result",
     "step3Text": "Save the processed image straight back to your device.",
     "privacyTitle": "Your files never leave your device",
-    "privacyText1": "Most online tools upload your file to their server, process it, and keep a copy. Piclizer is different: every tool does its work inside your browser — images are drawn with the Canvas and Blob APIs, PDFs are parsed by pdf.js and pdf-lib, and text, calculator and developer tools run in plain JavaScript — so what you open in a tool is read, processed and saved on your own machine, never on ours.",
+    "privacyText1": "Most online tools upload your file to their server, process it, and keep a copy. Piclizer is different: most processing happens locally in your browser — images are processed with Canvas and Blob APIs, PDFs are parsed with pdf.js and pdf-lib, and text, calculator and developer tools run in plain JavaScript — so what you open in a tool is read, processed and saved on your own machine, never on ours. Two exceptions download public resources: the OCR tools fetch their recognition engine from a public CDN, and the Currency Converter fetches exchange-rate data.",
     "privacyText2": "Close the tab and every trace is gone. It's the same technology photo editors use — without any upload step.",
     "privacyPoint1": "No file uploads, no storage, no copies",
-    "privacyPoint2": "Most tools keep working offline once the page has loaded",
+    "privacyPoint2": "Most tools can work offline after the required page resources have loaded (OCR needs CDN engine, Currency Converter needs rates)",
     "privacyPoint3": "Free and open to everyone",
     "faqTitle": "Frequently asked questions",
     "faqSubtitle": "Quick answers about Piclizer.",
     "newTitle": "Just added",
     "newSubtitle": "The newest tools on Piclizer — PDF, text, calculator and developer utilities.",
     "aboutTitle": "What is Piclizer?",
-    "aboutP1": "Piclizer is a free online toolbox that brings {count} everyday file utilities into one fast, private website. Instead of installing heavy desktop software or uploading documents to anonymous cloud servers, you open a tool, drop in a file, and get the result in seconds — while the file itself never leaves your device.",
+      "aboutP1": "Piclizer is a free online toolbox that brings {count} everyday file utilities into one fast, private website. Instead of installing heavy desktop software or uploading documents to anonymous cloud servers, you open a tool, drop in a file, and get the result in seconds — with most processing happening locally so your files stay on your device (OCR tools fetch their engine from a public CDN and Currency Converter fetches rates).",
     "aboutP2": "Every tool is organised into nine clear categories: image compression and resizing, format conversion (including iPhone HEIC photos), PDF merging and splitting, text cleanup, practical calculators, and a full suite of developer utilities. Each tool page explains exactly what the tool does, which formats it accepts, how to use it step by step, and answers the questions real users ask — so you always know what will happen before you start.",
-    "aboutP3": "Behind the simple interface is a deliberate engineering choice: all processing runs locally in your browser using modern web standards. That is why Piclizer is free, why it works even on a slow connection once the page has loaded, and why your photos, contracts and code stay yours. No account, no email required, no watermark on your output.",
+    "aboutP3": "Behind the simple interface is a deliberate engineering choice: most processing happens locally in your browser using modern web standards. That is why Piclizer is free, why most tools can work offline after the required page resources have loaded, and why your photos, contracts and code stay yours. No account, no email required, no watermark on your output. The OCR tools download their engine from a public CDN on first use, and the Currency Converter fetches exchange-rate data.",
     "aboutP4": "We publish practical guides — from compressing images without visible quality loss to preparing passport photos that meet official requirements — because we believe a good tool should also teach you something useful. Whether you are a student, a photographer, an office professional or a developer, Piclizer is designed to be the fastest path from \"I have a file problem\" to \"done\".",
     "guidesTitle": "Guides & tutorials",
     "guidesSubtitle": "Step-by-step articles that help you master everyday file tasks.",
@@ -4679,6 +4680,270 @@
           "a": "Up to 10,000 — far beyond homework scale."
         }
       ]
+    },
+    "word-to-pdf": {
+      "name": "Word to PDF",
+      "short": "Convert DOC, DOCX and TXT to PDF.",
+      "description": "Convert Word to PDF online for free. DOCX converted locally to a clean A4 PDF, entirely in your browser — no upload.",
+      "intro": "Turn Word documents into PDF files without uploading them anywhere. DOCX files are read locally and rebuilt as a printable A4 PDF; TXT files are converted with preserved line breaks. Legacy .doc files are best-effort only.",
+      "howTo": [
+        "Drop a DOCX, DOC or TXT file (max 25 MB).",
+        "Wait for local conversion to finish.",
+        "Preview the result and download the PDF."
+      ],
+      "faqs": [
+        {
+          "q": "What formats are supported?",
+          "a": "DOCX (modern Word), DOC (legacy, best-effort text extraction) and TXT. DOCX is recommended for best results."
+        },
+        {
+          "q": "Does formatting survive?",
+          "a": "DOCX conversion extracts raw text and reflows it into a clean A4 PDF. Complex layouts, tables, images and headers/footers are not preserved — this is a text-focused local conversion, not a full Word renderer."
+        },
+        {
+          "q": "Are my documents uploaded?",
+          "a": "No. The file is read with mammoth in your browser and the PDF is built with pdf-lib locally. Nothing is sent to a server."
+        },
+        {
+          "q": "Why does .doc show a warning?",
+          "a": ".doc is a legacy binary format without a reliable browser decoder. We extract printable text as a fallback and clearly mark it as best-effort. Save as DOCX for accurate conversion."
+        },
+        {
+          "q": "What is the file size limit?",
+          "a": "25 MB per file. Very large documents are limited by browser memory."
+        }
+      ]
+    },
+    "pdf-to-excel": {
+      "name": "PDF to Excel",
+      "short": "Convert PDF tables and text to valid .xlsx.",
+      "description": "Convert PDF to Excel online for free. Extract lines to a real .xlsx spreadsheet with page tracking, in your browser.",
+      "intro": "Get PDF text into a real Excel file you can open in Excel, Sheets and Numbers. Every line becomes a row tagged with page and line numbers. Not a CSV renamed — a valid .xlsx built locally.",
+      "howTo": [
+        "Drop a PDF (max 50 MB, up to 200 pages).",
+        "Extract with one click — processing is local.",
+        "Download the .xlsx file and open in your spreadsheet."
+      ],
+      "faqs": [
+        {
+          "q": "Is this a real Excel file?",
+          "a": "Yes — a valid .xlsx generated with SheetJS in your browser. It is not a CSV with an .xlsx extension."
+        },
+        {
+          "q": "Will complex tables convert perfectly?",
+          "a": "Simple lists and reports convert well. Complex merged-cell tables may need manual cleanup — the tool extracts text lines, not visual table borders."
+        },
+        {
+          "q": "What columns are in the sheet?",
+          "a": "All Pages sheet contains Page, Line and Text. Additional sheets per page (up to 20) contain Line and Text for that page."
+        },
+        {
+          "q": "Are scanned PDFs supported?",
+          "a": "No — scans are images of text with no text layer. Run PDF OCR first, then convert."
+        },
+        {
+          "q": "Are my PDFs uploaded?",
+          "a": "No. Extraction runs with pdf.js locally and the .xlsx is built in your browser."
+        }
+      ]
+    },
+    "pdf-to-powerpoint": {
+      "name": "PDF to PowerPoint",
+      "short": "Convert PDF pages to valid .pptx.",
+      "description": "Convert PDF to PowerPoint online for free. Each PDF page becomes a slide in a real .pptx, built locally in your browser.",
+      "intro": "Turn a PDF into an editable presentation: each page becomes a slide with its extracted text. The output is a valid .pptx file built with PptxGenJS — not an image-only hack.",
+      "howTo": [
+        "Drop a PDF (max 50 MB, up to 100 slides).",
+        "Convert locally — one slide per PDF page.",
+        "Download the .pptx and open in PowerPoint, Keynote or Google Slides."
+      ],
+      "faqs": [
+        {
+          "q": "Is this a valid PowerPoint file?",
+          "a": "Yes — a real .pptx generated locally. It opens in PowerPoint, Google Slides and Keynote."
+        },
+        {
+          "q": "Does it preserve layout and images?",
+          "a": "Text is extracted and placed as text boxes. Images, exact fonts and complex layouts are not preserved — this is a text-focused conversion."
+        },
+        {
+          "q": "How many pages can I convert?",
+          "a": "Up to 100 pages per conversion. For larger decks, split the PDF first."
+        },
+        {
+          "q": "What about scanned PDFs?",
+          "a": "Scans have no text to extract. OCR them first."
+        },
+        {
+          "q": "Is anything uploaded?",
+          "a": "No — pdf.js extraction and pptx generation both run locally in your browser."
+        }
+      ]
+    },
+    "excel-to-pdf": {
+      "name": "Excel to PDF",
+      "short": "Convert XLS and XLSX to PDF.",
+      "description": "Convert Excel to PDF online for free. Multi-sheet spreadsheets to A4 PDF with grid layout, entirely in your browser.",
+      "intro": "Turn spreadsheets into shareable PDFs without uploading them. XLS and XLSX files are parsed locally with SheetJS and rebuilt as A4 grid PDFs, one table per sheet.",
+      "howTo": [
+        "Drop an XLS or XLSX file (max 25 MB, up to 50 sheets).",
+        "Preview the sheets found and convert locally.",
+        "Download the PDF with all sheets in order."
+      ],
+      "faqs": [
+        {
+          "q": "Is this a valid PDF?",
+          "a": "Yes — a real PDF built with pdf-lib in your browser, with text selectable."
+        },
+        {
+          "q": "Does it keep formulas and charts?",
+          "a": "Formulas are evaluated to their displayed values. Charts, images and conditional formatting are not preserved — this is a grid-focused local conversion."
+        },
+        {
+          "q": "How are large sheets handled?",
+          "a": "Column widths auto-fit and text truncates with ellipsis if too wide. Very wide sheets may need landscape printing or splitting."
+        },
+        {
+          "q": "How many sheets?",
+          "a": "Up to 50 sheets, 1000 rows and 50 columns per sheet. Larger sheets are truncated with a notice."
+        },
+        {
+          "q": "Are files uploaded?",
+          "a": "No — SheetJS parsing and PDF generation run locally."
+        }
+      ]
+    },
+    "powerpoint-to-pdf": {
+      "name": "PowerPoint to PDF",
+      "short": "Convert PPT and PPTX to PDF.",
+      "description": "Convert PowerPoint to PDF online for free. Text extracted locally to landscape A4 PDF slides, in your browser.",
+      "intro": "Convert presentations to PDF without cloud upload. PPTX files are parsed locally and each slide's text is placed onto a landscape A4 PDF page. PPT legacy is best-effort.",
+      "howTo": [
+        "Drop a PPTX or PPT file (max 25 MB, up to 100 slides).",
+        "Convert locally — text extraction only.",
+        "Download the PDF."
+      ],
+      "faqs": [
+        {
+          "q": "Does it keep images and design?",
+          "a": "No — this local conversion extracts text only and rebuilds it as clean PDF pages. Use desktop PowerPoint or Google Slides for pixel-perfect conversion with images."
+        },
+        {
+          "q": "What about .ppt files?",
+          "a": ".ppt is legacy binary. We attempt best-effort text extraction and clearly label limits. Save as PPTX for best results."
+        },
+        {
+          "q": "How many slides?",
+          "a": "Up to 100 slides per file. Split larger decks first."
+        },
+        {
+          "q": "Are files uploaded?",
+          "a": "No — PPTX parsing via JSZip and PDF creation run locally in your browser."
+        },
+        {
+          "q": "Is the PDF searchable?",
+          "a": "Yes — text is embedded as selectable text, not images."
+        }
+      ]
+    },
+    "sign-pdf": {
+      "name": "Sign PDF",
+      "short": "Add visual signature to PDF.",
+      "description": "Sign PDF online for free. Draw or type a signature and stamp it on any page — visual signature, not certified, processed locally.",
+      "intro": "Add a handwritten-style signature to a PDF: draw on canvas or type your name, pick size and position, and stamp it onto any page. Visual signature only — not a certified digital signature.",
+      "howTo": [
+        "Drop a PDF (max 50 MB).",
+        "Draw a signature or type one.",
+        "Pick page, position and size, then apply and download."
+      ],
+      "faqs": [
+        {
+          "q": "Is this a legally certified digital signature?",
+          "a": "No — this is a visual signature image stamped onto the page. It is not a cryptographic / PKI digital signature. Check what your recipient requires."
+        },
+        {
+          "q": "Can I place signatures on multiple pages?",
+          "a": "Yes — add multiple placements with different pages and positions before applying."
+        },
+        {
+          "q": "What formats are supported for signature?",
+          "a": "Drawn canvas PNG and typed signature rendered to canvas. Both are embedded as images with opacity control."
+        },
+        {
+          "q": "Are my PDFs uploaded?",
+          "a": "No — PDF parsing and stamping run with pdf-lib entirely in your browser."
+        },
+        {
+          "q": "Can I remove a signature later?",
+          "a": "The signature is baked into the PDF content. Keep the original if you may need an unsigned copy."
+        }
+      ]
+    },
+    "fill-pdf-forms": {
+      "name": "Fill PDF Forms",
+      "short": "Fill AcroForm PDF forms.",
+      "description": "Fill PDF forms online for free. Detect AcroForm fields, fill text, checkboxes and dropdowns, then flatten — locally in your browser.",
+      "intro": "Fill interactive PDF forms without printing: the tool detects AcroForm text fields, checkboxes, radio buttons and dropdowns, lets you fill them, and optionally flattens the result to lock it.",
+      "howTo": [
+        "Drop a PDF with form fields (max 50 MB).",
+        "Review detected fields and fill them.",
+        "Optionally enable flatten and download the filled PDF."
+      ],
+      "faqs": [
+        {
+          "q": "What types of PDF forms are supported?",
+          "a": "AcroForm (standard PDF forms). XFA (dynamic XML forms) is not supported and will show a clear error."
+        },
+        {
+          "q": "Does it support checkboxes and dropdowns?",
+          "a": "Yes — text fields, checkboxes, radio groups and dropdowns (choice fields) are detected and fillable."
+        },
+        {
+          "q": "What does flatten do?",
+          "a": "Flatten bakes field values into static page content so they can no longer be edited. Useful for archiving and sharing."
+        },
+        {
+          "q": "Are my forms uploaded?",
+          "a": "No — inspection and filling run with pdf-lib locally in your browser."
+        },
+        {
+          "q": "My PDF shows no fields?",
+          "a": "It may be a scanned form or XFA. For scans, there are no interactive fields — you would need to add text manually. For XFA, use Adobe Acrobat."
+        }
+      ]
+    },
+    "pdf-redaction": {
+      "name": "PDF Redaction",
+      "short": "Permanently black out sensitive text.",
+      "description": "Redact PDF online for free. Permanent removal via local rasterization — not just a black overlay. Safe to share after redaction.",
+      "intro": "Permanently remove sensitive content from PDFs: select areas to black out, and the tool rasterizes each page locally at 2x, burns in black rectangles, and rebuilds a new PDF. True removal, not a cover that can be stripped.",
+      "howTo": [
+        "Drop a PDF (max 50 MB).",
+        "Add redaction areas by page and coordinates.",
+        "Apply permanent redaction and download the safe-to-share copy."
+      ],
+      "faqs": [
+        {
+          "q": "Is this real redaction or just a black box?",
+          "a": "Real, permanent redaction: pages are rendered to images, black rectangles are burned in, and a new PDF is built from those images. Underlying text is gone."
+        },
+        {
+          "q": "Does text stay selectable after redaction?",
+          "a": "No — redacted pages become images for security, so text is no longer selectable. This is the trade-off for true removal. Keep the original if you need searchable text."
+        },
+        {
+          "q": "What about metadata?",
+          "a": "Page content is replaced, but document metadata may remain. Use PDF Metadata Cleaner afterwards for extra privacy."
+        },
+        {
+          "q": "Can redaction be reversed?",
+          "a": "No — once applied and downloaded, the blacked-out content cannot be recovered from the new file."
+        },
+        {
+          "q": "Are my files uploaded?",
+          "a": "No — rendering with pdf.js and rebuilding with pdf-lib run entirely locally in your browser."
+        }
+      ]
     }
   },
   "errors": {
@@ -4762,7 +5027,7 @@
   },
   "toolsPage": {
     "title": "All free tools",
-    "subtitle": "Every tool runs entirely in your browser — compress, resize, convert, edit, plus PDF, text and developer utilities. No uploads, no sign-up."
+    "subtitle": "Most tools run locally in your browser — compress, resize, convert, edit, plus PDF, text and developer utilities. No uploads, no sign-up. Most tools work offline after the page has loaded."
   },
   "howTo": {
     "title": "How to use"
@@ -4779,7 +5044,7 @@
     "q1": "Is it free to use?",
     "a1": "Yes — all {category} tools on Piclizer are completely free, with no watermarks and no account required.",
     "q2": "Are my images uploaded anywhere?",
-    "a2": "No. Every tool in this category processes your images entirely in your browser. Nothing is sent to a server.",
+    "a2": "Most tools in this category process your files entirely in your browser — nothing is sent to a server. Two exceptions download public resources: OCR tools fetch their engine from a public CDN and Currency Converter fetches rates; your files are still read locally.",
     "privacyQ": {
       "compress": "Are my images uploaded anywhere?",
       "resize": "Are my images uploaded anywhere?",
@@ -4814,7 +5079,8 @@
   },
   "seo": {
     "homeTitle": "Free Online Tools — Image, PDF, Text & Developer | Piclizer",
-    "homeDescription": "Free online tools that run 100% in your browser: compress, resize and convert images, merge and edit PDFs, clean text and calculate. No upload, no sign-up.",
+    "homeDescription": "Free online tools that mostly run in your browser: compress, resize and convert images, merge and edit PDFs, clean text and calculate. Most processing happens locally — no upload, no sign-up.",
+
     "toolsTitle": "All Free Online Tools — Image, PDF, Text & Code | Piclizer",
     "toolsDescription": "Every free Piclizer tool: compress images to an exact size, convert iPhone HEIC photos, edit PDFs, OCR text and format code — all in your browser.",
     "categoriesTitle": "Tool Categories — Image, PDF, Text & More | Piclizer",

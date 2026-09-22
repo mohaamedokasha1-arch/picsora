@@ -71,7 +71,7 @@ export const siteConfig = {
   /** Raster OG image — social crawlers do not reliably fetch SVG. */
   ogImage: '/images/og-image.jpg',
   description:
-    'Free online tools that run 100% in your browser: images, PDFs, text, calculators and developer utilities in one place — privately.',
+    'Free online tools that mostly run in your browser: images, PDFs, text, calculators and developer utilities in one place — privately. Most processing happens locally.',
   keywords: [
     'online tools',
     'image tools',
