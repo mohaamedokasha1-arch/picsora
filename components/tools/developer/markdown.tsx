@@ -157,7 +157,7 @@ export default function MarkdownFormatterTool() {
         />
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

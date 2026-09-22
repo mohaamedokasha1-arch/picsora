@@ -124,7 +124,7 @@ export default function TextCleanerTool() {
         ]}
       />
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

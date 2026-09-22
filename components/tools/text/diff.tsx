@@ -104,7 +104,7 @@ export default function TextDiffTool() {
         </>
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

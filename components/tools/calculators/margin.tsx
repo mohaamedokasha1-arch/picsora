@@ -23,7 +23,7 @@ export default function MarginCalculatorTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <ToolPanel
         title={t('calc.marginDetails')}
         actions={

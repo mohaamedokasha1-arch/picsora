@@ -135,7 +135,7 @@ export default function CurrencyConverterTool() {
         </Notice>
       )}
       <Notice variant="privacy">{t('calc.currencyPrivacy')}</Notice>
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

@@ -131,7 +131,7 @@ export default function TipCalculatorTool() {
         </>
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

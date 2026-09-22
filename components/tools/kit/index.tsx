@@ -207,10 +207,22 @@ export function Notice({
  * is the file-neutral one — PDF, text, calculator and developer pages used to
  * inherit the image sentence ("your images never leave your device"). Image
  * tools that want the image wording pass it in explicitly.
+ *
+ * `scope="inputs"` is for the tools that never receive a file at all (the
+ * calculators and the paste-only text/developer utilities): telling those
+ * visitors "your files never leave your device" promises something the page
+ * never asks them for, so they get the input-scoped sentence instead.
  */
-export function PrivacyNotice({ text }: { text?: string }) {
+export function PrivacyNotice({
+  text,
+  scope = 'files',
+}: {
+  text?: string;
+  scope?: 'files' | 'inputs';
+}) {
   const t = useTranslations('common');
-  return <Notice variant="privacy">{text ?? t('allProcessingFiles')}</Notice>;
+  const fallback = scope === 'inputs' ? t('allProcessingInputs') : t('allProcessingFiles');
+  return <Notice variant="privacy">{text ?? fallback}</Notice>;
 }
 
 /* ------------------------------------------------------------------ error */

@@ -169,7 +169,7 @@ export default function GpaCalculatorTool() {
       )}
 
       <Notice>{t('calc.gpaHint')}</Notice>
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

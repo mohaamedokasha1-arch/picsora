@@ -60,29 +60,43 @@
   },
   "privacy": {
     "title": "Privacy Policy",
-    "intro": "This Privacy Policy explains what information Piclizer collects, why, and what we deliberately do not collect. The short version: your files are processed on your own device and never reach our servers, and we collect almost nothing about you.",
+    "intro": "This Privacy Policy explains what information Piclizer collects, why, and what we deliberately do not collect. The short version: the files and text you process in our tools are handled on your own device and never reach our servers, there are no accounts and no user database, and the only personal information we ever receive is what you deliberately send us in a Contact, Business or Bug Report form — your name, email address and message — so that we can deal with the request and reply to you.",
     "sections": [
       {
         "h": "1. Overview",
         "ps": [
           "Piclizer (“we”, “us”, “our”) operates the website piclizer.vercel.app and its subpages (the “Service”). This policy describes our practices regarding information collected through the Service. By using the Service you agree to this policy. If you do not agree, please discontinue use.",
-          "The Service is designed around a privacy-first architecture: file processing happens locally in your web browser using client-side technology. We do not operate an upload pipeline for your documents, images or text."
+          "The Service is designed around a privacy-first architecture: file processing happens locally in your web browser using client-side technology. We do not operate an upload pipeline for your documents, images or text. The one exception is information you choose to send us yourself — the Contact, Business and Bug Report forms — which is described in section 3."
         ]
       },
       {
         "h": "2. Information we do NOT collect",
         "ps": [
-          "We do not collect or receive the files you process. Images, PDFs and text you place into a tool are decoded, converted and encoded by your browser on your device. We never see them, never store them and cannot recover them. We also do not require registration: there are no accounts, so we hold no names, usernames or passwords."
+          "We do not collect or receive the files you process. Images, PDFs and text you place into a tool are decoded, converted and encoded by your browser on your device. We never see them, never store them and cannot recover them. We also do not require registration: there are no accounts, so we hold no names, usernames or passwords, and there is no user database to breach. This section covers using the tools; it does not cover the forms — when you contact us deliberately, the name, email address and message you type do reach our inbox, and section 3 explains that in full."
         ]
       },
       {
-        "h": "3. Information collected automatically",
+        "h": "3. Information you choose to send us",
+        "ps": [
+          "Our tools never ask who you are — our forms do. If you get in touch through the Contact page, the Business inquiry form or the Bug / error report form, the contents of that form are delivered to Piclizer's contact inbox (piclizer@gmail.com) so that we can read the request and reply to it. This is the only channel through which Piclizer receives personal data, and it exists entirely at your initiative.",
+          "How the message travels depends on how the site is deployed. When a form endpoint is configured, your browser posts the form fields as JSON to that endpoint, which forwards them to our inbox by email. When no endpoint is configured — the current default — the form opens your own email application with the message already addressed and prefilled, and your email provider delivers it to us. In both cases nothing is written to a Piclizer database, because there is none."
+        ],
+        "bullets": [
+          "Contact and Business forms: the reason you selected, your name, your email address and your message. Business and custom-solution inquiries additionally carry the company name, team size, expected monthly volume and the type of need you picked from the lists.",
+          "Bug / error reports: only the description of the problem is required; your name and email address are optional fields, so fill them in if you want an answer.",
+          "We use that information for one purpose: to handle the request and respond to you. It is not added to a marketing list, not sold, and not combined with analytics or advertising data.",
+          "The message then lives in our mailbox — there is no account, profile or record attached to it. If you ask us to delete it, we do; see the “Your rights” section below.",
+          "Ordinary email is not a channel we control end to end. Please do not put passwords, card numbers, medical details or other secrets into these forms — describe the problem instead, and share a file only if it is not sensitive."
+        ]
+      },
+      {
+        "h": "4. Information collected automatically",
         "ps": [
           "Like virtually all websites, our hosting infrastructure records standard technical log data for security and operation: IP address, browser user-agent, referring page, and the time of each request. This data is used to prevent abuse, diagnose errors and keep the Service available. It is not used to build advertising profiles and we do not attempt to identify individuals from it."
         ]
       },
       {
-        "h": "4. Cookies and similar technologies",
+        "h": "5. Cookies and similar technologies",
         "ps": [
           "Cookies are small text files a website stores in your browser. We use the minimum needed to operate:",
           "You can change or withdraw your choice at any time through the “Cookie Settings” link in the footer. Withdrawing consent stops non-essential cookies from being set on future visits; essential preference cookies cannot be switched off because the site cannot function without them."
@@ -90,17 +104,17 @@
         "bullets": [
           "Essential storage — remembers your cookie-consent choice, language and light/dark theme. These are first-party and stored only in your browser.",
           "Analytics cookies — loaded only if you explicitly consent and only when the analytics module is enabled. Off by default.",
-          "Advertising cookies — loaded only if you explicitly consent and only when advertising is enabled. Off by default. See section 6."
+          "Advertising cookies — loaded only if you explicitly consent and only when advertising is enabled. Off by default. See section 7."
         ]
       },
       {
-        "h": "5. Analytics",
+        "h": "6. Analytics",
         "ps": [
           "If, and only if, you consent to analytics cookies and the analytics module is enabled, we load Google Analytics 4 with IP anonymisation to understand aggregate usage (which tools are popular, which browsers need better support). Google Analytics is governed by Google's Privacy Policy. If you decline, no analytics script is loaded at all — not a reduced version, nothing."
         ]
       },
       {
-        "h": "6. Advertising and third-party vendors",
+        "h": "7. Advertising and third-party vendors",
         "ps": [
           "We use advertising to keep the Service free. Where advertising is enabled and you have consented to advertising cookies:",
           "Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this or other websites. Google's use of advertising cookies (such as the DoubleClick DART cookie) enables it and its partners to serve ads to you based on your visit to our site and/or other sites on the Internet. You may opt out of personalised advertising by visiting Google Ads Settings, and you may opt out of third-party vendor cookies for personalised advertising at aboutads.info.",
@@ -116,46 +130,46 @@
         ]
       },
       {
-        "h": "7. Data retention",
+        "h": "8. Data retention",
         "ps": [
-          "Your files: never stored — processing is local, so there is nothing to retain. Consent cookies: stored until you clear them or change your setting. Technical logs: kept by our hosting provider for a limited operational period, after which they are automatically deleted. We do not maintain any user database."
+          "Your files: never stored — processing is local, so there is nothing to retain. Consent cookies: stored until you clear them or change your setting. Technical logs: kept by our hosting provider for a limited operational period, after which they are automatically deleted. Contact, Business and Bug Report messages: kept in our email inbox for as long as needed to handle the request and answer you, and deleted on request. We do not maintain any user database."
         ]
       },
       {
-        "h": "8. Data sharing and transfers",
+        "h": "9. Data sharing and transfers",
         "ps": [
-          "We do not sell, rent or trade personal information. The only parties that may process minimal technical data are our hosting provider (site delivery and security logs) and — strictly with your consent — the analytics and advertising providers described above. Our hosting infrastructure may be located outside your country; where that involves transfer of personal data (for example from the EEA), standard safeguards such as adequacy decisions or contractual clauses applied by the processor are relied upon."
+          "We do not sell, rent or trade personal information. The only parties that may process minimal technical data are our hosting provider (site delivery and security logs) and — strictly with your consent — the analytics and advertising providers described above; a message you send through a form additionally passes through the email service that delivers it to our inbox. Our hosting infrastructure may be located outside your country; where that involves transfer of personal data (for example from the EEA), standard safeguards such as adequacy decisions or contractual clauses applied by the processor are relied upon."
         ]
       },
       {
-        "h": "9. Your rights",
+        "h": "10. Your rights",
         "ps": [
-          "Depending on your jurisdiction (including the GDPR for EEA/UK residents and the CCPA/CPRA for California residents) you have rights of access, correction, deletion, restriction, portability and objection, and the right not to be discriminated against for exercising them. Because we hold no personal data about you, there is generally nothing to access, correct or delete — the most effective way to exercise control is the Cookie Settings panel, which can switch analytics and advertising off instantly.",
+          "Depending on your jurisdiction (including the GDPR for EEA/UK residents and the CCPA/CPRA for California residents) you have rights of access, correction, deletion, restriction, portability and objection, and the right not to be discriminated against for exercising them. Because our tools store nothing about you, there is generally no record to access, correct or delete — and the most effective way to exercise control is the Cookie Settings panel, which can switch analytics and advertising off instantly. If you have written to us, the only thing we hold is the content of that message (described in section 3), and we will provide, correct or delete it on request.",
           "California residents may also use the “Do Not Sell My Personal Information” right — we do not sell personal information as defined by the CCPA. To make any request or ask a question, contact us via the contact page or the email listed there; we respond within 30 days."
         ]
       },
       {
-        "h": "10. Children's privacy",
+        "h": "11. Children's privacy",
         "ps": [
           "The Service is not directed at children under 13 (or under 16 in the EEA), and we do not knowingly collect personal data from children. Since we collect almost nothing from anyone, a child using the tools exposes no personal information; nevertheless, we encourage parents and guardians to supervise children's internet use."
         ]
       },
       {
-        "h": "11. Security",
+        "h": "12. Security",
         "ps": [
           "The Service is served exclusively over HTTPS. Because file processing is client-side and no user database exists, the most common breach risks — stolen file archives and leaked account databases — are structurally impossible. We still apply strict security headers, input validation and dependency updates as part of routine maintenance."
         ]
       },
       {
-        "h": "12. Changes to this policy",
+        "h": "13. Changes to this policy",
         "ps": [
           "We may update this Privacy Policy to reflect changes in the Service or the law. The “last updated” date at the top of this page always shows the current version, and material changes will be highlighted on the homepage for a reasonable period."
         ]
       },
       {
-        "h": "13. Contact us",
+        "h": "14. Contact us",
         "ps": [
-          "Questions about this policy or your data? Use the contact page. We aim to reply within two business days."
+          "Questions about this policy or your data? Use the contact page. We aim to reply within two business days. Remember that submitting a form sends the name, email address and message you typed to our inbox, exactly as described in section 3."
         ]
       }
     ]

@@ -83,7 +83,7 @@ export default function UnitConverterTool() {
         />
       </ToolPanel>
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

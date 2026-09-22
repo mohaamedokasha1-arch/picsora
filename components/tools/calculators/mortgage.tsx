@@ -31,7 +31,7 @@ export default function MortgageCalculatorTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <ToolPanel
         title={t('calc.mortgageDetails')}
         actions={

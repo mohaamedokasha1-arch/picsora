@@ -121,7 +121,7 @@ export default function LoremIpsumTool() {
         ]}
       />
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

@@ -82,7 +82,7 @@ export default function SlugTool() {
         )}
       </ToolPanel>
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

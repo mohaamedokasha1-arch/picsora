@@ -92,7 +92,7 @@ export default function NumberToWordsTool() {
         </ToolPanel>
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

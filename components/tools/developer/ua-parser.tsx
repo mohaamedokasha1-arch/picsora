@@ -32,7 +32,7 @@ export default function UserAgentParserTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <Notice variant="info">{t('dev.uaCaveat')}</Notice>
 
       <ToolPanel

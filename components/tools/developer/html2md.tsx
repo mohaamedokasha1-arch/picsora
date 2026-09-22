@@ -27,7 +27,7 @@ export default function HtmlToMarkdownTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <Notice variant="info">{t('dev.html2mdSafety')}</Notice>
 
       <div className="grid gap-5 lg:grid-cols-2">

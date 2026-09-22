@@ -134,7 +134,7 @@ export default function PercentageCalculatorTool() {
       </ToolPanel>
 
       <Notice>{t('calc.percentHint')}</Notice>
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

@@ -112,7 +112,7 @@ export default function AgeCalculatorTool() {
       )}
 
       {!birth && <Notice>{t('calc.ageHint')}</Notice>}
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

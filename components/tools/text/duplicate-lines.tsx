@@ -91,7 +91,7 @@ export default function DuplicateLinesTool() {
         ]}
       />
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

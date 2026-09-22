@@ -30,7 +30,7 @@ export default function MockJsonGeneratorTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <ToolPanel
         title={t('dev.mockOptions')}
         actions={

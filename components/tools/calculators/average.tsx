@@ -18,7 +18,7 @@ export default function AverageCalculatorTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <ToolPanel
         title={t('calc.averageInput')}
         actions={<ResetButton onClick={() => setInput('')} label={t('textTools.clear')} />}

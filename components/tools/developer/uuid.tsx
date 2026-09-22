@@ -154,7 +154,7 @@ export default function UuidGeneratorTool() {
       </ToolPanel>
 
       <Notice>{t('dev.uuidHint')}</Notice>
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

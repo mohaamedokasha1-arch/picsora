@@ -143,7 +143,7 @@ export default function NumberBaseConverterTool() {
       )}
 
       <Notice>{t('dev.baseHint')}</Notice>
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

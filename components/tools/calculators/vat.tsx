@@ -29,7 +29,7 @@ export default function VatCalculatorTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <ToolPanel
         title={t('calc.vatDetails')}
         actions={
