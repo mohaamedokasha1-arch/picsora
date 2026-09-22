@@ -173,7 +173,7 @@ export function ContactForm() {
       )}
       {status === 'error' && (
         <p role="alert" className="text-sm text-destructive">
-          {t('notConfiguredText')}
+          {t('contactErrorText')}
         </p>
       )}
     </form>

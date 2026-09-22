@@ -34,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   add('/tools', 0.9, 'weekly');
   add('/categories', 0.8, 'weekly');
   add('/guides', 0.85, 'weekly');
+  add('/business', 0.6, 'weekly');
 
   for (const slug of SLUGS) add(`/tools/${slug}`, 0.8, 'weekly');
   for (const slug of CATEGORY_SLUGS) add(`/categories/${slug}`, 0.7, 'weekly');
