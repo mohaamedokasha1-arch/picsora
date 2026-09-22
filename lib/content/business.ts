@@ -3,8 +3,11 @@
  *
  * Same pattern as the legal documents: server-side JSON, one file per locale,
  * rendered only by the business page's server component. The copy is
- * deliberately factual — it lists what the tools actually do and, in a
- * dedicated section, what they do NOT offer, so the page never overpromises.
+ * deliberately factual — it lists what the tools actually do, explains how a
+ * business inquiry is handled (understand requirements → evaluate → propose
+ * the appropriate solution) and states, in a dedicated section, what exists
+ * today, so the page never promises an API, bulk processing or "unlimited"
+ * capacity that has not been built.
  */
 
 import en from './business.en.json';
