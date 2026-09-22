@@ -61,12 +61,14 @@ export default async function BusinessPage({ params }: { params: { locale: strin
         ))}
       </div>
 
-      {/* Business inquiry CTA — the same card style the rest of the site uses. */}
+      {/* Business inquiry CTA — the same card style the rest of the site uses.
+          `?reason=business` pre-selects "Business inquiry" on the existing
+          contact form so the company-specific fields are shown right away. */}
       <div className="mt-12 max-w-3xl rounded-xl border border-border bg-card p-6">
         <h2 className="text-lg font-semibold text-foreground">{doc.ctaHeading}</h2>
         <p className="mt-2 text-sm leading-7 text-muted-foreground sm:text-base">{doc.ctaText}</p>
         <Link
-          href="/contact"
+          href="/contact?reason=business"
           className="mt-4 inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
         >
           {doc.ctaLabel}

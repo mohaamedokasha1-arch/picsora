@@ -1,11 +1,27 @@
 {
   "title": "Piclizer for Business",
-  "intro": "Piclizer is a set of free online tools that run entirely in the web browser. Files are processed on the device that opens them — nothing is uploaded to a server and nothing is stored. No installs, no accounts, no licenses: that is what makes it a practical choice for teams that handle photos, documents and text every day.",
+  "intro": "Simplify repetitive file and image tasks for your team. Piclizer is a set of free online tools that run entirely in the web browser — files are processed on the device that opens them, nothing is uploaded and nothing is stored. No installs, no accounts and no licences, which makes it a practical fit for teams that work with images, documents and digital files every day.",
   "sections": [
+    {
+      "h": "What Piclizer helps your team with",
+      "ps": [
+        "The catalogue covers the everyday file work that otherwise ends up scattered across desktop apps, plugins and one-off scripts:"
+      ],
+      "bullets": [
+        "Images — compress, resize, crop, rotate, watermark, blur, adjust and clean up photos and graphics.",
+        "PDFs — merge, split, compress, protect, number, watermark, extract pages or images, and convert to text, Word or images.",
+        "Text — clean, sort, deduplicate, compare, count and convert text, JSON, CSV, XML, YAML and Markdown.",
+        "File conversion — JPG, PNG, WebP, AVIF, SVG, ICO and iPhone HEIC in both directions, plus images to PDF and PDF to images.",
+        "Image compression — reduce file size by quality, or to an exact target such as 100 KB, 200 KB or 500 KB.",
+        "Image resizing — exact dimensions, percentages, social-media and passport presets, DPI changes and upscaling.",
+        "Image editing — colour adjustments, filters, rounded corners, background removal and signatures.",
+        "Other digital file workflows — bulk renaming, duplicate detection, metadata viewing and cleaning, and OCR for scanned documents."
+      ]
+    },
     {
       "h": "Why teams use Piclizer",
       "ps": [
-        "Most everyday file work — compressing a photo, merging two PDFs, cleaning a text export — is small, one-off, and not worth installing dedicated software for. Piclizer covers that work with a catalogue of free tools that open in a browser tab and work on the first try.",
+        "Most everyday file work — compressing a photo, merging two PDFs, cleaning a text export — is small, recurring, and not worth installing dedicated software for. Piclizer covers that work with a catalogue of free tools that open in a browser tab and work on the first try.",
         "Because everything runs locally, the same site works in an office, in a school lab, or on a phone at a client site: the files never leave the device, so there is no upload step, no queue, and no server to breach."
       ],
       "bullets": [
@@ -16,42 +32,39 @@
       ]
     },
     {
-      "h": "What you can do today",
+      "h": "How teams use Piclizer",
       "ps": [],
       "bullets": [
-        "Batch image work — compress, resize, crop, convert and watermark images; iPhone HEIC photos are supported end to end.",
-        "Combine up to 30 images into a single PDF, or merge up to 20 PDF files into one.",
-        "Bulk file tasks — rename many files in one pass and find duplicate files by their content.",
-        "Document preparation — page numbers, headers and footers, watermarks, rotation, page extraction and compression.",
-        "Text at scale — clean, deduplicate, sort, diff and convert text, JSON, CSV, XML, YAML and Markdown.",
-        "OCR for scanned documents — extract English or Arabic text from images and PDFs, with recognition running in the browser."
+        "E-commerce teams — prepare product photos before publishing: compress them, resize them to the store's dimensions and convert them to the required format.",
+        "Marketing teams — get the images and files used in campaigns, ads, newsletters and social posts ready, including exact-size exports and assembled PDFs.",
+        "Agencies — handle the recurring file- and image-preparation work that comes with every client project, from image batches to document packs.",
+        "Content teams — convert, compress, resize and edit files quickly while writing and publishing, without switching between applications.",
+        "Web teams — prepare optimised images, favicons and assets for websites and apps, and format JSON, CSS, JavaScript, SQL and other code along the way."
       ]
     },
     {
-      "h": "Typical use cases",
-      "ps": [],
-      "bullets": [
-        "Marketing and e-commerce — resize and compress product photos, meet upload size limits exactly, prepare favicons and social banners.",
-        "Support and back office — merge and number PDFs, and clean or edit document metadata before sharing.",
-        "Education and exams — assemble PDFs from answer sheets and extract text from scanned papers.",
-        "Development — format JSON, XML, SQL and YAML, test regular expressions and decode tokens from the same browser tab as the code."
-      ]
-    },
-    {
-      "h": "What Piclizer does not offer",
+      "h": "Have a need the current tools don't cover?",
       "ps": [
-        "Piclizer is a public website, not a platform. To keep expectations honest, here is what does not exist today:"
+        "Some teams need more than the public tools: a larger volume than a browser tab handles comfortably, a repeatable workflow, a connection to their own systems, or a tool that does not exist yet. Business solutions can be discussed based on your team's workflow, requirements and expected usage.",
+        "Every business request follows the same simple path:"
       ],
       "bullets": [
-        "No API or integrations — the tools are web pages, not a service you can call programmatically.",
-        "No accounts, dashboards or file storage — nothing is kept between visits, and no file is ever stored by us.",
-        "No self-hosting or enterprise licensing — the same free site is available to everyone."
+        "You tell us what your team needs — the task, the file types, the team size and the approximate monthly volume.",
+        "We review the requirements and the expected usage.",
+        "We evaluate what is technically involved.",
+        "We reply by email with the most suitable option — from using the existing tools as they are to scoping a tailored solution such as bulk processing, a custom workflow, an integration or a programmatic interface."
+      ]
+    },
+    {
+      "h": "What is available today",
+      "ps": [
+        "To keep expectations clear: Piclizer is currently a public website of browser-based tools. There is no API, no accounts, no dashboards and no file storage, and each tool has its own per-file and per-batch limits. Anything beyond that is scoped individually through a business inquiry rather than offered off the shelf."
       ]
     }
   ],
-  "ctaHeading": "Business inquiries",
-  "ctaText": "If you are evaluating Piclizer for your organisation and have a specific question — a requirement the current tools do not cover, a large-volume workflow, or anything else — send it through the contact form. Every message is read and answered by email; you can also reach us directly at piclizer@gmail.com.",
-  "ctaLabel": "Send a business inquiry",
+  "ctaHeading": "Tell us what your team needs",
+  "ctaText": "Send a business inquiry with a short description of your workflow, your team size and the approximate number of files you handle each month. Every request is read and answered by email; you can also write to us directly at piclizer@gmail.com.",
+  "ctaLabel": "Talk to Piclizer",
   "faqs": [
     {
       "q": "Do our files go to your servers?",
@@ -59,15 +72,19 @@
     },
     {
       "q": "Does using Piclizer for business cost anything?",
-      "a": "No. The same free tools are available to everyone — businesses included. There is no paid tier, no trial and no account requirement. (Where ads are displayed, they are only loaded after you accept advertising cookies.)"
+      "a": "The public tools are free for everyone, businesses included — there is no paid tier, no trial and no account requirement. If your team needs something beyond the public tools, the scope and any terms are discussed individually as part of your business inquiry. (Where ads are displayed, they are only loaded after you accept advertising cookies.)"
     },
     {
       "q": "Can we use Piclizer on work devices without installing anything?",
       "a": "Yes. Every tool works from a URL in any current browser — desktop or mobile. There is nothing to install, update, patch or license, so it is easy to roll out across a team."
     },
     {
-      "q": "Is there an API we can integrate with?",
-      "a": "Not today. Piclizer tools are browser pages rather than a programmable API. If a programmatic interface would help your workflow, tell us about it through the contact form — that kind of feedback is the main input for what gets built next."
+      "q": "Is there an API or a bulk-processing service?",
+      "a": "Not today. The tools are browser pages rather than a programmable service, and each tool has its own per-batch limits. If your workflow needs an API, bulk processing or an integration, send a business inquiry describing the volume and the systems involved — those are exactly the requests we evaluate and scope individually."
+    },
+    {
+      "q": "What happens after we send a business inquiry?",
+      "a": "We read it, review the requirements and the expected usage, evaluate what is technically involved, and reply by email with the most suitable next step. There is no account to create and no commitment attached to asking."
     }
   ]
 }

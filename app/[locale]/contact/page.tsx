@@ -30,7 +30,7 @@ export default async function ContactPage({ params }: { params: { locale: string
         <p className="mt-2 text-muted-foreground">{t('intro')}</p>
 
         <div className="mt-6 rounded-xl border border-border bg-card p-6">
-          <ContactForm />
+          <ContactForm contactEmail={siteConfig.contactEmail} />
         </div>
 
         {/* Bug / error report section — reports go to the official Piclizer inbox. */}

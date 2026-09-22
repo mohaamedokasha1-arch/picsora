@@ -99,6 +99,11 @@ export const siteConfig = {
   locales: ['en', 'ar'] as const,
   /** Bug / error reports submitted from the contact page go here. */
   reportEmail: 'piclizer@gmail.com',
+  /**
+   * General and business inquiries from the contact form go here when no
+   * `NEXT_PUBLIC_CONTACT_ENDPOINT` is configured (mailto fallback).
+   */
+  contactEmail: 'piclizer@gmail.com',
   adsensePublisherId: 'ca-pub-5770911159315916',
   /** Used for Article datePublished / sitemap lastmod when a page has no own date. */
   contentUpdatedAt: '2026-09-14',
