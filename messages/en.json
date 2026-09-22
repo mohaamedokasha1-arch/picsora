@@ -66,6 +66,7 @@
     "replyNote": "We read every message and usually reply within 1–2 business days.",
     "allProcessingText": "All processing happens locally in your browser. Your text never leaves your device.",
     "allProcessingFiles": "All processing happens locally in your browser. Your files never leave your device.",
+    "allProcessingInputs": "All processing happens locally in your browser. Your inputs are processed on your device and are not uploaded.",
     "useToolLabel": "Use tool",
     "addFavorite": "Add to favorites",
     "removeFavorite": "Remove from favorites"
@@ -96,7 +97,7 @@
   "home": {
     "heroTitle": "{count} free tools in one place — fast, private, no uploads",
     "heroHighlight": "right in your browser",
-    "heroSubtitle": "Compress, resize and edit images, merge and watermark PDFs, sort and analyse text, convert data and run everyday calculations — all inside your browser. Piclizer processes everything locally on your device, so your files are never uploaded to any server.",
+    "heroSubtitle": "Compress, resize and edit images, merge and watermark PDFs, sort and analyse text, convert data and run everyday calculations — all inside your browser. Piclizer processes your files locally on your device, so they are never uploaded to Piclizer's servers.",
     "heroPrimary": "Explore all tools",
     "heroSecondary": "Try the image compressor",
     "searchTitle": "What do you want to do today?",
@@ -126,10 +127,10 @@
     "step3Title": "Download the result",
     "step3Text": "Save the processed image straight back to your device.",
     "privacyTitle": "Your files never leave your device",
-    "privacyText1": "Most online tools upload your file to their server, process it, and keep a copy. Piclizer is different: every tool uses the Canvas, Blob and File APIs built into your browser, so the image stays on your machine the whole time.",
+    "privacyText1": "Most online tools upload your file to their server, process it, and keep a copy. Piclizer is different: every tool does its work inside your browser — images are drawn with the Canvas and Blob APIs, PDFs are parsed by pdf.js and pdf-lib, and text, calculator and developer tools run in plain JavaScript — so what you open in a tool is read, processed and saved on your own machine, never on ours.",
     "privacyText2": "Close the tab and every trace is gone. It's the same technology photo editors use — without any upload step.",
     "privacyPoint1": "No file uploads, no storage, no copies",
-    "privacyPoint2": "Most tools work even when you're offline",
+    "privacyPoint2": "Most tools keep working offline once the page has loaded",
     "privacyPoint3": "Free and open to everyone",
     "faqTitle": "Frequently asked questions",
     "faqSubtitle": "Quick answers about Piclizer.",
@@ -157,7 +158,7 @@
     },
     {
       "q": "Are my images uploaded to your servers?",
-      "a": "Never. Every tool runs entirely in your browser using standard web APIs. Your files are read locally, processed locally and downloaded locally. Your files are not uploaded to Piclizer's servers."
+      "a": "No. Every tool runs in your browser: your files are read locally, processed locally and downloaded locally, and they are not uploaded to Piclizer's servers. Two tools also fetch public resources over the network — the OCR engine from a public CDN and the exchange-rate table used by the Currency Converter — and neither request carries your files."
     },
     {
       "q": "Do I need to create an account?",
@@ -173,11 +174,11 @@
     },
     {
       "q": "Is my data private?",
-      "a": "Completely. Since processing happens on your device, there is nothing for us to collect, store or share. We don't use your images for anything."
+      "a": "For the tools, yes: processing happens on your device, so there is nothing for us to collect, store or share from your files, and we don't use your images for anything. The exception is what you choose to send us — a Contact, Business or Bug Report form delivers the name, email address and message you type to Piclizer's inbox so we can answer it, as the Privacy Policy explains."
     },
     {
       "q": "Can I use Piclizer offline?",
-      "a": "Once the page is loaded, most tools work without an internet connection, because no server round-trip is needed."
+      "a": "Once the page is loaded, most tools work without an internet connection, because no server round-trip is needed. The exceptions are the OCR tools, which first download their recognition engine from a public CDN, and the Currency Converter, which fetches the public exchange-rate table."
     },
     {
       "q": "Why is it faster than other tools?",
@@ -405,7 +406,7 @@
         },
         {
           "q": "Which formats can I compress?",
-          "a": "JPG, PNG and WebP. You can keep the original format or export to a different one."
+          "a": "Input formats: JPG, PNG, WebP, HEIC and HEIF. Output formats: JPG, PNG and WebP. You can keep the original format or export to any of the three output formats."
         },
         {
           "q": "Can I compress multiple images at once?",
@@ -4451,7 +4452,7 @@
       "name": "Bulk File Renamer",
       "short": "Rename hundreds of files at once.",
       "description": "Rename multiple files online for free. Prefixes, numbering, find-replace — ZIP download, in your browser.",
-      "intro": "Rename a whole folder without the tedium: add prefixes, sequence numbers, dates, find-and-replace and case changes — with a live preview and collision-safe download as ZIP.",
+      "intro": "Rename up to 200 files at once without uploading them: add prefixes, sequence numbers, dates, find-and-replace and case changes — with a live preview and collision-safe download as ZIP.",
       "howTo": [
         "Drop up to 200 files.",
         "Stack rename rules and watch the preview.",
@@ -6165,6 +6166,7 @@
     "heading": "About this tool",
     "useCases": "Common use cases",
     "localNote": "Like every Piclizer tool, this one runs entirely in your browser — your files stay on your device.",
+    "localNoteInputs": "Like every Piclizer tool, this one runs entirely in your browser — the text and values you enter stay on your device.",
     "localNoteCdn": "Your files stay on your device: recognition happens in your browser. Only the OCR engine and its language data are downloaded once from a public CDN, then cached for later runs.",
     "localNoteNetwork": "The amounts you enter stay in your browser. Only the public exchange-rate table is fetched over the network, and it is cached locally for an hour."
   },

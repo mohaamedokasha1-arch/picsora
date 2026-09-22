@@ -142,7 +142,7 @@ export default function SqlFormatterTool() {
         />
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

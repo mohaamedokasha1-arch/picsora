@@ -164,7 +164,7 @@ export default function DiscountCalculatorTool() {
         </>
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

@@ -140,7 +140,7 @@ export default function XmlFormatterTool() {
         </ToolPanel>
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

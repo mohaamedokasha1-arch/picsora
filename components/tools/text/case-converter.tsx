@@ -104,7 +104,7 @@ export default function CaseConverterTool() {
         </div>
       </ToolPanel>
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

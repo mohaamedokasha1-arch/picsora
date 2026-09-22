@@ -35,7 +35,7 @@ export default function HttpStatusTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <ToolPanel title={t('dev.httpSearch')}>
         <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
           <Field label={t('dev.httpQuery')}>

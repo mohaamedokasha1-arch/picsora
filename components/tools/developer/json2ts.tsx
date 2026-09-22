@@ -35,7 +35,7 @@ export default function JsonToTsTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <ToolPanel title={t('textTools.options')}>
         <div className="grid gap-4 md:grid-cols-3 md:items-end">
           <Field label={t('dev.tsRootName')}>

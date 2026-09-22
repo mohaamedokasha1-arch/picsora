@@ -163,7 +163,7 @@ export default function ColorConverterTool() {
         </ToolPanel>
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

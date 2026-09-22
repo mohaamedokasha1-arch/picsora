@@ -110,7 +110,7 @@ export default function JavaScriptFormatterTool() {
       )}
 
       <Notice>{t('dev.jsLocalNote')}</Notice>
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

@@ -29,7 +29,7 @@ export default function TextToJsonTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <ToolPanel title={t('textTools.options')}>
         <div className="grid gap-4 md:grid-cols-3">
           <CheckboxRow checked={skipEmpty} onChange={setSkipEmpty} label={t('textTools.skipEmpty')} />

@@ -151,7 +151,7 @@ export default function DateDifferenceTool() {
         </>
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

@@ -159,7 +159,7 @@ export default function InterestCalculatorTool() {
       )}
 
       <Notice variant="warning">{t('calc.financialDisclaimer')}</Notice>
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

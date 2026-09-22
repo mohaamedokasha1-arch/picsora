@@ -168,7 +168,7 @@ export default function BmiCalculatorTool() {
       )}
 
       <Notice variant="warning">{t('calc.bmiDisclaimer')}</Notice>
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

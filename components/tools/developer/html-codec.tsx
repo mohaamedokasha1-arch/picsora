@@ -101,7 +101,7 @@ export default function HtmlCodecTool() {
       </ToolPanel>
 
       <Notice>{t('dev.htmlHint')}</Notice>
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

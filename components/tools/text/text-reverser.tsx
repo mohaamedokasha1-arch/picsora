@@ -56,7 +56,7 @@ export default function TextReverserTool() {
         </ToolPanel>
       </div>
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function LoanCalculatorTool() {
 
   return (
     <div className="space-y-5">
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
       <ToolPanel
         title={t('calc.loanDetails')}
         actions={

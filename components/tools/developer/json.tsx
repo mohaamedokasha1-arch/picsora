@@ -239,7 +239,7 @@ export default function JsonFormatterTool() {
         </ToolPanel>
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

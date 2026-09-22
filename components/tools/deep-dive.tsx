@@ -1,6 +1,7 @@
 import { getLocale, getTranslations } from 'next-intl/server';
 import { CheckCircle2, ShieldCheck } from 'lucide-react';
 import { getToolArticle } from '@/lib/content/tool-articles';
+import { getTool } from '@/lib/tools/registry';
 
 /**
  * Tools that cannot honestly claim "nothing ever leaves your browser".
@@ -13,10 +14,40 @@ import { getToolArticle } from '@/lib/content/tool-articles';
 const CDN_DEPENDENT = new Set(['image-ocr', 'pdf-ocr']);
 const NETWORK_DEPENDENT = new Set(['currency-converter']);
 
-function localNoteKey(slug: string): 'localNote' | 'localNoteCdn' | 'localNoteNetwork' {
+/**
+ * Non-image tools that still read a real file in the browser, so the
+ * "your files stay on your device" sentence is the right one for them.
+ * (`base64` and `hash` accept a file payload, the renamer and the duplicate
+ * finder work on batches of files, and four text tools offer an optional
+ * "load a .txt" control. Everything else in these families is paste/type only.)
+ */
+const FILE_INPUT_TOOLS = new Set([
+  'base64-encoder-decoder',
+  'bulk-file-renamer',
+  'duplicate-file-finder',
+  'hash-generator',
+  'line-sorter',
+  'text-extractor',
+  'text-frequency-counter',
+  'word-counter',
+]);
+
+/** True when the tool actually receives a file from the visitor. */
+function acceptsFiles(slug: string): boolean {
+  const tool = getTool(slug);
+  if (!tool) return true; // unknown slug — keep the stronger, established wording
+  if (tool.kind === 'image' || tool.kind === 'pdf') return true;
+  return FILE_INPUT_TOOLS.has(slug);
+}
+
+type LocalNoteKey = 'localNote' | 'localNoteCdn' | 'localNoteNetwork' | 'localNoteInputs';
+
+function localNoteKey(slug: string): LocalNoteKey {
   if (CDN_DEPENDENT.has(slug)) return 'localNoteCdn';
   if (NETWORK_DEPENDENT.has(slug)) return 'localNoteNetwork';
-  return 'localNote';
+  // Calculators and the paste-only text/developer utilities never ask for a
+  // file, so the note talks about the inputs instead of files.
+  return acceptsFiles(slug) ? 'localNote' : 'localNoteInputs';
 }
 
 /**

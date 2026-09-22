@@ -265,7 +265,7 @@ export default function RegexTesterTool() {
         )}
       </ToolPanel>
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

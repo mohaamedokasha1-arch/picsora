@@ -105,7 +105,7 @@ export default function RemoveExtraSpacesTool() {
         ]}
       />
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

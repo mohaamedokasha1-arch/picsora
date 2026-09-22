@@ -120,7 +120,7 @@ export default function CssFormatterTool() {
         </ToolPanel>
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }

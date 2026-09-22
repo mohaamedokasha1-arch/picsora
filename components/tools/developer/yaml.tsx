@@ -185,7 +185,7 @@ export default function YamlFormatterTool() {
         />
       )}
 
-      <PrivacyNotice />
+      <PrivacyNotice scope="inputs" />
     </div>
   );
 }
