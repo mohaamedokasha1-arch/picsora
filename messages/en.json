@@ -56,7 +56,7 @@
     "disclaimer": "Disclaimer",
     "rightsReserved": "All rights reserved.",
     "madeWith": "Built for privacy-first work in the browser.",
-    "localSignal": "100% local — no uploads, no servers",
+    "localSignal": "100% local processing — files stay on your device",
     "new": "New",
     "lastUpdated": "Last updated",
     "legalPages": "Explore our policies",
@@ -106,7 +106,7 @@
     "popularTitle": "Most popular tools",
     "popularSubtitle": "The tools people use every day.",
     "allToolsTitle": "Every tool, free forever",
-    "allToolsSubtitle": "No accounts, no watermarks and no limits — and nothing is ever uploaded.",
+    "allToolsSubtitle": "Free to use, with no account or watermark — and your files are never uploaded to our servers.",
     "benefitsTitle": "Why Piclizer?",
     "benefitsSubtitle": "Honest tools that respect your privacy.",
     "benefitFreeTitle": "Free forever",
@@ -128,7 +128,7 @@
     "privacyTitle": "Your files never leave your device",
     "privacyText1": "Most online tools upload your file to their server, process it, and keep a copy. Piclizer is different: every tool uses the Canvas, Blob and File APIs built into your browser, so the image stays on your machine the whole time.",
     "privacyText2": "Close the tab and every trace is gone. It's the same technology photo editors use — without any upload step.",
-    "privacyPoint1": "No servers, no storage, no copies",
+    "privacyPoint1": "No file uploads, no storage, no copies",
     "privacyPoint2": "Works even when you're offline",
     "privacyPoint3": "Free and open to everyone",
     "faqTitle": "Frequently asked questions",
@@ -153,11 +153,11 @@
   "homeFaqs": [
     {
       "q": "Is Piclizer really free?",
-      "a": "Yes. Every tool is completely free with no usage limits, no watermarks and no hidden fees."
+      "a": "Yes. Every tool is completely free with no watermarks and no hidden fees."
     },
     {
       "q": "Are my images uploaded to your servers?",
-      "a": "Never. Every tool runs entirely in your browser using standard web APIs. Your files are read locally, processed locally and downloaded locally. Nothing is transmitted anywhere."
+      "a": "Never. Every tool runs entirely in your browser using standard web APIs. Your files are read locally, processed locally and downloaded locally. Your files are not uploaded to Piclizer's servers."
     },
     {
       "q": "Do I need to create an account?",
@@ -389,7 +389,7 @@
       "description": "Compress JPG, PNG and WebP images online for free. Reduce file size in your browser with a quality slider — no upload, no watermark.",
       "intro": "Shrink your images to a fraction of their size without any visible quality loss. Perfect for websites, emails and apps where every kilobyte matters. Adjust the quality slider and watch the size savings in real time.",
       "howTo": [
-        "Add one or more images using drag & drop or the browse button.",
+        "Add up to 20 images (50 MB each) using drag & drop or the browse button.",
         "Choose the output quality with the slider (lower = smaller file).",
         "Optionally pick a different output format.",
         "Press Compress and download your optimized images."
@@ -409,7 +409,7 @@
         },
         {
           "q": "Can I compress multiple images at once?",
-          "a": "Yes — add as many files as you like and they will be processed in a batch, one after another."
+          "a": "Yes — you can compress up to 20 files at once (50 MB per file). They will be processed in a batch, one after another."
         },
         {
           "q": "Are my images uploaded anywhere?",
@@ -4776,7 +4776,7 @@
   },
   "categoryFaqs": {
     "q1": "Is it free to use?",
-    "a1": "Yes — all {category} tools on Piclizer are completely free, with no limits, no watermarks and no account required.",
+    "a1": "Yes — all {category} tools on Piclizer are completely free, with no watermarks and no account required.",
     "q2": "Are my images uploaded anywhere?",
     "a2": "No. Every tool in this category processes your images entirely in your browser. Nothing is sent to a server.",
     "privacyQ": {
