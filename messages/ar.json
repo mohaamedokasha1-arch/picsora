@@ -69,7 +69,8 @@
     "allProcessingInputs": "معظم المعالجة تتم محليًا داخل متصفحك. مدخلاتك تُعالَج على جهازك ولا تُرفع إلى أي خادم.",
     "useToolLabel": "استخدم الأداة",
     "addFavorite": "أضف للمفضلة",
-    "removeFavorite": "أزل من المفضلة"
+    "removeFavorite": "أزل من المفضلة",
+    "adLabel": "إعلان"
   },
   "validation": {
     "invalidType": "هذا النوع من الملفات غير مدعوم هنا. يرجى اختيار {types}.",
