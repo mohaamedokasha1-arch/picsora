@@ -14,6 +14,8 @@ import { PersonalSections } from '@/components/tools/personal-sections';
 import { Accordion } from '@/components/ui/accordion';
 import { ToolIcon } from '@/components/icons';
 import { AdPlacement } from '@/components/ads/ad-placement';
+import { AdsterraBanner } from '@/components/ads/adsterra-banner';
+import { AdsterraNative } from '@/components/ads/adsterra-native';
 
 export function generateStaticParams() {
   return siteConfig.locales.map((locale) => ({ locale }));
@@ -164,6 +166,13 @@ export default async function HomePage({ params }: { params: { locale: string } 
           </Link>
         </div>
       </section>
+
+      {/* Adsterra 300×250 banner: reserved mid-page in-content slot (the top
+          of the page already carries the responsive ad slot above), never
+          inside a tool control or interactive result. */}
+      <div className="container flex justify-center py-8">
+        <AdsterraBanner />
+      </div>
 
       {/* Just added */}
       <section className="container py-12">
@@ -359,6 +368,12 @@ export default async function HomePage({ params }: { params: { locale: string } 
             <Accordion items={homeFaqs} />
           </div>
         </div>
+      </section>
+
+      {/* Adsterra Native Banner: sits at the very bottom of the homepage,
+          below all editorial content and above the site footer. */}
+      <section className="container py-10">
+        <AdsterraNative />
       </section>
     </>
   );
