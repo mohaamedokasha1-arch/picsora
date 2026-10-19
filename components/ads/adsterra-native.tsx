@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
-import { useConsent } from '@/components/consent/consent-provider';
 import { cn } from '@/lib/utils';
 
 export interface AdsterraNativeProps {
@@ -20,23 +19,29 @@ const NATIVE_SCRIPT_ID = 'adsterra-native';
 const NATIVE_SRC = `https://furydonkeypharmacy.com/${NATIVE_UNIT_ID}/invoke.js`;
 
 /**
- * Adsterra Native Banner.
+ * Adsterra Native Banner — ALWAYS ON.
  *
  * Unlike the 300×250 banner, the native unit fills a named container
  * (`#container-<id>`) with its own markup and grows to its natural height,
  * so it is injected as a real element and the official script is appended
  * once the container is on the page (same pattern as the Monetag tag).
  *
- * Renders the real ad only when the visitor consented to advertising cookies
- * (and `NEXT_PUBLIC_ADSTERRA_ENABLED` is not explicitly `false`). Used at
- * the very bottom of the homepage, below all editorial content.
+ * Per explicit site-owner request this unit MUST NOT be gated behind
+ * `consent?.advertising` — it loads immediately on mount, whether the
+ * visitor accepted, rejected, or hasn't chosen yet. Kill-switch:
+ * NEXT_PUBLIC_ADSTERRA_ENABLED=false. Used at the very bottom of the
+ * homepage, below all editorial content.
+ *
+ * React hydration note: external scripts don't execute if placed as plain
+ * JSX. We create/append the <script> in useEffect once the container div
+ * exists — the only reliable way inside a React tree — matching the
+ * official Adsterra snippet (async + data-cfasync="false").
  */
 export function AdsterraNative({ className }: AdsterraNativeProps) {
   const t = useTranslations('common');
-  const { consent } = useConsent();
-  // Opt-out kill switch — see adsterra-banner.tsx.
+  // Explicitly NOT gated by consent — site owner requires immediate display.
   const enabled = process.env.NEXT_PUBLIC_ADSTERRA_ENABLED !== 'false';
-  const showAd = enabled && Boolean(consent?.advertising);
+  const showAd = enabled;
 
   React.useEffect(() => {
     if (!showAd) return;

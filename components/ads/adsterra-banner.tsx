@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
-import { useConsent } from '@/components/consent/consent-provider';
 import { cn } from '@/lib/utils';
 
 export interface AdsterraBannerProps {
@@ -48,22 +47,27 @@ atOptions = {
 </body></html>`;
 
 /**
- * Adsterra 300×250 banner.
+ * Adsterra 300×250 banner — ALWAYS ON.
  *
- * Renders the real ad only when the visitor consented to advertising
- * cookies (and `NEXT_PUBLIC_ADSTERRA_ENABLED` is not explicitly `false`).
- * The 300×250 box is reserved either way so the page never shifts when the
- * ad arrives. Used on the homepage between editorial sections — never
- * inside a tool control or interactive result.
+ * Renders immediately on mount, regardless of cookie-consent state.
+ * Per explicit site-owner request the banner MUST NOT be gated behind
+ * `consent?.advertising`. It shows 100% whether the visitor accepted,
+ * rejected, or hasn't chosen yet.
+ *
+ * Kill-switch: set NEXT_PUBLIC_ADSTERRA_ENABLED=false to remove it entirely.
+ * Otherwise the 300×250 box is always live. Used at the top/middle of the
+ * homepage — never inside a tool control or interactive result.
+ *
+ * Implementation: the creative's invoke.js uses document.write(), so it is
+ * executed inside a sandboxed srcdoc iframe. That keeps the write confined
+ * to the iframe's own parsing phase and off the main page, exactly as the
+ * official Adsterra tag expects.
  */
 export function AdsterraBanner({ className }: AdsterraBannerProps) {
   const t = useTranslations('common');
-  const { consent } = useConsent();
-  // Opt-out kill switch: the unit is enabled by default because these
-  // placement ids were explicitly configured for the site; setting
-  // NEXT_PUBLIC_ADSTERRA_ENABLED=false removes the ad entirely.
+  // Explicitly NOT gated by consent — site owner requires immediate display.
   const enabled = process.env.NEXT_PUBLIC_ADSTERRA_ENABLED !== 'false';
-  const showAd = enabled && Boolean(consent?.advertising);
+  const showAd = enabled;
 
   return (
     <div
